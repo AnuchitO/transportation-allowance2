@@ -1,0 +1,27 @@
+.x-grid3-check-ss-col
+,.x-grid3-check-ss-col-on
+,.x-grid3-check-ss-col-disabled
+,.x-grid3-check-ss-col-on-disabled {
+    background-image:url(ss-row-check-sprite.png);
+    width:16px;
+    height:18px;
+    margin:auto;
+    background-repeat:no-repeat;
+    background-color:transparent;
+}
+
+.x-grid3-check-ss-col {
+    background-position:2px 2px;
+}
+
+.x-grid3-check-ss-col-on {
+	background-position:-23px 2px;
+}
+
+.x-grid3-check-ss-col-disabled{
+    background-position:-48px 2px;
+}
+
+.x-grid3-check-ss-col-on-disabled {
+    background-position:-72px 2px;
+}

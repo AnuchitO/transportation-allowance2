@@ -1,0 +1,26 @@
+.x-grid3-row-ss-checker
+,.x-grid3-row-ss-checker-on
+,.x-grid3-row-ss-checker-disabled
+,.x-grid3-row-ss-checker-disabled-on {
+    background-image:url(ss-row-check-sprite.png);
+    width:100%;
+    height:18px;
+    background-repeat:no-repeat;
+    background-color:transparent;
+}
+
+.x-grid3-row-ss-checker {
+    background-position:2px 2px;
+}
+
+.x-grid3-row-ss-checker-on {
+	background-position:-23px 2px;
+}
+
+.x-grid3-row-ss-checker-disabled {
+    background-position:-48px 2px;
+}
+
+.x-grid3-row-ss-checker-disabled-on {
+    background-position:-72px 2px;
+}

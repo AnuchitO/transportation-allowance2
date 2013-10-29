@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<definition name=".emptytemplate" template="/WEB-INF/jsp/tiles/emptyTemplate.jsp">
+       <put-attribute name="header" value="/WEB-INF/jsp/tiles/header.jsp"/>
+    </definition>    
+    
+    <definition name="/app001.tiles" extends=".emptytemplate">
+       <put-attribute name="title" 	value="EXT JS Training"/>
+       <put-attribute name="content" value="/WEB-INF/jsp/app/app001.jsp"/>
+   </definition>
+	
+	<definition name="/EXT001.tiles" extends=".emptytemplate">
+      	<put-attribute name="title" value="Ext Js Training"/>
+      	<put-attribute name="content" value="/WEB-INF/jsp/app/EXT001.jsp"/>
+     	<put-attribute name="pageJsIncluded" value="/js/app/EXT001.js,/js/app/EXT001A.js"/>  
+    </definition>
+
+    <definition name="/SPV004.tiles" extends=".emptytemplate">
+      	<put-attribute name="title" value="Print Preview"/>
+      	<put-attribute name="content" value="/WEB-INF/jsp/app/SPV004/SPV004.jsp"/>      	     	  
+    </definition>
+
+	<definition name="/SCF003.tiles" extends=".emptytemplate">
+      	<put-attribute name="title" value="SCF003"/>
+      	<put-attribute name="content" value="/WEB-INF/jsp/app/SCF003.jsp"/>
+     	<put-attribute name="pageJsIncluded" value="/js/app/SCF003.js"/>  
+    </definition>
+   
+</tiles-definitions>

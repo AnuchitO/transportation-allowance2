@@ -1,9 +1,6 @@
 package com.spt.tsa.controller.datasource;
 
 public class SPV004Pojo {	
-	private String stuid;	
-	private String course;	
-	private String grade;
 	//Head Information
 	private String noDoc;
 	private String docDate;
@@ -44,22 +41,11 @@ public class SPV004Pojo {
 
 	}
 
-	public SPV004Pojo(String id, String name, String course, String grade,
-			String no) {
-		this.stuid = id;
+	public SPV004Pojo(String id, String name,String no) {
 		this.name = name;
-		this.course = course;
-		this.grade = grade;
 		this.noDoc = no;
 	}
 
-	public String getStuid() {
-		return stuid;
-	}
-
-	public void setStuid(String stuid) {
-		this.stuid = stuid;
-	}
 
 	public String getName() {
 		return name;
@@ -67,22 +53,6 @@ public class SPV004Pojo {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getCourse() {
-		return course;
-	}
-
-	public void setCourse(String course) {
-		this.course = course;
-	}
-
-	public String getGrade() {
-		return grade;
-	}
-
-	public void setGrade(String grade) {
-		this.grade = grade;
 	}
 
 	public String getNoDoc() {

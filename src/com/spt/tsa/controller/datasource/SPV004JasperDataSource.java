@@ -24,20 +24,20 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 		// Head Information
 				String noDoc="70077";
 				String docDate="10/02/2556";
-				String name="AAAAAA  BBBBBB";
+				String name="นางสาวยสมชาย  บุญรอด";
 				String empId="53412345";
-				String compName = "Softsquar 1999";
+				String compName = "ซอฟต์สแควร์";
 				String department="Operation II";
-				String address="92   tumboon  kangkoy      aumper  mung";
-				String province="saraburee";
+				String address="92   ต.หลักหก  อ.เมือง";
+				String province="สระบุรี";
 				String phoneNumber="08-0225-2568";
 				String email="its-anshit_a@softsquaregroup.com";			
 				
 		//Table Information
 				String tDate="10/10/2556";
 				String tCustomer="yasoop";
-				String tFrom="From";
-				String tTo="To";
+				String tFrom="ฟิวเจอร์";
+				String tTo="ราดพร้าว";
 				String tTravel="300";
 				String tExpressWay ="0";
 				String tSum="300";
@@ -47,13 +47,13 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 				String tSumTotal="300";
 			
 			//Summary Information
-				String sumTotalCharector="SamRoiBathToun";
+				String sumTotalCharector="สามร้อยบาทถ้วน";
 				String attachment="1";
-				String toPay="travel to customer";
-				String bank="bankkok";
-				String branch="runsit";
+				String toPay="เดินทางไปหาลูกค้า";
+				String bank="กรุงเทพ";
+				String branch="รังสิต";
 				String accountId="123-4-12224-5";
-				String accountType="oom";
+				String accountType="ออมทรัพย์";
 				String checkCash="/";
 				String checkCheck="/";
 				

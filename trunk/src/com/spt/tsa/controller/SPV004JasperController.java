@@ -36,20 +36,17 @@ public class SPV004JasperController {
 	}
 
 	@RequestMapping(value = "/jasperReport.pdf", method = RequestMethod.GET)
-	public String printWelcome(ModelMap model) throws JRException{
-//		 @ModelAttribute SCF003Domain01 domain,@RequestParam("no") String no) throws JRException {
-//				//logger.debug("aaaa+++++++++++++++++++++++++++++++++++a");	
-//				domain.setNo(no);
-//				logger.debug("-----{}+++++",domain.getNo());
+	public String printWelcome(ModelMap model,HttpServletRequest request) throws JRException{
+		String XXX= request.getParameter("docNo").toString();
+		logger.debug("+++++++++++++++++++++++++++++++++"+XXX);
+
 		SPV004JasperDataSource dsStudent =  new SPV004JasperDataSource();
 		jrDatasource = dsStudent.create(null);
 		model.addAttribute("datasource", jrDatasource);
 		model.addAttribute("format", "pdf");
 		return "multiViewReport";
 	}
-//	@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=save1")
-//	public void save1(HttpServletRequest request, HttpServletResponse response,
-//	
+
 	
 	
 }

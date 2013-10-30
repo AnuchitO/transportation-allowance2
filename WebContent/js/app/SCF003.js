@@ -600,6 +600,7 @@ SCF003.checkBox2 = new Ext.form.Checkbox({
 SCF003.bank.setValue(SCF01Domain.bank);
 SCF003.branch.setValue(SCF01Domain.branch);
 SCF003.accountNumber.setValue(SCF01Domain.accountNumber);
+SCF003.typeAccount.setValue(SCF01Domain.typeAccount);
 SCF003.createButtonSubmit = new Ext.Button({
 	id : 'submit',
 	text : 'Submit',

@@ -14,11 +14,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.jasperreports.JasperReportsCsvView;
 
 import com.spt.tsa.controller.datasource.SPV004JasperDataSource;
+import com.spt.tsa.domain.SCF003Domain01;
 
 
 
@@ -32,16 +35,21 @@ public class SPV004JasperController {
 		
 	}
 
-	@RequestMapping(value = "/jasperReport.pdf", method = RequestMethod.GET)
-	public String printWelcome(ModelMap model) throws JRException {
-		//logger.debug("aaaa+++++++++++++++++++++++++++++++++++a");		
+	@RequestMapping(value = "/jasperReport.pdf", method = RequestMethod.POST, params = "method=preview")
+	public String printWelcome(ModelMap model, @ModelAttribute SCF003Domain01 domain,@RequestParam("no") String no) throws JRException {
+		//logger.debug("aaaa+++++++++++++++++++++++++++++++++++a");	
+		domain.setDataGridNo(no);
+		logger.debug("-----{}+++++",domain.getName());
+		
 		SPV004JasperDataSource dsStudent =  new SPV004JasperDataSource();
 		jrDatasource = dsStudent.create(null);
 		model.addAttribute("datasource", jrDatasource);
 		model.addAttribute("format", "pdf");
 		return "multiViewReport";
 	}
-	
+//	@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=save1")
+//	public void save1(HttpServletRequest request, HttpServletResponse response,
+//	
 	
 	
 }

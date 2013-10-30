@@ -31,9 +31,9 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 				String address="92   tumboon  kangkoy      aumper  mung";
 				String province="saraburee";
 				String phoneNumber="08-0225-2568";
-				String email="its-anshit_a@softsquaregroup.com";
+				String email="its-anshit_a@softsquaregroup.com";			
 				
-			//Table Information
+		//Table Information
 				String tDate="10/10/2556";
 				String tCustomer="yasoop";
 				String tFrom="From";
@@ -69,16 +69,18 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 						  	spv004Pojo.setProvince(province);
 						  	spv004Pojo.setPhoneNumber(phoneNumber);
 						  	spv004Pojo.setEmail(email);		
-						  	
+						  	//Value For first Row Table
 							spv004Pojo.settDate("A");
 							spv004Pojo.settCustomer("A");
 							spv004Pojo.settFrom("A");
 							spv004Pojo.settTo("A");
 							spv004Pojo.settTravel("A");
 							spv004Pojo.settExpressWay("A");
-							spv004Pojo.settSum("A");					
+							spv004Pojo.settSum("A");
+							spv004Pojo.settNotation("AP");
 							listSPV004PojoData.add(spv004Pojo);
-				//Fill table value Rows
+							
+				//Fill table value Rows second  and every rows after first Row
 							spv004Pojo = new SPV004Pojo();
 							spv004Pojo.settDate(tDate);
 							spv004Pojo.settCustomer(tCustomer);
@@ -87,10 +89,7 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 							spv004Pojo.settTravel(tTravel);
 							spv004Pojo.settExpressWay(tExpressWay);
 							spv004Pojo.settSum(tSum);
-														
-						  	spv004Pojo.setStuid("S001");
-						  	spv004Pojo.setCourse("MCA");
-						  	spv004Pojo.setGrade("B");
+							spv004Pojo.settNotation("PP");
 						  	listSPV004PojoData.add(spv004Pojo);
 				
 				//Fill Total Row
@@ -109,12 +108,25 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 						
 						spv004Pojo.settDate(tDate);
 						spv004Pojo.settCustomer(tCustomer);
-					  	spv004Pojo.setStuid("QQS001");
-					  	spv004Pojo.setCourse("WWMCA");
-					  	spv004Pojo.setGrade("BA");
 					  	listSPV004PojoData.add(spv004Pojo);		
+					  	
+					  	
 				//Fill Summary
-						spv004Pojo = new SPV004Pojo();
+					  	spv004Pojo = new SPV004Pojo();
+					  	//Fill table last Fill before Total Row
+					  	spv004Pojo.settDate(tDate);
+						spv004Pojo.settCustomer(tCustomer);
+						spv004Pojo.settFrom(tFrom);
+						spv004Pojo.settTo(tTo);
+						spv004Pojo.settTravel(tTravel);
+						spv004Pojo.settExpressWay(tExpressWay);
+						spv004Pojo.settSum(tSum); 
+						spv004Pojo.settNotation(tNotation);
+						spv004Pojo.settSumTravel(tSumTravel);
+						spv004Pojo.settSumExpressWay(tSumExpressWay);
+						spv004Pojo.settSumTotal(tSumTotal);
+					  	
+					  	//Fill summary						
 						spv004Pojo.setSumTotalCharector(sumTotalCharector);
 						spv004Pojo.setAttachment(attachment);
 						spv004Pojo.setToPay(toPay);

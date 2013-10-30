@@ -34,5 +34,16 @@ public class Employee01ServiceImpl implements Employee01Service{
     	return send;
     	
     }
-    
+    public List<String> findBranchBankWhereEmp(){
+    	List<String> send = employee01Dao.findBranchBankWhereEmp();
+    	return send;
+    }
+    public List<String> findDeptWhereEmp(){
+    	List<String> send = employee01Dao.findDeptWhereEmp();
+    	return send;
+    }
+    public List<String> findProvinceEmp(){
+    	List<String> send = employee01Dao.findProvinceEmp();
+    	return send;
+    }
 }

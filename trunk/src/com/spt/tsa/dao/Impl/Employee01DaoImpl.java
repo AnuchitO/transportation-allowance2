@@ -31,13 +31,43 @@ public class Employee01DaoImpl extends HibernateDaoSupport implements Employee01
 	   System.out.println("findBankWhereEmpDao");
 	   Session ses = (Session) this.getSession();
 	   StringBuffer sql = new StringBuffer();
-	   sql.append("select DETAIL FROM PARAMETER_TABLE  WHERE ENTRY = '200'");
+	   sql.append("select DETAIL FROM PARAMETERTABLE  WHERE ENTRY = " + "'" + id +"'");
 	   SQLQuery query = ses.createSQLQuery(sql.toString());
 	   List<String> send = query.list();
 	   ses.close();
-//	   return (ParameterTable) this.getHibernateTemplate().find("FROM ParameterTable R WHERE R.code ='7' AND R.entry = '200'");
 	   return send;
-//	   return (ParameterTable)this.getHibernateTemplate().find(" from CttHdr c where c.cttCd = '"+cttCd+"' ").get(0);
+
 }
+   public List<String> findBranchBankWhereEmp(){
+	   String branch = this.findEmployeeWhereId().getAccountType();
+	   Session ses = (Session) this.getSession();
+	   StringBuffer sql = new StringBuffer();
+	   sql.append("select DETAIL from PARAMETERTABLE where CODE = '8' and ENTRY = "+"'"+branch+"'");
+	   SQLQuery query = ses.createSQLQuery(sql.toString());
+	   List<String> send = query.list();
+	   ses.close();
+	   return send;
+   }
+   public List<String> findDeptWhereEmp(){
+	   String dept = this.findEmployeeWhereId().getDepId();
+	   Session ses = (Session) this.getSession();
+	   StringBuffer sql = new StringBuffer();
+	   sql.append("select DETAIL from PARAMETERTABLE where CODE = '4' and ENTRY = "+"'"+dept+"'");
+	   SQLQuery query = ses.createSQLQuery(sql.toString());
+	   List<String> send = query.list();
+	   ses.close();
+	   return send;
+   }
+   public List<String> findProvinceEmp(){
+	   String province = this.findEmployeeWhereId().getProvince();
+	   Session ses = (Session) this.getSession();
+	   StringBuffer sql = new StringBuffer();
+	   sql.append("select DETAIL from PARAMETERTABLE where CODE = '2' and ENTRY = "+"'"+province+"'");
+	   SQLQuery query = ses.createSQLQuery(sql.toString());
+	   List<String> send = query.list();
+	   ses.close();
+	   return send;
+	   
+   }
    
 }

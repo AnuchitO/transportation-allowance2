@@ -15,7 +15,7 @@ import org.hibernate.annotations.NaturalId;
 
 @Entity
 
-@Table(name="PARAMETER_TABLE",
+@Table(name="PARAMETERTABLE",
 uniqueConstraints = {@UniqueConstraint(columnNames={"CODE", "ENTRY"})})
 public class ParameterTable  implements Serializable {
 	private static final long serialVersionUID = -4122310234428712362L;

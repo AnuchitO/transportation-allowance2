@@ -93,6 +93,10 @@ public class APP001Controller{
 		List<TravelDetail> resultsTravelD = this.travelDetail01Service.findTravelDetail();
 		List<TravelHeader> resultsTravelH = this.travelHeader01Service.findTravelHeader();
 		List<ParameterTable> resultsParame = this.parameterTable01Service.findTable("2");
+		List<ParameterTable> resultsPara = this.parameterTable01Service.findByDept();
+		for(ParameterTable c:resultsPara){
+			logger.debug("++++++++++++++++++++++++++++++++++++{}",c.getDetail());
+		}
 		logger.debug("++++++++++++++++++++++++++++++++++++");
 		for(ParameterTable parame : resultsParame){
 			logger.debug("++++++++++++++++++++++++++++++++++++{}",parame.getDetail());

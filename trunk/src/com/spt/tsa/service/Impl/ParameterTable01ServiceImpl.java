@@ -28,5 +28,8 @@ public class ParameterTable01ServiceImpl implements ParameterTable01Service {
 		// TODO Auto-generated method stub
 		return this.parameterTableDao.findRow(code, entry);
 	}
+	public List<ParameterTable> findByDept(){
+		return this.parameterTableDao.findByDept();
+	}
 
 }

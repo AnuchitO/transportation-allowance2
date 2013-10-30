@@ -78,6 +78,9 @@ public class SCF003Controller {
 			System.out.println("view 2");
 			List<String> resu = this.employee01Service.findBankWhereEmp();
 			List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp();
+			List<String> resultsDept = this.employee01Service.findDeptWhereEmp();
+			List<String> resultsProvince = this.employee01Service.findProvinceEmp();
+			
 			SCF003Domain01 domain = new SCF003Domain01();
 			domain.setName(resultsEmp.getName());
 			domain.setId(resultsEmp.getEmpId());
@@ -85,8 +88,8 @@ public class SCF003Controller {
 			domain.setAddress(resultsEmp.getAddress());
 			domain.setPhone(resultsEmp.getTelephone());
 			domain.setEmail(resultsEmp.getEmail());
-			domain.setAntecedent(resultsEmp.getDepId());
-			domain.setAntercedentA(resultsEmp.getProvince());
+			domain.setAntecedent(resultsDept.get(0));
+			domain.setAntercedentA(resultsProvince.get(0));
 			//************* set value Button *****************//
 			domain.setBank(resu.get(0));
 			domain.setBranch(resultsEmp.getBranch());
@@ -101,13 +104,14 @@ public class SCF003Controller {
 			logger.debug("+++++++++++++++++++++{}--------------------",resu.get(0));
 			logger.debug("+++++++++++++++++++++{}--------------------",domain.getName());
 			model.put("tesrt", JSONObject.fromObject(BeanUtils.beanToMap(domain)).toString());
+			
 			return new ModelAndView("SCF003", model);
 
 		}
 		
 		@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=antecedent" )
 		public void findComSS(HttpServletRequest request, HttpServletResponse response) {
-				
+			
 			JSONArray jsonArray = new JSONArray();
 			GridData gridData = new GridData();
 			

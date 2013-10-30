@@ -2,8 +2,12 @@ package com.spt.tsa.dao.Impl;
 
 import java.util.List;
 
+import javax.management.Query;
+import javax.transaction.Transaction;
+
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.classic.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +40,11 @@ public class ParameterTableDaoImpl extends HibernateDaoSupport  implements Param
 		System.out.println("///////////////////////////////////////"+this.getHibernateTemplate().findByCriteria(criteria));
 //		eturn (ParameterTable) this.getHibernateTemplate().findByCriteria(criteria);
 		return null;
+	}
+	
+	public List<ParameterTable> findByDept(){
+		String hql = "FROM ParameterTable";
+		 return this.getHibernateTemplate().find(hql);
 	}
 
 	

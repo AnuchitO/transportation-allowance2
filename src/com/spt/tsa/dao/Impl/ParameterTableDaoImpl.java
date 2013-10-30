@@ -29,16 +29,20 @@ public class ParameterTableDaoImpl extends HibernateDaoSupport  implements Param
 	public List<ParameterTable> findTable(String code) {
 		DetachedCriteria criteria =  DetachedCriteria.forClass(ParameterTable.class)
 		        .add(Restrictions.eq("code", code));
+		System.out.println("///////////////////////////////////////"+this.getHibernateTemplate().findByCriteria(criteria));
 		return this.getHibernateTemplate().findByCriteria(criteria);
 		
 	}
 
 	public ParameterTable findRow(String code, String entry) {
 		//not work
-		DetachedCriteria criteria =  DetachedCriteria.forClass(ParameterTable.class)
-		        .add(Restrictions.eq("code", code)).add(Restrictions.eq("entry", entry));
+		DetachedCriteria criteria =  DetachedCriteria.forClass(ParameterTable.class).add(
+		        Restrictions.and(
+		                Restrictions.eq("code", code),
+		                Restrictions.eq("entry", entry)
+		            ));
 		System.out.println("///////////////////////////////////////"+this.getHibernateTemplate().findByCriteria(criteria));
-//		eturn (ParameterTable) this.getHibernateTemplate().findByCriteria(criteria);
+//		return (ParameterTable) this.getHibernateTemplate().findByCriteria(criteria);
 		return null;
 	}
 	

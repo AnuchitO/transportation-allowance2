@@ -24,5 +24,9 @@ public class Travelheader01ServiceImpl implements TravelHeader01Service{
    	 // TODO Auto-generated method stub
    	 return travelHeader01Dao.findTravelHeader();
     }
+
+	public List<TravelHeader> findByDocNo(String docNo) {
+		return this.travelHeader01Dao.findByDocNo(docNo);
+	}
     
 }

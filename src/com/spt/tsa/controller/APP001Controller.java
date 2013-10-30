@@ -29,7 +29,7 @@ public class APP001Controller{
 	private TravelDetail01Service travelDetail01Service;
 	private TravelHeader01Service travelHeader01Service;
 	private ParameterTable01Service parameterTable01Service;
-	
+		
 	
 	@Autowired
     public void setCompany01Service(Company01Service company01Service) {
@@ -79,6 +79,7 @@ public class APP001Controller{
 			ParameterTable01Service parameterTable01Service) {
 		this.parameterTable01Service = parameterTable01Service;
 	}
+	
 
 	
 	@RequestMapping(value="/app001.html",method=RequestMethod.GET)
@@ -93,19 +94,26 @@ public class APP001Controller{
 		List<TravelDetail> resultsTravelD = this.travelDetail01Service.findTravelDetail();
 		List<TravelHeader> resultsTravelH = this.travelHeader01Service.findTravelHeader();
 		List<ParameterTable> resultsParame = this.parameterTable01Service.findTable("2");
+
+		logger.debug("++++++++++++++*******++++++++++++");
+
 		List<ParameterTable> resultsPara = this.parameterTable01Service.findByDept();
 		for(ParameterTable c:resultsPara){
 			logger.debug("++++++++++++++++++++++++++++++++++++{}",c.getDetail());
 		}
 		logger.debug("++++++++++++++++++++++++++++++++++++");
-		for(ParameterTable parame : resultsParame){
-			logger.debug("++++++++++++++++++++++++++++++++++++{}",parame.getDetail());
-		}
 
+		for(ParameterTable parame : resultsParame){
+			logger.debug("+++++++++++++3333333333+++++++++++++++{}",parame.getDetail());
+		}
 		
+		List<TravelHeader> resutl = this.travelHeader01Service.findByDocNo("no001");
+		for(TravelHeader parame : resutl){
+			logger.debug("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH+++++{}}",parame.getNo());
+			logger.debug("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH+++++{}}",parame.getEmployee().getName());
+		}
 		
-		for(PaymentHeader c:resultsPayH){
-			
+		for(PaymentHeader c:resultsPayH){			
 			
 			logger.debug("+++++++++++++++++{}-------------{}",c.getTravelHeader().getNo(),c.getCreationDate());
 	

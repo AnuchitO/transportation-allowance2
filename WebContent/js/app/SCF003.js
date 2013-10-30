@@ -3,7 +3,7 @@ var SCF003 = {};
 SCF003.No = new Ext.form.TextField({
 	id : 'no',
 	fieldLabel : "No",
-
+	
 });
 SCF003.date = new Ext.form.TextField({
 	id : 'date',
@@ -68,6 +68,7 @@ SCF003.createCombobox = new Ext.form.ComboBox({
 
 SCF003.textArea = new Ext.ss.form.TextArea({
 	fieldLabel : 'ที่อยู่',
+	id:'address',
 	width : 600,
 	bodyPadding : 10,
 
@@ -130,6 +131,8 @@ SCF003.company.setValue(SCF01Domain.company);
 SCF003.textArea.setValue(SCF01Domain.address);
 SCF003.phone.setValue(SCF01Domain.phone);
 SCF003.email.setValue(SCF01Domain.email);
+SCF003.createCombobox.setValue(SCF01Domain.antecedent);
+SCF003.createComboboxA.setValue(SCF01Domain.antercedentA);
 
 SCF003.setCenter = new Ext.form.FieldSet({
 	collapsible : false,
@@ -291,27 +294,73 @@ SCF003.gridSaveBtn = new Ext.Toolbar.Button({
 		function confirmFunction(btn) {
 			if (btn == 'yes') {
 				
-				var param = {};
+				
+				
+					//**************** get value History to controller **********//
+					var param1 = {};
+					 param1.no = Ext.getCmp('no').getValue();
+					 param1.date = Ext.getCmp('date').getValue();
+					 param1.name = Ext.getCmp('name').getValue();
+					 param1.id = Ext.getCmp('id').getValue();
+					 param1.company = Ext.getCmp('company').getValue();
+					 param1.antecedent = Ext.getCmp('antecedent').getValue();
+					 param1.address = Ext.getCmp('address').getValue();
+					 param1.antercedentA = Ext.getCmp('antercedentA').getValue();
+					 param1.phone = Ext.getCmp('phone').getValue();
+					 param1.email = Ext.getCmp('email').getValue();
+					 
+					//**************** get value in Bottom to controller **********//
+					
+					 param1.tatolManey = Ext.getCmp('tatolManey').getValue();
+					 param1.document = Ext.getCmp('document').getValue();
+					 param1.forPay = Ext.getCmp('forPay').getValue();
+					 param1.bank = Ext.getCmp('bank').getValue();
+					 param1.branch = Ext.getCmp('branch').getValue();
+					 param1.accountNumber = Ext.getCmp('accountNumber').getValue();
+					 param1.typeAccount = Ext.getCmp('typeAccount').getValue();
+					 param1.type1 = Ext.getCmp('type1').getValue();
+					 param1.type2 = Ext.getCmp('type2').getValue();
+					 param1.method = "save1";
+						Ext.Ajax.request({
+							url : '/TransportationAllowance/SCF003.html',
+							params : param1,
+							success : function(response, opts) {
+								if (param1 != null) {
+									Ext.Msg.alert('Information', 'บันทึกเรียบร้อย');
+								} else {
+									Ext.Msg.alert('Information', 'Error');
+								}
+
+							},
+							failure : function(response, opts) {
+								Ext.Msg.alert('ERROR', 'Error.');
+							}
+
+						});
+					
+					
+					 //************************** get value to controller by Grid ***************************//	
+					var param2 = {};
 				SCF003.createGrid.getSelectionModel().selectAll();
 				 var sm = SCF003.createGrid.getSelectionModel().getSelections();
-					    for (var i=0; i<=sm.length-1; i++) {
-//					    	 param.dataGridNo = SCF003.createGrid.getStore().getAt(i).data.no;
-					    
-				param.dataGridNo =  SCF003.createGrid.getStore().getAt(i).data.no;
-				param.dataGridData = SCF003.createGrid.getStore().getAt(i).data.gridDate;
-		    	param.dataGridCustomer = SCF003.createGrid.getStore().getAt(i).data.customer;
-		    	param.dataGridRegion = SCF003.createGrid.getStore().getAt(i).data.region;
-		    	param.dataGridGoal = SCF003.createGrid.getStore().getAt(i).data.goal;
-		    	param.dataGridPaymentTravel = SCF003.createGrid.getStore().getAt(i).data.paymentTravel;
-		    	param.dataGridPaymentD = SCF003.createGrid.getStore().getAt(i).data.paymentD;
-		    	param.dataGridPayment = SCF003.createGrid.getStore().getAt(i).data.payment;
-		    	param.dataRemark = SCF003.createGrid.getStore().getAt(i).data.remark;
-				param.method = "save";
+				 for (var i=0; i<=sm.length-1; i++) {
+						    
+				
+				param2.dataGridNo =  SCF003.createGrid.getStore().getAt(i).data.no;
+				param2.dataGridData = SCF003.createGrid.getStore().getAt(i).data.gridDate;
+		    	param2.dataGridCustomer = SCF003.createGrid.getStore().getAt(i).data.customer;
+		    	param2.dataGridRegion = SCF003.createGrid.getStore().getAt(i).data.region;
+		    	param2.dataGridGoal = SCF003.createGrid.getStore().getAt(i).data.goal;
+		    	param2.dataGridPaymentTravel = SCF003.createGrid.getStore().getAt(i).data.paymentTravel;
+		    	param2.dataGridPaymentD = SCF003.createGrid.getStore().getAt(i).data.paymentD;
+		    	param2.dataGridPayment = SCF003.createGrid.getStore().getAt(i).data.payment;
+		    	param2.dataRemark = SCF003.createGrid.getStore().getAt(i).data.remark;
+				param2.method = "save2";
 				Ext.Ajax.request({
 					url : '/TransportationAllowance/SCF003.html',
-					params : param,
+					params : param2,
 					success : function(response, opts) {
-						if (param != null) {
+						if (param2 != null) {
 							Ext.Msg.alert('Information', 'บันทึกเรียบร้อย');
 						} else {
 							Ext.Msg.alert('Information', 'Error');
@@ -325,7 +374,6 @@ SCF003.gridSaveBtn = new Ext.Toolbar.Button({
 				});
 				SCF003.createGrid.getSelectionModel().deselectRow(i);
 					    }
-				//
 			}
 		}
 	}
@@ -493,7 +541,7 @@ SCF003.totalManey = new Ext.form.TextField({
 });
 SCF003.document = new Ext.form.TextField({
 	id : 'document',
-	fieldLabel : "เอกสาร",
+	fieldLabel : "เอกสารแนบ",
 	width : 120
 
 });
@@ -548,20 +596,26 @@ SCF003.checkBox2 = new Ext.form.Checkbox({
 	boxLabel : 'เช็คธนาคาร',
 	fieldLabel : 'text'
 });
-
+//******************** set Value *****************//
+SCF003.bank.setValue(SCF01Domain.bank);
+SCF003.branch.setValue(SCF01Domain.branch);
+SCF003.accountNumber.setValue(SCF01Domain.accountNumber);
 SCF003.createButtonSubmit = new Ext.Button({
 	id : 'submit',
-	text : 'Submit'
+	text : 'Submit',
+	width:100
 });
 
 SCF003.createButtonPrint = new Ext.Button({
 	id : 'print',
-	text : 'Print Preview'
+	text : 'Print Preview',
+	width:100
 });
 
 SCF003.createButtonBack = new Ext.Button({
 	id : 'back',
-	text : 'Back'
+	text : 'Back',
+	width:100
 });
 
 SCF003.setBottom = new Ext.form.FieldSet({
@@ -580,7 +634,11 @@ SCF003.setBottom = new Ext.form.FieldSet({
 	items : [ {
 		columnWidth : 1,
 		items : SCF003.totalManey,
-		labelAlign : 'right'
+		labelAlign : 'right',
+		style : {
+			"margin-left":"330px",
+			
+		},
 	}, {
 		columnWidth : 0.3,
 		items : SCF003.document,
@@ -693,12 +751,19 @@ Ext.onReady(function() {
 		{
 			items : SCF003.No,
 			labelAlign : 'right',
-			align : 'right',
+			style : {
+				"margin-left":"550px",
+				
+			},
 		// disabled: true
 		}, {
 			columnWidth : 1,
 			items : SCF003.date,
 			labelAlign : 'right',
+			style : {
+				"margin-left":"550px",
+				
+			},
 		// disabled: true
 		}, {
 			columnWidth : 1,
@@ -711,17 +776,29 @@ Ext.onReady(function() {
 			columnWidth : 1,
 			items : SCF003.setBottom
 		}, {
-			columnWidth : 0.3,
-			items : SCF003.createButtonSubmit
+			columnWidth : 0.35,
+			items : SCF003.createButtonSubmit,
+		
+			style : {
+				"margin-left":"150px",
+				
+			},
 
 		}, {
 			columnWidth : 0.3,
 			items : SCF003.createButtonPrint,
+			style : {
+				"margin-left":"50px",
+				
+			},
 
 		}, {
-			columnWidth : 0.4,
-			align : 'right',
-			items : SCF003.createButtonBack
+			columnWidth : 0.35,
+			items : SCF003.createButtonBack,
+			style : {
+				"margin-left":"5px",
+				
+			},
 
 		} ]
 

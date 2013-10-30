@@ -37,6 +37,9 @@ public class Employee implements Serializable {
 	@Column(name="Emp_emaddress")
 	private String address;
 	
+	@Column(name="Emp_emprovince")
+	private String province;
+	
 	@Column(name="Emp_emtelephone")
 	private String telephone;
 	
@@ -68,6 +71,14 @@ public class Employee implements Serializable {
 	private Date modifyDate;
 	
 	
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
 
 	public Company getCompany() {
 		return company;

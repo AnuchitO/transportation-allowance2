@@ -32,7 +32,7 @@ public class SPV004JasperController {
 		
 	}
 
-	@RequestMapping(value = "/jasperReport", method = RequestMethod.GET)
+	@RequestMapping(value = "/jasperReport.pdf", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) throws JRException {
 		//logger.debug("aaaa+++++++++++++++++++++++++++++++++++a");		
 		SPV004JasperDataSource dsStudent =  new SPV004JasperDataSource();

@@ -4,7 +4,6 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>
 	   		 classpath:/META-INF/TransportationAllowance-context.xml
-	   		
 	</param-value>
   </context-param>
   <listener>
@@ -36,6 +35,10 @@
  <servlet-mapping>
     <servlet-name>TransportationAllowance</servlet-name>
     <url-pattern>*.html</url-pattern>
+  </servlet-mapping>
+   <servlet-mapping>
+    <servlet-name>TransportationAllowance</servlet-name>
+    <url-pattern>*.pdf</url-pattern>
   </servlet-mapping>
   <!--servlet-mapping>
     <servlet-name>TransportationAllowance</servlet-name>

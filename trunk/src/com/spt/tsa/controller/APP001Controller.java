@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spt.tsa.entity.*;
-
 import com.spt.tsa.service.*;
 
 
@@ -29,6 +28,7 @@ public class APP001Controller{
 	private PaymentHeader01Service paymentHeader01Service;
 	private TravelDetail01Service travelDetail01Service;
 	private TravelHeader01Service travelHeader01Service;
+	private ParameterTable01Service parameterTable01Service;
 	
 	
 	@Autowired
@@ -73,6 +73,12 @@ public class APP001Controller{
     public void setTravelHeader01Service(TravelHeader01Service travelHeader01Service) {
    	 this.travelHeader01Service= travelHeader01Service;
     }
+	
+	@Autowired
+	public void setParameterTable01Service(
+			ParameterTable01Service parameterTable01Service) {
+		this.parameterTable01Service = parameterTable01Service;
+	}
 
 	
 	@RequestMapping(value="/app001.html",method=RequestMethod.GET)
@@ -86,6 +92,14 @@ public class APP001Controller{
 		List<PaymentHeader> resultsPayH = this.paymentHeader01Service.findPaymentHeader();
 		List<TravelDetail> resultsTravelD = this.travelDetail01Service.findTravelDetail();
 		List<TravelHeader> resultsTravelH = this.travelHeader01Service.findTravelHeader();
+		List<ParameterTable> resultsParame = this.parameterTable01Service.findTable("2");
+		logger.debug("++++++++++++++++++++++++++++++++++++");
+		for(ParameterTable parame : resultsParame){
+			logger.debug("++++++++++++++++++++++++++++++++++++{}",parame.getDetail());
+		}
+
+		
+		
 		for(PaymentHeader c:resultsPayH){
 			
 			
@@ -109,6 +123,14 @@ public class APP001Controller{
 		
 		return new ModelAndView("app001",model);
     }
+
+
+
+
+
+
+
+
 
 	
 

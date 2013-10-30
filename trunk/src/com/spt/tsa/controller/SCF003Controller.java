@@ -38,10 +38,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
+
+
+
 import com.fission.web.view.extjs.grid.GridData;
+import com.spt.tsa.dao.ParameterTableDao;
 import com.spt.tsa.domain.SCF003Domain01;
 import com.spt.tsa.entity.Employee;
+import com.spt.tsa.entity.ParameterTable;
 import com.spt.tsa.service.Employee01Service;
+import com.spt.tsa.service.ParameterTable01Service;
 import com.spt.tsa.util.BeanUtils;
 
 
@@ -52,9 +58,14 @@ public class SCF003Controller {
 	private static Logger logger = LoggerFactory.getLogger(APP001Controller.class);
 	
 	private Employee01Service employee01Service;
+	private ParameterTable01Service parameterTable01Service;
 	
 	@Autowired
-    public void setEmployee01Service(Employee01Service employee01Service) {
+    public void setParameterTable01Service(ParameterTable01Service parameterTable01Service) {
+   	 this.parameterTable01Service= parameterTable01Service;
+    }
+	@Autowired
+    public void setParameterTableDao(Employee01Service employee01Service) {
    	 this.employee01Service= employee01Service;
     }
 	
@@ -64,12 +75,8 @@ public class SCF003Controller {
 			
 			Map<String,Object> model = new HashMap<String,Object>();
 			Employee resultsEmp = this.employee01Service.findEmployeeWhereId();
-//			SCF003Domain01 domain = new SCF003Domain01();
-//			for(Employee c:resultsEmp){
-//				domain.setName(c.getName());
-//				domain.setId(c.getEmpId());
-//				
-//			}
+			System.out.println("view 2");
+			List<String> resu = this.employee01Service.findBankWhereEmp();
 			SCF003Domain01 domain = new SCF003Domain01();
 			domain.setName(resultsEmp.getName());
 			domain.setId(resultsEmp.getEmpId());
@@ -77,12 +84,19 @@ public class SCF003Controller {
 			domain.setAddress(resultsEmp.getAddress());
 			domain.setPhone(resultsEmp.getTelephone());
 			domain.setEmail(resultsEmp.getEmail());
+			domain.setAntecedent(resultsEmp.getDepId());
+			domain.setAntercedentA(resultsEmp.getProvince());
+			//************* set value Button *****************//
+			domain.setBank(resu.get(0));
+			domain.setBranch(resultsEmp.getBranch());
+			domain.setAccountNumber(resultsEmp.getAccountNo());
 //			domain.setName("ffasfds");
 //			domain.setId("fdsaf");
 //			domain.setCompany("fdsfsdfs");
 //			domain.setAddress("fdsfa");
 //			domain.setPhone("fsdf");
 //			domain.setEmail("fsdfa");
+			logger.debug("+++++++++++++++++++++{}--------------------",resu.get(0));
 			logger.debug("+++++++++++++++++++++{}--------------------",domain.getName());
 			model.put("tesrt", JSONObject.fromObject(BeanUtils.beanToMap(domain)).toString());
 			return new ModelAndView("SCF003", model);
@@ -203,8 +217,86 @@ public class SCF003Controller {
 
 		}
 
-		@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=save")
-		public void save(HttpServletRequest request, HttpServletResponse response,
+		
+		//************************ Save History *************************//
+				@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=save1")
+				public void save1(HttpServletRequest request, HttpServletResponse response,
+				
+						@ModelAttribute SCF003Domain01 domain,
+						@RequestParam("no") String no,
+						@RequestParam("date") String date,
+						@RequestParam("name") String name,
+						@RequestParam("id") String id,
+						@RequestParam("company") String company,
+						@RequestParam("antecedent") String antecedent,
+						@RequestParam("address") String address,
+						@RequestParam("antercedentA") String antercedentA,
+						@RequestParam("phone") String phone,
+						@RequestParam("email") String email,
+						@RequestParam("tatolManey") String tatolManey,
+						@RequestParam("document") String document,
+						@RequestParam("forPay") String forPay,
+						@RequestParam("bank") String bank,
+						@RequestParam("branch") String branch,
+						@RequestParam("accountNumber") String accountNumber,
+						@RequestParam("typeAccount") String typeAccount,
+						@RequestParam("type1") String type1,
+						@RequestParam("type2") String type2
+						
+						
+						)throws Exception {
+					
+					try {
+						domain.setNo(no);
+						domain.setDate(date);
+						domain.setName(name);
+						domain.setId(id);
+						domain.setCompany(company);
+						domain.setAntecedent(antecedent);
+						domain.setAddress(address);
+						domain.setAntercedentA(antercedentA);
+						domain.setPhone(phone);
+						domain.setEmail(email);
+						//********************* set Buttom Data ********************//
+						domain.setTatolManey(tatolManey);
+						domain.setDocument(document);
+						domain.setForPay(forPay);
+						domain.setBank(bank);
+						domain.setBranch(branch);
+						domain.setAccountNumber(accountNumber);
+						domain.setTypeAccount(typeAccount);
+						domain.setType1(type1);
+						domain.setType2(type2);
+						logger.debug("---------------------{}+++++++{}+++++++++++++++++++++++++++++++",domain.getNo(),domain.getDate()); 
+						logger.debug("-----{}+++++",domain.getName());
+						logger.debug("-----{}+++++",domain.getId());
+						logger.debug("-----{}+++++",domain.getCompany());
+						logger.debug("-----{}+++++",domain.getAntecedent());
+						logger.debug("-----{}+++++",domain.getAddress());
+						logger.debug("-----{}+++++",domain.getAntercedentA());
+						logger.debug("-----{}+++++",domain.getPhone());
+						logger.debug("-----{}+++++",domain.getEmail());
+						logger.debug("-----{}+++++",domain.getTatolManey());
+						logger.debug("-----{}+++++",domain.getDocument());
+						logger.debug("-----{}+++++",domain.getForPay());
+						logger.debug("-----{}+++++",domain.getBank());
+						logger.debug("-----{}+++++",domain.getBranch());
+						logger.debug("-----{}+++++",domain.getAccountNumber());
+						logger.debug("-----{}+++++",domain.getTypeAccount());
+						logger.debug("-----{}+++++",domain.getType1());
+						logger.debug("-----{}+++++",domain.getType2());
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+						logger.error(e.getMessage());
+					}
+
+				}
+		
+		//************************* Save Grid ********************************//
+		
+		@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=save2")
+		public void save2(HttpServletRequest request, HttpServletResponse response,
 		
 				@ModelAttribute SCF003Domain01 domain,
 				@RequestParam("dataGridNo") String dataGridNo,
@@ -220,7 +312,6 @@ public class SCF003Controller {
 				)throws Exception {
 			
 			try {
-
 				domain.setDataGridNo(dataGridNo);
 				domain.setDataGridData(dataGridData);
 				domain.setDataGridCustomer(dataGridCustomer);
@@ -230,22 +321,22 @@ public class SCF003Controller {
 				domain.setDataGridPaymentD(dataGridPaymentD);
 				domain.setDataGridPayment(dataGridPayment);
 				domain.setDataRemark(dataRemark);
-				logger.debug("-----{}+++++"+domain.getDataGridNo()); 
-				logger.debug("-----{}+++++"+domain.getDataGridData());
-				logger.debug("-----{}+++++"+domain.getDataGridCustomer());
-				logger.debug("-----{}+++++"+domain.getDataGridRegion());
-				logger.debug("-----{}+++++"+domain.getDataGridGoal());
-				logger.debug("-----{}+++++"+domain.getDataGridPaymentTravel());
-				logger.debug("-----{}+++++"+domain.getDataGridPaymentD());
-				logger.debug("-----{}+++++"+domain.getDataGridPayment());
-				logger.debug("-----{}+++++"+domain.getDataRemark());
+				logger.debug("-----{}+++++",domain.getDataGridNo()); 
+				logger.debug("-----{}+++++",domain.getDataGridData());
+				logger.debug("-----{}+++++",domain.getDataGridCustomer());
+				logger.debug("-----{}+++++",domain.getDataGridRegion());
+				logger.debug("-----{}+++++",domain.getDataGridGoal());
+				logger.debug("-----{}+++++",domain.getDataGridPaymentTravel());
+				logger.debug("-----{}+++++",domain.getDataGridPaymentD());
+				logger.debug("-----{}+++++",domain.getDataGridPayment());
+				logger.debug("-----{}+++++",domain.getDataRemark());
 			} catch (Exception e) {
 				e.printStackTrace();
 				logger.error(e.getMessage());
 			}
 
 		}
-		}
+}
 
 
 		

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spt.tsa.dao.Employee01Dao;
+import com.spt.tsa.domain.SCF003Domain01;
 import com.spt.tsa.entity.*;
 import com.spt.tsa.service.Employee01Service;
 
@@ -25,6 +26,13 @@ public class Employee01ServiceImpl implements Employee01Service{
     }
     public Employee findEmployeeWhereId(){
     	return employee01Dao.findEmployeeWhereId();
+    }
+    public List<String> findBankWhereEmp(){
+    	System.out.println("findBankWhereEmpService");
+    	List<String> send = employee01Dao.findBankWhereEmp();
+    	System.out.println("narukjungbey"+send);
+    	return send;
+    	
     }
     
 }

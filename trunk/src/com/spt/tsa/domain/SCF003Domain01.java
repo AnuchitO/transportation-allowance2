@@ -1,14 +1,20 @@
 package com.spt.tsa.domain;
 
 public class SCF003Domain01 {
+	/************* no and Date ****************/
+	String no;
+	String date;
+	
 	/************* Employee History *************/
 	String name;
 	String id;
 	String company;
+	String antecedent;
 	String address;
+	String antercedentA;
 	String phone;
 	String email;
-	
+
 	/************* Grid **************/
 	String dataGridNo;
 	String dataGridData;
@@ -20,8 +26,96 @@ public class SCF003Domain01 {
 	String dataGridPayment;
 	String dataRemark;
 	
+	/************* Bottom ************/
+	String tatolManey;
+	String document;
+	String forPay;
+	String bank;
+	String branch;
+	String accountNumber;
+	String typeAccount;
+	String type1;
+	String type2;
 	
 	
+	public String getTatolManey() {
+		return tatolManey;
+	}
+	public void setTatolManey(String tatolManey) {
+		this.tatolManey = tatolManey;
+	}
+	public String getDocument() {
+		return document;
+	}
+	public void setDocument(String document) {
+		this.document = document;
+	}
+	public String getForPay() {
+		return forPay;
+	}
+	public void setForPay(String forPay) {
+		this.forPay = forPay;
+	}
+	public String getBank() {
+		return bank;
+	}
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+	public String getBranch() {
+		return branch;
+	}
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+	public String getAccountNumber() {
+		return accountNumber;
+	}
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+	public String getTypeAccount() {
+		return typeAccount;
+	}
+	public void setTypeAccount(String typeAccount) {
+		this.typeAccount = typeAccount;
+	}
+	public String getType1() {
+		return type1;
+	}
+	public void setType1(String type1) {
+		this.type1 = type1;
+	}
+	public String getType2() {
+		return type2;
+	}
+	public void setType2(String type2) {
+		this.type2 = type2;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getNo() {
+		return no;
+	}
+	public void setNo(String no) {
+		this.no = no;
+	}
+	public String getAntecedent() {
+		return antecedent;
+	}
+	public void setAntecedent(String antecedent) {
+		this.antecedent = antecedent;
+	}
+	public String getAntercedentA() {
+		return antercedentA;
+	}
+	public void setAntercedentA(String antercedentA) {
+		this.antercedentA = antercedentA;
+	}
 	public String getDataGridNo() {
 		return dataGridNo;
 	}

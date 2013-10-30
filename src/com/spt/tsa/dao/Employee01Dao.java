@@ -9,5 +9,8 @@ public interface Employee01Dao {
 	public List<Employee> findEmployee();
 	public Employee findEmployeeWhereId();
 	public List<String> findBankWhereEmp();
+	public List<String> findBranchBankWhereEmp();
+	public List<String> findDeptWhereEmp();
+	public List<String> findProvinceEmp();
 
 }

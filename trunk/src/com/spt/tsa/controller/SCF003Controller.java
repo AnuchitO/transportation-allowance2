@@ -77,6 +77,7 @@ public class SCF003Controller {
 			Employee resultsEmp = this.employee01Service.findEmployeeWhereId();
 			System.out.println("view 2");
 			List<String> resu = this.employee01Service.findBankWhereEmp();
+			List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp();
 			SCF003Domain01 domain = new SCF003Domain01();
 			domain.setName(resultsEmp.getName());
 			domain.setId(resultsEmp.getEmpId());
@@ -90,6 +91,7 @@ public class SCF003Controller {
 			domain.setBank(resu.get(0));
 			domain.setBranch(resultsEmp.getBranch());
 			domain.setAccountNumber(resultsEmp.getAccountNo());
+			domain.setTypeAccount(resultsBranch.get(0));
 //			domain.setName("ffasfds");
 //			domain.setId("fdsaf");
 //			domain.setCompany("fdsfsdfs");

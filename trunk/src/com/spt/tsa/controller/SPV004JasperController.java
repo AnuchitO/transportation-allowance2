@@ -35,12 +35,12 @@ public class SPV004JasperController {
 		
 	}
 
-	@RequestMapping(value = "/jasperReport.pdf", method = RequestMethod.POST, params = "method=preview")
-	public String printWelcome(ModelMap model, @ModelAttribute SCF003Domain01 domain,@RequestParam("no") String no) throws JRException {
-		//logger.debug("aaaa+++++++++++++++++++++++++++++++++++a");	
-		domain.setDataGridNo(no);
-		logger.debug("-----{}+++++",domain.getName());
-		
+	@RequestMapping(value = "/jasperReport.pdf", method = RequestMethod.GET)
+	public String printWelcome(ModelMap model) throws JRException{
+//		 @ModelAttribute SCF003Domain01 domain,@RequestParam("no") String no) throws JRException {
+//				//logger.debug("aaaa+++++++++++++++++++++++++++++++++++a");	
+//				domain.setNo(no);
+//				logger.debug("-----{}+++++",domain.getNo());
 		SPV004JasperDataSource dsStudent =  new SPV004JasperDataSource();
 		jrDatasource = dsStudent.create(null);
 		model.addAttribute("datasource", jrDatasource);

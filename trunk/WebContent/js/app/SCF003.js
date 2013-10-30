@@ -829,7 +829,29 @@ Ext.onReady(function() {
 
 				function confirmFunction(btn) {
 					if (btn == 'yes') {
-						window.location.assign("http://www.google.com");
+//						var param3 = {};
+//						 param3.no = Ext.getCmp('no').getValue();
+//						
+//						 param3.method = "preview";
+//							Ext.Ajax.request({
+//								url : '/TransportationAllowance/jasperReport.pdf',
+//								params : param3,
+//								success : function(response, opts) {
+//									if (param3 != null) {
+//										Ext.Msg.alert('Information', 'บันทึกเรียบร้อย');
+//									} else {
+//										Ext.Msg.alert('Information', 'Error');
+//									}
+//
+//								},
+//								failure : function(response, opts) {
+//									Ext.Msg.alert('ERROR', 'Error.');
+//								}
+//
+//							});
+//							var http = new XMLHttpRequest();
+//							 http.open("POST", "./jasperReport.pdf", true);
+						window.location.assign("/TransportationAllowance/jasperReport.pdf");
 					}
 				}
 

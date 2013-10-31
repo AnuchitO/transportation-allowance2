@@ -103,6 +103,7 @@ public class APP001Controller{
 		}
 		logger.debug("++++++++++++++++++++++++++++++++++++");
 
+		
 		for(ParameterTable parame : resultsParame){
 			logger.debug("+++++++++++++3333333333+++++++++++++++{}",parame.getDetail());
 		}
@@ -119,6 +120,12 @@ public class APP001Controller{
 	
 		}
 		logger.info("==============================in APP001Controller");
+		
+		List<ParameterTable> resultsCodeEntry= this.parameterTable01Service.findRow("3","02");
+		for(ParameterTable c:resultsCodeEntry){
+			logger.debug("+++++++AAAAAAAAAAAAAAAAAAAA++++++{}",c.getDetail());
+		}
+		
 		
 		Map model = new HashMap();
 		

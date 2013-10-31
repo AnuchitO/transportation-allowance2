@@ -20,7 +20,7 @@ public class TravelDetail implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name="Trad_thid")
-	private TravelHeader TravelHeader;
+	private TravelHeader travelHeader;
 	
 	@ManyToOne
 	@JoinColumn(name="Trad_Cuid")
@@ -36,13 +36,13 @@ public class TravelDetail implements Serializable {
 	private String to;
 	
 	@Column(name="Trad_tdtravelexpenses")
-	private long travelExpenses;
+	private Long travelExpenses;
 	
 	@Column(name="Trad_tdmotorway")
-	private long motorWay;
+	private Long motorWay;
 	
 	@Column(name="Trad_tdtotalday")
-	private long totalDay;
+	private Long totalDay;
 	
 	@Column(name="Trad_tdremark")
 	private String remark;
@@ -71,11 +71,11 @@ public class TravelDetail implements Serializable {
 	}
 
 	public TravelHeader getTravelHeader() {
-		return TravelHeader;
+		return travelHeader;
 	}
 
 	public void setTravelHeader(TravelHeader travelHeader) {
-		TravelHeader = travelHeader;
+		this.travelHeader = travelHeader;
 	}
 
 	public String gettDetailId() {
@@ -112,27 +112,27 @@ public class TravelDetail implements Serializable {
 		this.to = to;
 	}
 
-	public long getTravelExpenses() {
+	public Long getTravelExpenses() {
 		return travelExpenses;
 	}
 
-	public void setTravelExpenses(long travelExpenses) {
+	public void setTravelExpenses(Long travelExpenses) {
 		this.travelExpenses = travelExpenses;
 	}
 
-	public long getMotorWay() {
+	public Long getMotorWay() {
 		return motorWay;
 	}
 
-	public void setMotorWay(long motorWay) {
+	public void setMotorWay(Long motorWay) {
 		this.motorWay = motorWay;
 	}
 
-	public long getTotalDay() {
+	public Long getTotalDay() {
 		return totalDay;
 	}
 
-	public void setTotalDay(long totalDay) {
+	public void setTotalDay(Long totalDay) {
 		this.totalDay = totalDay;
 	}
 

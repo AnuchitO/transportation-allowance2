@@ -22,5 +22,10 @@ public class TravelDetail01ServiceImpl implements TravelDetail01Service{
    	 // TODO Auto-generated method stub
    	 return travelDetail01Dao.findTravelDetail();
     }
+
+	public List<TravelDetail> findByTravelHeader(TravelHeader travelHeader) {
+		// TODO Auto-generated method stub
+		return this.travelDetail01Dao.findByTravelHeader(travelHeader);
+	}
     
 }

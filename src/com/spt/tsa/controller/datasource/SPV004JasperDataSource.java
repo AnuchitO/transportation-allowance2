@@ -51,6 +51,7 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 		
 					
 		// Head Information
+				String hCompanyName=" ";
 				String noDoc=" ";
 				String docDate=" ";
 				String name=" ";
@@ -90,32 +91,33 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 				logger.debug("+++++++%%%%%%%%%%@@@@@@@@@@@@@@%%%%%%%%%%%==========%%%%%%%%%%====%%%%%%+++++++++"+this.travelDetails);
 			
 				///get data for  Header
-				noDoc	=  listLravelHerder.get(0).getNo();
-				docDate	=  new SimpleDateFormat ("dd/MM/yyyy").format(listLravelHerder.get(0).getCreationate());
-				name	=  listLravelHerder.get(0).getEmployee().getName();
-				empId	=  listLravelHerder.get(0).getEmployee().getEmpId();
-				compName = listLravelHerder.get(0).getCompany().getName();
+				hCompanyName = this.listLravelHerder.get(0).getComName();
+				noDoc	=  this.listLravelHerder.get(0).getNo();
+				docDate	=  new SimpleDateFormat ("dd/MM/yyyy").format(this.listLravelHerder.get(0).getCreationate());
+				name	=  this.listLravelHerder.get(0).getEmployee().getName();
+				empId	=  this.listLravelHerder.get(0).getEmployee().getEmpId();
+				compName = this.listLravelHerder.get(0).getCompany().getName();
 				department="Operation II";
-				address =  listLravelHerder.get(0).getAddress();
-				province=  listLravelHerder.get(0).getProvince();
-				phoneNumber= listLravelHerder.get(0).getTelephone();
-				email	= listLravelHerder.get(0).getEmail();
+				address =  this.listLravelHerder.get(0).getAddress();
+				province=  this.listLravelHerder.get(0).getProvince();
+				phoneNumber= this.listLravelHerder.get(0).getTelephone();
+				email	= this.listLravelHerder.get(0).getEmail();
 				
 				//get data for Total Row
-				tSumTravel= listLravelHerder.get(0).getTotalExpenses().toString();
-				tSumExpressWay = listLravelHerder.get(0).getTotalMotorWay().toString();
-				tSumTotal = listLravelHerder.get(0).getTotal().toString();
+				tSumTravel= this.listLravelHerder.get(0).getTotalExpenses().toString();
+				tSumExpressWay = this.listLravelHerder.get(0).getTotalMotorWay().toString();
+				tSumTotal = this.listLravelHerder.get(0).getTotal().toString();
 				
 				
 				//get data For assign to variable For Fill summary				
-				 sumTotalCharector=new BahtText(listLravelHerder.get(0).getTotal()).toString();
-				 attachment	=	listLravelHerder.get(0).getAttachment().toString();
-				 toPay	= listLravelHerder.get(0).getPaymDesc();
-				 bank 	= resultsBank.get(0).getDetail();
-				 branch	= listLravelHerder.get(0).getEmployee().getBranch();
-				 accountId = listLravelHerder.get(0).getEmployee().getAccountNo();
-				 accountType = resultsBankType.get(0).getDetail();
-				 if(listLravelHerder.get(0).getPayType().equals("1")){
+				 sumTotalCharector=new BahtText(this.listLravelHerder.get(0).getTotal()).toString();
+				 attachment	=	this.listLravelHerder.get(0).getAttachment().toString();
+				 toPay	= this.listLravelHerder.get(0).getPaymDesc();
+				 bank 	= this.resultsBank.get(0).getDetail();
+				 branch	= this.listLravelHerder.get(0).getEmployee().getBranch();
+				 accountId = this.listLravelHerder.get(0).getEmployee().getAccountNo();
+				 accountType = this.resultsBankType.get(0).getDetail();
+				 if(this.listLravelHerder.get(0).getPayType().equals("1")){
 					 checkCash="/";
 					 checkCheck=" ";
 				 }else{
@@ -127,6 +129,7 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 		if(this.travelDetails.size()==1){
 			//Fill all  in page field
 			SPV004Pojo 	spv004Pojo = new SPV004Pojo();
+			spv004Pojo.sethCompanyName(hCompanyName);
 			spv004Pojo.setNoDoc(noDoc);
 			spv004Pojo.setDocDate(docDate);
 		  	spv004Pojo.setName(name);  	
@@ -169,6 +172,7 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 		}else if(this.travelDetails.size()==2){
 			//Fill Header and Row 1 
 			SPV004Pojo 	spv004Pojo = new SPV004Pojo();
+			spv004Pojo.sethCompanyName(hCompanyName);
 			spv004Pojo.setNoDoc(noDoc);
 			spv004Pojo.setDocDate(docDate);
 		  	spv004Pojo.setName(name);  	
@@ -222,6 +226,7 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 		}else if(this.travelDetails.size()>=3){
 			////Fill Header 
 			SPV004Pojo 	spv004Pojo = new SPV004Pojo();
+			spv004Pojo.sethCompanyName(hCompanyName);
 			spv004Pojo.setNoDoc(noDoc);
 			spv004Pojo.setDocDate(docDate);
 		  	spv004Pojo.setName(name);  	

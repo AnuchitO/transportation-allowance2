@@ -2,6 +2,7 @@ package com.spt.tsa.controller.datasource;
 
 public class SPV004Pojo {	
 	//Head Information
+	private String hCompanyName;
 	private String noDoc;
 	private String docDate;
 	private String name;
@@ -46,6 +47,14 @@ public class SPV004Pojo {
 		this.noDoc = no;
 	}
 
+
+	public String gethCompanyName() {
+		return hCompanyName;
+	}
+
+	public void sethCompanyName(String hCompanyName) {
+		this.hCompanyName = hCompanyName;
+	}
 
 	public String getName() {
 		return name;

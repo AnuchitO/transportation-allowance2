@@ -3,7 +3,7 @@ var SCF003 = {};
 SCF003.No = new Ext.form.TextField({
 	id : 'no',
 	fieldLabel : "No",
-	
+
 });
 SCF003.date = new Ext.form.TextField({
 	id : 'date',
@@ -68,7 +68,7 @@ SCF003.createCombobox = new Ext.form.ComboBox({
 
 SCF003.textArea = new Ext.ss.form.TextArea({
 	fieldLabel : 'ที่อยู่',
-	id:'address',
+	id : 'address',
 	width : 600,
 	bodyPadding : 10,
 
@@ -125,6 +125,8 @@ SCF003.email = new Ext.form.TextField({
 });
 
 // /////////////////////set Field/////////////////////////
+SCF003.No.setValue(SCF01Domain.no);
+SCF003.date.setValue(SCF01Domain.date);
 SCF003.name.setValue(SCF01Domain.name);
 SCF003.id.setValue(SCF01Domain.id);
 SCF003.company.setValue(SCF01Domain.company);
@@ -284,49 +286,57 @@ SCF003.gridCopyBtn = new Ext.Toolbar.Button(
 						});
 			}
 		});
-SCF003.gridSaveBtn = new Ext.Toolbar.Button({
-	tooltip : 'Save',
-	iconCls : 'save',
-	disabled : false,
-	handler : function() {
-		Ext.MessageBox.confirm('Confirmation', 'ยืนยันข้อมูลถูกต้อง ?',
-				confirmFunction);		   
-		function confirmFunction(btn) {
-			if (btn == 'yes') {
-				
-				
-				
-					//**************** get value History to controller **********//
-					var param1 = {};
-					 param1.no = Ext.getCmp('no').getValue();
-					 param1.date = Ext.getCmp('date').getValue();
-					 param1.name = Ext.getCmp('name').getValue();
-					 param1.id = Ext.getCmp('id').getValue();
-					 param1.company = Ext.getCmp('company').getValue();
-					 param1.antecedent = Ext.getCmp('antecedent').getValue();
-					 param1.address = Ext.getCmp('address').getValue();
-					 param1.antercedentA = Ext.getCmp('antercedentA').getValue();
-					 param1.phone = Ext.getCmp('phone').getValue();
-					 param1.email = Ext.getCmp('email').getValue();
-					 
-					//**************** get value in Bottom to controller **********//
-					
-					 param1.tatolManey = Ext.getCmp('tatolManey').getValue();
-					 param1.document = Ext.getCmp('document').getValue();
-					 param1.forPay = Ext.getCmp('forPay').getValue();
-					 param1.bank = Ext.getCmp('bank').getValue();
-					 param1.branch = Ext.getCmp('branch').getValue();
-					 param1.accountNumber = Ext.getCmp('accountNumber').getValue();
-					 param1.typeAccount = Ext.getCmp('typeAccount').getValue();
-					 param1.type1 = Ext.getCmp('type1').getValue();
-					 param1.type2 = Ext.getCmp('type2').getValue();
-					 param1.method = "save1";
+SCF003.gridSaveBtn = new Ext.Toolbar.Button(
+		{
+			tooltip : 'Save',
+			iconCls : 'save',
+			disabled : false,
+			handler : function() {
+				Ext.MessageBox.confirm('Confirmation', 'ยืนยันข้อมูลถูกต้อง ?',
+						confirmFunction);
+				function confirmFunction(btn) {
+					if (btn == 'yes') {
+
+						// **************** get value History to controller
+						// **********//
+						var param1 = {};
+						param1.no = Ext.getCmp('no').getValue();
+						param1.date = Ext.getCmp('date').getValue();
+						param1.name = Ext.getCmp('name').getValue();
+						param1.id = Ext.getCmp('id').getValue();
+						param1.company = Ext.getCmp('company').getValue();
+						param1.antecedent = Ext.getCmp('antecedent').getValue();
+						param1.address = Ext.getCmp('address').getValue();
+						param1.antercedentA = Ext.getCmp('antercedentA')
+								.getValue();
+						param1.phone = Ext.getCmp('phone').getValue();
+						param1.email = Ext.getCmp('email').getValue();
+
+						// **************** get value in Bottom to controller
+						// **********//
+						param1.tatolPaym = Ext.getCmp('tatolPaym').getValue();
+						param1.tatolPaymA = Ext.getCmp('tatolPaymA').getValue();
+						param1.tatolPaymfullCase = Ext.getCmp(
+								'tatolPaymfullCase').getValue();
+						param1.tatolManey = Ext.getCmp('tatolManey').getValue();
+						param1.document = Ext.getCmp('document').getValue();
+						param1.forPay = Ext.getCmp('forPay').getValue();
+						param1.bank = Ext.getCmp('bank').getValue();
+						param1.branch = Ext.getCmp('branch').getValue();
+						param1.accountNumber = Ext.getCmp('accountNumber')
+								.getValue();
+						param1.typeAccount = Ext.getCmp('typeAccount')
+								.getValue();
+						param1.type1 = Ext.getCmp('type1').getValue();
+						param1.type2 = Ext.getCmp('type2').getValue();
+						param1.method = "save1";
 						Ext.Ajax.request({
 							url : '/TransportationAllowance/SCF003.html',
 							params : param1,
 							success : function(response, opts) {
 								if (param1 != null) {
-									Ext.Msg.alert('Information', 'บันทึกเรียบร้อย');
+									Ext.Msg.alert('Information',
+											'บันทึกเรียบร้อย');
 								} else {
 									Ext.Msg.alert('Information', 'Error');
 								}
@@ -337,49 +347,60 @@ SCF003.gridSaveBtn = new Ext.Toolbar.Button({
 							}
 
 						});
-					
-					
-					 //************************** get value to controller by Grid ***************************//	
-					var param2 = {};
-				SCF003.createGrid.getSelectionModel().selectAll();
-				 var sm = SCF003.createGrid.getSelectionModel().getSelections();
-				 for (var i=0; i<=sm.length-1; i++) {
-						    
-				
-				param2.dataGridNo =  SCF003.createGrid.getStore().getAt(i).data.no;
-				param2.dataGridData = SCF003.createGrid.getStore().getAt(i).data.gridDate;
-		    	param2.dataGridCustomer = SCF003.createGrid.getStore().getAt(i).data.customer;
-		    	param2.dataGridRegion = SCF003.createGrid.getStore().getAt(i).data.region;
-		    	param2.dataGridGoal = SCF003.createGrid.getStore().getAt(i).data.goal;
-		    	param2.dataGridPaymentTravel = SCF003.createGrid.getStore().getAt(i).data.paymentTravel;
-		    	param2.dataGridPaymentD = SCF003.createGrid.getStore().getAt(i).data.paymentD;
-		    	param2.dataGridPayment = SCF003.createGrid.getStore().getAt(i).data.payment;
-		    	param2.dataRemark = SCF003.createGrid.getStore().getAt(i).data.remark;
-				param2.method = "save2";
-				Ext.Ajax.request({
-					url : '/TransportationAllowance/SCF003.html',
-					params : param2,
-					success : function(response, opts) {
-						if (param2 != null) {
-							Ext.Msg.alert('Information', 'บันทึกเรียบร้อย');
-						} else {
-							Ext.Msg.alert('Information', 'Error');
+
+						// ************************** get value to controller by
+						// Grid ***************************//
+						var param2 = {};
+						SCF003.createGrid.getSelectionModel().selectAll();
+						var sm = SCF003.createGrid.getSelectionModel()
+								.getSelections();
+						for (var i = 0; i <= sm.length - 1; i++) {
+
+							param2.dataGridNo = SCF003.createGrid.getStore()
+									.getAt(i).data.no;
+							param2.dataGridData = SCF003.createGrid.getStore()
+									.getAt(i).data.gridDate;
+							param2.dataGridCustomer = SCF003.createGrid
+									.getStore().getAt(i).data.customer;
+							param2.dataGridRegion = SCF003.createGrid
+									.getStore().getAt(i).data.region;
+							param2.dataGridGoal = SCF003.createGrid.getStore()
+									.getAt(i).data.goal;
+							param2.dataGridPaymentTravel = SCF003.createGrid
+									.getStore().getAt(i).data.paymentTravel;
+							param2.dataGridPaymentD = SCF003.createGrid
+									.getStore().getAt(i).data.paymentD;
+							param2.dataGridPayment = SCF003.createGrid
+									.getStore().getAt(i).data.payment;
+							param2.dataRemark = SCF003.createGrid.getStore()
+									.getAt(i).data.remark;
+							param2.method = "save2";
+							Ext.Ajax.request({
+								url : '/TransportationAllowance/SCF003.html',
+								params : param2,
+								success : function(response, opts) {
+									if (param2 != null) {
+										Ext.Msg.alert('Information',
+												'บันทึกเรียบร้อย');
+									} else {
+										Ext.Msg.alert('Information', 'Error');
+									}
+
+								},
+								failure : function(response, opts) {
+									Ext.Msg.alert('ERROR', 'Error.');
+								}
+
+							});
+							SCF003.createGrid.getSelectionModel()
+									.deselectRow(i);
 						}
-
-					},
-					failure : function(response, opts) {
-						Ext.Msg.alert('ERROR', 'Error.');
 					}
-
-				});
-				SCF003.createGrid.getSelectionModel().deselectRow(i);
-					    }
+				}
 			}
-		}
-	}
-// window.location.assign("http://www.google.com");
+		// window.location.assign("http://www.google.com");
 
-});
+		});
 
 SCF003.checkboxselection = new Ext.grid.CheckboxSelectionModel({
 	singleSelect : false,
@@ -387,96 +408,243 @@ SCF003.checkboxselection = new Ext.grid.CheckboxSelectionModel({
 // dataIndex: 'chkFlag'
 });
 
-SCF003.gridColumns = [ SCF003.checkboxselection,
+SCF003.gridColumns = [
+		SCF003.checkboxselection,
 
-{
+		{
 
-	header : 'No',
-	dataIndex : 'no',
-	align : 'center',
-	editor : new Ext.form.TextField({
-		id : 'editNo',
-	}),
-	width : 87.08,
+			header : 'No',
+			dataIndex : 'no',
+			align : 'center',
+			editor : new Ext.form.TextField({
+				id : 'editNo',
+			}),
+			width : 87.08,
 
-}, {
+		},
+		{
 
-	header : 'วันที่',
-	dataIndex : 'gridDate',
-	align : 'center',
-	editor : new Ext.form.TextField({
-		id : 'editGridDate',
-	}),
-	width : 87.08,
+			header : 'วันที่',
+			dataIndex : 'gridDate',
+			align : 'center',
+			editor : new Ext.form.TextField({
+				id : 'editGridDate',
+			}),
+			width : 87.08,
 
-}, {
-	header : 'ลูกค้า',
-	dataIndex : 'customer',
-	align : 'center',
-	editor : new Ext.form.TextField({
-		id : 'editCustomer',
-	}),
-	width : 87.08,
+		},
+		{
+			header : 'ลูกค้า',
+			dataIndex : 'customer',
+			align : 'center',
+			editor : new Ext.form.TextField({
+				id : 'editCustomer',
+			}),
+			width : 87.08,
 
-}, {
+		},
+		{
 
-	header : 'จาก',
-	dataIndex : 'region',
-	align : 'center',
-	id : 'region',
-	editor : new Ext.form.TextField({
-		id : 'editRegion',
-	}),
-	width : 87.08,
+			header : 'จาก',
+			dataIndex : 'region',
+			align : 'center',
+			id : 'region',
+			editor : new Ext.form.TextField({
+				id : 'editRegion',
+			}),
+			width : 87.08,
 
-}, {
-	header : 'ถึง',
-	dataIndex : 'goal',
-	align : 'center',
-	editor : new Ext.form.TextField({
-		id : 'editGoal',
-	}),
-	width : 87.08,
+		},
+		{
+			header : 'ถึง',
+			dataIndex : 'goal',
+			align : 'center',
+			editor : new Ext.form.TextField({
+				id : 'editGoal',
+			}),
+			width : 87.08,
 
-}
+		}
 
-, {
-	header : 'ค่าเดินทาง',
-	dataIndex : 'paymentTravel',
-	align : 'center',
-	editor : new Ext.form.TextField({
-		id : 'editPaymentTravel',
-	}),
-	width : 87.08,
+		,
+		{
+			header : 'ค่าเดินทาง',
+			dataIndex : 'paymentTravel',
+			align : 'center',
+			editor : new Ext.form.TextField({
+				id : 'editPaymentTravel',
+				listeners : {
+					change : function(f, e) {
+						SCF003.createGrid.getSelectionModel().selectAll();
+						var totalLength = SCF003.createGrid.getSelectionModel()
+								.getSelections();
+						var a = 0;
+						for (var i = 0; i <= totalLength.length - 1; i++) {
+							a = a
+									+ parseInt(SCF003.createGrid.getStore()
+											.getAt(i).data.paymentTravel);
+							SCF003.tatolPaym.setValue(a);
+							SCF003.createGrid.getSelectionModel()
+									.deselectRow(i);
+						}
+					}
+				}
+			}),
+			width : 87.08,
 
-}, {
-	header : 'ค่าทางด่วน',
-	dataIndex : 'paymentD',
-	align : 'center',
-	editor : new Ext.form.TextField({
-		id : 'editPaymentD',
-	}),
-	width : 87.08,
+		},
+		{
+			header : 'ค่าทางด่วน',
+			dataIndex : 'paymentD',
+			align : 'center',
+			editor : new Ext.form.TextField({
+				id : 'editPaymentD',
+				listeners : {
+					change : function(f, e) {
+						SCF003.createGrid.getSelectionModel().selectAll();
+						var totalLength = SCF003.createGrid.getSelectionModel()
+								.getSelections();
+						var b = 0;
+						for (var i = 0; i <= totalLength.length - 1; i++) {
+							b = b
+									+ parseInt(SCF003.createGrid.getStore()
+											.getAt(i).data.paymentD);
+							SCF003.tatolPaymA.setValue(b);
 
-}, {
-	header : 'รวมเป็นเงิน',
-	dataIndex : 'payment',
-	align : 'center',
-	editor : new Ext.form.TextField({
-		id : 'editPayment',
-	}),
-	width : 87.08,
+							SCF003.createGrid.getSelectionModel()
+									.deselectRow(i);
+						}
+					}
+				}
+			}),
+			width : 87.08,
 
-}, {
-	header : 'หมายเหตุ',
-	dataIndex : 'remark',
-	align : 'center',
-	editor : new Ext.form.TextField({
-		id : 'editRemark',
-	}),
-	width : 87.08,
+		},
+		{
+			header : 'รวมเป็นเงิน',
+			dataIndex : 'payment',
+			align : 'center',
+			editor : new Ext.form.TextField({
+				id : 'editPayment',
+				listeners : {
+					change : function(f, e) {
+						SCF003.createGrid.getSelectionModel().selectAll();
+						var totalLength = SCF003.createGrid.getSelectionModel()
+								.getSelections();
+						var c = 0;
+						for (var i = 0; i <= totalLength.length - 1; i++) {
+							c = c
+									+ parseInt(SCF003.createGrid.getStore()
+											.getAt(i).data.payment);
+							SCF003.tatolPaymfullCase.setValue(c);
 
-}
+							SCF003.createGrid.getSelectionModel()
+									.deselectRow(i);
+						
+							
+								
+//									var tb = document.getElementById('tatolPaymfullCase').value;
+//									var result = document.getElementById('tatolManey');
+//									var ctb = tb.toFixed(2);
+//									var fctb = ctb.toString();
+//									var x = ThaiBaht(fctb);
+//									result.value = x;
+				//
+//									function ThaiBaht(Number) {
+//										for (var a = 0; a< Number.length; a++) 
+//										{
+//											Number = Number.replace (",", ""); //ไมต่อ้งการเครAอืงหมายคอมมาร์ 
+//											Number = Number.replace (" ", ""); //ไม่ต้องการช่องว่าง 
+//											Number = Number.replace ("บาท", ""); //ไม่ต้องการตัวหนังสือ บาท 
+//											Number = Number.replace ("฿", ""); //ไม่ต้องการสัญลักษณ์สกุลเงินบาท }
+//										}
+				//
+//										var TxtNumArr = new Array("ศูนย์", "หนึAง", "สอง",
+//												"สาม", "สีA", "ห้า", "หก", "เจ็ด", "แปด",
+//												"เก้า", "สิบ");
+//										var TxtDigitArr = new Array("", "สิบ", "ร้อย", "พัน",
+//												"หมืAน", "แสน", "ล้าน");
+//										var BahtText = "";
+//										if (isNaN(Number)) {
+//											return "ขอ้มลูนําเขา้ไมถ่กูตอ้ง";
+//										} else {
+//											if ((Number - 0) > 9999999.9999) {
+//												return "ขอ้มลูนําเขา้เกนิขอบเขตทAตีงัMไว้";
+//											} else {
+//												Number = Number.split(".");
+//												if (Number[1].length > 0) {
+//													Number[1] = Number[1].substring(0, 2);
+//												}
+//												var NumberLen = Number[0].length - 0;
+//												for (var a = 0; a < NumberLen; a++) {
+//													var tmp = Number[0].substring(a, a + 1) - 0;
+//													if (tmp != 0) {
+//														if ((a == (NumberLen - 1))
+//																&& (tmp == 1)) {
+//															BahtText += "เอ็ด";
+//														} else if ((a == (NumberLen - 2))
+//																&& (tmp == 2)) {
+//															BahtText += "ยAี";
+//														} else if ((a == (NumberLen - 2))
+//																&& (tmp == 1)) {
+//															BahtText += " ";
+//														} else {
+//															BahtText += TxtNumArr[tmp];
+//														}
+//														BahtText += TxtDigitArr[NumberLen - a
+//																- 1];
+//													}
+//												}
+//												BahtText += "บาท";
+//												if ((Number[1] == "0") || (Number[1] == "00")) {
+//													BahtText += "ถว้ น";
+//												} else {
+//													DecimalLen = Number[1].length - 0;
+//													for (var a = 0; a < DecimalLen; a++) {
+//														var tmp = Number[1].substring(a, a + 1) - 0;
+//														app.alert(tmp);
+//														if (tmp != 0) {
+//															if ((a == (DecimalLen - 1))
+//																	&& (tmp == 1)) {
+//																BahtText += "เอ็ด";
+//															} else if ((a == (DecimalLen - 2))
+//																	&& (tmp == 2)) {
+//																BahtText += "ยAี";
+//															} else if ((a == (DecimalLen - 2))
+//																	&& (tmp == 1)) {
+//																BahtText += "";
+//															} else {
+//																BahtText += TxtNumArr[tmp];
+//															}
+//															BahtText += TxtDigitArr[DecimalLen
+//																	- a - 1];
+//														}
+//													}
+//													BahtText += "สตางค์";
+//												}
+//												return BahtText;
+//											}
+//										}
+//									}
+				//
+//								}
+//							}
+						}
+					}
+				}
+			}),
+			width : 87.08,
+
+		}, {
+			header : 'หมายเหตุ',
+			dataIndex : 'remark',
+			align : 'center',
+			editor : new Ext.form.TextField({
+				id : 'editRemark',
+			}),
+			width : 87.08,
+
+		}
 
 ];
 
@@ -539,6 +707,7 @@ SCF003.totalManey = new Ext.form.TextField({
 	width : 300
 
 });
+SCF003.totalManey.setValue(SCF01Domain.tatolManey);
 SCF003.document = new Ext.form.TextField({
 	id : 'document',
 	fieldLabel : "เอกสารแนบ",
@@ -596,7 +765,7 @@ SCF003.checkBox2 = new Ext.form.Checkbox({
 	boxLabel : 'เช็คธนาคาร',
 	fieldLabel : 'text'
 });
-//******************** set Value *****************//
+// ******************** set Value *****************//
 SCF003.bank.setValue(SCF01Domain.bank);
 SCF003.branch.setValue(SCF01Domain.branch);
 SCF003.accountNumber.setValue(SCF01Domain.accountNumber);
@@ -604,19 +773,19 @@ SCF003.typeAccount.setValue(SCF01Domain.typeAccount);
 SCF003.createButtonSubmit = new Ext.Button({
 	id : 'submit',
 	text : 'Submit',
-	width:100
+	width : 100
 });
 
 SCF003.createButtonPrint = new Ext.Button({
 	id : 'print',
 	text : 'Print Preview',
-	width:100
+	width : 100
 });
 
 SCF003.createButtonBack = new Ext.Button({
 	id : 'back',
 	text : 'Back',
-	width:100
+	width : 100
 });
 
 SCF003.setBottom = new Ext.form.FieldSet({
@@ -637,8 +806,8 @@ SCF003.setBottom = new Ext.form.FieldSet({
 		items : SCF003.totalManey,
 		labelAlign : 'right',
 		style : {
-			"margin-left":"330px",
-			
+			"margin-left" : "330px",
+
 		},
 	}, {
 		columnWidth : 0.3,
@@ -681,12 +850,31 @@ SCF003.setBottom = new Ext.form.FieldSet({
 
 	]
 });
+SCF003.tatolPaym = new Ext.form.TextField({
+	id : 'tatolPaym',
+	width : 80
 
+});
+SCF003.tatolPaymA = new Ext.form.TextField({
+	id : 'tatolPaymA',
+
+	width : 80
+
+});
+SCF003.tatolPaymfullCase = new Ext.form.TextField(
+		{
+			id : 'tatolPaymfullCase',
+
+			width : 80,
+	
+
+		});
 SCF003.createGrid = new Ext.ss.grid.EditorGridPanel({
 	id : 'gridEducationInfomation',
 	store : SCF003.gridStrore,
 	sm : SCF003.checkboxselection,
 	columns : SCF003.gridColumns,
+	columnLines : true,
 	height : 350,
 	width : 805,
 
@@ -709,7 +897,7 @@ SCF003.createGrid = new Ext.ss.grid.EditorGridPanel({
 		pageSize : 25,
 		store : SCF003.gridStrore,
 		displayInfo : true,
-		displayMsg : 'Displaying topics {0} - {1} of {2}',
+		displayMsg : ' {0} - {1} of {2}',
 		emptyMsg : "Report of Travel",
 		items : [ '-', {
 			pressed : true,
@@ -717,128 +905,170 @@ SCF003.createGrid = new Ext.ss.grid.EditorGridPanel({
 			text : 'Show Preview',
 			cls : 'x-btn-text-icon details',
 			toggleHandler : function(btn, pressed) {
-				var view = grid.getView();
+				var view = SCF003.createGrid.getView();
 				view.showPreview = pressed;
 				view.refresh();
+
 			}
-		} ]
+		}, '-', "รวม", '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-',
+				'-', SCF003.tatolPaym, '-', SCF003.tatolPaymA, '-',
+				SCF003.tatolPaymfullCase ]
 	})
 });
 // SCF003.gridStrore.load({params:{start:0, limit:25}});
 
-Ext.onReady(function() {
-	SCF003.resumeForm = new Ext.form.FormPanel({
+Ext
+		.onReady(function() {
 
-		applyTo : "content",
-		layout : 'column',
-		border : false,
-		width : '60%',
-		style : {
-			"margin-left" : "auto",
-			"margin-right" : "auto",
-			"margin-top" : "50px"
-		},
-		defaults : {
-			xtype : 'container',
-			layout : 'form',
-			columnWidth : 1,
-			// labelWidth : 0,
-			anchor : '100%',
+			SCF003.resumeForm = new Ext.form.FormPanel({
 
-		// hideBorders : true
-		},
-		items : [
+				applyTo : "content",
+				layout : 'column',
+				border : false,
+				width : '60%',
+				style : {
+					"margin-left" : "auto",
+					"margin-right" : "auto",
+					"margin-top" : "50px"
+				},
+				defaults : {
+					xtype : 'container',
+					layout : 'form',
+					columnWidth : 1,
+					// labelWidth : 0,
+					anchor : '100%',
 
-		{
-			items : SCF003.No,
-			labelAlign : 'right',
-			style : {
-				"margin-left":"550px",
-				
-			},
-		// disabled: true
-		}, {
-			columnWidth : 1,
-			items : SCF003.date,
-			labelAlign : 'right',
-			style : {
-				"margin-left":"550px",
-				
-			},
-		// disabled: true
-		}, {
-			columnWidth : 1,
-			items : SCF003.setCenter,
+				// hideBorders : true
+				},
 
-		}, {
-			columnWidth : 1,
-			items : SCF003.createGrid
-		}, {
-			columnWidth : 1,
-			items : SCF003.setBottom
-		}, {
-			columnWidth : 0.35,
-			items : SCF003.createButtonSubmit,
-		
-			style : {
-				"margin-left":"150px",
-				
-			},
+				items : [
 
-		}, {
-			columnWidth : 0.3,
-			items : SCF003.createButtonPrint,
-			style : {
-				"margin-left":"50px",
-				
-			},
+				{
+					items : SCF003.No,
+					labelAlign : 'right',
+					style : {
+						"margin-left" : "550px",
 
-		}, {
-			columnWidth : 0.35,
-			items : SCF003.createButtonBack,
-			style : {
-				"margin-left":"5px",
-				
-			},
+					},
+				// disabled: true
+				}, {
+					columnWidth : 1,
+					items : SCF003.date,
+					labelAlign : 'right',
+					style : {
+						"margin-left" : "550px",
 
-		} ]
+					},
+				// disabled: true
+				}, {
+					columnWidth : 1,
+					items : SCF003.setCenter,
 
-	});
+				}, {
+					columnWidth : 1,
+					items : SCF003.createGrid
+				}, {
+					columnWidth : 1,
+					items : SCF003.setBottom
+				}, {
+					columnWidth : 0.35,
+					items : SCF003.createButtonSubmit,
 
-	// Ext.getCmp('name').setValue('test');
-	Ext.get('submit').on(
-			'click',
-			function(e) {
-				var name = Ext.getCmp('name').getValue();
-				// var jobValue = document.getElementById('name').value;
-				Ext.MessageBox.confirm('Acception', 'คุณ' + ' ' + name + ' '
-						+ 'มั่นใจว่าจะทำสิ่งนี้  ?', confirmFunction);
+					style : {
+						"margin-left" : "150px",
 
-				function confirmFunction(btn) {
-					if (btn == 'yes') {
-						window.location.assign("http://www.google.com");
-					}
-				}
-			});
+					},
 
-	Ext.get('print').on(
-			'click',
-			function(e) {
+				}, {
+					columnWidth : 0.3,
+					items : SCF003.createButtonPrint,
+					style : {
+						"margin-left" : "50px",
 
-				Ext.MessageBox.confirm('Confirmation', 'ยืนยันข้อมูลถูกต้อง ?',
-						confirmFunction);
+					},
 
-				function confirmFunction(btn) {
-					if (btn == 'yes') {
-						var param3 = {};
-////						 param3.no = Ext.getCmp('no').getValue();
-						 param3.no ="no001";
-						 
-						var urlPreviwPage="/TransportationAllowance/jasperReport.pdf?docNo="+param3.no;
-//						window.location.assign("/TransportationAllowance/jasperReport.pdf?docNo=56000");
-						window.location.assign(urlPreviwPage);
-					}
-				}
+				}, {
+					columnWidth : 0.35,
+					items : SCF003.createButtonBack,
+					style : {
+						"margin-left" : "5px",
+
+					},
+
+				} ],
+			// listeners : {
+			// autoLoad : function (f, e){
+			// SCF003.createGrid.getSelectionModel().selectAll();
+			// var totalLength =
+			// SCF003.createGrid.getSelectionModel().getSelections();
+			// var a =0;
+			// var b =0;
+			// var c =0;
+			// for (var i=0; i<=totalLength.length-1; i++) {
+			//
+			// a =
+			// a+parseInt(SCF003.createGrid.getStore().getAt(i).data.paymentTravel);
+			// b =
+			// b+parseInt(SCF003.createGrid.getStore().getAt(i).data.paymentD);
+			// c =
+			// c+parseInt(SCF003.createGrid.getStore().getAt(i).data.payment);
+			// SCF003.tatolPaym.setValue(a);
+			// SCF003.tatolPaymA.setValue(b);
+			// SCF003.tatolPaymfullCase.setValue(c);
+			//
+			// SCF003.createGrid.getSelectionModel().deselectRow(i);
+			// }
+			// }
+			// }
 
 			});
-});
+
+			// Ext.getCmp('name').setValue('test');
+			Ext
+					.get('submit')
+					.on(
+							'click',
+							function(e) {
+								var name = Ext.getCmp('name').getValue();
+								// var jobValue =
+								// document.getElementById('name').value;
+								Ext.MessageBox.confirm('Acception', 'คุณ' + ' '
+										+ name + ' '
+										+ 'มั่นใจว่าจะทำสิ่งนี้  ?',
+										confirmFunction);
+
+								function confirmFunction(btn) {
+									if (btn == 'yes') {
+										window.location
+												.assign("http://www.google.com");
+									}
+								}
+							});
+
+			Ext
+					.get('print')
+					.on(
+							'click',
+							function(e) {
+
+								Ext.MessageBox.confirm('Confirmation',
+										'ยืนยันข้อมูลถูกต้อง ?',
+										confirmFunction);
+
+								function confirmFunction(btn) {
+									if (btn == 'yes') {
+										var param3 = {};
+										// // param3.no =
+										// Ext.getCmp('no').getValue();
+										param3.no = "no001";
+
+										var urlPreviwPage = "/TransportationAllowance/jasperReport.pdf?docNo="
+												+ param3.no;
+										// window.location.assign("/TransportationAllowance/jasperReport.pdf?docNo=56000");
+										window.location.assign(urlPreviwPage);
+									}
+								}
+
+							});
+
+		});

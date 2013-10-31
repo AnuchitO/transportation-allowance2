@@ -154,12 +154,23 @@ url:'/ExtjsTraining/EXT001.html',
 method:'POST'
 */
 });
+
+	
+ EXT001A.testt = new Ext.form.TextField({
+	id : 'lnameaa',
+	fieldLabel : "Lastname",
+	
+
+	});
+
 EXT001A.createGrid = new Ext.grid.EditorGridPanel({
 	id:'createGrid',
 	store:EXT001A.gridStrore,
 	columns: EXT001A.gridColumns,
 	height:127,
-	width:500
+	width:500,
+	
+	
 });
 
 EXT001A.tabPanel = new Ext.TabPanel({

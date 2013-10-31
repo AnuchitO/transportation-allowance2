@@ -27,6 +27,9 @@ public class SCF003Domain01 {
 	String dataRemark;
 	
 	/************* Bottom ************/
+	String tatolPaym;
+	String tatolPaymA;
+	String tatolPaymfullCase;
 	String tatolManey;
 	String document;
 	String forPay;
@@ -38,6 +41,24 @@ public class SCF003Domain01 {
 	String type2;
 	
 	
+	public String getTatolPaym() {
+		return tatolPaym;
+	}
+	public void setTatolPaym(String tatolPaym) {
+		this.tatolPaym = tatolPaym;
+	}
+	public String getTatolPaymA() {
+		return tatolPaymA;
+	}
+	public void setTatolPaymA(String tatolPaymA) {
+		this.tatolPaymA = tatolPaymA;
+	}
+	public String getTatolPaymfullCase() {
+		return tatolPaymfullCase;
+	}
+	public void setTatolPaymfullCase(String tatolPaymfullCase) {
+		this.tatolPaymfullCase = tatolPaymfullCase;
+	}
 	public String getTatolManey() {
 		return tatolManey;
 	}

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spt.tsa.dao.TravelHeader01Dao;
+import com.spt.tsa.domain.SCF003Domain01;
 import com.spt.tsa.entity.*;
 import com.spt.tsa.service.TravelHeader01Service;
 
@@ -28,5 +29,5 @@ public class Travelheader01ServiceImpl implements TravelHeader01Service{
 	public List<TravelHeader> findByDocNo(String docNo) {
 		return this.travelHeader01Dao.findByDocNo(docNo);
 	}
-    
+	
 }

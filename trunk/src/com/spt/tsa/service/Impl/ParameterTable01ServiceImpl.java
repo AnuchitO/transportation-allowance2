@@ -31,5 +31,7 @@ public class ParameterTable01ServiceImpl implements ParameterTable01Service {
 	public List<ParameterTable> findByDept(){
 		return this.parameterTableDao.findByDept();
 	}
-
+	public List<ParameterTable> findByProvince(){
+		return this.parameterTableDao.findByProvince();
+	}
 }

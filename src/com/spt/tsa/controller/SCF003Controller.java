@@ -1,6 +1,8 @@
 package com.spt.tsa.controller;
 
-import java.io.PrintWriter;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,13 +43,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
+
+
+
+import org.tuxilla.BahtText;
+
 import com.fission.web.view.extjs.grid.GridData;
 import com.spt.tsa.dao.ParameterTableDao;
 import com.spt.tsa.domain.SCF003Domain01;
 import com.spt.tsa.entity.Employee;
 import com.spt.tsa.entity.ParameterTable;
+import com.spt.tsa.entity.TravelHeader;
 import com.spt.tsa.service.Employee01Service;
 import com.spt.tsa.service.ParameterTable01Service;
+import com.spt.tsa.service.TravelHeader01Service;
 import com.spt.tsa.util.BeanUtils;
 
 
@@ -59,14 +68,20 @@ public class SCF003Controller {
 	
 	private Employee01Service employee01Service;
 	private ParameterTable01Service parameterTable01Service;
+	private TravelHeader01Service travelHeader01Service;
+
 	
 	@Autowired
     public void setParameterTable01Service(ParameterTable01Service parameterTable01Service) {
    	 this.parameterTable01Service= parameterTable01Service;
     }
 	@Autowired
-    public void setParameterTableDao(Employee01Service employee01Service) {
+    public void setParameterTable01Service(Employee01Service employee01Service) {
    	 this.employee01Service= employee01Service;
+    }
+	@Autowired
+    public void setTravelHeader01Service(TravelHeader01Service travelHeader01Service) {
+   	 this.travelHeader01Service= travelHeader01Service;
     }
 	
 //
@@ -77,12 +92,19 @@ public class SCF003Controller {
 			Employee resultsEmp = this.employee01Service.findEmployeeWhereId();
 			System.out.println("view 2");
 			List<String> resu = this.employee01Service.findBankWhereEmp();
+			List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp();
 			List<String> resultsDept = this.employee01Service.findDeptWhereEmp();
 			List<String> resultsProvince = this.employee01Service.findProvinceEmp();
 			
+			  Date date = new Date();
+			  SimpleDateFormat ft = new SimpleDateFormat ("yyyy/MM/dd");  
 			SCF003Domain01 domain = new SCF003Domain01();
+			domain.setNo("560001");
+			domain.setDate(ft.format(date));
 			domain.setName(resultsEmp.getName());
 			domain.setId(resultsEmp.getEmpId());
+			new BahtText(11).toString();
+		
 			domain.setCompany(resultsEmp.getCompany().getName());
 			domain.setAddress(resultsEmp.getAddress());
 			domain.setPhone(resultsEmp.getTelephone());
@@ -90,15 +112,22 @@ public class SCF003Controller {
 			domain.setAntecedent(resultsDept.get(0));
 			domain.setAntercedentA(resultsProvince.get(0));
 			//************* set value Button *****************//
+		
+//			domain.setTatolManey(new BahtText(arg0).totalPayment);
 			domain.setBank(resu.get(0));
 			domain.setBranch(resultsEmp.getBranch());
 			domain.setAccountNumber(resultsEmp.getAccountNo());
+			domain.setTypeAccount(resultsBranch.get(0));
 //			domain.setName("ffasfds");
 //			domain.setId("fdsaf");
 //			domain.setCompany("fdsfsdfs");
 //			domain.setAddress("fdsfa");
 //			domain.setPhone("fsdf");
 //			domain.setEmail("fsdfa");
+			List<TravelHeader> teeeeeee = this.travelHeader01Service.findTravelHeader();
+			for(TravelHeader c:teeeeeee){
+				logger.debug("+++++++++++++++++++++{}--------------------",c.getAddress());
+			}
 			logger.debug("+++++++++++++++++++++{}--------------------",resu.get(0));
 			logger.debug("+++++++++++++++++++++{}--------------------",domain.getName());
 			model.put("tesrt", JSONObject.fromObject(BeanUtils.beanToMap(domain)).toString());
@@ -107,65 +136,54 @@ public class SCF003Controller {
 
 		}
 		
-		@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=preview" )
+		@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=antecedent" )
 		public void findComSS(HttpServletRequest request, HttpServletResponse response) {
-			
+			List<ParameterTable> resultsParam = this.parameterTable01Service.findByDept();
 			JSONArray jsonArray = new JSONArray();
 			GridData gridData = new GridData();
 			
 			JSONObject jobect1 = new JSONObject();
-			jobect1.accumulate("code", "01");
-			jobect1.accumulate("description", "Ms");
+			for(ParameterTable c:resultsParam){
+			
+			
+			jobect1.accumulate("code", c.getDetail());
+			jobect1.accumulate("description", c.getDetail());
 			jsonArray.add(jobect1);
+			jobect1.clear();
 			
-			JSONObject jobect2 = new JSONObject();
-			jobect2.accumulate("code", "02");
-			jobect2.accumulate("description", "Mrs");
-			jsonArray.add(jobect2);
-			
-			JSONObject jobect3 = new JSONObject();
-			jobect3.accumulate("code", "03");
-			jobect3.accumulate("description", "Mr");
-			jsonArray.add(jobect3);
-			
+			}
 			gridData.setRecords(jsonArray);
 	        gridData.setTotal(jsonArray.size());
 	        gridData.setSuccess(true);
 	       
 	        gridData.responseJson(response);
-
-			
-
 		}
 		@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=antercedent2" )
 		public void findComSS2(HttpServletRequest request, HttpServletResponse response) {
 				
+			List<ParameterTable> resultsParam = this.parameterTable01Service.findByProvince();
 			JSONArray jsonArray = new JSONArray();
 			GridData gridData = new GridData();
 			
 			JSONObject jobect1 = new JSONObject();
-			jobect1.accumulate("code", "01");
-			jobect1.accumulate("description", "Ms");
+			
+			for(int i=0;i< resultsParam.size();i++){
+			logger.debug("-*-{}-*-",resultsParam.get(i));
+			
+			
+			jobect1.accumulate("code", resultsParam.get(i));
+			jobect1.accumulate("description", resultsParam.get(i));
 			jsonArray.add(jobect1);
+			jobect1.clear();
 			
-			JSONObject jobect2 = new JSONObject();
-			jobect2.accumulate("code", "02");
-			jobect2.accumulate("description", "Mrs");
-			jsonArray.add(jobect2);
+			}
 			
-			JSONObject jobect3 = new JSONObject();
-			jobect3.accumulate("code", "03");
-			jobect3.accumulate("description", "Mr");
-			jsonArray.add(jobect3);
-			
+		
 			gridData.setRecords(jsonArray);
 	        gridData.setTotal(jsonArray.size());
 	        gridData.setSuccess(true);
 	       
 	        gridData.responseJson(response);
-
-			
-
 		}
 		
 		@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=gridData" )
@@ -237,6 +255,9 @@ public class SCF003Controller {
 						@RequestParam("antercedentA") String antercedentA,
 						@RequestParam("phone") String phone,
 						@RequestParam("email") String email,
+						@RequestParam("tatolPaym") String tatolPaym,
+						@RequestParam("tatolPaymA") String tatolPaymA,
+						@RequestParam("tatolPaymfullCase") String tatolPaymfullCase,
 						@RequestParam("tatolManey") String tatolManey,
 						@RequestParam("document") String document,
 						@RequestParam("forPay") String forPay,
@@ -262,6 +283,10 @@ public class SCF003Controller {
 						domain.setPhone(phone);
 						domain.setEmail(email);
 						//********************* set Buttom Data ********************//
+						domain.setTatolPaym(tatolPaym);
+						domain.setTatolPaymA(tatolPaymA);
+						domain.setTatolPaymfullCase(tatolPaymfullCase);
+					
 						domain.setTatolManey(tatolManey);
 						domain.setDocument(document);
 						domain.setForPay(forPay);
@@ -280,6 +305,9 @@ public class SCF003Controller {
 						logger.debug("-----{}+++++",domain.getAntercedentA());
 						logger.debug("-----{}+++++",domain.getPhone());
 						logger.debug("-----{}+++++",domain.getEmail());
+						logger.debug("-----{}+++++",domain.getTatolPaym());
+						logger.debug("-----{}+++++",domain.getTatolPaymA());
+						logger.debug("-----{}+++++",domain.getTatolPaymfullCase());
 						logger.debug("-----{}+++++",domain.getTatolManey());
 						logger.debug("-----{}+++++",domain.getDocument());
 						logger.debug("-----{}+++++",domain.getForPay());
@@ -294,7 +322,7 @@ public class SCF003Controller {
 						e.printStackTrace();
 						logger.error(e.getMessage());
 					}
-
+					
 				}
 		
 		//************************* Save Grid ********************************//
@@ -340,7 +368,6 @@ public class SCF003Controller {
 			}
 
 		}
-}
-
-
+	
 		
+}

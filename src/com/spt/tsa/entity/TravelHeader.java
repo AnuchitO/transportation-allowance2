@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="Travel_header")
 public class TravelHeader  implements Serializable {
-	private static final long serialVersionUID = -4122310234428712362L;
+	private static final Long serialVersionUID = -4122310234428712362L;
 	@Id
 	@Column(name="Trah_thid")
 	private String tHeadId;

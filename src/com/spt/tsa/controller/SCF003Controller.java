@@ -77,7 +77,6 @@ public class SCF003Controller {
 			Employee resultsEmp = this.employee01Service.findEmployeeWhereId();
 			System.out.println("view 2");
 			List<String> resu = this.employee01Service.findBankWhereEmp();
-			List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp();
 			List<String> resultsDept = this.employee01Service.findDeptWhereEmp();
 			List<String> resultsProvince = this.employee01Service.findProvinceEmp();
 			
@@ -94,7 +93,6 @@ public class SCF003Controller {
 			domain.setBank(resu.get(0));
 			domain.setBranch(resultsEmp.getBranch());
 			domain.setAccountNumber(resultsEmp.getAccountNo());
-			domain.setTypeAccount(resultsBranch.get(0));
 //			domain.setName("ffasfds");
 //			domain.setId("fdsaf");
 //			domain.setCompany("fdsfsdfs");
@@ -109,7 +107,7 @@ public class SCF003Controller {
 
 		}
 		
-		@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=antecedent" )
+		@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=preview" )
 		public void findComSS(HttpServletRequest request, HttpServletResponse response) {
 			
 			JSONArray jsonArray = new JSONArray();

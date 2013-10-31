@@ -34,7 +34,7 @@ public class ParameterTableDaoImpl extends HibernateDaoSupport  implements Param
 		
 	}
 
-	public ParameterTable findRow(String code, String entry) {
+	public List<ParameterTable>  findRow(String code, String entry) {
 		//not work
 		DetachedCriteria criteria =  DetachedCriteria.forClass(ParameterTable.class).add(
 		        Restrictions.and(
@@ -43,7 +43,7 @@ public class ParameterTableDaoImpl extends HibernateDaoSupport  implements Param
 		            ));
 		System.out.println("///////////////////////////////////////"+this.getHibernateTemplate().findByCriteria(criteria));
 //		return (ParameterTable) this.getHibernateTemplate().findByCriteria(criteria);
-		return null;
+		return this.getHibernateTemplate().findByCriteria(criteria);
 	}
 	
 	public List<ParameterTable> findByDept(){

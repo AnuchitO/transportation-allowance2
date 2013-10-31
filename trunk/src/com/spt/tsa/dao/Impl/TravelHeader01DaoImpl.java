@@ -30,8 +30,10 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
    	 return this.getHibernateTemplate().find("FROM TravelHeader");
     }
     public List<TravelHeader> findByDocNo(String docNo){
-    	DetachedCriteria criteria =  DetachedCriteria.forClass(TravelHeader.class)
-		        .add(Restrictions.eq("no", docNo));
+    	DetachedCriteria criteria =  DetachedCriteria.forClass(TravelHeader.class).add(
+		        Restrictions.and(
+		                Restrictions.eq("no", docNo),
+		                Restrictions.eq("status", "002")));
 //    	logger.debug("{}",this.getHibernateTemplate().findByCriteria(criteria));
     	return this.getHibernateTemplate().findByCriteria(criteria);
     }

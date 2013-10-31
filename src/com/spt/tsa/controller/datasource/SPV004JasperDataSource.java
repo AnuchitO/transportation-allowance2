@@ -51,40 +51,40 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 		
 					
 		// Head Information
-				String noDoc="85588";
-				String docDate="10/02/2556";
-				String name="นางสาวยสมชาย  บุญรอด";
-				String empId="53412345";
-				String compName = "ซอฟต์สแควร์";
+				String noDoc=" ";
+				String docDate=" ";
+				String name=" ";
+				String empId=" ";
+				String compName = " ";
 				String department="Operation II";
-				String address="92   ต.หลักหก  อ.เมือง";
-				String province="สระบุรี";
-				String phoneNumber="08-0225-2568";
-				String email="its-anshit_a@softsquaregroup.com";			
+				String address=" ";
+				String province=" ";
+				String phoneNumber=" ";
+				String email=" ";			
 				
 		//Table Information
-				String tDate="10/10/2556";
-				String tCustomer="yasoop";
-				String tFrom="ฟิวเจอร์";
-				String tTo="ราดพร้าว";
-				String tTravel="300";
-				String tExpressWay ="0";
-				String tSum="300";
-				String tRemark="NN";
-				String tSumTravel="300";
-				String tSumExpressWay="0";
-				String tSumTotal="300";
+				String tDate=" ";
+				String tCustomer=" ";
+				String tFrom=" ";
+				String tTo=" ";
+				String tTravel=" ";
+				String tExpressWay =" ";
+				String tSum=" ";
+				String tRemark=" ";
+				String tSumTravel=" ";
+				String tSumExpressWay=" ";
+				String tSumTotal=" ";
 			
-			//Summary Information
-				String sumTotalCharector="##สามร้อยบาทถ้ว##";
-				String attachment="1";
-				String toPay="เดินทางไปหาลูกค้า";
-				String bank="กรุงเทพ";
-				String branch="รังสิต";
-				String accountId="123-4-12224-5";
-				String accountType="ออมทรัพย์";
-				String checkCash="/";
-				String checkCheck="/";
+		//Summary Information
+				String sumTotalCharector=" ";
+				String attachment=" ";
+				String toPay=" ";
+				String bank=" ";
+				String branch=" ";
+				String accountId=" ";
+				String accountType="  ";
+				String checkCash=" ";
+				String checkCheck=" ";
 
 //check TravelDetail how any object
 				logger.debug("+++++++%%%%%%%%%%@@@@@@@@@@@@@@%%%%%%%%%%%==========%%%%%%%%%%====%%%%%%+++++++++"+this.travelDetails);
@@ -167,13 +167,133 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 			listSPV004PojoData.add(spv004Pojo);//Object for save all			
 			
 		}else if(this.travelDetails.size()==2){
+			//Fill Header and Row 1 
+			SPV004Pojo 	spv004Pojo = new SPV004Pojo();
+			spv004Pojo.setNoDoc(noDoc);
+			spv004Pojo.setDocDate(docDate);
+		  	spv004Pojo.setName(name);  	
+		  	spv004Pojo.setEmpId(empId);
+		  	spv004Pojo.setCompName(compName);
+		  	spv004Pojo.setDepartment(department);
+		  	spv004Pojo.setAddress(address);
+		  	spv004Pojo.setProvince(province);
+		  	spv004Pojo.setPhoneNumber(phoneNumber);
+		  	spv004Pojo.setEmail(email);
+
+		  	//Value For first Row Table  query form TravelDetail
+		  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(this.travelDetails.get(0).getDate()));
+			spv004Pojo.settCustomer(this.travelDetails.get(0).getCustomer().getName());
+			spv004Pojo.settFrom(this.travelDetails.get(0).getFrom());
+			spv004Pojo.settTo(this.travelDetails.get(0).getTo());
+			spv004Pojo.settTravel(this.travelDetails.get(0).getTravelExpenses().toString());
+			spv004Pojo.settExpressWay(this.travelDetails.get(0).getMotorWay().toString());
+			spv004Pojo.settSum(this.travelDetails.get(0).getTotalDay().toString());
+			spv004Pojo.settNotation(this.travelDetails.get(0).getRemark());
+			listSPV004PojoData.add(spv004Pojo);//Header and First Row  Object
+			
+			//Value For Second Row Table and Summary
+		  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(this.travelDetails.get(1).getDate()));
+			spv004Pojo.settCustomer(this.travelDetails.get(1).getCustomer().getName());
+			spv004Pojo.settFrom(this.travelDetails.get(1).getFrom());
+			spv004Pojo.settTo(this.travelDetails.get(1).getTo());
+			spv004Pojo.settTravel(this.travelDetails.get(1).getTravelExpenses().toString());
+			spv004Pojo.settExpressWay(this.travelDetails.get(1).getMotorWay().toString());
+			spv004Pojo.settSum(this.travelDetails.get(1).getTotalDay().toString());
+			spv004Pojo.settNotation(this.travelDetails.get(1).getRemark());
+			
+			//Fill Total Row
+			spv004Pojo.settSumTravel(tSumTravel);
+			spv004Pojo.settSumExpressWay(tSumExpressWay);
+			spv004Pojo.settSumTotal(tSumTotal);
+
+			//Fill summary						
+			spv004Pojo.setSumTotalCharector(sumTotalCharector);
+			spv004Pojo.setAttachment(attachment);
+			spv004Pojo.setToPay(toPay);
+			spv004Pojo.setBank(bank);
+			spv004Pojo.setBranch(branch);
+			spv004Pojo.setAccountId(accountId);
+			spv004Pojo.setAccountType(accountType);
+			spv004Pojo.setCheckCash(checkCash);
+			spv004Pojo.setCheckCheck(checkCheck);			
+			
+			listSPV004PojoData.add(spv004Pojo);//Second Row Total Row and Summary  Object
+					
+		}else if(this.travelDetails.size()>=3){
+			////Fill Header 
+			SPV004Pojo 	spv004Pojo = new SPV004Pojo();
+			spv004Pojo.setNoDoc(noDoc);
+			spv004Pojo.setDocDate(docDate);
+		  	spv004Pojo.setName(name);  	
+		  	spv004Pojo.setEmpId(empId);
+		  	spv004Pojo.setCompName(compName);
+		  	spv004Pojo.setDepartment(department);
+		  	spv004Pojo.setAddress(address);
+		  	spv004Pojo.setProvince(province);
+		  	spv004Pojo.setPhoneNumber(phoneNumber);
+		  	spv004Pojo.setEmail(email);
+
+		  	//Value For first Row Table  query form TravelDetail
+		  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(this.travelDetails.get(0).getDate()));
+			spv004Pojo.settCustomer(this.travelDetails.get(0).getCustomer().getName());
+			spv004Pojo.settFrom(this.travelDetails.get(0).getFrom());
+			spv004Pojo.settTo(this.travelDetails.get(0).getTo());
+			spv004Pojo.settTravel(this.travelDetails.get(0).getTravelExpenses().toString());
+			spv004Pojo.settExpressWay(this.travelDetails.get(0).getMotorWay().toString());
+			spv004Pojo.settSum(this.travelDetails.get(0).getTotalDay().toString());
+			spv004Pojo.settNotation(this.travelDetails.get(0).getRemark());
+			listSPV004PojoData.add(spv004Pojo);//Header+First Row  Object one
+			
+			//Fill  second Row to n-1 Row
+			int size = this.travelDetails.size();
+			for(int i=1;i<=(size-2);i++){
+				//Value For Second Row Table and Summary
+			  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(this.travelDetails.get(i).getDate()));
+				spv004Pojo.settCustomer(this.travelDetails.get(i).getCustomer().getName());
+				spv004Pojo.settFrom(this.travelDetails.get(i).getFrom());
+				spv004Pojo.settTo(this.travelDetails.get(i).getTo());
+				spv004Pojo.settTravel(this.travelDetails.get(i).getTravelExpenses().toString());
+				spv004Pojo.settExpressWay(this.travelDetails.get(i).getMotorWay().toString());
+				spv004Pojo.settSum(this.travelDetails.get(i).getTotalDay().toString());
+				spv004Pojo.settNotation(this.travelDetails.get(i).getRemark());
+			}
+			
+			//Value For last Row 
+			int lastIndex = size-1;
+		  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(this.travelDetails.get(lastIndex).getDate()));
+			spv004Pojo.settCustomer(this.travelDetails.get(lastIndex).getCustomer().getName());
+			spv004Pojo.settFrom(this.travelDetails.get(lastIndex).getFrom());
+			spv004Pojo.settTo(this.travelDetails.get(lastIndex).getTo());
+			spv004Pojo.settTravel(this.travelDetails.get(lastIndex).getTravelExpenses().toString());
+			spv004Pojo.settExpressWay(this.travelDetails.get(lastIndex).getMotorWay().toString());
+			spv004Pojo.settSum(this.travelDetails.get(lastIndex).getTotalDay().toString());
+			spv004Pojo.settNotation(this.travelDetails.get(lastIndex).getRemark());
+			
+			
+			//Fill Total Row
+			spv004Pojo.settSumTravel(tSumTravel);
+			spv004Pojo.settSumExpressWay(tSumExpressWay);
+			spv004Pojo.settSumTotal(tSumTotal);
+			
+			//Fill summary						
+			spv004Pojo.setSumTotalCharector(sumTotalCharector);
+			spv004Pojo.setAttachment(attachment);
+			spv004Pojo.setToPay(toPay);
+			spv004Pojo.setBank(bank);
+			spv004Pojo.setBranch(branch);
+			spv004Pojo.setAccountId(accountId);
+			spv004Pojo.setAccountType(accountType);
+			spv004Pojo.setCheckCash(checkCash);
+			spv004Pojo.setCheckCheck(checkCheck);			
+			
+			listSPV004PojoData.add(spv004Pojo);// Last Row Total Row and Summary  Object
 			
 		}else{
 			
+			
 		}
 		
-		
-		
+				
 ///////////////  general add Fill		
 		
 		//get data For assign to variable For Fill Header

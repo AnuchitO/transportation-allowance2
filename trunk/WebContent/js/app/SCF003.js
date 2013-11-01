@@ -1057,13 +1057,12 @@ Ext
 
 								function confirmFunction(btn) {
 									if (btn == 'yes') {
-										var param3 = {};
-										// // param3.no =
-										// Ext.getCmp('no').getValue();
-										param3.no = "no001";
+									//	var param3 = {};
+										    var noDoc = Ext.getCmp('no').getValue();
+//										    var noDoc = SCF01Domain.no; //ลองดู
+//										param3.no = "no001";
 
-										var urlPreviwPage = "/TransportationAllowance/jasperReport.pdf?docNo="
-												+ param3.no;
+										var urlPreviwPage = "/TransportationAllowance/jasperReport.pdf?docNo="+noDoc;
 										// window.location.assign("/TransportationAllowance/jasperReport.pdf?docNo=56000");
 										window.location.assign(urlPreviwPage);
 									}

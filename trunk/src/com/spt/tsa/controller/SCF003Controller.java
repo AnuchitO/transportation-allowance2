@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.xmlbeans.impl.regex.REUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,7 @@ import org.tuxilla.BahtText;
 import com.fission.web.view.extjs.grid.GridData;
 import com.spt.tsa.dao.ParameterTableDao;
 import com.spt.tsa.domain.SCF003Domain01;
+import com.spt.tsa.entity.Company;
 import com.spt.tsa.entity.Employee;
 import com.spt.tsa.entity.ParameterTable;
 import com.spt.tsa.entity.TravelHeader;
@@ -95,10 +97,13 @@ public class SCF003Controller {
 			List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp();
 			List<String> resultsDept = this.employee01Service.findDeptWhereEmp();
 			List<String> resultsProvince = this.employee01Service.findProvinceEmp();
+			List<TravelHeader> resultDate = this.travelHeader01Service.findTravelHanderGetNewDate();
+		
 			
 			  Date date = new Date();
 			  SimpleDateFormat ft = new SimpleDateFormat ("yyyy/MM/dd");  
 			SCF003Domain01 domain = new SCF003Domain01();
+			
 			domain.setNo("560001");
 			domain.setDate(ft.format(date));
 			domain.setName(resultsEmp.getName());
@@ -124,10 +129,12 @@ public class SCF003Controller {
 //			domain.setAddress("fdsfa");
 //			domain.setPhone("fsdf");
 //			domain.setEmail("fsdfa");
-			List<TravelHeader> teeeeeee = this.travelHeader01Service.findTravelHeader();
-			for(TravelHeader c:teeeeeee){
-				logger.debug("+++++++++++++++++++++{}--------------------",c.getAddress());
-			}
+			Employee teeeeeee = this.travelHeader01Service.findEmployeeWhereId(domain.getId());
+			Company commmmm = this.travelHeader01Service.findCompanyWhereId(resultsEmp.getCompany().getComId());
+			
+				logger.debug("+++++++------------+{}------",teeeeeee.getAddress());
+				logger.debug("+++++++------------+{}------",commmmm.getComId());
+			
 			logger.debug("+++++++++++++++++++++{}--------------------",resu.get(0));
 			logger.debug("+++++++++++++++++++++{}--------------------",domain.getName());
 			model.put("tesrt", JSONObject.fromObject(BeanUtils.beanToMap(domain)).toString());
@@ -255,11 +262,11 @@ public class SCF003Controller {
 						@RequestParam("antercedentA") String antercedentA,
 						@RequestParam("phone") String phone,
 						@RequestParam("email") String email,
-						@RequestParam("tatolPaym") String tatolPaym,
-						@RequestParam("tatolPaymA") String tatolPaymA,
-						@RequestParam("tatolPaymfullCase") String tatolPaymfullCase,
+						@RequestParam("tatolPaym") Long tatolPaym,
+						@RequestParam("tatolPaymA") Long tatolPaymA,
+						@RequestParam("tatolPaymfullCase") Long tatolPaymfullCase,
 						@RequestParam("tatolManey") String tatolManey,
-						@RequestParam("document") String document,
+						@RequestParam("document") Long document,
 						@RequestParam("forPay") String forPay,
 						@RequestParam("bank") String bank,
 						@RequestParam("branch") String branch,
@@ -296,6 +303,8 @@ public class SCF003Controller {
 						domain.setTypeAccount(typeAccount);
 						domain.setType1(type1);
 						domain.setType2(type2);
+						this.travelHeader01Service.save(domain);
+//						this.travelHeader01Service.save2();
 						logger.debug("---------------------{}+++++++{}+++++++++++++++++++++++++++++++",domain.getNo(),domain.getDate()); 
 						logger.debug("-----{}+++++",domain.getName());
 						logger.debug("-----{}+++++",domain.getId());

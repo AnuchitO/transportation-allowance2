@@ -81,6 +81,17 @@ public class TravelHeader  implements Serializable {
 	@Column(name="Trah_thmodifydate")
 	private Date modifyDate;
 
+	@Column(name="NAME_DEPT")
+	private String nameDept;
+
+	
+	public String getNameDept() {
+		return nameDept;
+	}
+
+	public void setNameDept(String nameDept) {
+		this.nameDept = nameDept;
+	}
 
 	public Employee getEmployee() {
 		return employee;

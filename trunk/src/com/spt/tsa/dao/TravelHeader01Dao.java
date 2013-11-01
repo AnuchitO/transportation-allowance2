@@ -7,5 +7,8 @@ import com.spt.tsa.entity.*;
 public interface TravelHeader01Dao {
 	public List<TravelHeader> findTravelHeader();
 	 public List<TravelHeader> findByDocNo(String docNo);
-	 
+	 public void save(SCF003Domain01 domain);
+	 public Employee findEmployeeWhereId(String domain);
+	 public Company findCompanyWhereId(String domain);
+	 public List<TravelHeader> findTravelHanderGetNewDate();
 }

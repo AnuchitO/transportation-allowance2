@@ -70,6 +70,8 @@ public class Employee implements Serializable {
 	@Column(name="Emp_modifydate")
 	private Date modifyDate;
 	
+	@Column(name="EMP_EMIDCARD")
+	private String idCard;
 	
 
 	public String getProvince() {
@@ -204,6 +206,16 @@ public class Employee implements Serializable {
 
 	public String getUserUpdate() {
 		return userUpdate;
+	}
+	
+	
+
+	public String getIdCard() {
+		return idCard;
+	}
+
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
 	}
 
 	public void setUserUpdate(String userUpdate) {

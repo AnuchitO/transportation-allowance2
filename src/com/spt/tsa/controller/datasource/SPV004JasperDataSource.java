@@ -67,6 +67,7 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 				String hTellName="-";
 				String hFaxName="-";
 				
+				
 		//Table Information
 				String tDate="-";
 				String tCustomer="-";
@@ -101,12 +102,12 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 				name	=  this.listLravelHerder.get(0).getEmployee().getName();
 				empId	=  this.listLravelHerder.get(0).getEmployee().getEmpId();
 				compName = this.listLravelHerder.get(0).getCompany().getName();
-				department="Operation II";
+				department=this.listLravelHerder.get(0).getNameDept();
 				address =  this.listLravelHerder.get(0).getAddress();
 				province=  this.listLravelHerder.get(0).getProvince();
 				phoneNumber= this.listLravelHerder.get(0).getTelephone();
 				email	= this.listLravelHerder.get(0).getEmail();
-				idCard = "1234567890123";
+				idCard = this.listLravelHerder.get(0).getEmployee().getIdCard();
 				hAddressName=this.listLravelHerder.get(0).getCompany().getAddress();
 				hTellName=this.listLravelHerder.get(0).getCompany().getTelephone();
 				hFaxName=this.listLravelHerder.get(0).getCompany().getFax();

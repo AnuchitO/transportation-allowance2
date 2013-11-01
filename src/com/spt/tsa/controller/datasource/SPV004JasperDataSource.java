@@ -40,7 +40,7 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 		this.resultsBank = resultsBank;
 		this.resultsBankType = resultsBankType;
 		this.travelDetails = travelDetails;
-		logger.debug("##############################3");
+
 	}
 	
 	
@@ -88,7 +88,7 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 				String checkCheck=" ";
 
 //check TravelDetail how any object
-				logger.debug("+++++++%%%%%%%%%%@@@@@@@@@@@@@@%%%%%%%%%%%==========%%%%%%%%%%====%%%%%%+++++++++"+this.travelDetails);
+
 			
 				///get data for  Header
 				hCompanyName = this.listLravelHerder.get(0).getComName();

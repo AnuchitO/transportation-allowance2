@@ -10,7 +10,7 @@ public interface TravelHeader01Service {
 	 public Employee findEmployeeWhereId(String domain);
 	 public Company findCompanyWhereId(String domain);
 	 public void save(SCF003Domain01 domain);
-	 public List<TravelHeader> findTravelHanderGetNewDate();
+	 public List<TravelHeader> findTravelHanderGetLastNoDoc();
 	
 
 }

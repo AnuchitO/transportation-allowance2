@@ -50,6 +50,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.tuxilla.BahtText;
 
 import com.fission.web.view.extjs.grid.GridData;
+import com.spt.tsa.controller.datasource.RunNumberDocument;
 import com.spt.tsa.dao.ParameterTableDao;
 import com.spt.tsa.domain.SCF003Domain01;
 import com.spt.tsa.entity.Company;
@@ -101,7 +102,7 @@ public class SCF003Controller {
 			  SimpleDateFormat ft = new SimpleDateFormat ("yyyy/MM/dd");  
 			SCF003Domain01 domain = new SCF003Domain01();
 			
-			domain.setNo("560001");
+			domain.setNo(new RunNumberDocument(this.travelHeader01Service.findTravelHanderGetLastNoDoc().get(0).getNo()).generatNumberDocument());
 			domain.setDate(ft.format(date));
 			domain.setName(resultsEmp.getName());
 			domain.setId(resultsEmp.getEmpId());
@@ -300,7 +301,7 @@ public class SCF003Controller {
 						domain.setTypeAccount(typeAccount);
 						domain.setType1(type1);
 						domain.setType2(type2);
-//						this.travelHeader01Service.save(domain);
+						this.travelHeader01Service.save(domain);
 //						this.travelHeader01Service.save2();
 						logger.debug("---------------------{}+++++++{}+++++++++++++++++++++++++++++++",domain.getNo(),domain.getDate()); 
 						logger.debug("-----{}+++++",domain.getName());

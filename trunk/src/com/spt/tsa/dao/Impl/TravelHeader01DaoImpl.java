@@ -5,10 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.*;
+import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,8 +53,11 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 		   return this.getHibernateTemplate().get(Company.class,domain);
 	   
 }
-    public List<TravelHeader> findTravelHanderGetNewDate(){
-    	return this.getHibernateTemplate().find("FROM TravelHeader");
+    public List<TravelHeader> findTravelHanderGetLastNoDoc(){
+       	DetachedCriteria criteria =  DetachedCriteria.forClass(TravelHeader.class);  	
+       		criteria.addOrder(Order.desc("no"));
+   	
+    	return this.getHibernateTemplate().findByCriteria(criteria);
     }
     
     public void save(SCF003Domain01 domain){

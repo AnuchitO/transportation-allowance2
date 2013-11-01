@@ -97,9 +97,6 @@ public class SCF003Controller {
 			List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp();
 			List<String> resultsDept = this.employee01Service.findDeptWhereEmp();
 			List<String> resultsProvince = this.employee01Service.findProvinceEmp();
-			List<TravelHeader> resultDate = this.travelHeader01Service.findTravelHanderGetNewDate();
-		
-			
 			  Date date = new Date();
 			  SimpleDateFormat ft = new SimpleDateFormat ("yyyy/MM/dd");  
 			SCF003Domain01 domain = new SCF003Domain01();

@@ -51,39 +51,43 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 		
 					
 		// Head Information
-				String hCompanyName=" ";
-				String noDoc=" ";
-				String docDate=" ";
-				String name=" ";
-				String empId=" ";
-				String compName = " ";
+				String hCompanyName="-";
+				String noDoc="-";
+				String docDate="-";
+				String name="-";
+				String empId="-";
+				String compName = "-";
 				String department="Operation II";
-				String address=" ";
-				String province=" ";
-				String phoneNumber=" ";
-				String email=" ";			
+				String address="-";
+				String province="-";
+				String phoneNumber="-";
+				String email="-";
+				String idCard="-";
+				String hAddressName="-";
+				String hTellName="-";
+				String hFaxName="-";
 				
 		//Table Information
-				String tDate=" ";
-				String tCustomer=" ";
-				String tFrom=" ";
-				String tTo=" ";
-				String tTravel=" ";
-				String tExpressWay =" ";
-				String tSum=" ";
-				String tRemark=" ";
-				String tSumTravel=" ";
-				String tSumExpressWay=" ";
-				String tSumTotal=" ";
+				String tDate="-";
+				String tCustomer="-";
+				String tFrom="-";
+				String tTo="-";
+				String tTravel="-";
+				String tExpressWay ="-";
+				String tSum="-";
+				String tRemark="-";
+				String tSumTravel="-";
+				String tSumExpressWay="-";
+				String tSumTotal="-";
 			
 		//Summary Information
-				String sumTotalCharector=" ";
-				String attachment=" ";
-				String toPay=" ";
-				String bank=" ";
-				String branch=" ";
-				String accountId=" ";
-				String accountType="  ";
+				String sumTotalCharector="-";
+				String attachment="-";
+				String toPay="-";
+				String bank="-";
+				String branch="-";
+				String accountId="-";
+				String accountType="-";
 				String checkCash=" ";
 				String checkCheck=" ";
 
@@ -102,6 +106,10 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 				province=  this.listLravelHerder.get(0).getProvince();
 				phoneNumber= this.listLravelHerder.get(0).getTelephone();
 				email	= this.listLravelHerder.get(0).getEmail();
+				idCard = "1234567890123";
+				hAddressName=this.listLravelHerder.get(0).getCompany().getAddress();
+				hTellName=this.listLravelHerder.get(0).getCompany().getTelephone();
+				hFaxName=this.listLravelHerder.get(0).getCompany().getFax();
 				
 				//get data for Total Row
 				tSumTravel= this.listLravelHerder.get(0).getTotalExpenses().toString();
@@ -118,13 +126,13 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 				 accountId = this.listLravelHerder.get(0).getEmployee().getAccountNo();
 				 accountType = this.resultsBankType.get(0).getDetail();
 				 if(this.listLravelHerder.get(0).getPayType().equals("1")){
-					 checkCash="/";
+					 checkCash=" ";
 					 checkCheck=" ";
 				 }else{
 					 checkCash=" ";
-					 checkCheck="/";
+					 checkCheck=" ";
 				 }
-				
+	
 					
 		if(this.travelDetails.size()==1){
 			//Fill all  in page field
@@ -140,6 +148,12 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 		  	spv004Pojo.setProvince(province);
 		  	spv004Pojo.setPhoneNumber(phoneNumber);
 		  	spv004Pojo.setEmail(email);
+		  	spv004Pojo.setIdCard(idCard);
+			spv004Pojo.setAttachment(attachment);
+			spv004Pojo.setToPay(toPay);
+		  	spv004Pojo.sethAddressName(hAddressName);
+		  	spv004Pojo.sethTellName(hTellName);
+		  	spv004Pojo.sethFaxName(hFaxName);
 
 		  	//Value For first Row Table  query form TravelDetail
 		  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(this.travelDetails.get(0).getDate()));
@@ -159,8 +173,6 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 			
 			//Fill summary						
 			spv004Pojo.setSumTotalCharector(sumTotalCharector);
-			spv004Pojo.setAttachment(attachment);
-			spv004Pojo.setToPay(toPay);
 			spv004Pojo.setBank(bank);
 			spv004Pojo.setBranch(branch);
 			spv004Pojo.setAccountId(accountId);
@@ -183,6 +195,13 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 		  	spv004Pojo.setProvince(province);
 		  	spv004Pojo.setPhoneNumber(phoneNumber);
 		  	spv004Pojo.setEmail(email);
+		  	spv004Pojo.setIdCard(idCard);
+			spv004Pojo.setAttachment(attachment);
+			spv004Pojo.setToPay(toPay);
+		  	spv004Pojo.sethAddressName(hAddressName);
+		  	spv004Pojo.sethTellName(hTellName);
+		  	spv004Pojo.sethFaxName(hFaxName);
+			
 
 		  	//Value For first Row Table  query form TravelDetail
 		  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(this.travelDetails.get(0).getDate()));
@@ -211,9 +230,7 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 			spv004Pojo.settSumTotal(tSumTotal);
 
 			//Fill summary						
-			spv004Pojo.setSumTotalCharector(sumTotalCharector);
-			spv004Pojo.setAttachment(attachment);
-			spv004Pojo.setToPay(toPay);
+			spv004Pojo.setSumTotalCharector(sumTotalCharector);;
 			spv004Pojo.setBank(bank);
 			spv004Pojo.setBranch(branch);
 			spv004Pojo.setAccountId(accountId);
@@ -237,6 +254,12 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 		  	spv004Pojo.setProvince(province);
 		  	spv004Pojo.setPhoneNumber(phoneNumber);
 		  	spv004Pojo.setEmail(email);
+		  	spv004Pojo.setIdCard(idCard);
+			spv004Pojo.setAttachment(attachment);
+			spv004Pojo.setToPay(toPay);
+		  	spv004Pojo.sethAddressName(hAddressName);
+		  	spv004Pojo.sethTellName(hTellName);
+		  	spv004Pojo.sethFaxName(hFaxName);
 
 		  	//Value For first Row Table  query form TravelDetail
 		  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(this.travelDetails.get(0).getDate()));
@@ -282,8 +305,6 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 			
 			//Fill summary						
 			spv004Pojo.setSumTotalCharector(sumTotalCharector);
-			spv004Pojo.setAttachment(attachment);
-			spv004Pojo.setToPay(toPay);
 			spv004Pojo.setBank(bank);
 			spv004Pojo.setBranch(branch);
 			spv004Pojo.setAccountId(accountId);

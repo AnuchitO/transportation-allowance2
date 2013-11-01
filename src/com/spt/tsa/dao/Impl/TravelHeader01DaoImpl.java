@@ -52,7 +52,7 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 	   
 }
     public List<TravelHeader> findTravelHanderGetNewDate(){
-    	return this.getHibernateTemplate().find("select no FROM TravelHeader order by no desc");
+    	return this.getHibernateTemplate().find("FROM TravelHeader");
     }
     
     public void save(SCF003Domain01 domain){

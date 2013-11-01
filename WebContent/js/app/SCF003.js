@@ -13,7 +13,6 @@ SCF003.date = new Ext.form.TextField({
 SCF003.name = new Ext.form.TextField({
 	id : 'name',
 	fieldLabel : "ชื่อ - สกุล",
-
 });
 
 SCF003.id = new Ext.form.TextField({
@@ -541,40 +540,45 @@ SCF003.gridColumns = [
 							SCF003.createGrid.getSelectionModel()
 									.deselectRow(i);
 						}
-								var num = Ext.getCmp('tatolPaymfullCase').getValue();
-								var number = new Array( "", "หนึ่ง", "สอง", "สาม", "สี่", "ห้า", "หก", "เจ็ด", "แปด", "เก้า" );
-								var number2 = new Array( "", "สิบ", "ร้อย", "พัน", "หมื่น", "แสน", "ล้าน" );
-								var str = ""; 
-								var lennum = num.length; 
-								var tmp = 0; 
-								var count = 0; 
-								for( i = lennum-1; i > -1 ; --i ){ 
-								count++; 
-								
-								if ( tmp == 7 ) tmp = 1;
-								ch = num.charAt( i ); 
-								digit = number[ parseInt( ch ) ];
-								pos = tmp + 1; 
-								if ( pos == 2 && ch=="1" ){ 
+						var num = Ext.getCmp('tatolPaymfullCase').getValue();
+						var number = new Array("", "หนึ่ง", "สอง", "สาม",
+								"สี่", "ห้า", "หก", "เจ็ด", "แปด", "เก้า");
+						var number2 = new Array("", "สิบ", "ร้อย", "พัน",
+								"หมื่น", "แสน", "ล้าน");
+						var str = "";
+						var lennum = num.length;
+						var tmp = 0;
+						var count = 0;
+						for (i = lennum - 1; i > -1; --i) {
+							count++;
+
+							if (tmp == 7)
+								tmp = 1;
+							ch = num.charAt(i);
+							digit = number[parseInt(ch)];
+							pos = tmp + 1;
+							if (pos == 2 && ch == "1") {
 								digit = ""
-								
-								}else if ( pos == 2 && ch=="2" ){
+
+							} else if (pos == 2 && ch == "2") {
 								digit = "ยี่"
-								} else if ( ( pos == 1 || pos == 7 ) && ch == "1" && lennum > count ){
+							} else if ((pos == 1 || pos == 7) && ch == "1"
+									&& lennum > count) {
 								digit = "เอ็ด";
-								} 
-								last = number2[ tmp ];
-								if ( ch == "0" && pos != 7 ) last = "";
-								str = digit + last + str;
-								
-								tmp++;
-								}
-								if(num.length == 0){
-									Ext.getCmp('tatolManey').setValue(" ");	
-								}else{
-									Ext.getCmp('tatolManey').setValue(str+"บาทถ้วน");
-								}
-						
+							}
+							last = number2[tmp];
+							if (ch == "0" && pos != 7)
+								last = "";
+							str = digit + last + str;
+
+							tmp++;
+						}
+						if (num.length == 0) {
+							Ext.getCmp('tatolManey').setValue(" ");
+						} else {
+							Ext.getCmp('tatolManey').setValue(str + "บาทถ้วน");
+						}
+
 					}
 				}
 			}),
@@ -806,14 +810,12 @@ SCF003.tatolPaymA = new Ext.form.TextField({
 	width : 80
 
 });
-SCF003.tatolPaymfullCase = new Ext.form.TextField(
-		{
-			id : 'tatolPaymfullCase',
+SCF003.tatolPaymfullCase = new Ext.form.TextField({
+	id : 'tatolPaymfullCase',
 
-			width : 80,
-	
+	width : 80,
 
-		});
+});
 SCF003.createGrid = new Ext.ss.grid.EditorGridPanel({
 	id : 'gridEducationInfomation',
 	store : SCF003.gridStrore,
@@ -861,9 +863,9 @@ SCF003.createGrid = new Ext.ss.grid.EditorGridPanel({
 	})
 });
 // SCF003.gridStrore.load({params:{start:0, limit:25}});
-//SCF003.textHeader = new Ext.form.Label({
-//	fieldLabel : "ใบเบิกค่าเดินทาง"
-//});
+// SCF003.textHeader = new Ext.form.Label({
+// fieldLabel : "ใบเบิกค่าเดินทาง"
+// });
 Ext
 		.onReady(function() {
 
@@ -889,13 +891,13 @@ Ext
 				},
 
 				items : [
-//				         	{
-//				         		items : SCF003.textHeader,
-//				         				labelAlign : 'center',
-//				         				width:'100'
-//				         				
-//
-//				         	},
+				// {
+				// items : SCF003.textHeader,
+				// labelAlign : 'center',
+				// width:'100'
+				//				         				
+				//
+				// },
 
 				{
 					items : SCF003.No,
@@ -1011,12 +1013,13 @@ Ext
 
 								function confirmFunction(btn) {
 									if (btn == 'yes') {
-									// var param3 = {};
-										    var noDoc = Ext.getCmp('no').getValue();
-// var noDoc = SCF01Domain.no; //ลองดู
-// param3.no = "no001";
+										// var param3 = {};
+										var noDoc = Ext.getCmp('no').getValue();
+										// var noDoc = SCF01Domain.no; //ลองดู
+										// param3.no = "no001";
 
-										var urlPreviwPage = "/TransportationAllowance/jasperReport.pdf?docNo="+noDoc;
+										var urlPreviwPage = "/TransportationAllowance/jasperReport.pdf?docNo="
+												+ noDoc;
 										// window.location.assign("/TransportationAllowance/jasperReport.pdf?docNo=56000");
 										window.location.assign(urlPreviwPage);
 									}

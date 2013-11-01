@@ -198,7 +198,7 @@ public class SCF003Controller {
 			
 			JSONObject jobect1 = new JSONObject();
 			jobect1.accumulate("no", "01");
-			jobect1.accumulate("gridDate", "17/16/06");
+			jobect1.accumulate("gridDate", "17/12/2556");
 			jobect1.accumulate("customer", "mardnakub");
 			jobect1.accumulate("region", "Bangkok");
 			jobect1.accumulate("goal", "Bangkok");
@@ -211,7 +211,7 @@ public class SCF003Controller {
 			
 			JSONObject jobect2 = new JSONObject();
 			jobect2.accumulate("no", "02");
-			jobect2.accumulate("gridDate", "18/16/06");
+			jobect2.accumulate("gridDate", "18/12/2556");
 			jobect2.accumulate("customer", "mardnakub");
 			jobect2.accumulate("region", "Bangkok");
 			jobect2.accumulate("goal", "Bangkok");
@@ -223,7 +223,7 @@ public class SCF003Controller {
 			
 			JSONObject jobect3 = new JSONObject();
 			jobect3.accumulate("no", "03");
-			jobect3.accumulate("gridDate", "19/16/06");
+			jobect3.accumulate("gridDate","19/12/2556");
 			jobect3.accumulate("customer", "mardnakub");
 			jobect3.accumulate("region", "Bangkok");
 			jobect3.accumulate("goal", "Bangkok");
@@ -300,7 +300,7 @@ public class SCF003Controller {
 						domain.setTypeAccount(typeAccount);
 						domain.setType1(type1);
 						domain.setType2(type2);
-						this.travelHeader01Service.save(domain);
+//						this.travelHeader01Service.save(domain);
 //						this.travelHeader01Service.save2();
 						logger.debug("---------------------{}+++++++{}+++++++++++++++++++++++++++++++",domain.getNo(),domain.getDate()); 
 						logger.debug("-----{}+++++",domain.getName());
@@ -338,13 +338,13 @@ public class SCF003Controller {
 		
 				@ModelAttribute SCF003Domain01 domain,
 				@RequestParam("dataGridNo") String dataGridNo,
-				@RequestParam("dataGridData") String dataGridData,
+				@RequestParam("dataGridData") Date dataGridData,
 				@RequestParam("dataGridCustomer") String dataGridCustomer,
 				@RequestParam("dataGridRegion") String dataGridRegion,
 				@RequestParam("dataGridGoal") String dataGridGoal,
-				@RequestParam("dataGridPaymentTravel") String dataGridPaymentTravel,
-				@RequestParam("dataGridPaymentD") String dataGridPaymentD,
-				@RequestParam("dataGridPayment") String dataGridPayment,
+				@RequestParam("dataGridPaymentTravel") Long dataGridPaymentTravel,
+				@RequestParam("dataGridPaymentD") Long dataGridPaymentD,
+				@RequestParam("dataGridPayment") Long dataGridPayment,
 				@RequestParam("dataRemark") String dataRemark
 				
 				)throws Exception {
@@ -359,6 +359,7 @@ public class SCF003Controller {
 				domain.setDataGridPaymentD(dataGridPaymentD);
 				domain.setDataGridPayment(dataGridPayment);
 				domain.setDataRemark(dataRemark);
+				
 				logger.debug("-----{}+++++",domain.getDataGridNo()); 
 				logger.debug("-----{}+++++",domain.getDataGridData());
 				logger.debug("-----{}+++++",domain.getDataGridCustomer());

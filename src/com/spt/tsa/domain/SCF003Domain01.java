@@ -1,5 +1,7 @@
 package com.spt.tsa.domain;
 
+import java.util.Date;
+
 public class SCF003Domain01 {
 	/************* no and Date ****************/
 	String no;
@@ -17,13 +19,13 @@ public class SCF003Domain01 {
 
 	/************* Grid **************/
 	String dataGridNo;
-	String dataGridData;
+	Date dataGridData;
 	String dataGridCustomer;
 	String dataGridRegion;
 	String dataGridGoal;
-	String dataGridPaymentTravel;
-	String dataGridPaymentD;
-	String dataGridPayment;
+	Long dataGridPaymentTravel;
+	Long dataGridPaymentD;
+	Long dataGridPayment;
 	String dataRemark;
 	
 	/************* Bottom ************/
@@ -41,6 +43,30 @@ public class SCF003Domain01 {
 	String type2;
 	
 	
+	public Date getDataGridData() {
+		return dataGridData;
+	}
+	public void setDataGridData(Date dataGridData) {
+		this.dataGridData = dataGridData;
+	}
+	public Long getDataGridPaymentTravel() {
+		return dataGridPaymentTravel;
+	}
+	public void setDataGridPaymentTravel(Long dataGridPaymentTravel) {
+		this.dataGridPaymentTravel = dataGridPaymentTravel;
+	}
+	public Long getDataGridPaymentD() {
+		return dataGridPaymentD;
+	}
+	public void setDataGridPaymentD(Long dataGridPaymentD) {
+		this.dataGridPaymentD = dataGridPaymentD;
+	}
+	public Long getDataGridPayment() {
+		return dataGridPayment;
+	}
+	public void setDataGridPayment(Long dataGridPayment) {
+		this.dataGridPayment = dataGridPayment;
+	}
 	public Long getTatolPaym() {
 		return tatolPaym;
 	}
@@ -143,12 +169,7 @@ public class SCF003Domain01 {
 	public void setDataGridNo(String dataGridNo) {
 		this.dataGridNo = dataGridNo;
 	}
-	public String getDataGridData() {
-		return dataGridData;
-	}
-	public void setDataGridData(String dataGridData) {
-		this.dataGridData = dataGridData;
-	}
+
 	public String getDataGridCustomer() {
 		return dataGridCustomer;
 	}
@@ -167,24 +188,7 @@ public class SCF003Domain01 {
 	public void setDataGridGoal(String dataGridGoal) {
 		this.dataGridGoal = dataGridGoal;
 	}
-	public String getDataGridPaymentTravel() {
-		return dataGridPaymentTravel;
-	}
-	public void setDataGridPaymentTravel(String dataGridPaymentTravel) {
-		this.dataGridPaymentTravel = dataGridPaymentTravel;
-	}
-	public String getDataGridPaymentD() {
-		return dataGridPaymentD;
-	}
-	public void setDataGridPaymentD(String dataGridPaymentD) {
-		this.dataGridPaymentD = dataGridPaymentD;
-	}
-	public String getDataGridPayment() {
-		return dataGridPayment;
-	}
-	public void setDataGridPayment(String dataGridPayment) {
-		this.dataGridPayment = dataGridPayment;
-	}
+
 	public String getDataRemark() {
 		return dataRemark;
 	}

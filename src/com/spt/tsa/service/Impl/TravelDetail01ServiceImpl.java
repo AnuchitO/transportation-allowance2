@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spt.tsa.dao.TravelDetail01Dao;
+import com.spt.tsa.domain.SCF003Domain01;
 import com.spt.tsa.entity.*;
 import com.spt.tsa.service.TravelDetail01Service;
 
@@ -26,6 +27,12 @@ public class TravelDetail01ServiceImpl implements TravelDetail01Service{
 	public List<TravelDetail> findByTravelHeader(TravelHeader travelHeader) {
 		// TODO Auto-generated method stub
 		return this.travelDetail01Dao.findByTravelHeader(travelHeader);
+	}
+	public void saveTravelDetail(SCF003Domain01 domain){
+		this.travelDetail01Dao.saveTravelDetail(domain);
+	}
+	public TravelHeader findTravelHeaderWhereId(String domain){
+		return this.travelDetail01Dao.findTravelHeaderWhereId(domain);
 	}
     
 }

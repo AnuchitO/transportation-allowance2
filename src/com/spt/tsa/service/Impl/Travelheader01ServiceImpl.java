@@ -38,8 +38,8 @@ public class Travelheader01ServiceImpl implements TravelHeader01Service{
 	public void save(SCF003Domain01 domain){
 		this.travelHeader01Dao.save(domain);
 	}
-	public List<TravelHeader> findTravelHanderGetNewDate(){
-		return this.travelHeader01Dao.findTravelHanderGetNewDate();
+	public List<TravelHeader> findTravelHanderGetLastNoDoc(){
+		return this.travelHeader01Dao.findTravelHanderGetLastNoDoc();
 	}
 	}
 	

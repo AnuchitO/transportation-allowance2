@@ -58,7 +58,7 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
     public void save(SCF003Domain01 domain){
     	TravelHeader traH = new TravelHeader();
     	
-//    	traH.settHeadId("1");
+    	traH.settHeadId("1");
     	traH.setNo(domain.getNo().toString());
     	traH.setEmployee(findEmployeeWhereId(domain.getId()));//3
     	traH.setCompany(findEmployeeWhereId(domain.getId()).getCompany());//4

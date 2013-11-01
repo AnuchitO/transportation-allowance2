@@ -29,5 +29,17 @@ public class Travelheader01ServiceImpl implements TravelHeader01Service{
 	public List<TravelHeader> findByDocNo(String docNo) {
 		return this.travelHeader01Dao.findByDocNo(docNo);
 	}
+	public Employee findEmployeeWhereId(String domain){
+    	return travelHeader01Dao.findEmployeeWhereId(domain);
+    }
+	public Company findCompanyWhereId(String domain){
+		return travelHeader01Dao.findCompanyWhereId(domain);
+	}
+	public void save(SCF003Domain01 domain){
+		this.travelHeader01Dao.save(domain);
+	}
+	public List<TravelHeader> findTravelHanderGetNewDate(){
+		return this.travelHeader01Dao.findTravelHanderGetNewDate();
+	}
+	}
 	
-}

@@ -27,11 +27,11 @@ public class SCF003Domain01 {
 	String dataRemark;
 	
 	/************* Bottom ************/
-	String tatolPaym;
-	String tatolPaymA;
-	String tatolPaymfullCase;
+	Long tatolPaym;
+	Long tatolPaymA;
+	Long tatolPaymfullCase;
 	String tatolManey;
-	String document;
+	Long document;
 	String forPay;
 	String bank;
 	String branch;
@@ -41,22 +41,22 @@ public class SCF003Domain01 {
 	String type2;
 	
 	
-	public String getTatolPaym() {
+	public Long getTatolPaym() {
 		return tatolPaym;
 	}
-	public void setTatolPaym(String tatolPaym) {
+	public void setTatolPaym(Long tatolPaym) {
 		this.tatolPaym = tatolPaym;
 	}
-	public String getTatolPaymA() {
+	public Long getTatolPaymA() {
 		return tatolPaymA;
 	}
-	public void setTatolPaymA(String tatolPaymA) {
+	public void setTatolPaymA(Long tatolPaymA) {
 		this.tatolPaymA = tatolPaymA;
 	}
-	public String getTatolPaymfullCase() {
+	public Long getTatolPaymfullCase() {
 		return tatolPaymfullCase;
 	}
-	public void setTatolPaymfullCase(String tatolPaymfullCase) {
+	public void setTatolPaymfullCase(Long tatolPaymfullCase) {
 		this.tatolPaymfullCase = tatolPaymfullCase;
 	}
 	public String getTatolManey() {
@@ -65,10 +65,10 @@ public class SCF003Domain01 {
 	public void setTatolManey(String tatolManey) {
 		this.tatolManey = tatolManey;
 	}
-	public String getDocument() {
+	public Long getDocument() {
 		return document;
 	}
-	public void setDocument(String document) {
+	public void setDocument(Long document) {
 		this.document = document;
 	}
 	public String getForPay() {

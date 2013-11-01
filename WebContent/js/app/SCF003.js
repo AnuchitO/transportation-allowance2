@@ -540,96 +540,41 @@ SCF003.gridColumns = [
 
 							SCF003.createGrid.getSelectionModel()
 									.deselectRow(i);
-						
-							
-								
-//									var tb = document.getElementById('tatolPaymfullCase').value;
-//									var result = document.getElementById('tatolManey');
-//									var ctb = tb.toFixed(2);
-//									var fctb = ctb.toString();
-//									var x = ThaiBaht(fctb);
-//									result.value = x;
-				//
-//									function ThaiBaht(Number) {
-//										for (var a = 0; a< Number.length; a++) 
-//										{
-//											Number = Number.replace (",", ""); //ไมต่อ้งการเครAอืงหมายคอมมาร์ 
-//											Number = Number.replace (" ", ""); //ไม่ต้องการช่องว่าง 
-//											Number = Number.replace ("บาท", ""); //ไม่ต้องการตัวหนังสือ บาท 
-//											Number = Number.replace ("฿", ""); //ไม่ต้องการสัญลักษณ์สกุลเงินบาท }
-//										}
-				//
-//										var TxtNumArr = new Array("ศูนย์", "หนึAง", "สอง",
-//												"สาม", "สีA", "ห้า", "หก", "เจ็ด", "แปด",
-//												"เก้า", "สิบ");
-//										var TxtDigitArr = new Array("", "สิบ", "ร้อย", "พัน",
-//												"หมืAน", "แสน", "ล้าน");
-//										var BahtText = "";
-//										if (isNaN(Number)) {
-//											return "ขอ้มลูนําเขา้ไมถ่กูตอ้ง";
-//										} else {
-//											if ((Number - 0) > 9999999.9999) {
-//												return "ขอ้มลูนําเขา้เกนิขอบเขตทAตีงัMไว้";
-//											} else {
-//												Number = Number.split(".");
-//												if (Number[1].length > 0) {
-//													Number[1] = Number[1].substring(0, 2);
-//												}
-//												var NumberLen = Number[0].length - 0;
-//												for (var a = 0; a < NumberLen; a++) {
-//													var tmp = Number[0].substring(a, a + 1) - 0;
-//													if (tmp != 0) {
-//														if ((a == (NumberLen - 1))
-//																&& (tmp == 1)) {
-//															BahtText += "เอ็ด";
-//														} else if ((a == (NumberLen - 2))
-//																&& (tmp == 2)) {
-//															BahtText += "ยAี";
-//														} else if ((a == (NumberLen - 2))
-//																&& (tmp == 1)) {
-//															BahtText += " ";
-//														} else {
-//															BahtText += TxtNumArr[tmp];
-//														}
-//														BahtText += TxtDigitArr[NumberLen - a
-//																- 1];
-//													}
-//												}
-//												BahtText += "บาท";
-//												if ((Number[1] == "0") || (Number[1] == "00")) {
-//													BahtText += "ถว้ น";
-//												} else {
-//													DecimalLen = Number[1].length - 0;
-//													for (var a = 0; a < DecimalLen; a++) {
-//														var tmp = Number[1].substring(a, a + 1) - 0;
-//														app.alert(tmp);
-//														if (tmp != 0) {
-//															if ((a == (DecimalLen - 1))
-//																	&& (tmp == 1)) {
-//																BahtText += "เอ็ด";
-//															} else if ((a == (DecimalLen - 2))
-//																	&& (tmp == 2)) {
-//																BahtText += "ยAี";
-//															} else if ((a == (DecimalLen - 2))
-//																	&& (tmp == 1)) {
-//																BahtText += "";
-//															} else {
-//																BahtText += TxtNumArr[tmp];
-//															}
-//															BahtText += TxtDigitArr[DecimalLen
-//																	- a - 1];
-//														}
-//													}
-//													BahtText += "สตางค์";
-//												}
-//												return BahtText;
-//											}
-//										}
-//									}
-				//
-//								}
-//							}
 						}
+								var num = Ext.getCmp('tatolPaymfullCase').getValue();
+								var number = new Array( "", "หนึ่ง", "สอง", "สาม", "สี่", "ห้า", "หก", "เจ็ด", "แปด", "เก้า" );
+								var number2 = new Array( "", "สิบ", "ร้อย", "พัน", "หมื่น", "แสน", "ล้าน" );
+								var str = ""; 
+								var lennum = num.length; 
+								var tmp = 0; 
+								var count = 0; 
+								for( i = lennum-1; i > -1 ; --i ){ 
+								count++; 
+								
+								if ( tmp == 7 ) tmp = 1;
+								ch = num.charAt( i ); 
+								digit = number[ parseInt( ch ) ];
+								pos = tmp + 1; 
+								if ( pos == 2 && ch=="1" ){ 
+								digit = ""
+								
+								}else if ( pos == 2 && ch=="2" ){
+								digit = "ยี่"
+								} else if ( ( pos == 1 || pos == 7 ) && ch == "1" && lennum > count ){
+								digit = "เอ็ด";
+								} 
+								last = number2[ tmp ];
+								if ( ch == "0" && pos != 7 ) last = "";
+								str = digit + last + str;
+								
+								tmp++;
+								}
+								if(num.length == 0){
+									Ext.getCmp('tatolManey').setValue(" ");	
+								}else{
+									Ext.getCmp('tatolManey').setValue(str+"บาทถ้วน");
+								}
+						
 					}
 				}
 			}),
@@ -916,7 +861,9 @@ SCF003.createGrid = new Ext.ss.grid.EditorGridPanel({
 	})
 });
 // SCF003.gridStrore.load({params:{start:0, limit:25}});
-
+//SCF003.textHeader = new Ext.form.Label({
+//	fieldLabel : "ใบเบิกค่าเดินทาง"
+//});
 Ext
 		.onReady(function() {
 
@@ -942,6 +889,13 @@ Ext
 				},
 
 				items : [
+//				         	{
+//				         		items : SCF003.textHeader,
+//				         				labelAlign : 'center',
+//				         				width:'100'
+//				         				
+//
+//				         	},
 
 				{
 					items : SCF003.No,
@@ -1057,10 +1011,10 @@ Ext
 
 								function confirmFunction(btn) {
 									if (btn == 'yes') {
-									//	var param3 = {};
+									// var param3 = {};
 										    var noDoc = Ext.getCmp('no').getValue();
-//										    var noDoc = SCF01Domain.no; //ลองดู
-//										param3.no = "no001";
+// var noDoc = SCF01Domain.no; //ลองดู
+// param3.no = "no001";
 
 										var urlPreviwPage = "/TransportationAllowance/jasperReport.pdf?docNo="+noDoc;
 										// window.location.assign("/TransportationAllowance/jasperReport.pdf?docNo=56000");

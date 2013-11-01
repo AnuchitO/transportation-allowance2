@@ -47,6 +47,9 @@ public class Company implements Serializable {
 
 	@Column (name = "COMP_CNMODIFYDATE")
 	private Date modifyDate;
+	
+	@Column (name= "COMP_CNFAX")
+	private String fax;
 
 	public String getComId() {
 		return comId;
@@ -110,6 +113,14 @@ public class Company implements Serializable {
 
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
+	}
+
+	public String getFax() {
+		return fax;
+	}
+
+	public void setFax(String fax) {
+		this.fax = fax;
 	}
 
 	

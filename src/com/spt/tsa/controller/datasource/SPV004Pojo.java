@@ -13,6 +13,10 @@ public class SPV004Pojo {
 	private String province;
 	private String phoneNumber;
 	private String email;
+	private String idCard;
+	private String hAddressName;
+	private String hTellName;
+	private String hFaxName;
 
 	//Table Information
 	private String tDate;
@@ -294,6 +298,38 @@ public class SPV004Pojo {
 
 	public void setCheckCheck(String checkCheck) {
 		this.checkCheck = checkCheck;
+	}
+
+	public String getIdCard() {
+		return idCard;
+	}
+
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
+	}
+
+	public String gethAddressName() {
+		return hAddressName;
+	}
+
+	public void sethAddressName(String hAddressName) {
+		this.hAddressName = hAddressName;
+	}
+
+	public String gethTellName() {
+		return hTellName;
+	}
+
+	public void sethTellName(String hTellName) {
+		this.hTellName = hTellName;
+	}
+
+	public String gethFaxName() {
+		return hFaxName;
+	}
+
+	public void sethFaxName(String hFaxName) {
+		this.hFaxName = hFaxName;
 	}
 	
 	

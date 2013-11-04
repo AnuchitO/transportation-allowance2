@@ -19,6 +19,7 @@ public class RunNumberDocument {
 		this.lastNumberDoc = numberDoc;
 		
 	}
+
 	
 	public String generatNumberDocument(){
 		String returnPrefix=this.lastNumberDoc;

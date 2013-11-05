@@ -117,8 +117,15 @@ public class SCF003Controller {
 			  Date date = new Date();
 			  SimpleDateFormat ft = new SimpleDateFormat ("yyyy/MM/dd");  
 			SCF003Domain01 domain = new SCF003Domain01();
+			List<TravelHeader> lastNoDocList = this.travelHeader01Service.findTravelHanderGetLastNoDoc();
+			String numberDoc = " ";
+			if(lastNoDocList.size()!=0){
+				logger.debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {}",lastNoDocList.get(0).getNo());
+				numberDoc = new RunNumberDocument(lastNoDocList.get(0).getNo()).generatNumberDocument();
+				logger.debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {}",numberDoc);
+			}
 			
-			domain.setNo(new RunNumberDocument(this.travelHeader01Service.findTravelHanderGetLastNoDoc().get(0).getNo()).generatNumberDocument());
+			domain.setNo(numberDoc);
 			domain.setDate(ft.format(date));
 			domain.setName(resultsEmp.getName());
 			domain.setId(resultsEmp.getEmpId());
@@ -330,6 +337,7 @@ public class SCF003Controller {
 						)throws Exception {
 					
 					try {
+						logger.debug("AAAAAAAAAAAAA----------------AAAAAAAA******AAAAAA{}AAAAAAAAA{}",dataGridData,domain.getDataGridData());
 						domain.setNo(no);
 						domain.setDate(date);
 						domain.setName(name);
@@ -366,104 +374,104 @@ public class SCF003Controller {
 						domain.setDataRemark(dataRemark);
 						domain.setPack(pack);
 						domain.setStatus(status);
-						
+						logger.debug("DDDDDDDDDDDDDDDDDDDDDDDD----------------DDDDDDDDDDDD******DDDDDD{}DDDDd{}",dataGridData,domain.getDataGridData());
 						
 //						this.travelHeader01Service.save(domain);
 //						this.travelHeader01Service.save2();
 						
-					 TravelHeader travelHeader =null;
-					 List<TravelHeader> getObjectByDocNo = this.travelHeader01Service.findByDocNoForSaveOrUpdate(domain.getNo());
-					 if(getObjectByDocNo.size()!=0){
-						 travelHeader = getObjectByDocNo.get(0);				
-					 }else{
-						 travelHeader = new TravelHeader();
-						 	travelHeader.settHeadId("1");
-					 }						
-							travelHeader.setNo(domain.getNo());
-							travelHeader.setEmployee(this.employee01Service.findEmployeeByIdName(domain.getId()));
-							travelHeader.setCompany(this.employee01Service.findEmployeeByIdName(domain.getId()).getCompany());
-							travelHeader.setTotal(new Long(domain.getTatolPaymfullCase()));
-							travelHeader.setComName(domain.getCompany());
-							travelHeader.setAddress(domain.getAddress());
-					    	travelHeader.setProvince(domain.getAntercedentA());
-					    	travelHeader.setEmail(domain.getEmail());
-					    	travelHeader.setTelephone(domain.getPhone());
-					    	if(domain.getStatus().equals("001")){
-					    	travelHeader.setStatus("001");
-					    	}
-					    	else if(domain.getStatus().equals("002")){
-					    	travelHeader.setStatus("002");
-					    	}
-					    	travelHeader.setRemark("no");
-					    	travelHeader.setTotalExpenses(new Long(domain.getTatolPaym()));
-					    	travelHeader.setTotalMotorWay(new Long(domain.getTatolPaymA()));
-					    	travelHeader.setAttachment(new Long(domain.getDocument()));
-					    	travelHeader.setPaymDesc(domain.getForPay());					    	
-					    	if(domain.getType1().equals("true")){
-					    		travelHeader.setPayType("1");
-					    	}else{
-					    		travelHeader.setPayType("2");
-					    	}					    						    	
-					    	travelHeader.setUserCreation(domain.getName());
-					    	travelHeader.setUserUpdate(domain.getName());
-					    	travelHeader.setCreationate(new Date());
-					    	travelHeader.setModifyDate(new Date());//21
-					    	travelHeader.setNameDept(domain.getAntecedent());//22
-					    this.travelHeader01Service.saveHeaderCreateFrom(travelHeader);
-					
-						//************************* Save Grid ********************************//				    
-						
-						String[] gridContext = domain.getPack().split("!");
-								for(String splitRows:gridContext){
-									
-									String[] gridRowContent = splitRows.split(",");			
-											
-									TravelDetail travelDetail = null;
-									TravelHeader travelHeaderForDetail = this.travelHeader01Service.findByDocNoForSaveOrUpdate(domain.getNo()).get(0);
-									List<TravelDetail>  gridRowList =  this.travelDetail01Service.findRowOfGridForUpdateRow(travelHeaderForDetail, gridRowContent[0]);
-																	
-									if(gridRowList.size()!=0){
-										travelDetail = gridRowList.get(0);
-									}else{
-										travelDetail = new TravelDetail();
-										travelDetail.settDetailId("1");
-									}
-													
-									travelDetail.setNo(gridRowContent[0]);
-									travelDetail.setTravelHeader(travelHeaderForDetail);
-									///Convert year 
-									SimpleDateFormat sdf = new SimpleDateFormat("d/MM/yyyy");
-									String[] thaiFormatSplit = gridRowContent[1].split("/");
-									Integer year = Integer.parseInt(thaiFormatSplit[2]);
-									year-=543;
-									System.out.println(year);
-									Date dateGridRow = sdf.parse(thaiFormatSplit[0]+"/"+thaiFormatSplit[1]+"/"+year);
-									//End Convert year
-									travelDetail.setDate(dateGridRow);
-									travelDetail.setCustomer(this.customer01Service.findByName(gridRowContent[2]).get(0));
-									travelDetail.setFrom(gridRowContent[3]);
-									travelDetail.setTo(gridRowContent[4]);
-									travelDetail.setTravelExpenses(new Long(gridRowContent[5]));
-									travelDetail.setMotorWay(new Long(gridRowContent[6]));
-									travelDetail.setTotalDay(new Long(gridRowContent[7]));
-									travelDetail.setRemark(gridRowContent[8]);
-									travelDetail.setUserCreation(domain.getName());
-									travelDetail.setUserUpdate(domain.getName());
-									
-									///Convert year 
-									SimpleDateFormat sdfCreate = new SimpleDateFormat("d/MM/yyyy");
-									String[] thaiFormatSplitCreate  = domain.getDate().split("/");
-									Integer yearCreate  = Integer.parseInt(thaiFormatSplitCreate[2]);
-									yearCreate-=543;
-									Date dateCreate  = sdfCreate.parse(thaiFormatSplit[0]+"/"+thaiFormatSplit[1]+"/"+yearCreate);
-									//End Convert year									
-									travelDetail.setCreationDate(dateCreate);
-									travelDetail.setModifyDate(new Date());
-									this.travelDetail01Service.saveTravelDetailCreateForm(travelDetail);
-								}
+//					 TravelHeader travelHeader =null;
+//					 List<TravelHeader> getObjectByDocNo = this.travelHeader01Service.findByDocNoForSaveOrUpdate(domain.getNo());
+//					 if(getObjectByDocNo.size()!=0){
+//						 travelHeader = getObjectByDocNo.get(0);				
+//					 }else{
+//						 travelHeader = new TravelHeader();
+//						 	travelHeader.settHeadId("1");
+//					 }						
+//							travelHeader.setNo(domain.getNo());
+//							travelHeader.setEmployee(this.employee01Service.findEmployeeByIdName(domain.getId()));
+//							travelHeader.setCompany(this.employee01Service.findEmployeeByIdName(domain.getId()).getCompany());
+//							travelHeader.setTotal(new Long(domain.getTatolPaymfullCase()));
+//							travelHeader.setComName(domain.getCompany());
+//							travelHeader.setAddress(domain.getAddress());
+//					    	travelHeader.setProvince(domain.getAntercedentA());
+//					    	travelHeader.setEmail(domain.getEmail());
+//					    	travelHeader.setTelephone(domain.getPhone());
+//					    	if(domain.getStatus().equals("001")){
+//					    	travelHeader.setStatus("001");
+//					    	}
+//					    	else if(domain.getStatus().equals("002")){
+//					    	travelHeader.setStatus("002");
+//					    	}
+//					    	travelHeader.setRemark("no");
+//					    	travelHeader.setTotalExpenses(new Long(domain.getTatolPaym()));
+//					    	travelHeader.setTotalMotorWay(new Long(domain.getTatolPaymA()));
+//					    	travelHeader.setAttachment(new Long(domain.getDocument()));
+//					    	travelHeader.setPaymDesc(domain.getForPay());					    	
+//					    	if(domain.getType1().equals("true")){
+//					    		travelHeader.setPayType("1");
+//					    	}else{
+//					    		travelHeader.setPayType("2");
+//					    	}					    						    	
+//					    	travelHeader.setUserCreation(domain.getName());
+//					    	travelHeader.setUserUpdate(domain.getName());
+//					    	travelHeader.setCreationate(new Date());
+//					    	travelHeader.setModifyDate(new Date());//21
+//					    	travelHeader.setNameDept(domain.getAntecedent());//22
+//					    this.travelHeader01Service.saveHeaderCreateFrom(travelHeader);
+//					
+//						//************************* Save Grid ********************************//				    
+//						
+//						String[] gridContext = domain.getPack().split("!");
+//								for(String splitRows:gridContext){
+//									
+//									String[] gridRowContent = splitRows.split(",");			
+//											
+//									TravelDetail travelDetail = null;
+//									TravelHeader travelHeaderForDetail = this.travelHeader01Service.findByDocNoForSaveOrUpdate(domain.getNo()).get(0);
+//									List<TravelDetail>  gridRowList =  this.travelDetail01Service.findRowOfGridForUpdateRow(travelHeaderForDetail, gridRowContent[0]);
+//																	
+//									if(gridRowList.size()!=0){
+//										travelDetail = gridRowList.get(0);
+//									}else{
+//										travelDetail = new TravelDetail();
+//										travelDetail.settDetailId("1");
+//									}
+//													
+//									travelDetail.setNo(gridRowContent[0]);
+//									travelDetail.setTravelHeader(travelHeaderForDetail);
+//									///Convert year 
+//									SimpleDateFormat sdf = new SimpleDateFormat("d/MM/yyyy");
+//									String[] thaiFormatSplit = gridRowContent[1].split("/");
+//									Integer year = Integer.parseInt(thaiFormatSplit[2]);
+//									year-=543;
+//									System.out.println(year);
+//									Date dateGridRow = sdf.parse(thaiFormatSplit[0]+"/"+thaiFormatSplit[1]+"/"+year);
+//									//End Convert year
+//									travelDetail.setDate(dateGridRow);
+//									travelDetail.setCustomer(this.customer01Service.findByName(gridRowContent[2]).get(0));
+//									travelDetail.setFrom(gridRowContent[3]);
+//									travelDetail.setTo(gridRowContent[4]);
+//									travelDetail.setTravelExpenses(new Long(gridRowContent[5]));
+//									travelDetail.setMotorWay(new Long(gridRowContent[6]));
+//									travelDetail.setTotalDay(new Long(gridRowContent[7]));
+//									travelDetail.setRemark(gridRowContent[8]);
+//									travelDetail.setUserCreation(domain.getName());
+//									travelDetail.setUserUpdate(domain.getName());
+//									
+//									///Convert year 
+//									SimpleDateFormat sdfCreate = new SimpleDateFormat("d/MM/yyyy");
+//									String[] thaiFormatSplitCreate  = domain.getDate().split("/");
+//									Integer yearCreate  = Integer.parseInt(thaiFormatSplitCreate[2]);
+//									yearCreate-=543;
+//									Date dateCreate  = sdfCreate.parse(thaiFormatSplit[0]+"/"+thaiFormatSplit[1]+"/"+yearCreate);
+//									//End Convert year									
+//									travelDetail.setCreationDate(dateCreate);
+//									travelDetail.setModifyDate(new Date());
+//									this.travelDetail01Service.saveTravelDetailCreateForm(travelDetail);
+//								}
 					} catch (Exception e) {
 						e.printStackTrace();
-						logger.error(e.getMessage());
+						logger.error("-----------travelDetail01Service------------{}",e.getMessage());
 					}
 					
 				}

@@ -380,7 +380,7 @@ public class SCF003Controller {
 					    	travelHeader.setNameDept(domain.getAntecedent());//22
 					    this.travelHeader01Service.saveHeaderCreateFrom(travelHeader);
 					
-					    
+						//************************* Save Grid ********************************//				    
 						
 						String[] gridContext = domain.getPack().split("!");
 								for(String splitRows:gridContext){
@@ -437,80 +437,6 @@ public class SCF003Controller {
 					
 				}
 				
-				//************************* Save Grid ********************************//
-				
-				@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=save2")
-				public void save2(HttpServletRequest request, HttpServletResponse response,
-				
-						@ModelAttribute SCF003Domain01 domain,
-						@RequestParam("dataGridNo") String dataGridNo,
-						@RequestParam("dataGridData") Date dataGridData,
-						@RequestParam("dataGridCustomer") String dataGridCustomer,
-						@RequestParam("dataGridRegion") String dataGridRegion,
-						@RequestParam("dataGridGoal") String dataGridGoal,
-						@RequestParam("dataGridPaymentTravel") Long dataGridPaymentTravel,
-						@RequestParam("dataGridPaymentD") Long dataGridPaymentD,
-						@RequestParam("dataGridPayment") Long dataGridPayment,
-						@RequestParam("dataRemark") String dataRemark,
-						@RequestParam("pack") String pack
-						
-						)throws Exception {
-					
-					try {
-						domain.setDataGridNo(dataGridNo);
-						domain.setDataGridData(dataGridData);
-						domain.setDataGridCustomer(dataGridCustomer);
-						domain.setDataGridRegion(dataGridRegion);
-						domain.setDataGridGoal(dataGridGoal);
-						domain.setDataGridPaymentTravel(dataGridPaymentTravel);
-						domain.setDataGridPaymentD(dataGridPaymentD);
-						domain.setDataGridPayment(dataGridPayment);
-						domain.setDataRemark(dataRemark);
-						domain.setPack(pack);
-						
-						TravelDetail travelDetail = new TravelDetail();
-
-							logger.debug("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTForCustomer++++{}",domain.getPack());
-							String[] gridContext = domain.getPack().split("!");
-									for(String splitRows:gridContext){
-										logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",splitRows);
-										String[] gridRowContent = splitRows.split(",");			
-										logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",gridRowContent[0]);
-										logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",gridRowContent[1]);
-										logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",gridRowContent[2]);
-										logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",gridRowContent[3]);
-										logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",gridRowContent[4]);
-										logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",gridRowContent[5]);
-										logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",gridRowContent[6]);
-										logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",gridRowContent[7]);
-										
-										travelDetail.settDetailId("1");
-										travelDetail.setTravelHeader(this.travelHeader01Service.findByDocNo("570001").get(0));
-										travelDetail.setCustomer(this.customer01Service.findCustomer().get(0));
-										travelDetail.setDate(new Date());
-										travelDetail.setFrom(domain.getDataGridRegion());
-										travelDetail.setTo(domain.getDataGridGoal());
-										travelDetail.setTravelExpenses(domain.getDataGridPaymentTravel());
-										travelDetail.setMotorWay(domain.getDataGridPaymentD());
-										travelDetail.setTotalDay(domain.getDataGridPayment());
-										travelDetail.setRemark(domain.getDataRemark());
-										travelDetail.setUserCreation("anuchit");
-										travelDetail.setUserUpdate("anuchit");
-										travelDetail.setCreationDate(new Date());
-										travelDetail.setModifyDate(new Date());
-//										this.travelDetail01Service.saveTravelDetailCreateForm(travelDetail);
-									}
-
-					} catch (Exception e) {
-						e.printStackTrace();
-						logger.error(e.getMessage());
-					}
-
-				}
-		
-
-	
-		
 
 		@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=save3")
 		public void save3(HttpServletRequest request, HttpServletResponse response,

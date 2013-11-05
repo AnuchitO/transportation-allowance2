@@ -95,8 +95,7 @@ public class TravelDetail01DaoImpl extends HibernateDaoSupport implements Travel
 	}
 
 	public void saveTravelDetailCreateForm(TravelDetail travelDetail) {
-		this.getHibernateTemplate().save(travelDetail);
-		
+		this.getHibernateTemplate().saveOrUpdate(travelDetail);		
 	}
 
 	public List<TravelDetail> findRowOfGridForUpdateRow(TravelHeader travelHeader, String no) {

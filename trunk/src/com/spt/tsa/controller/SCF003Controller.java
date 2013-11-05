@@ -54,6 +54,7 @@ import com.spt.tsa.controller.datasource.RunNumberDocument;
 import com.spt.tsa.dao.ParameterTableDao;
 import com.spt.tsa.domain.SCF003Domain01;
 import com.spt.tsa.entity.Company;
+import com.spt.tsa.entity.Customer;
 import com.spt.tsa.entity.Employee;
 import com.spt.tsa.entity.ParameterTable;
 import com.spt.tsa.entity.TravelDetail;
@@ -124,6 +125,7 @@ public class SCF003Controller {
 			new BahtText(11).toString();
 		
 			domain.setCompany(resultsEmp.getCompany().getName());
+			domain.setIdCard(resultsEmp.getIdCard());
 			domain.setAddress(resultsEmp.getAddress());
 			domain.setPhone(resultsEmp.getTelephone());
 			domain.setEmail(resultsEmp.getEmail());
@@ -205,7 +207,28 @@ public class SCF003Controller {
 	       
 	        gridData.responseJson(response);
 		}
-		
+		@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=customer" )
+		public void findCustomer(HttpServletRequest request, HttpServletResponse response) {
+			List<Customer> resultsCus = this.customer01Service.findCustomer();
+			JSONArray jsonArray = new JSONArray();
+			GridData gridData = new GridData();
+			
+			JSONObject jobect1 = new JSONObject();
+			for(Customer c:resultsCus){
+			
+			
+			jobect1.accumulate("code", c.getName());
+			jobect1.accumulate("description", c.getName());
+			jsonArray.add(jobect1);
+			jobect1.clear();
+			
+			}
+			gridData.setRecords(jsonArray);
+	        gridData.setTotal(jsonArray.size());
+	        gridData.setSuccess(true);
+	       
+	        gridData.responseJson(response);
+		}
 		@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=gridData" )
 		public void findGrid(HttpServletRequest request, HttpServletResponse response) {
 				
@@ -264,6 +287,7 @@ public class SCF003Controller {
 				public void save1(HttpServletRequest request, HttpServletResponse response,
 				
 						@ModelAttribute SCF003Domain01 domain,
+						
 						@RequestParam("no") String no,
 						@RequestParam("date") String date,
 						@RequestParam("name") String name,
@@ -297,7 +321,8 @@ public class SCF003Controller {
 						@RequestParam("dataGridPaymentD") Long dataGridPaymentD,
 						@RequestParam("dataGridPayment") Long dataGridPayment,
 						@RequestParam("dataRemark") String dataRemark,
-						@RequestParam("pack") String pack
+						@RequestParam("pack") String pack,
+						@RequestParam("status") String status
 						
 						
 						
@@ -340,6 +365,7 @@ public class SCF003Controller {
 						domain.setDataGridPayment(dataGridPayment);
 						domain.setDataRemark(dataRemark);
 						domain.setPack(pack);
+						domain.setStatus(status);
 						
 						
 //						this.travelHeader01Service.save(domain);
@@ -362,7 +388,12 @@ public class SCF003Controller {
 					    	travelHeader.setProvince(domain.getAntercedentA());
 					    	travelHeader.setEmail(domain.getEmail());
 					    	travelHeader.setTelephone(domain.getPhone());
+					    	if(domain.getStatus().equals("001")){
 					    	travelHeader.setStatus("001");
+					    	}
+					    	else if(domain.getStatus().equals("002")){
+					    	travelHeader.setStatus("002");
+					    	}
 					    	travelHeader.setRemark("no");
 					    	travelHeader.setTotalExpenses(new Long(domain.getTatolPaym()));
 					    	travelHeader.setTotalMotorWay(new Long(domain.getTatolPaymA()));

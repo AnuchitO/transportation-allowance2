@@ -14,6 +14,7 @@ public class SCF003Domain01 {
 	String id;
 	String company;
 	String antecedent;
+	String idCard;
 	String address;
 	String antercedentA;
 	String phone;
@@ -46,8 +47,21 @@ public class SCF003Domain01 {
 	String type1;
 	String type2;
 	String submitNo;
+	String status;
 	
 	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getIdCard() {
+		return idCard;
+	}
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
+	}
 	public String getSubmitNo() {
 		return submitNo;
 	}

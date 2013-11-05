@@ -64,6 +64,12 @@ SCF003.createCombobox = new Ext.form.ComboBox({
 	emptyText : 'Select ...'
 
 });
+SCF003.idCardEmp = new Ext.form.TextField({
+	id : 'idCardEmp',
+	fieldLabel : "รหัสประจำตัวประชาชน",
+	width:250
+
+});
 
 SCF003.textArea = new Ext.ss.form.TextArea({
 	fieldLabel : 'ที่อยู่',
@@ -134,7 +140,7 @@ SCF003.phone.setValue(SCF01Domain.phone);
 SCF003.email.setValue(SCF01Domain.email);
 SCF003.createCombobox.setValue(SCF01Domain.antecedent);
 SCF003.createComboboxA.setValue(SCF01Domain.antercedentA);
-
+SCF003.idCardEmp.setValue(SCF01Domain.idCard);
 SCF003.setCenter = new Ext.form.FieldSet({
 	collapsible : false,
 	title : 'ข้อมูลส่วนตัว',
@@ -163,6 +169,10 @@ SCF003.setCenter = new Ext.form.FieldSet({
 	}, {
 		columnWidth : 0.5,
 		items : SCF003.createCombobox,
+		labelAlign : 'right'
+	},{
+		columnWidth : 1,
+		items : SCF003.idCardEmp,
 		labelAlign : 'right'
 	}, {
 		columnWidth : 1,
@@ -267,9 +277,10 @@ SCF003.gridCopyBtn = new Ext.Toolbar.Button(
 																				'gridEducationInfomation')
 																		.addRow(
 																				x);
+																
+																
 
 															}
-
 														} else {
 															Ext.Msg
 																	.alert("กรุณาเลือกข้อมูลที่จะ copy");
@@ -295,117 +306,144 @@ function sleep(milliseconds) {
 		}
 	}
 }
+var param2 = {};
+function saveOrUpdate(){
+
+param2.no = Ext.getCmp('no').getValue();
+param2.date = Ext.getCmp('date').getValue();
+param2.name = Ext.getCmp('name').getValue();
+param2.id = Ext.getCmp('id').getValue();
+param2.company = Ext.getCmp('company').getValue();
+param2.antecedent = Ext.getCmp('antecedent').getValue();
+param2.address = Ext.getCmp('address').getValue();
+param2.antercedentA = Ext.getCmp('antercedentA').getValue();
+param2.phone = Ext.getCmp('phone').getValue();
+param2.email = Ext.getCmp('email').getValue();
+
+// **************** get value in Bottom to controller
+// **********//
+param2.tatolPaym = Ext.getCmp('tatolPaym').getValue();
+param2.tatolPaymA = Ext.getCmp('tatolPaymA').getValue();
+param2.tatolPaymfullCase = Ext.getCmp('tatolPaymfullCase').getValue();
+param2.tatolManey = Ext.getCmp('tatolManey').getValue();
+param2.document = Ext.getCmp('document').getValue();
+param2.forPay = Ext.getCmp('forPay').getValue();
+param2.bank = Ext.getCmp('bank').getValue();
+param2.branch = Ext.getCmp('branch').getValue();
+param2.accountNumber = Ext.getCmp('accountNumber')
+		.getValue();
+param2.typeAccount = Ext.getCmp('typeAccount')
+		.getValue();
+param2.type1 = Ext.getCmp('type1').getValue();
+param2.type2 = Ext.getCmp('type2').getValue();
+
+
+// ************************** get value to controller by
+// Grid ***************************//
+
+SCF003.createGrid.getSelectionModel().selectAll();
+
+var sm = SCF003.createGrid.getSelectionModel().getSelections();
+param2.pack = "";
+
+for (var i = 0; i <= sm.length - 1; i++) {
+	param2.dataGridNo = SCF003.createGrid.getStore().getAt(i).data.no;
+	param2.dataGridData = SCF003.createGrid.getStore().getAt(i).data.gridDate;
+	param2.dataGridCustomer = SCF003.createGrid.getStore().getAt(i).data.customer;
+	param2.dataGridRegion = SCF003.createGrid.getStore().getAt(i).data.region;
+	param2.dataGridGoal = SCF003.createGrid.getStore().getAt(i).data.goal;
+	param2.dataGridPaymentTravel = SCF003.createGrid.getStore().getAt(i).data.paymentTravel;
+	param2.dataGridPaymentD = SCF003.createGrid.getStore().getAt(i).data.paymentD;
+	param2.dataGridPayment = SCF003.createGrid.getStore().getAt(i).data.payment;
+	param2.dataRemark = SCF003.createGrid.getStore().getAt(i).data.remark;
+	SCF003.createGrid.getSelectionModel().deselectRow(i);
+	param2.pack += 	param2.dataGridNo+","+
+					param2.dataGridData+","+
+					param2.dataGridCustomer+","+
+					param2.dataGridRegion+","+
+					param2.dataGridGoal+","+						
+					param2.dataGridPaymentTravel+","+
+					param2.dataGridPaymentD+","+
+					param2.dataGridPayment+","+
+					param2.dataRemark+"!";
+}
+param2.method = "save1";
+Ext.Ajax.request({
+	url : '/TransportationAllowance/SCF003.html',
+	params : param2,
+	success : function(response, opts) {
+		if (param2 != null) {
+			Ext.Msg.alert('Information','บันทึกเรียบร้อย');
+		} else {
+			Ext.Msg.alert('Information', 'Error');
+		}
+	},
+	failure : function(response, opts) {
+		Ext.Msg.alert('ERROR', 'Error.');
+	}
+});
+}
+
 SCF003.gridSaveBtn = new Ext.Toolbar.Button(
 		{
 			tooltip : 'Save',
 			iconCls : 'save',
 			disabled : false,
 			handler : function() {
-				Ext.MessageBox.confirm('Confirmation', 'ยืนยันข้อมูลถูกต้อง ?',
+				Ext.MessageBox.confirm('Confirmation', 'ยืนยันข้อมูลถูกต้อง ? <br/>เอกสารของคุณจะอยู่ในสถานะ \"บันทึก\"',
 						confirmFunction);
 				function confirmFunction(btn) {
 					if (btn == 'yes') {
-
-						// **************** get value History to controller
-						// **********//
-//						var param1 = {};
-						var param2 = {};
-						param2.no = Ext.getCmp('no').getValue();
-						param2.date = Ext.getCmp('date').getValue();
-						param2.name = Ext.getCmp('name').getValue();
-						param2.id = Ext.getCmp('id').getValue();
-						param2.company = Ext.getCmp('company').getValue();
-						param2.antecedent = Ext.getCmp('antecedent').getValue();
-						param2.address = Ext.getCmp('address').getValue();
-						param2.antercedentA = Ext.getCmp('antercedentA').getValue();
-						param2.phone = Ext.getCmp('phone').getValue();
-						param2.email = Ext.getCmp('email').getValue();
-
-						// **************** get value in Bottom to controller
-						// **********//
-						param2.tatolPaym = Ext.getCmp('tatolPaym').getValue();
-						param2.tatolPaymA = Ext.getCmp('tatolPaymA').getValue();
-						param2.tatolPaymfullCase = Ext.getCmp('tatolPaymfullCase').getValue();
-						param2.tatolManey = Ext.getCmp('tatolManey').getValue();
-						param2.document = Ext.getCmp('document').getValue();
-						param2.forPay = Ext.getCmp('forPay').getValue();
-						param2.bank = Ext.getCmp('bank').getValue();
-						param2.branch = Ext.getCmp('branch').getValue();
-						param2.accountNumber = Ext.getCmp('accountNumber')
-								.getValue();
-						param2.typeAccount = Ext.getCmp('typeAccount')
-								.getValue();
-						param2.type1 = Ext.getCmp('type1').getValue();
-						param2.type2 = Ext.getCmp('type2').getValue();
-//						param1.method = "save1";
-//						Ext.Ajax.request({
-//							url : '/TransportationAllowance/SCF003.html',
-//							params : param1,
-//							success : function(response, opts) {
-//								if (param1 != null) {
-//									Ext.Msg.alert('Information',
-//											'บันทึกเรียบร้อย');
-//								} else {
-//									Ext.Msg.alert('Information', 'Error');
-//								}
-//
-//							},
-//							failure : function(response, opts) {
-//								Ext.Msg.alert('ERROR', 'Error.');
-//							}
-//
-//						});
-
-						// ************************** get value to controller by
-						// Grid ***************************//
+						param2.status = "001";
 						
-						SCF003.createGrid.getSelectionModel().selectAll();
+						saveOrUpdate();
 						
-						var sm = SCF003.createGrid.getSelectionModel().getSelections();
-						param2.pack = "";
 						
-						for (var i = 0; i <= sm.length - 1; i++) {
-							param2.dataGridNo = SCF003.createGrid.getStore().getAt(i).data.no;
-							param2.dataGridData = SCF003.createGrid.getStore().getAt(i).data.gridDate;
-							param2.dataGridCustomer = SCF003.createGrid.getStore().getAt(i).data.customer;
-							param2.dataGridRegion = SCF003.createGrid.getStore().getAt(i).data.region;
-							param2.dataGridGoal = SCF003.createGrid.getStore().getAt(i).data.goal;
-							param2.dataGridPaymentTravel = SCF003.createGrid.getStore().getAt(i).data.paymentTravel;
-							param2.dataGridPaymentD = SCF003.createGrid.getStore().getAt(i).data.paymentD;
-							param2.dataGridPayment = SCF003.createGrid.getStore().getAt(i).data.payment;
-							param2.dataRemark = SCF003.createGrid.getStore().getAt(i).data.remark;
-							SCF003.createGrid.getSelectionModel().deselectRow(i);
-							param2.pack += 	param2.dataGridNo+","+
-											param2.dataGridData+","+
-											param2.dataGridCustomer+","+
-											param2.dataGridRegion+","+
-											param2.dataGridGoal+","+						
-											param2.dataGridPaymentTravel+","+
-											param2.dataGridPaymentD+","+
-											param2.dataGridPayment+","+
-											param2.dataRemark+"!";
-						}
-						param2.method = "save1";
-						Ext.Ajax.request({
-							url : '/TransportationAllowance/SCF003.html',
-							params : param2,
-							success : function(response, opts) {
-								if (param2 != null) {
-									Ext.Msg.alert('Information','บันทึกเรียบร้อย');
-								} else {
-									Ext.Msg.alert('Information', 'Error');
-								}
-							},
-							failure : function(response, opts) {
-								Ext.Msg.alert('ERROR', 'Error.');
-							}
-						});
-					}
 				}
 			}
-		// window.location.assign("http://www.google.com");
+			}
+		
 
 		});
+
+SCF003.comboCustomerStoreGrid = new Ext.data.JsonStore({
+	baseParams : {
+		method : 'customer'
+	},
+	url : '/TransportationAllowance/SCF003.html',
+	method : 'POST',
+	storeId : 'bloodStore',
+	root : 'records',
+	idProperty : 'code',
+	autoLoad : true,
+	// fieldLabel : 'comboStrore',
+	fields : [ {
+		name : 'code'
+
+	}, {
+		name : 'description'
+	} ],
+	model : 'ForumThread',
+	remoteSort : true
+});
+
+SCF003.comboCustomerGrid = new Ext.form.ComboBox({
+	id : 'comboCustomerGrid',
+//	fieldLabel : 'ฝ่าย / แผนก',
+	mode : 'local',
+	store : SCF003.comboCustomerStoreGrid,
+	valueField : 'code',
+	displayField : 'description',
+	lazyRender : true,
+	autoSelect : true,
+	criterionField : true,
+	selectOnFocus : true,
+	typeAhead : true,
+	forceSelection : true,
+	triggerAction : 'all',
+	emptyText : 'Select ...'
+
+});
 SCF003.checkboxselection = new Ext.grid.CheckboxSelectionModel({
 	singleSelect : false,
 
@@ -446,9 +484,7 @@ SCF003.gridColumns = [
 			header : 'ลูกค้า',
 			dataIndex : 'customer',
 			align : 'center',
-			editor : new Ext.form.TextField({
-				id : 'editCustomer',
-			}),
+			editor :SCF003.comboCustomerGrid,
 			width : 87.08,
 
 		},
@@ -502,6 +538,7 @@ SCF003.gridColumns = [
 												'payment', totalPaymentTravel);
 										SCF003.createGrid.store.getAt(i).set(
 												'paymentD', "0");
+										
 										a = a
 												+ parseInt(SCF003.createGrid
 														.getStore().getAt(i).data.paymentTravel);
@@ -692,10 +729,7 @@ SCF003.gridColumns = [
 			header : 'รวมเป็นเงิน',
 			dataIndex : 'payment',
 			align : 'center',
-			editor : new Ext.form.TextField({
-				id : 'editPayment',
-
-			}),
+			
 			width : 87.08,
 
 		}, {
@@ -1084,7 +1118,7 @@ Ext
 								var type2 = Ext.getCmp('type2').getValue();
 								Ext.MessageBox.confirm('Acception', 'คุณ' + ' '
 										+ name + ' '
-										+ 'มั่นใจว่าจะทำสิ่งนี้  ?',
+										+ 'แน่ใจว่าจะส่งเอกสารนี้ไปยังผู้ดูแล  ?',
 										confirmFunction);
 
 								function confirmFunction(btn) {
@@ -1105,38 +1139,8 @@ Ext
 													.alert('Information',
 															'กรุณาเลือกประเภทการจ่ายเงิน');
 										} else {
-
-											var param3 = {};
-											param3.submitNo = Ext.getCmp('no')
-													.getValue();
-											param3.method = "save3";
-											Ext.Ajax
-													.request({
-														url : '/TransportationAllowance/SCF003.html',
-														params : param3,
-														success : function(
-																response, opts) {
-															if (param3 != null) {
-																Ext.Msg
-																		.alert(
-																				'Information',
-																				'Submit เรียบร้อย');
-															} else {
-																Ext.Msg
-																		.alert(
-																				'Information',
-																				'Error');
-															}
-
-														},
-														failure : function(
-																response, opts) {
-															Ext.Msg.alert(
-																	'ERROR',
-																	'Error.');
-														}
-
-													});
+											param2.status = "002";
+											saveOrUpdate();
 										}
 									}
 								}

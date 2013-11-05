@@ -11,6 +11,7 @@ public interface TravelHeader01Service {
 	 public Company findCompanyWhereId(String domain);
 	 public void save(SCF003Domain01 domain);
 	 public List<TravelHeader> findTravelHanderGetLastNoDoc();
+	 public void updateStatusSubmit(SCF003Domain01 domain);
 	
 	///nong
 		 public void saveHeaderCreateFrom(TravelHeader travelHeader);

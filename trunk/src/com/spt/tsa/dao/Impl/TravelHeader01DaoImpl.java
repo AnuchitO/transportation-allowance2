@@ -63,7 +63,7 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
     public void save(SCF003Domain01 domain){
     	TravelHeader traH = new TravelHeader();
     	
-    	traH.settHeadId("1");
+    	traH.settHeadId(domain.getName().toString());
     	traH.setNo(domain.getNo().toString());
     	traH.setEmployee(findEmployeeWhereId(domain.getId()));//3
     	traH.setCompany(findEmployeeWhereId(domain.getId()).getCompany());//4
@@ -73,13 +73,13 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
     	traH.setProvince(domain.getAntercedentA());
     	traH.setEmail(domain.getEmail());
     	traH.setTelephone(domain.getPhone());
-    	traH.setStatus("SAVE");
+    	traH.setStatus("002");
     	traH.setRemark("no");
     	traH.setTotalExpenses(new Long(domain.getTatolPaym()));
     	traH.setTotalMotorWay(new Long(domain.getTatolPaymA()));
     	traH.setAttachment(new Long(domain.getDocument()));
     	traH.setPaymDesc(domain.getForPay());
-    	traH.setPayType("1");
+    	traH.setPayType(domain.getType1());
     	traH.setUserCreation(domain.getName());
     	traH.setUserUpdate(domain.getName());
     	traH.setCreationate(new Date());
@@ -87,6 +87,20 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
     	traH.setNameDept(domain.getAntecedent());//22
     	this.getHibernateTemplate().save(traH);
     	
+    }
+    public List<TravelHeader> findTravelHWhereId(String domain){
+		 DetachedCriteria criteria =  DetachedCriteria.forClass(TravelHeader.class).add(
+				   
+	                Restrictions.eq("no", domain));
+
+		 return this.getHibernateTemplate().findByCriteria(criteria);
+}
+    public void updateStatusSubmit(SCF003Domain01 domain){
+    	TravelHeader traH = this.getHibernateTemplate().get(TravelHeader.class, findTravelHWhereId(domain.getSubmitNo()).get(0).gettHeadId());
+    	
+    	traH.setStatus("001");
+    	this.getHibernateTemplate().update(traH);
+    
     }
 
 	public void saveHeaderCreateFrom(TravelHeader travelHeader) {

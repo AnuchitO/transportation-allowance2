@@ -41,7 +41,9 @@ public class Travelheader01ServiceImpl implements TravelHeader01Service{
 	public List<TravelHeader> findTravelHanderGetLastNoDoc(){
 		return this.travelHeader01Dao.findTravelHanderGetLastNoDoc();
 	}
-
+	public void updateStatusSubmit(SCF003Domain01 domain){
+		this.travelHeader01Dao.updateStatusSubmit(domain);
+	}
 	public void saveHeaderCreateFrom(TravelHeader travelHeader) {
 		this.travelHeader01Dao.saveHeaderCreateFrom(travelHeader);
 	}

@@ -123,9 +123,21 @@ public class APP001Controller{
 		}
 		
 		TravelHeader travelHeader2 = this.travelHeader01Service.findByDocNoForSaveOrUpdate("990086").get(0);
-			logger.debug("+++@@@@@@@@@@@@@@@@@+++findByDocNoForSaveOrUpdate+++++++++{}-------------",travelHeader2.getStatus());
+			logger.debug("++++++findByDocNoForSaveOrUpdate+++++++++{}-------------",travelHeader2.getStatus());
 		travelHeader2.setStatus("001");
 		this.travelHeader01Service.saveHeaderCreateFrom(travelHeader2);
+		
+		TravelHeader travelHeaderForDetail = this.travelHeader01Service.findByDocNoForSaveOrUpdate("990099").get(0);
+		List<TravelDetail>  gridRowList =  this.travelDetail01Service.findRowOfGridForUpdateRow(travelHeaderForDetail, "01");
+		
+		for(TravelDetail c:gridRowList){				
+			logger.debug("++++++@@@@@@@@@@@@@@@@@+++++gridRowList++++++{}-------------{}",c.getNo(),c.getTravelHeader().getNo());
+			c.setTravelExpenses(new Long("1111"));
+			c.setMotorWay(new Long("22222"));
+			c.setTotalDay(new Long("33333"));
+			this.travelDetail01Service.saveTravelDetailCreateForm(c);
+		}
+		
 		
 		
 		

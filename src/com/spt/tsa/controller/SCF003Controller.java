@@ -511,4 +511,23 @@ public class SCF003Controller {
 
 	
 		
+
+		@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=save3")
+		public void save3(HttpServletRequest request, HttpServletResponse response,
+		
+				@ModelAttribute SCF003Domain01 domain,
+				@RequestParam("submitNo") String submitNo
+				)throws Exception {
+			
+			try {
+				domain.setSubmitNo(submitNo);
+				logger.debug("-----{}+++++",domain.getSubmitNo());
+				this.travelHeader01Service.updateStatusSubmit(domain);
+	
+			} catch (Exception e) {
+				e.printStackTrace();
+				logger.error(e.getMessage());
+			}
+
+		}
 }

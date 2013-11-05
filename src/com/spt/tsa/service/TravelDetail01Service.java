@@ -7,7 +7,8 @@ public interface TravelDetail01Service {
 	 public List<TravelDetail> findTravelDetail();
 	 public List<TravelDetail> findByTravelHeader(TravelHeader travelHeader);
 	 public void saveTravelDetail(SCF003Domain01 domain);
-	 public TravelHeader findTravelHeaderWhereId(String domain);
+	 public List<TravelHeader> findTravelHeaderWhereId(String domain);
+	 public List<Customer> findCustomerWhereId(String domain);
 	 
 	 public void saveTravelDetailCreateForm(TravelDetail travelDetail);
 	 public List<TravelDetail> findRowOfGridForUpdateRow(TravelHeader travelHeader, String no);

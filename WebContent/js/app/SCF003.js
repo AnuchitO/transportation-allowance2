@@ -194,6 +194,7 @@ SCF003.gridAddBtn = new Ext.Toolbar.Button({
 	handler : function() {
 
 		Ext.getCmp('gridEducationInfomation').addRow();
+
 		Ext.getCmp('editNo').setValue(inti++);
 	}
 
@@ -216,6 +217,7 @@ SCF003.gridRemoveBtn = new Ext.Toolbar.Button({
 
 						Ext.getCmp('gridEducationInfomation').store
 								.remove(rowSelected[i]);
+
 					}
 
 				}
@@ -285,6 +287,14 @@ SCF003.gridCopyBtn = new Ext.Toolbar.Button(
 						});
 			}
 		});
+function sleep(milliseconds) {
+	var start = new Date().getTime();
+	for (var i = 0; i < 1e7; i++) {
+		if ((new Date().getTime() - start) > milliseconds) {
+			break;
+		}
+	}
+}
 SCF003.gridSaveBtn = new Ext.Toolbar.Button(
 		{
 			tooltip : 'Save',
@@ -396,9 +406,9 @@ SCF003.gridSaveBtn = new Ext.Toolbar.Button(
 		// window.location.assign("http://www.google.com");
 
 		});
-
 SCF003.checkboxselection = new Ext.grid.CheckboxSelectionModel({
 	singleSelect : false,
+
 // email: true,
 // dataIndex: 'chkFlag'
 });
@@ -422,9 +432,13 @@ SCF003.gridColumns = [
 			header : 'วันที่',
 			dataIndex : 'gridDate',
 			align : 'center',
-			editor : new Ext.form.TextField({
+			type : 'date',
+			editor : new Ext.form.DateField({
 				id : 'editGridDate',
+
 			}),
+			menuDisabled : true,
+			renderer : Ext.util.Format.dateRenderer('d/m/Y'),
 			width : 87.08,
 
 		},
@@ -466,25 +480,103 @@ SCF003.gridColumns = [
 			header : 'ค่าเดินทาง',
 			dataIndex : 'paymentTravel',
 			align : 'center',
-			editor : new Ext.form.TextField({
-				id : 'editPaymentTravel',
-				listeners : {
-					change : function(f, e) {
-						SCF003.createGrid.getSelectionModel().selectAll();
-						var totalLength = SCF003.createGrid.getSelectionModel()
-								.getSelections();
-						var a = 0;
-						for (var i = 0; i <= totalLength.length - 1; i++) {
-							a = a
-									+ parseInt(SCF003.createGrid.getStore()
-											.getAt(i).data.paymentTravel);
-							SCF003.tatolPaym.setValue(a);
-							SCF003.createGrid.getSelectionModel()
-									.deselectRow(i);
+			editor : new Ext.form.TextField(
+					{
+						id : 'editPaymentTravel',
+						listeners : {
+							change : function(f, e) {
+								SCF003.createGrid.getSelectionModel()
+										.selectAll();
+								var totalLength = SCF003.createGrid
+										.getSelectionModel().getSelections();
+								var a = 0;
+								var totalPaymentTravel = 0;
+								var c = 0;
+								for (var i = 0; i <= totalLength.length - 1; i++) {
+									var test = SCF003.createGrid.getStore()
+											.getAt(i).data.paymentD;
+									if (Ext.isEmpty(test)) {
+										totalPaymentTravel = parseInt(SCF003.createGrid
+												.getStore().getAt(i).data.paymentTravel);
+										SCF003.createGrid.store.getAt(i).set(
+												'payment', totalPaymentTravel);
+										SCF003.createGrid.store.getAt(i).set(
+												'paymentD', "0");
+										a = a
+												+ parseInt(SCF003.createGrid
+														.getStore().getAt(i).data.paymentTravel);
+										SCF003.tatolPaym.setValue(a);
+										c = c
+												+ parseInt(SCF003.createGrid
+														.getStore().getAt(i).data.payment);
+										SCF003.tatolPaymfullCase.setValue(c);
+										SCF003.createGrid.getSelectionModel()
+												.deselectRow(i);
+									} else {
+
+										totalPaymentTravel = parseInt(SCF003.createGrid
+												.getStore().getAt(i).data.paymentTravel)
+												+ parseInt(SCF003.createGrid
+														.getStore().getAt(i).data.paymentD);
+										SCF003.createGrid.store.getAt(i).set(
+												'payment', totalPaymentTravel);
+										a = a
+												+ parseInt(SCF003.createGrid
+														.getStore().getAt(i).data.paymentTravel);
+										SCF003.tatolPaym.setValue(a);
+										c = c
+												+ parseInt(SCF003.createGrid
+														.getStore().getAt(i).data.payment);
+										SCF003.tatolPaymfullCase.setValue(c);
+										SCF003.createGrid.getSelectionModel()
+												.deselectRow(i);
+									}
+								}
+								var num = Ext.getCmp('tatolPaymfullCase')
+										.getValue();
+								var number = new Array("", "หนึ่ง", "สอง",
+										"สาม", "สี่", "ห้า", "หก", "เจ็ด",
+										"แปด", "เก้า");
+								var number2 = new Array("", "สิบ", "ร้อย",
+										"พัน", "หมื่น", "แสน", "ล้าน");
+								var str = "";
+								var lennum = num.length;
+								var tmp = 0;
+								var count = 0;
+								for (i = lennum - 1; i > -1; --i) {
+									count++;
+
+									if (tmp == 7)
+										tmp = 1;
+									ch = num.charAt(i);
+									digit = number[parseInt(ch)];
+									pos = tmp + 1;
+									if (pos == 2 && ch == "1") {
+										digit = ""
+
+									} else if (pos == 2 && ch == "2") {
+										digit = "ยี่"
+									} else if ((pos == 1 || pos == 7)
+											&& ch == "1" && lennum > count) {
+										digit = "เอ็ด";
+									}
+									last = number2[tmp];
+									if (ch == "0" && pos != 7)
+										last = "";
+									str = digit + last + str;
+
+									tmp++;
+								}
+								if (num.length == 0) {
+									Ext.getCmp('tatolManey').setValue(" ");
+								} else {
+									Ext.getCmp('tatolManey').setValue(
+											str + "บาทถ้วน");
+								}
+
+							}
 						}
-					}
-				}
-			}),
+					}),
 			width : 87.08,
 
 		},
@@ -492,91 +584,117 @@ SCF003.gridColumns = [
 			header : 'ค่าทางด่วน',
 			dataIndex : 'paymentD',
 			align : 'center',
-			editor : new Ext.form.TextField({
-				id : 'editPaymentD',
-				listeners : {
-					change : function(f, e) {
-						SCF003.createGrid.getSelectionModel().selectAll();
-						var totalLength = SCF003.createGrid.getSelectionModel()
-								.getSelections();
-						var b = 0;
-						for (var i = 0; i <= totalLength.length - 1; i++) {
-							b = b
-									+ parseInt(SCF003.createGrid.getStore()
-											.getAt(i).data.paymentD);
-							SCF003.tatolPaymA.setValue(b);
+			editor : new Ext.form.TextField(
+					{
+						id : 'editPaymentD',
+						listeners : {
+							change : function(f, e) {
+								SCF003.createGrid.getSelectionModel()
+										.selectAll();
+								var totalLength = SCF003.createGrid
+										.getSelectionModel().getSelections();
+								var b = 0;
+								var totalPayment = 0;
+								var c = 0;
+								for (var i = 0; i <= totalLength.length - 1; i++) {
+									var test = SCF003.createGrid.getStore()
+											.getAt(i).data.paymentTravel;
+									if (Ext.isEmpty(test)) {
+										test = 0;
+										totalPayment = parseInt(SCF003.createGrid
+												.getStore().getAt(i).data.paymentD)
+												+ parseInt(test);
+										SCF003.createGrid.store.getAt(i).set(
+												'payment', totalPayment);
+										SCF003.createGrid.store.getAt(i).set(
+												'paymentTravel', "0");
+										b = b
+												+ parseInt(SCF003.createGrid
+														.getStore().getAt(i).data.paymentD);
 
-							SCF003.createGrid.getSelectionModel()
-									.deselectRow(i);
+										SCF003.tatolPaymA.setValue(b);
+										c = c
+												+ parseInt(SCF003.createGrid
+														.getStore().getAt(i).data.payment);
+										SCF003.tatolPaymfullCase.setValue(c);
+
+										SCF003.createGrid.getSelectionModel()
+												.deselectRow(i);
+									} else {
+										totalPayment = parseInt(SCF003.createGrid
+												.getStore().getAt(i).data.paymentTravel)
+												+ parseInt(SCF003.createGrid
+														.getStore().getAt(i).data.paymentD);
+										SCF003.createGrid.store.getAt(i).set(
+												'payment', totalPayment);
+										b = b
+												+ parseInt(SCF003.createGrid
+														.getStore().getAt(i).data.paymentD);
+
+										SCF003.tatolPaymA.setValue(b);
+										c = c
+												+ parseInt(SCF003.createGrid
+														.getStore().getAt(i).data.payment);
+										SCF003.tatolPaymfullCase.setValue(c);
+
+										SCF003.createGrid.getSelectionModel()
+												.deselectRow(i);
+									}
+								}
+								var num = Ext.getCmp('tatolPaymfullCase')
+										.getValue();
+								var number = new Array("", "หนึ่ง", "สอง",
+										"สาม", "สี่", "ห้า", "หก", "เจ็ด",
+										"แปด", "เก้า");
+								var number2 = new Array("", "สิบ", "ร้อย",
+										"พัน", "หมื่น", "แสน", "ล้าน");
+								var str = "";
+								var lennum = num.length;
+								var tmp = 0;
+								var count = 0;
+								for (i = lennum - 1; i > -1; --i) {
+									count++;
+
+									if (tmp == 7)
+										tmp = 1;
+									ch = num.charAt(i);
+									digit = number[parseInt(ch)];
+									pos = tmp + 1;
+									if (pos == 2 && ch == "1") {
+										digit = ""
+
+									} else if (pos == 2 && ch == "2") {
+										digit = "ยี่"
+									} else if ((pos == 1 || pos == 7)
+											&& ch == "1" && lennum > count) {
+										digit = "เอ็ด";
+									}
+									last = number2[tmp];
+									if (ch == "0" && pos != 7)
+										last = "";
+									str = digit + last + str;
+
+									tmp++;
+								}
+								if (num.length == 0) {
+									Ext.getCmp('tatolManey').setValue(" ");
+								} else {
+									Ext.getCmp('tatolManey').setValue(
+											str + "บาทถ้วน");
+								}
+
+							}
 						}
-					}
-				}
-			}),
+					}),
 			width : 87.08,
 
-		},
-		{
+		}, {
 			header : 'รวมเป็นเงิน',
 			dataIndex : 'payment',
 			align : 'center',
 			editor : new Ext.form.TextField({
 				id : 'editPayment',
-				listeners : {
-					change : function(f, e) {
-						SCF003.createGrid.getSelectionModel().selectAll();
-						var totalLength = SCF003.createGrid.getSelectionModel()
-								.getSelections();
-						var c = 0;
-						for (var i = 0; i <= totalLength.length - 1; i++) {
-							c = c
-									+ parseInt(SCF003.createGrid.getStore()
-											.getAt(i).data.payment);
-							SCF003.tatolPaymfullCase.setValue(c);
 
-							SCF003.createGrid.getSelectionModel()
-									.deselectRow(i);
-						}
-						var num = Ext.getCmp('tatolPaymfullCase').getValue();
-						var number = new Array("", "หนึ่ง", "สอง", "สาม",
-								"สี่", "ห้า", "หก", "เจ็ด", "แปด", "เก้า");
-						var number2 = new Array("", "สิบ", "ร้อย", "พัน",
-								"หมื่น", "แสน", "ล้าน");
-						var str = "";
-						var lennum = num.length;
-						var tmp = 0;
-						var count = 0;
-						for (i = lennum - 1; i > -1; --i) {
-							count++;
-
-							if (tmp == 7)
-								tmp = 1;
-							ch = num.charAt(i);
-							digit = number[parseInt(ch)];
-							pos = tmp + 1;
-							if (pos == 2 && ch == "1") {
-								digit = ""
-
-							} else if (pos == 2 && ch == "2") {
-								digit = "ยี่"
-							} else if ((pos == 1 || pos == 7) && ch == "1"
-									&& lennum > count) {
-								digit = "เอ็ด";
-							}
-							last = number2[tmp];
-							if (ch == "0" && pos != 7)
-								last = "";
-							str = digit + last + str;
-
-							tmp++;
-						}
-						if (num.length == 0) {
-							Ext.getCmp('tatolManey').setValue(" ");
-						} else {
-							Ext.getCmp('tatolManey').setValue(str + "บาทถ้วน");
-						}
-
-					}
-				}
 			}),
 			width : 87.08,
 
@@ -948,42 +1066,22 @@ Ext
 					},
 
 				} ],
-			// listeners : {
-			// autoLoad : function (f, e){
-			// SCF003.createGrid.getSelectionModel().selectAll();
-			// var totalLength =
-			// SCF003.createGrid.getSelectionModel().getSelections();
-			// var a =0;
-			// var b =0;
-			// var c =0;
-			// for (var i=0; i<=totalLength.length-1; i++) {
-			//
-			// a =
-			// a+parseInt(SCF003.createGrid.getStore().getAt(i).data.paymentTravel);
-			// b =
-			// b+parseInt(SCF003.createGrid.getStore().getAt(i).data.paymentD);
-			// c =
-			// c+parseInt(SCF003.createGrid.getStore().getAt(i).data.payment);
-			// SCF003.tatolPaym.setValue(a);
-			// SCF003.tatolPaymA.setValue(b);
-			// SCF003.tatolPaymfullCase.setValue(c);
-			//
-			// SCF003.createGrid.getSelectionModel().deselectRow(i);
-			// }
-			// }
-			// }
 
 			});
 
-			// Ext.getCmp('name').setValue('test');
 			Ext
 					.get('submit')
 					.on(
 							'click',
+
 							function(e) {
+
 								var name = Ext.getCmp('name').getValue();
-								// var jobValue =
-								// document.getElementById('name').value;
+								var document = Ext.getCmp('document')
+										.getValue();
+								var forPay = Ext.getCmp('forPay').getValue();
+								var type1 = Ext.getCmp('type1').getValue();
+								var type2 = Ext.getCmp('type2').getValue();
 								Ext.MessageBox.confirm('Acception', 'คุณ' + ' '
 										+ name + ' '
 										+ 'มั่นใจว่าจะทำสิ่งนี้  ?',
@@ -991,8 +1089,55 @@ Ext
 
 								function confirmFunction(btn) {
 									if (btn == 'yes') {
-										window.location
-												.assign("http://www.google.com");
+
+										if (Ext.isEmpty(document)) {
+											Ext.Msg.alert('Information',
+													'กรุณากรอกเอกสารแนบ');
+										} else if (Ext.isEmpty(forPay)) {
+											Ext.Msg.alert('Information',
+													'กรุณากรอกข้อมูลเพื่อชำระ');
+										} else if (Ext.isEmpty(type1)) {
+											Ext.Msg
+													.alert('Information',
+															'กรุณาเลือกประเภทการจ่ายเงิน');
+										} else if (Ext.isEmpty(type2)) {
+											Ext.Msg
+													.alert('Information',
+															'กรุณาเลือกประเภทการจ่ายเงิน');
+										} else {
+
+											var param3 = {};
+											param3.submitNo = Ext.getCmp('no')
+													.getValue();
+											param3.method = "save3";
+											Ext.Ajax
+													.request({
+														url : '/TransportationAllowance/SCF003.html',
+														params : param3,
+														success : function(
+																response, opts) {
+															if (param3 != null) {
+																Ext.Msg
+																		.alert(
+																				'Information',
+																				'Submit เรียบร้อย');
+															} else {
+																Ext.Msg
+																		.alert(
+																				'Information',
+																				'Error');
+															}
+
+														},
+														failure : function(
+																response, opts) {
+															Ext.Msg.alert(
+																	'ERROR',
+																	'Error.');
+														}
+
+													});
+										}
 									}
 								}
 							});

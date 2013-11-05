@@ -31,7 +31,7 @@ public class TravelDetail01ServiceImpl implements TravelDetail01Service{
 	public void saveTravelDetail(SCF003Domain01 domain){
 		this.travelDetail01Dao.saveTravelDetail(domain);
 	}
-	public TravelHeader findTravelHeaderWhereId(String domain){
+	 public List<TravelHeader> findTravelHeaderWhereId(String domain){
 		return this.travelDetail01Dao.findTravelHeaderWhereId(domain);
 	}
 
@@ -42,5 +42,7 @@ public class TravelDetail01ServiceImpl implements TravelDetail01Service{
 	public List<TravelDetail> findRowOfGridForUpdateRow(TravelHeader travelHeader, String no) {
 		return this.travelDetail01Dao.findRowOfGridForUpdateRow(travelHeader, no);
 	}
-    
+	 public List<Customer> findCustomerWhereId(String domain){
+		return this.travelDetail01Dao.findCustomerWhereId(domain);
+	}    
 }

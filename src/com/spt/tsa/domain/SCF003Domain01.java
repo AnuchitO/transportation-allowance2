@@ -9,6 +9,7 @@ public class SCF003Domain01 {
 	String pack;
 	
 	/************* Employee History *************/
+	String check;
 	String name;
 	String id;
 	String company;
@@ -19,6 +20,8 @@ public class SCF003Domain01 {
 	String email;
 
 	/************* Grid **************/
+	String gridNo;
+	String gridName;
 	String dataGridNo;
 	Date dataGridData;
 	String dataGridCustomer;
@@ -42,8 +45,33 @@ public class SCF003Domain01 {
 	String typeAccount;
 	String type1;
 	String type2;
+	String submitNo;
 	
 	
+	public String getSubmitNo() {
+		return submitNo;
+	}
+	public void setSubmitNo(String submitNo) {
+		this.submitNo = submitNo;
+	}
+	public String getCheck() {
+		return check;
+	}
+	public void setCheck(String check) {
+		this.check = check;
+	}
+	public String getGridName() {
+		return gridName;
+	}
+	public void setGridName(String gridName) {
+		this.gridName = gridName;
+	}
+	public String getGridNo() {
+		return gridNo;
+	}
+	public void setGridNo(String gridNo) {
+		this.gridNo = gridNo;
+	}
 	public Date getDataGridData() {
 		return dataGridData;
 	}

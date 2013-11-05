@@ -876,6 +876,7 @@ SCF003.createButtonSubmit = new Ext.Button({
 SCF003.createButtonPrint = new Ext.Button({
 	id : 'print',
 	text : 'Print Preview',
+//	disabled:true,
 	width : 100
 });
 

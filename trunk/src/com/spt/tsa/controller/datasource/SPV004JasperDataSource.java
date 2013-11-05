@@ -133,8 +133,8 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 					 checkCash=" ";
 					 checkCheck=" ";
 				 }
-	
-					
+	logger.debug("============travelDetails========= {} ==============size===={}",travelDetails,travelDetails.size());
+				
 		if(this.travelDetails.size()==1){
 			//Fill all  in page field
 			SPV004Pojo 	spv004Pojo = new SPV004Pojo();
@@ -216,6 +216,7 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 			listSPV004PojoData.add(spv004Pojo);//Header and First Row  Object
 			
 			//Value For Second Row Table and Summary
+			spv004Pojo = new SPV004Pojo();
 		  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(this.travelDetails.get(1).getDate()));
 			spv004Pojo.settCustomer(this.travelDetails.get(1).getCustomer().getName());
 			spv004Pojo.settFrom(this.travelDetails.get(1).getFrom());
@@ -277,6 +278,7 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 			int size = this.travelDetails.size();
 			for(int i=1;i<=(size-2);i++){
 				//Value For Second Row Table and Summary
+				spv004Pojo = new SPV004Pojo();
 			  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(this.travelDetails.get(i).getDate()));
 				spv004Pojo.settCustomer(this.travelDetails.get(i).getCustomer().getName());
 				spv004Pojo.settFrom(this.travelDetails.get(i).getFrom());
@@ -285,10 +287,12 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 				spv004Pojo.settExpressWay(this.travelDetails.get(i).getMotorWay().toString());
 				spv004Pojo.settSum(this.travelDetails.get(i).getTotalDay().toString());
 				spv004Pojo.settNotation(this.travelDetails.get(i).getRemark());
+				listSPV004PojoData.add(spv004Pojo);
 			}
 			
 			//Value For last Row 
 			int lastIndex = size-1;
+			spv004Pojo = new SPV004Pojo();
 		  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(this.travelDetails.get(lastIndex).getDate()));
 			spv004Pojo.settCustomer(this.travelDetails.get(lastIndex).getCustomer().getName());
 			spv004Pojo.settFrom(this.travelDetails.get(lastIndex).getFrom());

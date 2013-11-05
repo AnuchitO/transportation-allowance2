@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,7 @@ public class TravelDetail01DaoImpl extends HibernateDaoSupport implements Travel
 	public List<TravelDetail> findByTravelHeader(TravelHeader travelHeader) {
 		DetachedCriteria criteria =  DetachedCriteria.forClass(TravelDetail.class)
 		        .add(Restrictions.eq("travelHeader", travelHeader));
+				criteria.addOrder(Order.asc("no"));
 		System.out.println("///////////////////////////////////////"+this.getHibernateTemplate().findByCriteria(criteria));
 		return this.getHibernateTemplate().findByCriteria(criteria);
 	}

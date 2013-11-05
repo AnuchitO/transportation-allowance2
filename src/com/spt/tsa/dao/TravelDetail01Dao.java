@@ -10,4 +10,8 @@ public interface TravelDetail01Dao {
 	public List<TravelDetail> findByTravelHeader(TravelHeader travelHeader);
 	public void saveTravelDetail(SCF003Domain01 domain);
 	public TravelHeader findTravelHeaderWhereId(String domain);
+	
+	
+	public void saveTravelDetailCreateForm(TravelDetail travelDetail);
+	public List<TravelDetail> findRowOfGridForUpdateRow(TravelHeader travelHeader,String no);
 }

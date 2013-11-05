@@ -12,5 +12,7 @@ public interface TravelHeader01Service {
 	 public void save(SCF003Domain01 domain);
 	 public List<TravelHeader> findTravelHanderGetLastNoDoc();
 	
-
+	///nong
+		 public void saveHeaderCreateFrom(TravelHeader travelHeader);
+		 public List<TravelHeader> findByDocNoForSaveOrUpdate(String docNo);
 }

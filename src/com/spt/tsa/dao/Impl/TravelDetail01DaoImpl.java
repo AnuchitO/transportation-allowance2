@@ -40,5 +40,19 @@ public class TravelDetail01DaoImpl extends HibernateDaoSupport implements Travel
 			traD.setDate(domain.getDataGridData());
 //			traD.setCustomer(domain.getDataGridCustomer());
 	}
+
+	public void saveTravelDetailCreateForm(TravelDetail travelDetail) {
+		this.getHibernateTemplate().save(travelDetail);
+		
+	}
+
+	public List<TravelDetail> findRowOfGridForUpdateRow(TravelHeader travelHeader, String no) {
+		DetachedCriteria criteria =  DetachedCriteria.forClass(TravelDetail.class).add(
+		        Restrictions.and(
+		                Restrictions.eq("travelHeader", travelHeader),
+		                Restrictions.eq("no", no)));
+//    	logger.debug("{}",this.getHibernateTemplate().findByCriteria(criteria));
+    	return this.getHibernateTemplate().findByCriteria(criteria);
+	}
     
 }

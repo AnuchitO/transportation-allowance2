@@ -34,5 +34,13 @@ public class TravelDetail01ServiceImpl implements TravelDetail01Service{
 	public TravelHeader findTravelHeaderWhereId(String domain){
 		return this.travelDetail01Dao.findTravelHeaderWhereId(domain);
 	}
+
+	public void saveTravelDetailCreateForm(TravelDetail travelDetail) {
+		this.travelDetail01Dao.saveTravelDetailCreateForm(travelDetail);
+	}
+
+	public List<TravelDetail> findRowOfGridForUpdateRow(TravelHeader travelHeader, String no) {
+		return this.travelDetail01Dao.findRowOfGridForUpdateRow(travelHeader, no);
+	}
     
 }

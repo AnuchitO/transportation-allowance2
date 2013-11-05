@@ -47,8 +47,8 @@ public class TravelDetail implements Serializable {
 	@Column(name="Trad_tdremark")
 	private String remark;
 	
-	@Column(name="Trad_tdusrecreation")
-	private String usreCreation;
+	@Column(name="TRAD_TDUSRECREATION")
+	private String userCreation;
 	
 	@Column(name="Trad_tduserupdate")
 	private String userUpdate;
@@ -59,7 +59,8 @@ public class TravelDetail implements Serializable {
 	@Column(name="Trad_tdmodifydate")
 	private Date modifyDate;
 	
-	
+	@Column(name="TRAD_TDNO")
+	private String no;
 	
 
 	public Customer getCustomer() {
@@ -67,7 +68,7 @@ public class TravelDetail implements Serializable {
 	}
 
 	public void setCustomer(Customer customer) {
-		Customer = customer;
+		this.Customer = customer;
 	}
 
 	public TravelHeader getTravelHeader() {
@@ -86,14 +87,12 @@ public class TravelDetail implements Serializable {
 		this.tDetailId = tDetailId;
 	}
 
-
-
 	public Date getDate() {
-		return date;
+		return this.date;
 	}
 
 	public void setDate(Date date) {
-		date = date;
+		this.date = date;
 	}
 
 	public String getFrom() {
@@ -144,12 +143,14 @@ public class TravelDetail implements Serializable {
 		this.remark = remark;
 	}
 
-	public String getUsreCreation() {
-		return usreCreation;
+
+
+	public String getUserCreation() {
+		return userCreation;
 	}
 
-	public void setUsreCreation(String usreCreation) {
-		this.usreCreation = usreCreation;
+	public void setUserCreation(String userCreation) {
+		this.userCreation = userCreation;
 	}
 
 	public String getUserUpdate() {
@@ -174,6 +175,14 @@ public class TravelDetail implements Serializable {
 
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
+	}
+
+	public String getNo() {
+		return no;
+	}
+
+	public void setNo(String no) {
+		this.no = no;
 	}
 	
 	

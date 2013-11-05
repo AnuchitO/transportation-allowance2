@@ -20,6 +20,7 @@ public class TravelHeader  implements Serializable {
 	@Column(name="Trah_thid")
 	private String tHeadId;
 	
+	
 	@Column(name="Trah_thno")
 	private String no;
 	

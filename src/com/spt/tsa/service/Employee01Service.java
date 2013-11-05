@@ -10,4 +10,7 @@ public interface Employee01Service {
 	 public List<String> findBranchBankWhereEmp();
 	 public List<String> findDeptWhereEmp();
 	 public List<String> findProvinceEmp();
+	 
+	 
+	 public Employee findEmployeeByIdName(String domainId);
 }

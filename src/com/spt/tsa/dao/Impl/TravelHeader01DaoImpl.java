@@ -88,6 +88,15 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
     	this.getHibernateTemplate().save(traH);
     	
     }
-   
+
+	public void saveHeaderCreateFrom(TravelHeader travelHeader) {
+		this.getHibernateTemplate().saveOrUpdate(travelHeader);
+	}
+
+	public List<TravelHeader> findByDocNoForSaveOrUpdate(String docNo) {
+		DetachedCriteria criteria =  DetachedCriteria.forClass(TravelHeader.class)
+				.add(Restrictions.eq("no", docNo));
+		return this.getHibernateTemplate().findByCriteria(criteria);
+	}
     
 }

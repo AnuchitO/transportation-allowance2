@@ -70,4 +70,9 @@ public class Employee01DaoImpl extends HibernateDaoSupport implements Employee01
 	   
    }
    
+   
+   
+   public Employee findEmployeeByIdName(String domainId){
+	   return this.getHibernateTemplate().get(Employee.class,domainId);
+   }
 }

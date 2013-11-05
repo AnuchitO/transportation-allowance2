@@ -46,4 +46,9 @@ public class Employee01ServiceImpl implements Employee01Service{
     	List<String> send = employee01Dao.findProvinceEmp();
     	return send;
     }
+
+	public Employee findEmployeeByIdName(String domainId) {
+		
+		return this.employee01Dao.findEmployeeByIdName(domainId);
+	}
 }

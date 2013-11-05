@@ -6,6 +6,7 @@ public class SCF003Domain01 {
 	/************* no and Date ****************/
 	String no;
 	String date;
+	String pack;
 	
 	/************* Employee History *************/
 	String name;
@@ -231,4 +232,11 @@ public class SCF003Domain01 {
 	public void setId(String id) {
 		this.id = id;
 	}
+	public String getPack() {
+		return pack;
+	}
+	public void setPack(String pack) {
+		this.pack = pack;
+	}
+	
 }

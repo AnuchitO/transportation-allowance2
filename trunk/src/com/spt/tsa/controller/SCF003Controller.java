@@ -56,9 +56,12 @@ import com.spt.tsa.domain.SCF003Domain01;
 import com.spt.tsa.entity.Company;
 import com.spt.tsa.entity.Employee;
 import com.spt.tsa.entity.ParameterTable;
+import com.spt.tsa.entity.TravelDetail;
 import com.spt.tsa.entity.TravelHeader;
+import com.spt.tsa.service.Customer01Service;
 import com.spt.tsa.service.Employee01Service;
 import com.spt.tsa.service.ParameterTable01Service;
+import com.spt.tsa.service.TravelDetail01Service;
 import com.spt.tsa.service.TravelHeader01Service;
 import com.spt.tsa.util.BeanUtils;
 
@@ -72,6 +75,9 @@ public class SCF003Controller {
 	private Employee01Service employee01Service;
 	private ParameterTable01Service parameterTable01Service;
 	private TravelHeader01Service travelHeader01Service;
+	private TravelDetail01Service travelDetail01Service;
+	private Customer01Service customer01Service;
+	
 
 	
 	@Autowired
@@ -87,7 +93,16 @@ public class SCF003Controller {
    	 this.travelHeader01Service= travelHeader01Service;
     }
 	
-//
+	@Autowired	
+	public void setCustomer01Service(Customer01Service customer01Service) {
+	 this.customer01Service = customer01Service;
+	}
+	
+	@Autowired
+	public void setTravelDetail01Service(TravelDetail01Service travelDetail01Service) {
+		this.travelDetail01Service = travelDetail01Service;
+	}
+		//
 		@RequestMapping(value = "/SCF003.html", method = RequestMethod.GET)
 		public ModelAndView view(HttpServletRequest request, HttpServletResponse response) {
 			
@@ -200,7 +215,7 @@ public class SCF003Controller {
 			JSONObject jobect1 = new JSONObject();
 			jobect1.accumulate("no", "01");
 			jobect1.accumulate("gridDate", "17/12/2556");
-			jobect1.accumulate("customer", "mardnakub");
+			jobect1.accumulate("customer", "ANUCHIT");
 			jobect1.accumulate("region", "Bangkok");
 			jobect1.accumulate("goal", "Bangkok");
 			jobect1.accumulate("paymentTravel", "1000");
@@ -213,7 +228,7 @@ public class SCF003Controller {
 			JSONObject jobect2 = new JSONObject();
 			jobect2.accumulate("no", "02");
 			jobect2.accumulate("gridDate", "18/12/2556");
-			jobect2.accumulate("customer", "mardnakub");
+			jobect2.accumulate("customer", "ANUCHIT");
 			jobect2.accumulate("region", "Bangkok");
 			jobect2.accumulate("goal", "Bangkok");
 			jobect2.accumulate("paymentTravel", "1000");
@@ -225,7 +240,7 @@ public class SCF003Controller {
 			JSONObject jobect3 = new JSONObject();
 			jobect3.accumulate("no", "03");
 			jobect3.accumulate("gridDate","19/12/2556");
-			jobect3.accumulate("customer", "mardnakub");
+			jobect3.accumulate("customer", "ANUCHIT");
 			jobect3.accumulate("region", "Bangkok");
 			jobect3.accumulate("goal", "Bangkok");
 			jobect3.accumulate("paymentTravel", "1000");
@@ -243,8 +258,7 @@ public class SCF003Controller {
 			
 
 		}
-
-		
+	
 		//************************ Save History *************************//
 				@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=save1")
 				public void save1(HttpServletRequest request, HttpServletResponse response,
@@ -271,7 +285,21 @@ public class SCF003Controller {
 						@RequestParam("accountNumber") String accountNumber,
 						@RequestParam("typeAccount") String typeAccount,
 						@RequestParam("type1") String type1,
-						@RequestParam("type2") String type2
+						@RequestParam("type2") String type2,
+						
+						
+						@RequestParam("dataGridNo") String dataGridNo,
+						@RequestParam("dataGridData") Date dataGridData,
+						@RequestParam("dataGridCustomer") String dataGridCustomer,
+						@RequestParam("dataGridRegion") String dataGridRegion,
+						@RequestParam("dataGridGoal") String dataGridGoal,
+						@RequestParam("dataGridPaymentTravel") Long dataGridPaymentTravel,
+						@RequestParam("dataGridPaymentD") Long dataGridPaymentD,
+						@RequestParam("dataGridPayment") Long dataGridPayment,
+						@RequestParam("dataRemark") String dataRemark,
+						@RequestParam("pack") String pack
+						
+						
 						
 						
 						)throws Exception {
@@ -301,81 +329,186 @@ public class SCF003Controller {
 						domain.setTypeAccount(typeAccount);
 						domain.setType1(type1);
 						domain.setType2(type2);
-						this.travelHeader01Service.save(domain);
-//						this.travelHeader01Service.save2();
-						logger.debug("---------------------{}+++++++{}+++++++++++++++++++++++++++++++",domain.getNo(),domain.getDate()); 
-						logger.debug("-----{}+++++",domain.getName());
-						logger.debug("-----{}+++++",domain.getId());
-						logger.debug("-----{}+++++",domain.getCompany());
-						logger.debug("-----{}+++++",domain.getAntecedent());
-						logger.debug("-----{}+++++",domain.getAddress());
-						logger.debug("-----{}+++++",domain.getAntercedentA());
-						logger.debug("-----{}+++++",domain.getPhone());
-						logger.debug("-----{}+++++",domain.getEmail());
-						logger.debug("-----{}+++++",domain.getTatolPaym());
-						logger.debug("-----{}+++++",domain.getTatolPaymA());
-						logger.debug("-----{}+++++",domain.getTatolPaymfullCase());
-						logger.debug("-----{}+++++",domain.getTatolManey());
-						logger.debug("-----{}+++++",domain.getDocument());
-						logger.debug("-----{}+++++",domain.getForPay());
-						logger.debug("-----{}+++++",domain.getBank());
-						logger.debug("-----{}+++++",domain.getBranch());
-						logger.debug("-----{}+++++",domain.getAccountNumber());
-						logger.debug("-----{}+++++",domain.getTypeAccount());
-						logger.debug("-----{}+++++",domain.getType1());
-						logger.debug("-----{}+++++",domain.getType2());
 						
+						domain.setDataGridNo(dataGridNo);
+						domain.setDataGridData(dataGridData);
+						domain.setDataGridCustomer(dataGridCustomer);
+						domain.setDataGridRegion(dataGridRegion);
+						domain.setDataGridGoal(dataGridGoal);
+						domain.setDataGridPaymentTravel(dataGridPaymentTravel);
+						domain.setDataGridPaymentD(dataGridPaymentD);
+						domain.setDataGridPayment(dataGridPayment);
+						domain.setDataRemark(dataRemark);
+						domain.setPack(pack);
+						
+						
+//						this.travelHeader01Service.save(domain);
+//						this.travelHeader01Service.save2();
+						
+					 TravelHeader travelHeader =null;
+					 List<TravelHeader> getObjectByDocNo = this.travelHeader01Service.findByDocNoForSaveOrUpdate(domain.getNo());
+					 if(getObjectByDocNo.size()!=0){
+						 travelHeader = getObjectByDocNo.get(0);				
+					 }else{
+						 travelHeader = new TravelHeader();
+						 	travelHeader.settHeadId("1");
+					 }						
+							travelHeader.setNo(domain.getNo());
+							travelHeader.setEmployee(this.employee01Service.findEmployeeByIdName(domain.getId()));
+							travelHeader.setCompany(this.employee01Service.findEmployeeByIdName(domain.getId()).getCompany());
+							travelHeader.setTotal(new Long(domain.getTatolPaymfullCase()));
+							travelHeader.setComName(domain.getCompany());
+							travelHeader.setAddress(domain.getAddress());
+					    	travelHeader.setProvince(domain.getAntercedentA());
+					    	travelHeader.setEmail(domain.getEmail());
+					    	travelHeader.setTelephone(domain.getPhone());
+					    	travelHeader.setStatus("001");
+					    	travelHeader.setRemark("no");
+					    	travelHeader.setTotalExpenses(new Long(domain.getTatolPaym()));
+					    	travelHeader.setTotalMotorWay(new Long(domain.getTatolPaymA()));
+					    	travelHeader.setAttachment(new Long(domain.getDocument()));
+					    	travelHeader.setPaymDesc(domain.getForPay());					    	
+					    	if(domain.getType1().equals("true")){
+					    		travelHeader.setPayType("1");
+					    	}else{
+					    		travelHeader.setPayType("2");
+					    	}					    						    	
+					    	travelHeader.setUserCreation(domain.getName());
+					    	travelHeader.setUserUpdate(domain.getName());
+					    	travelHeader.setCreationate(new Date());
+					    	travelHeader.setModifyDate(new Date());//21
+					    	travelHeader.setNameDept(domain.getAntecedent());//22
+					    this.travelHeader01Service.saveHeaderCreateFrom(travelHeader);
+					
+					    
+						
+						String[] gridContext = domain.getPack().split("!");
+								for(String splitRows:gridContext){
+									
+									String[] gridRowContent = splitRows.split(",");			
+											
+									TravelDetail travelDetail = null;
+									TravelHeader travelHeaderForDetail = this.travelHeader01Service.findByDocNoForSaveOrUpdate(domain.getNo()).get(0);
+									List<TravelDetail>  gridRowList =  this.travelDetail01Service.findRowOfGridForUpdateRow(travelHeaderForDetail, gridRowContent[0]);
+																	
+									if(gridRowList.size()!=0){
+										travelDetail = gridRowList.get(0);
+									}else{
+										travelDetail = new TravelDetail();
+										travelDetail.settDetailId("1");
+									}
+													
+									travelDetail.setNo(gridRowContent[0]);
+									travelDetail.setTravelHeader(travelHeaderForDetail);
+									///Convert year 
+									SimpleDateFormat sdf = new SimpleDateFormat("d/MM/yyyy");
+									String[] thaiFormatSplit = gridRowContent[1].split("/");
+									Integer year = Integer.parseInt(thaiFormatSplit[2]);
+									year-=543;
+									System.out.println(year);
+									Date dateGridRow = sdf.parse(thaiFormatSplit[0]+"/"+thaiFormatSplit[1]+"/"+year);
+									//End Convert year
+									travelDetail.setDate(dateGridRow);
+									travelDetail.setCustomer(this.customer01Service.findByName(gridRowContent[2]).get(0));
+									travelDetail.setFrom(gridRowContent[3]);
+									travelDetail.setTo(gridRowContent[4]);
+									travelDetail.setTravelExpenses(new Long(gridRowContent[5]));
+									travelDetail.setMotorWay(new Long(gridRowContent[6]));
+									travelDetail.setTotalDay(new Long(gridRowContent[7]));
+									travelDetail.setRemark(gridRowContent[8]);
+									travelDetail.setUserCreation(domain.getName());
+									travelDetail.setUserUpdate(domain.getName());
+									
+									///Convert year 
+									SimpleDateFormat sdfCreate = new SimpleDateFormat("d/MM/yyyy");
+									String[] thaiFormatSplitCreate  = domain.getDate().split("/");
+									Integer yearCreate  = Integer.parseInt(thaiFormatSplitCreate[2]);
+									yearCreate-=543;
+									Date dateCreate  = sdfCreate.parse(thaiFormatSplit[0]+"/"+thaiFormatSplit[1]+"/"+yearCreate);
+									//End Convert year									
+									travelDetail.setCreationDate(dateCreate);
+									travelDetail.setModifyDate(new Date());
+									this.travelDetail01Service.saveTravelDetailCreateForm(travelDetail);
+								}
 					} catch (Exception e) {
 						e.printStackTrace();
 						logger.error(e.getMessage());
 					}
 					
 				}
-		
-		//************************* Save Grid ********************************//
-		
-		@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=save2")
-		public void save2(HttpServletRequest request, HttpServletResponse response,
-		
-				@ModelAttribute SCF003Domain01 domain,
-				@RequestParam("dataGridNo") String dataGridNo,
-				@RequestParam("dataGridData") Date dataGridData,
-				@RequestParam("dataGridCustomer") String dataGridCustomer,
-				@RequestParam("dataGridRegion") String dataGridRegion,
-				@RequestParam("dataGridGoal") String dataGridGoal,
-				@RequestParam("dataGridPaymentTravel") Long dataGridPaymentTravel,
-				@RequestParam("dataGridPaymentD") Long dataGridPaymentD,
-				@RequestParam("dataGridPayment") Long dataGridPayment,
-				@RequestParam("dataRemark") String dataRemark
 				
-				)throws Exception {
-			
-			try {
-				domain.setDataGridNo(dataGridNo);
-				domain.setDataGridData(dataGridData);
-				domain.setDataGridCustomer(dataGridCustomer);
-				domain.setDataGridRegion(dataGridRegion);
-				domain.setDataGridGoal(dataGridGoal);
-				domain.setDataGridPaymentTravel(dataGridPaymentTravel);
-				domain.setDataGridPaymentD(dataGridPaymentD);
-				domain.setDataGridPayment(dataGridPayment);
-				domain.setDataRemark(dataRemark);
+				//************************* Save Grid ********************************//
 				
-				logger.debug("-----{}+++++",domain.getDataGridNo()); 
-				logger.debug("-----{}+++++",domain.getDataGridData());
-				logger.debug("-----{}+++++",domain.getDataGridCustomer());
-				logger.debug("-----{}+++++",domain.getDataGridRegion());
-				logger.debug("-----{}+++++",domain.getDataGridGoal());
-				logger.debug("-----{}+++++",domain.getDataGridPaymentTravel());
-				logger.debug("-----{}+++++",domain.getDataGridPaymentD());
-				logger.debug("-----{}+++++",domain.getDataGridPayment());
-				logger.debug("-----{}+++++",domain.getDataRemark());
-			} catch (Exception e) {
-				e.printStackTrace();
-				logger.error(e.getMessage());
-			}
+				@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=save2")
+				public void save2(HttpServletRequest request, HttpServletResponse response,
+				
+						@ModelAttribute SCF003Domain01 domain,
+						@RequestParam("dataGridNo") String dataGridNo,
+						@RequestParam("dataGridData") Date dataGridData,
+						@RequestParam("dataGridCustomer") String dataGridCustomer,
+						@RequestParam("dataGridRegion") String dataGridRegion,
+						@RequestParam("dataGridGoal") String dataGridGoal,
+						@RequestParam("dataGridPaymentTravel") Long dataGridPaymentTravel,
+						@RequestParam("dataGridPaymentD") Long dataGridPaymentD,
+						@RequestParam("dataGridPayment") Long dataGridPayment,
+						@RequestParam("dataRemark") String dataRemark,
+						@RequestParam("pack") String pack
+						
+						)throws Exception {
+					
+					try {
+						domain.setDataGridNo(dataGridNo);
+						domain.setDataGridData(dataGridData);
+						domain.setDataGridCustomer(dataGridCustomer);
+						domain.setDataGridRegion(dataGridRegion);
+						domain.setDataGridGoal(dataGridGoal);
+						domain.setDataGridPaymentTravel(dataGridPaymentTravel);
+						domain.setDataGridPaymentD(dataGridPaymentD);
+						domain.setDataGridPayment(dataGridPayment);
+						domain.setDataRemark(dataRemark);
+						domain.setPack(pack);
+						
+						TravelDetail travelDetail = new TravelDetail();
 
-		}
+							logger.debug("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTForCustomer++++{}",domain.getPack());
+							String[] gridContext = domain.getPack().split("!");
+									for(String splitRows:gridContext){
+										logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",splitRows);
+										String[] gridRowContent = splitRows.split(",");			
+										logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",gridRowContent[0]);
+										logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",gridRowContent[1]);
+										logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",gridRowContent[2]);
+										logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",gridRowContent[3]);
+										logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",gridRowContent[4]);
+										logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",gridRowContent[5]);
+										logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",gridRowContent[6]);
+										logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",gridRowContent[7]);
+										
+										travelDetail.settDetailId("1");
+										travelDetail.setTravelHeader(this.travelHeader01Service.findByDocNo("570001").get(0));
+										travelDetail.setCustomer(this.customer01Service.findCustomer().get(0));
+										travelDetail.setDate(new Date());
+										travelDetail.setFrom(domain.getDataGridRegion());
+										travelDetail.setTo(domain.getDataGridGoal());
+										travelDetail.setTravelExpenses(domain.getDataGridPaymentTravel());
+										travelDetail.setMotorWay(domain.getDataGridPaymentD());
+										travelDetail.setTotalDay(domain.getDataGridPayment());
+										travelDetail.setRemark(domain.getDataRemark());
+										travelDetail.setUserCreation("anuchit");
+										travelDetail.setUserUpdate("anuchit");
+										travelDetail.setCreationDate(new Date());
+										travelDetail.setModifyDate(new Date());
+//										this.travelDetail01Service.saveTravelDetailCreateForm(travelDetail);
+									}
+
+					} catch (Exception e) {
+						e.printStackTrace();
+						logger.error(e.getMessage());
+					}
+
+				}
+		
+
 	
 		
 }

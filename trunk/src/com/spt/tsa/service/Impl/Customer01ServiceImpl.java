@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.spt.tsa.dao.Customer01Dao;
 import com.spt.tsa.entity.*;
-
 import com.spt.tsa.service.Customer01Service;
 
 @Service
@@ -23,6 +22,10 @@ public class Customer01ServiceImpl implements Customer01Service{
    	 // TODO Auto-generated method stub
    	 return customer01Dao.findCustomer();
     }
+
+	public List<Customer> findByName(String name) {
+		return this.customer01Dao.findByName(name);
+	}
 
 
     

@@ -28,5 +28,11 @@
       	<put-attribute name="content" value="/WEB-INF/jsp/app/SCF003.jsp"/>
      	<put-attribute name="pageJsIncluded" value="/js/app/SCF003.js"/>  
     </definition>
+    
+    	<definition name="/SVD006.tiles" extends=".emptytemplate">
+      	<put-attribute name="title" value="SVD006"/>
+      	<put-attribute name="content" value="/WEB-INF/jsp/app/SVD006/SVD006.jsp"/>
+     	<put-attribute name="pageJsIncluded" value="/js/app/SVD006/SVD006Components.js, /js/app/SVD006/SVD006.js"/>    
+    </definition>
    
 </tiles-definitions>

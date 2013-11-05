@@ -11,4 +11,9 @@ public interface TravelHeader01Dao {
 	 public Employee findEmployeeWhereId(String domain);
 	 public Company findCompanyWhereId(String domain);
 	 public List<TravelHeader> findTravelHanderGetLastNoDoc();
+	 
+	 ///nong
+	 public void saveHeaderCreateFrom(TravelHeader travelHeader);
+	 public List<TravelHeader> findByDocNoForSaveOrUpdate(String docNo);
+
 }

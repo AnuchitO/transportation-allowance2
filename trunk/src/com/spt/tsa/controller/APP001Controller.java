@@ -112,7 +112,22 @@ public class APP001Controller{
 		}
 		logger.info("==============================in APP001Controller");
 		
-
+		List<Customer> customer = this.customer01Service.findByName("ANUCHIT");
+		
+		for(Customer c:customer){
+			
+			
+			logger.debug("+++++++++++++++++{}-------------{}",c.getName(),c);
+			
+	
+		}
+		
+		TravelHeader travelHeader2 = this.travelHeader01Service.findByDocNoForSaveOrUpdate("990086").get(0);
+			logger.debug("+++@@@@@@@@@@@@@@@@@+++findByDocNoForSaveOrUpdate+++++++++{}-------------",travelHeader2.getStatus());
+		travelHeader2.setStatus("001");
+		this.travelHeader01Service.saveHeaderCreateFrom(travelHeader2);
+		
+		
 		
 		Map model = new HashMap();
 		

@@ -41,5 +41,14 @@ public class Travelheader01ServiceImpl implements TravelHeader01Service{
 	public List<TravelHeader> findTravelHanderGetLastNoDoc(){
 		return this.travelHeader01Dao.findTravelHanderGetLastNoDoc();
 	}
+
+	public void saveHeaderCreateFrom(TravelHeader travelHeader) {
+		this.travelHeader01Dao.saveHeaderCreateFrom(travelHeader);
 	}
+
+	public List<TravelHeader> findByDocNoForSaveOrUpdate(String docNo) {
+		return this.travelHeader01Dao.findByDocNoForSaveOrUpdate(docNo);
+	}
+
+}
 	

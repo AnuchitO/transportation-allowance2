@@ -843,29 +843,29 @@ SVD006C.checkBoxCancel = new Ext.form.Checkbox({
 //    ]
 //});
 
-SVD006C.checkboxGroup = new Ext.form.CheckboxGroup({
-    columns: 1,
-    vertical: true,
-    items: [
-        {boxLabel: "Value 12", name :"checkNong", inputValue: 1},
-        {boxLabel: "Value 2", name :"checkNong", inputValue: 2}
-    ],
-	flex: 1
-});
-
 //SVD006C.checkboxGroup = new Ext.form.CheckboxGroup({
-//	 	    id:'myGroup',
-//		    xtype: 'checkboxgroup',
-//	 	    fieldLabel: 'Single Column',
-//	 	    itemCls: 'x-check-group-alt',
-//	 	    // Put all controls in a single column with width 100%
-//	 	    columns: 1,
-//	 	    items: [
-//	 	        {boxLabel: 'Item 1', name: 'check'},
-//	 	        {boxLabel: 'Item 2', name: 'check', checked: true},
-//	 	        {boxLabel: 'Item 3', name: 'check'}
-//		    ]
-//	});
+//    columns: 1,
+//    cls: 'field-margin',
+//    vertical: true,
+//    items: [
+//        {boxLabel: "Value 12", name :"checkNong", inputValue: 1},
+//        {boxLabel: "Value 2", name :"checkNong", inputValue: 2}
+//    ]
+//});
+
+SVD006C.checkboxGroup = new Ext.form.CheckboxGroup({
+    id:'myGroup',
+    xtype: 'checkboxgroup',
+    fieldLabel: 'Single Column',
+    itemCls: 'x-form-item',
+    // Put all controls in a single colusmn with width 100%
+    columns: 1,
+    items: [
+        {boxLabel: 'Item 121', name: 'cb-col-1'},
+        {boxLabel: 'Item 212', name: 'cb-col-1', checked: true},
+        {boxLabel: 'Item 312', name: 'cb-col-1'}
+    ]
+});
 
 // ******************** set Value *****************//
 SVD006C.bank.setValue(SVD006Domain.bank);

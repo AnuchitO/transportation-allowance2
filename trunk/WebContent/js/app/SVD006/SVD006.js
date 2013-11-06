@@ -14,7 +14,6 @@ Ext.onReady(function() {SVD006.resumeForm = new Ext.form.FormPanel({
 					xtype : 'container',
 					layout : 'form',
 					columnWidth : 1,
-					// labelWidth : 0,
 					anchor : '100%',
 					// hideBorders : true
 				},

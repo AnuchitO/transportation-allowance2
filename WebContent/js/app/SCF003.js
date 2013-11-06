@@ -67,7 +67,7 @@ SCF003.createCombobox = new Ext.form.ComboBox({
 SCF003.idCardEmp = new Ext.form.TextField({
 	id : 'idCardEmp',
 	fieldLabel : "รหัสประจำตัวประชาชน",
-	width:250
+	width : 250
 
 });
 
@@ -170,7 +170,7 @@ SCF003.setCenter = new Ext.form.FieldSet({
 		columnWidth : 0.5,
 		items : SCF003.createCombobox,
 		labelAlign : 'right'
-	},{
+	}, {
 		columnWidth : 1,
 		items : SCF003.idCardEmp,
 		labelAlign : 'right'
@@ -202,10 +202,19 @@ SCF003.gridAddBtn = new Ext.Toolbar.Button({
 	// disabled : false,
 	privilage : "educationAddBtn",
 	handler : function() {
+		SCF003.createGrid.getSelectionModel().selectAll();
+
+		var sm = SCF003.createGrid.getSelectionModel().getSelections();
 
 		Ext.getCmp('gridEducationInfomation').addRow();
 
-		Ext.getCmp('editNo').setValue(inti++);
+		var i = 1 + sm.length - 1;
+		var uu = SCF003.createGrid.getStore().getAt(i).data.no;
+		Ext.getCmp('editNo').setValue(i + 1);
+		for (var j = 0; j <= sm.length - 1; j++) {
+
+			SCF003.createGrid.getSelectionModel().deselectRow(j);
+		}
 	}
 
 });
@@ -223,11 +232,40 @@ SCF003.gridRemoveBtn = new Ext.Toolbar.Button({
 		if (!Ext.isEmpty(rowSelected)) {
 			Ext.MessageBox.confirm('Confirm', 'Are you sure?', function(btn) {
 				if (btn == 'yes') {
+
 					for ( var i in rowSelected) {
 
 						Ext.getCmp('gridEducationInfomation').store
 								.remove(rowSelected[i]);
 
+					}
+					SCF003.createGrid.getSelectionModel().selectAll();
+
+					var sm = SCF003.createGrid.getSelectionModel()
+							.getSelections();
+					//					
+					var numberSelect = rowSelected.length;
+
+					var lastIndex = sm.length - 1;
+
+					var getValueLastIndex = SCF003.createGrid.getStore().getAt(
+							lastIndex).data.no;
+
+					var u = getValueLastIndex - numberSelect;
+
+					SCF003.createGrid.store.getAt(lastIndex).set('no', u);
+					for (var j = lastIndex; j >= 0; j--) {
+						if (j == lastIndex) {
+
+						}
+						detroyNumber = u - j;
+						SCF003.createGrid.store.getAt(lastIndex - j).set('no',
+								detroyNumber);
+					}
+
+					for (var j = 0; j <= sm.length - 1; j++) {
+
+						SCF003.createGrid.getSelectionModel().deselectRow(j);
 					}
 
 				}
@@ -270,16 +308,47 @@ SCF003.gridCopyBtn = new Ext.Toolbar.Button(
 																&& rowSelected.length == 1) {
 															var x = rowSelected
 																	.pop().data;
-
+															SCF003.createGrid
+																	.getSelectionModel()
+																	.selectAll();
+															var sm = SCF003.createGrid
+																	.getSelectionModel()
+																	.getSelections();
+															var lastIndex = sm.length - 1;
+															var getValueLastIndex = SCF003.createGrid
+																	.getStore()
+																	.getAt(
+																			lastIndex).data.no;
+															// alert(getValueLastIndex);
+															var j = 0;
+															var increment = 0;
 															for (var i = int1; i > 0; i--) {
+																j++;
 																Ext
 																		.getCmp(
 																				'gridEducationInfomation')
 																		.addRow(
 																				x);
-																
-																
+																increment = getValueLastIndex++;
+																increment = increment + 1;
 
+																SCF003.createGrid.store
+																		.getAt(
+																				lastIndex
+																						+ j)
+																		.set(
+																				'no',
+																				increment);
+
+																//																
+
+															}
+															for (var j = 0; j <= sm.length - 1; j++) {
+
+																SCF003.createGrid
+																		.getSelectionModel()
+																		.deselectRow(
+																				j);
 															}
 														} else {
 															Ext.Msg
@@ -307,81 +376,73 @@ function sleep(milliseconds) {
 	}
 }
 var param2 = {};
-function saveOrUpdate(){
+function saveOrUpdate() {
 
-param2.no = Ext.getCmp('no').getValue();
-param2.date = Ext.getCmp('date').getValue();
-param2.name = Ext.getCmp('name').getValue();
-param2.id = Ext.getCmp('id').getValue();
-param2.company = Ext.getCmp('company').getValue();
-param2.antecedent = Ext.getCmp('antecedent').getValue();
-param2.address = Ext.getCmp('address').getValue();
-param2.antercedentA = Ext.getCmp('antercedentA').getValue();
-param2.phone = Ext.getCmp('phone').getValue();
-param2.email = Ext.getCmp('email').getValue();
+	param2.no = Ext.getCmp('no').getValue();
+	param2.date = Ext.getCmp('date').getValue();
+	param2.name = Ext.getCmp('name').getValue();
+	param2.id = Ext.getCmp('id').getValue();
+	param2.company = Ext.getCmp('company').getValue();
+	param2.antecedent = Ext.getCmp('antecedent').getValue();
+	param2.address = Ext.getCmp('address').getValue();
+	param2.antercedentA = Ext.getCmp('antercedentA').getValue();
+	param2.phone = Ext.getCmp('phone').getValue();
+	param2.email = Ext.getCmp('email').getValue();
 
-// **************** get value in Bottom to controller
-// **********//
-param2.tatolPaym = Ext.getCmp('tatolPaym').getValue();
-param2.tatolPaymA = Ext.getCmp('tatolPaymA').getValue();
-param2.tatolPaymfullCase = Ext.getCmp('tatolPaymfullCase').getValue();
-param2.tatolManey = Ext.getCmp('tatolManey').getValue();
-param2.document = Ext.getCmp('document').getValue();
-param2.forPay = Ext.getCmp('forPay').getValue();
-param2.bank = Ext.getCmp('bank').getValue();
-param2.branch = Ext.getCmp('branch').getValue();
-param2.accountNumber = Ext.getCmp('accountNumber')
-		.getValue();
-param2.typeAccount = Ext.getCmp('typeAccount')
-		.getValue();
-param2.type1 = Ext.getCmp('type1').getValue();
-param2.type2 = Ext.getCmp('type2').getValue();
+	// **************** get value in Bottom to controller
+	// **********//
+	param2.tatolPaym = Ext.getCmp('tatolPaym').getValue();
+	param2.tatolPaymA = Ext.getCmp('tatolPaymA').getValue();
+	param2.tatolPaymfullCase = Ext.getCmp('tatolPaymfullCase').getValue();
+	param2.tatolManey = Ext.getCmp('tatolManey').getValue();
+	param2.document = Ext.getCmp('document').getValue();
+	param2.forPay = Ext.getCmp('forPay').getValue();
+	param2.bank = Ext.getCmp('bank').getValue();
+	param2.branch = Ext.getCmp('branch').getValue();
+	param2.accountNumber = Ext.getCmp('accountNumber').getValue();
+	param2.typeAccount = Ext.getCmp('typeAccount').getValue();
+	param2.type1 = Ext.getCmp('type1').getValue();
+	param2.type2 = Ext.getCmp('type2').getValue();
 
+	// ************************** get value to controller by
+	// Grid ***************************//
 
-// ************************** get value to controller by
-// Grid ***************************//
+	SCF003.createGrid.getSelectionModel().selectAll();
 
-SCF003.createGrid.getSelectionModel().selectAll();
+	var sm = SCF003.createGrid.getSelectionModel().getSelections();
+	param2.pack = "";
 
-var sm = SCF003.createGrid.getSelectionModel().getSelections();
-param2.pack = "";
-
-for (var i = 0; i <= sm.length - 1; i++) {
-	param2.dataGridNo = SCF003.createGrid.getStore().getAt(i).data.no;
-	param2.dataGridData = SCF003.createGrid.getStore().getAt(i).data.gridDate;
-	param2.dataGridCustomer = SCF003.createGrid.getStore().getAt(i).data.customer;
-	param2.dataGridRegion = SCF003.createGrid.getStore().getAt(i).data.region;
-	param2.dataGridGoal = SCF003.createGrid.getStore().getAt(i).data.goal;
-	param2.dataGridPaymentTravel = SCF003.createGrid.getStore().getAt(i).data.paymentTravel;
-	param2.dataGridPaymentD = SCF003.createGrid.getStore().getAt(i).data.paymentD;
-	param2.dataGridPayment = SCF003.createGrid.getStore().getAt(i).data.payment;
-	param2.dataRemark = SCF003.createGrid.getStore().getAt(i).data.remark;
-	SCF003.createGrid.getSelectionModel().deselectRow(i);
-	param2.pack += 	param2.dataGridNo+","+
-					param2.dataGridData+","+
-					param2.dataGridCustomer+","+
-					param2.dataGridRegion+","+
-					param2.dataGridGoal+","+						
-					param2.dataGridPaymentTravel+","+
-					param2.dataGridPaymentD+","+
-					param2.dataGridPayment+","+
-					param2.dataRemark+"!";
-}
-param2.method = "save1";
-Ext.Ajax.request({
-	url : '/TransportationAllowance/SCF003.html',
-	params : param2,
-	success : function(response, opts) {
-		if (param2 != null) {
-			Ext.Msg.alert('Information','บันทึกเรียบร้อย');
-		} else {
-			Ext.Msg.alert('Information', 'Error');
-		}
-	},
-	failure : function(response, opts) {
-		Ext.Msg.alert('ERROR', 'Error.');
+	for (var i = 0; i <= sm.length - 1; i++) {
+		var dataGridNo = SCF003.createGrid.getStore().getAt(i).data.no;
+		var dataGridData = SCF003.createGrid.getStore().getAt(i).data.gridDate;
+		var dataGridCustomer = SCF003.createGrid.getStore().getAt(i).data.customer;
+		var dataGridRegion = SCF003.createGrid.getStore().getAt(i).data.region;
+		var dataGridGoal = SCF003.createGrid.getStore().getAt(i).data.goal;
+		var dataGridPaymentTravel = SCF003.createGrid.getStore().getAt(i).data.paymentTravel;
+		var dataGridPaymentD = SCF003.createGrid.getStore().getAt(i).data.paymentD;
+		var dataGridPayment = SCF003.createGrid.getStore().getAt(i).data.payment;
+		var dataRemark = SCF003.createGrid.getStore().getAt(i).data.remark;
+		SCF003.createGrid.getSelectionModel().deselectRow(i);
+		param2.pack += dataGridNo + "," + dataGridData + "," + dataGridCustomer
+				+ "," + dataGridRegion + "," + dataGridGoal + ","
+				+ dataGridPaymentTravel + "," + dataGridPaymentD + ","
+				+ dataGridPayment + "," + dataRemark + "!";
 	}
-});
+	param2.method = "save1";
+	Ext.Ajax.request({
+		url : '/TransportationAllowance/SCF003.html',
+		params : param2,
+		success : function(response, opts) {
+			if (param2 != null) {
+				Ext.Msg.alert('Information', 'บันทึกเรียบร้อย');
+			} else {
+				Ext.Msg.alert('Information', 'Error');
+			}
+		},
+		failure : function(response, opts) {
+			Ext.Msg.alert('ERROR', 'Error.');
+		}
+	});
 }
 
 SCF003.gridSaveBtn = new Ext.Toolbar.Button(
@@ -390,19 +451,20 @@ SCF003.gridSaveBtn = new Ext.Toolbar.Button(
 			iconCls : 'save',
 			disabled : false,
 			handler : function() {
-				Ext.MessageBox.confirm('Confirmation', 'ยืนยันข้อมูลถูกต้อง ? <br/>เอกสารของคุณจะอยู่ในสถานะ \"บันทึก\"',
-						confirmFunction);
+				Ext.MessageBox
+						.confirm(
+								'Confirmation',
+								'ยืนยันข้อมูลถูกต้อง ? <br/>เอกสารของคุณจะอยู่ในสถานะ \"บันทึก\"',
+								confirmFunction);
 				function confirmFunction(btn) {
 					if (btn == 'yes') {
 						param2.status = "001";
-						
+
 						saveOrUpdate();
-						
-						
+
+					}
 				}
 			}
-			}
-		
 
 		});
 
@@ -429,7 +491,7 @@ SCF003.comboCustomerStoreGrid = new Ext.data.JsonStore({
 
 SCF003.comboCustomerGrid = new Ext.form.ComboBox({
 	id : 'comboCustomerGrid',
-//	fieldLabel : 'ฝ่าย / แผนก',
+	// fieldLabel : 'ฝ่าย / แผนก',
 	mode : 'local',
 	store : SCF003.comboCustomerStoreGrid,
 	valueField : 'code',
@@ -484,7 +546,7 @@ SCF003.gridColumns = [
 			header : 'ลูกค้า',
 			dataIndex : 'customer',
 			align : 'center',
-			editor :SCF003.comboCustomerGrid,
+			editor : SCF003.comboCustomerGrid,
 			width : 87.08,
 
 		},
@@ -538,7 +600,7 @@ SCF003.gridColumns = [
 												'payment', totalPaymentTravel);
 										SCF003.createGrid.store.getAt(i).set(
 												'paymentD', "0");
-										
+
 										a = a
 												+ parseInt(SCF003.createGrid
 														.getStore().getAt(i).data.paymentTravel);
@@ -729,7 +791,7 @@ SCF003.gridColumns = [
 			header : 'รวมเป็นเงิน',
 			dataIndex : 'payment',
 			align : 'center',
-			
+
 			width : 87.08,
 
 		}, {
@@ -876,7 +938,7 @@ SCF003.createButtonSubmit = new Ext.Button({
 SCF003.createButtonPrint = new Ext.Button({
 	id : 'print',
 	text : 'Print Preview',
-//	disabled:true,
+	// disabled:true,
 	width : 100
 });
 
@@ -1117,10 +1179,15 @@ Ext
 								var forPay = Ext.getCmp('forPay').getValue();
 								var type1 = Ext.getCmp('type1').getValue();
 								var type2 = Ext.getCmp('type2').getValue();
-								Ext.MessageBox.confirm('Acception', 'คุณ' + ' '
-										+ name + ' '
-										+ 'แน่ใจว่าจะส่งเอกสารนี้ไปยังผู้ดูแล  ?',
-										confirmFunction);
+								Ext.MessageBox
+										.confirm(
+												'Acception',
+												'คุณ'
+														+ ' '
+														+ name
+														+ ' '
+														+ 'แน่ใจว่าจะส่งเอกสารนี้ไปยังผู้ดูแล  ?',
+												confirmFunction);
 
 								function confirmFunction(btn) {
 									if (btn == 'yes') {

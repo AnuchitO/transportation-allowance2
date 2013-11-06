@@ -847,9 +847,10 @@ SVD006C.checkboxGroup = new Ext.form.CheckboxGroup({
     columns: 1,
     vertical: true,
     items: [
-        {boxLabel: "Value 1", name :"checkNong", inputValue: 1},
+        {boxLabel: "Value 12", name :"checkNong", inputValue: 1},
         {boxLabel: "Value 2", name :"checkNong", inputValue: 2}
-    ]
+    ],
+	flex: 1
 });
 
 //SVD006C.checkboxGroup = new Ext.form.CheckboxGroup({

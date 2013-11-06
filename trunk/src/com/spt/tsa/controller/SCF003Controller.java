@@ -499,7 +499,7 @@ public class SCF003Controller {
 						.split("/");
 				Integer yearCreate = Integer
 						.parseInt(thaiFormatSplitCreatetion[2]);
-				yearCreate -= 543;
+//				yearCreate -= 543;
 				Date dateCreate = sdfCreate
 						.parse(thaiFormatSplitCreatetion[0] + "/"
 								+ thaiFormatSplitCreatetion[1] + "/"

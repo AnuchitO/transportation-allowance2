@@ -258,9 +258,16 @@ SCF003.gridRemoveBtn = new Ext.Toolbar.Button({
 						if (j == lastIndex) {
 
 						}
+						
 						detroyNumber = u - j;
+						if(detroyNumber == 0){
+							SCF003.createGrid.store.getAt(lastIndex - j).set('no',
+									detroyNumber+1);
+						}
+						else{
 						SCF003.createGrid.store.getAt(lastIndex - j).set('no',
 								detroyNumber);
+						}
 					}
 
 					for (var j = 0; j <= sm.length - 1; j++) {
@@ -342,7 +349,7 @@ SCF003.gridCopyBtn = new Ext.Toolbar.Button(
 																increment = increment + 1;
 
 																SCF003.createGrid.store.getAt(lastIndex+ j).set('no',increment);
-																SCF003.createGrid.store.getAt(lastIndex+ j).set('gridDate',selectedColumn2);
+//																SCF003.createGrid.store.getAt(lastIndex+ j).set('gridDate',selectedColumn2);
 																SCF003.createGrid.store.getAt(lastIndex+ j).set('customer',selectedColumn3);
 																SCF003.createGrid.store.getAt(lastIndex+ j).set('region',selectedColumn4);
 																SCF003.createGrid.store.getAt(lastIndex+ j).set('goal',selectedColumn5);
@@ -548,10 +555,13 @@ SCF003.gridColumns = [
 			type : 'date',
 			editor : new Ext.form.DateField({
 				id : 'editGridDate',
+				emptyText : 'Select ...',
+				
 
 			}),
 			menuDisabled : true,
 			renderer : Ext.util.Format.dateRenderer('d/m/Y'),
+			
 			width : 87.08,
 
 		},

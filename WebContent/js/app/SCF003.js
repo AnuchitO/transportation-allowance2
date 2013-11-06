@@ -306,8 +306,18 @@ SCF003.gridCopyBtn = new Ext.Toolbar.Button(
 															text) {
 														if (buttonId == 'ok'
 																&& rowSelected.length == 1) {
-															var x = rowSelected
-																	.pop().data;
+//															var x = rowSelected
+//																	.pop().data;
+															var selectedColumn1 = Ext.getCmp('gridEducationInfomation').getSelectionModel().getSelections()[0].get('no');
+															var selectedColumn2 = Ext.getCmp('gridEducationInfomation').getSelectionModel().getSelections()[0].get('gridDate');
+															var selectedColumn3 = Ext.getCmp('gridEducationInfomation').getSelectionModel().getSelections()[0].get('customer');
+															var selectedColumn4 = Ext.getCmp('gridEducationInfomation').getSelectionModel().getSelections()[0].get('region');
+															var selectedColumn5 = Ext.getCmp('gridEducationInfomation').getSelectionModel().getSelections()[0].get('goal');
+															var selectedColumn6 = Ext.getCmp('gridEducationInfomation').getSelectionModel().getSelections()[0].get('paymentTravel');
+															var selectedColumn7 = Ext.getCmp('gridEducationInfomation').getSelectionModel().getSelections()[0].get('paymentD');
+															var selectedColumn8 = Ext.getCmp('gridEducationInfomation').getSelectionModel().getSelections()[0].get('payment');
+															var selectedColumn9 = Ext.getCmp('gridEducationInfomation').getSelectionModel().getSelections()[0].get('remark');
+//															
 															SCF003.createGrid
 																	.getSelectionModel()
 																	.selectAll();
@@ -327,18 +337,19 @@ SCF003.gridCopyBtn = new Ext.Toolbar.Button(
 																Ext
 																		.getCmp(
 																				'gridEducationInfomation')
-																		.addRow(
-																				x);
+																		.addRow();
 																increment = getValueLastIndex++;
 																increment = increment + 1;
 
-																SCF003.createGrid.store
-																		.getAt(
-																				lastIndex
-																						+ j)
-																		.set(
-																				'no',
-																				increment);
+																SCF003.createGrid.store.getAt(lastIndex+ j).set('no',increment);
+																SCF003.createGrid.store.getAt(lastIndex+ j).set('gridDate',selectedColumn2);
+																SCF003.createGrid.store.getAt(lastIndex+ j).set('customer',selectedColumn3);
+																SCF003.createGrid.store.getAt(lastIndex+ j).set('region',selectedColumn4);
+																SCF003.createGrid.store.getAt(lastIndex+ j).set('goal',selectedColumn5);
+																SCF003.createGrid.store.getAt(lastIndex+ j).set('paymentTravel',selectedColumn6);
+																SCF003.createGrid.store.getAt(lastIndex+ j).set('paymentD',selectedColumn7);
+																SCF003.createGrid.store.getAt(lastIndex+ j).set('payment',selectedColumn8);
+																SCF003.createGrid.store.getAt(lastIndex+ j).set('remark',selectedColumn9);
 
 																//																
 

@@ -99,18 +99,12 @@ public class SCF003Controller {
 		Date date = new Date();
 		SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
 		SCF003Domain01 domain = new SCF003Domain01();
-		List<TravelHeader> lastNoDocList = this.travelHeader01Service
-				.findTravelHanderGetLastNoDoc();
+		List<TravelHeader> lastNoDocList = this.travelHeader01Service.findTravelHanderGetLastNoDoc();
 		String numberDoc = " ";
 		if (lastNoDocList.size() != 0) {
-			logger.debug(
-					"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {}",
-					lastNoDocList.get(0).getNo());
-			numberDoc = new RunNumberDocument(lastNoDocList.get(0).getNo())
-					.generatNumberDocument();
-			logger.debug(
-					"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {}",
-					numberDoc);
+			logger.debug("!!!!!!!!!!!!  {}",lastNoDocList.get(0).getNo());
+			numberDoc = new RunNumberDocument(lastNoDocList.get(0).getNo()).generatNumberDocumentV2();
+			logger.debug("!!!!!!!!!!!!!  {}",numberDoc);
 		}
 
 		domain.setNo(numberDoc);

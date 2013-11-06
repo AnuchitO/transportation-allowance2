@@ -1263,5 +1263,19 @@ Ext
 								}
 
 							});
+			Ext
+			.get('type1')
+			.on(
+					'click',
+					function(e) {
+						Ext.getDom('type2').checked = false;
+					});
+			Ext
+			.get('type2')
+			.on(
+					'click',
+					function(e) {
+						Ext.getDom('type1').checked = false;
+					});
 
 		});

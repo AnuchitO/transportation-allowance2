@@ -422,6 +422,9 @@ function saveOrUpdate() {
 		var dataGridPaymentD = SCF003.createGrid.getStore().getAt(i).data.paymentD;
 		var dataGridPayment = SCF003.createGrid.getStore().getAt(i).data.payment;
 		var dataRemark = SCF003.createGrid.getStore().getAt(i).data.remark;
+			if(dataRemark == "" || dataRemark == null || dataRemark == "undefined"){
+				dataRemark = "  ";
+			}
 		SCF003.createGrid.getSelectionModel().deselectRow(i);
 		param2.pack += dataGridNo + "," + dataGridData + "," + dataGridCustomer
 				+ "," + dataGridRegion + "," + dataGridGoal + ","
@@ -504,7 +507,6 @@ SCF003.comboCustomerGrid = new Ext.form.ComboBox({
 	forceSelection : true,
 	triggerAction : 'all',
 	emptyText : 'Select ...'
-
 });
 SCF003.checkboxselection = new Ext.grid.CheckboxSelectionModel({
 	singleSelect : false,
@@ -1027,6 +1029,7 @@ SCF003.tatolPaymfullCase = new Ext.form.TextField({
 	width : 80,
 
 });
+
 SCF003.createGrid = new Ext.ss.grid.EditorGridPanel({
 	id : 'gridEducationInfomation',
 	store : SCF003.gridStrore,

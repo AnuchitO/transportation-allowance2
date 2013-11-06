@@ -51,7 +51,8 @@ public class RunNumberDocument {
 		Character sub1=null;
 		Character sub2=null;
 		Long yearThaiLong =null;
-		if(year.toString().substring(0, 2).equals("25")){
+		if(year.toString().substring(0,2).equals("25")){
+			 yearThaiLong = year.longValue();
 			 sub1 = yearThaiLong.toString().charAt(2);
 			 sub2 = yearThaiLong.toString().charAt(3);
 		}else {

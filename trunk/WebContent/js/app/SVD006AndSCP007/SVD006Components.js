@@ -669,6 +669,7 @@ SVD006C.tabPanelSVD006 = new Ext.Panel({
 });
 
 // /////// Tab Panel //////
+
 SVD006C.tabPanel = new Ext.TabPanel({
 	autoHeight : true,
 	autoWidth : true,
@@ -686,7 +687,8 @@ SVD006C.tabPanel = new Ext.TabPanel({
 		items : SVD006C.tabPanelSVD006
 	}, {
 		title : 'ใบสำคัญจ่าย',
-		items : SCP007C.test
+		items : SCP007C.tabPanelSCP007C,
+//		disabled : true
 	} ]
 });
 

@@ -26,6 +26,9 @@ public class Employee01DaoImpl extends HibernateDaoSupport implements Employee01
    public Employee findEmployeeWhereId(){
 	   return this.getHibernateTemplate().get(Employee.class,"EMp001");
    }
+   
+
+   
    public List<String> findBankWhereEmp(){
 	   String id =  this.findEmployeeWhereId().getBank();
 	   System.out.println("findBankWhereEmpDao");

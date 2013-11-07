@@ -1,6 +1,10 @@
 var SVD006 = {};
 
-Ext.onReady(function() {SVD006.resumeForm = new Ext.form.FormPanel({
+Ext.onReady(function() {
+
+
+	SVD006.resumeForm = new Ext.form.FormPanel({
+	
 				applyTo : "content",
 				layout : 'column',
 				border : false,
@@ -143,6 +147,22 @@ Ext.get('idBtnConfirm').on('click',function(e) {
 
 
 ///////End Operater Function
+//************************ set value By SCP007C **************************************/
+SCP007C.scpForPayGive.setValue(SVD006Domain.name);
+SCP007C.scpBank.setValue(SVD006Domain.bank);
+SCP007C.scpBranch.setValue(SVD006Domain.branch);
+SCP007C.scpTotalMoney.setValue(SVD006Domain.totalPayment);
+SCP007C.scpNumberCharactor.setValue(SVD006Domain.charactorNumber);
+var totalPayment = Ext.getCmp('scpTotalMoney').getValue();
+var a = parseInt(totalPayment);
 
+if(a <= 1500){
+SCP007C.scpTypeForpay1.checked = true;
+	
 
+}
+else{
+	SCP007C.scpTypeForpay2.checked = true;
+
+}
 });

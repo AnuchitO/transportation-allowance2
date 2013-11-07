@@ -1,5 +1,7 @@
 package com.spt.tsa.dao;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.*;
 
 import com.spt.tsa.domain.SCF003Domain01;
@@ -13,6 +15,8 @@ public interface TravelHeader01Dao {
 	 public List<TravelHeader> findTravelHanderGetLastNoDoc();
 	 public List<TravelHeader> findTravelHWhereId(String domain);
 	 public void updateStatusSubmit(SCF003Domain01 domain);
+	 
+	 public List<BigDecimal> findTravelTotal(String domain);
 	 
 	 ///nong
 	 public void saveHeaderCreateFrom(TravelHeader travelHeader);

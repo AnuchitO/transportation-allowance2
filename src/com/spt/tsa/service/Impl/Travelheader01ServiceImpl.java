@@ -1,5 +1,7 @@
 package com.spt.tsa.service.Impl;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +53,11 @@ public class Travelheader01ServiceImpl implements TravelHeader01Service{
 	public List<TravelHeader> findByDocNoForSaveOrUpdate(String docNo) {
 		return this.travelHeader01Dao.findByDocNoForSaveOrUpdate(docNo);
 	}
+	
+	public List<BigDecimal> findTravelTotal(String domain){
+		 List<BigDecimal> send = travelHeader01Dao.findTravelTotal(domain);
+	    	return send;
+	    }
 
 }
 	

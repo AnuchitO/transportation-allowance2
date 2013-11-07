@@ -1,7 +1,12 @@
 package com.spt.tsa.controller;
 
 
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import java.text.DateFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -108,8 +113,22 @@ public class SVD006Controller{
 			
 			///////////////////////old
 			Map<String,Object> model = new HashMap<String,Object>();
+
+			Employee resultsEmp = this.employee01Service.findEmployeeWhereId();
+			System.out.println("view 2");
+			List<String> resu = this.employee01Service.findBankWhereEmp();
+			List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp();
+			List<String> resultsDept = this.employee01Service.findDeptWhereEmp();
+			List<String> resultsProvince = this.employee01Service.findProvinceEmp();
+			
+			
+			  Date date = new Date();
+			  SimpleDateFormat ft = new SimpleDateFormat ("yyyy/MM/dd");  
+		
+
 			SVD006Domain01 domain = new SVD006Domain01();
 	  			  
+
 			List<TravelHeader> lastNoDocList = this.travelHeader01Service.findTravelHanderGetLastNoDoc();
 			String numberDoc = " ";
 			if(lastNoDocList.size()!=0){
@@ -145,7 +164,19 @@ public class SVD006Controller{
 			domain.setAccountNumber(travelHeader.getEmployee().getAccountNo());
 			domain.setTypeAccount(parameterTableBankType.getDetail());
 
-		
+			List<BigDecimal> tra = this.travelHeader01Service.findTravelTotal("550001");
+			domain.setTotalPayment(tra.get(0));
+			domain.setCharactorNumber(new BahtText(tra.get(0)).toString());
+			
+			Employee teeeeeee = this.travelHeader01Service.findEmployeeWhereId(domain.getId());
+			Company commmmm = this.travelHeader01Service.findCompanyWhereId(resultsEmp.getCompany().getComId());
+			
+				logger.debug("+++++++------------+{}------",teeeeeee.getAddress());
+				logger.debug("+++++++------------+{}------",commmmm.getComId());
+			
+			logger.debug("+++++++++++++++++++++{}--------------------",resu.get(0));
+			logger.debug("+++++++++++++++++++++{}--------------------",domain.getName());
+
 			model.put("data", JSONObject.fromObject(BeanUtils.beanToMap(domain)).toString());
 			
 			return new ModelAndView("SVD006",model);

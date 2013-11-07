@@ -1,5 +1,7 @@
 package com.spt.tsa.domain;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 
 public class SCF003Domain01 {
@@ -49,7 +51,24 @@ public class SCF003Domain01 {
 	String submitNo;
 	String status;
 	
+	//*************** variable for SCP007 program ************************//
+	BigDecimal totalPayment;
+	String charactorNumber;
 	
+	
+	
+	public String getCharactorNumber() {
+		return charactorNumber;
+	}
+	public void setCharactorNumber(String charactorNumber) {
+		this.charactorNumber = charactorNumber;
+	}
+	public BigDecimal getTotalPayment() {
+		return totalPayment;
+	}
+	public void setTotalPayment(BigDecimal totalPayment) {
+		this.totalPayment = totalPayment;
+	}
 	public String getStatus() {
 		return status;
 	}

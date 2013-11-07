@@ -1,5 +1,7 @@
 package com.spt.tsa.dao.Impl;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -112,5 +114,20 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 				.add(Restrictions.eq("no", docNo));
 		return this.getHibernateTemplate().findByCriteria(criteria);
 	}
+	
+	 public List<BigDecimal> findTravelTotal(String domain){
+		   String no = domain;
+		   Session ses = (Session) this.getSession();
+		   StringBuffer sql = new StringBuffer();
+		   sql.append("select TRAH_THTOTAL from TRAVEL_HEADER where TRAH_THNO = "+"'"+no+"'");
+		   SQLQuery query = ses.createSQLQuery(sql.toString());
+		   List<BigDecimal> send = query.list();
+		   ses.close();
+		   return send;
+		   
+	   }
+	
+	
+	
     
 }

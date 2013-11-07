@@ -70,12 +70,10 @@ public class SPV004JasperController {
 		List<TravelHeader> travelHeader = null;
 		try{ 
 		travelHeader = this.travelHeader01Service.findByDocNo(docNo);
-		 
 		List<TravelDetail> travelDetails = this.travelDetail01Service.findByTravelHeader(travelHeader.get(0));
-
 		List<ParameterTable> resultsBank = this.parameterTable01Service.findRow("7",travelHeader.get(0).getEmployee().getBank().toString());
 		List<ParameterTable> resultsBankType = this.parameterTable01Service.findRow("8",travelHeader.get(0).getEmployee().getAccountType().toString());
-		
+
 		SPV004JasperDataSource dsStudent=null;
 		dsStudent =  new SPV004JasperDataSource(travelHeader,resultsBank,resultsBankType,travelDetails);
 		jrDatasource = dsStudent.create(null);

@@ -241,8 +241,7 @@ SCF003.gridRemoveBtn = new Ext.Toolbar.Button({
 					}
 					SCF003.createGrid.getSelectionModel().selectAll();
 
-					var sm = SCF003.createGrid.getSelectionModel()
-							.getSelections();
+					var sm = SCF003.createGrid.getSelectionModel().getSelections();
 					//					
 					var numberSelect = rowSelected.length;
 

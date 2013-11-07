@@ -236,7 +236,6 @@ SVD006C.gridStrore = new Ext.data.JsonStore({
 	} ],
 	model : 'ForumThread',
 	remoteSort : true
-
 });
 
 SVD006C.totalPayCharector = new Ext.form.TextField({

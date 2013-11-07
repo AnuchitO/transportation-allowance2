@@ -27,6 +27,9 @@ Ext.onReady(function() {SVD006.resumeForm = new Ext.form.FormPanel({
 
 ////////Operater Function
 
+SVD006C.btnCreatePay.disable();
+SVD006C.date.disable();
+//SVD006C.btnCreatePay.enable();
 Ext.get('approve').on('click',function(e) {
 	Ext.getDom('refused').checked = false;
 	Ext.getDom('cancel').checked = false;

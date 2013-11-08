@@ -1,3 +1,5 @@
+
+
 var SVD006 = {};
 
 Ext.onReady(function() {
@@ -31,6 +33,7 @@ Ext.onReady(function() {
 
 ////////Operater Function
 
+
 SVD006C.btnCreatePay.disable();
 SVD006C.date.disable();
 //SVD006C.btnCreatePay.enable();
@@ -55,14 +58,16 @@ Ext.get('cancel').on('click',function(e) {
 
 Ext.get('payCash').on('click',function(e) {
 	Ext.getDom('payCheck').checked = false;
-	Ext.getDom('approve').checked = true;
+	
+	Ext.getDom('approve').checked = true;		
 	Ext.getDom('refused').checked = false;
 	Ext.getDom('cancel').checked = false;
 });
 
 Ext.get('payCheck').on('click',function(e) {
 	Ext.getDom('payCash').checked = false;
-	Ext.getDom('approve').checked = true;
+	
+	Ext.getDom('approve').checked = true;	
 	Ext.getDom('refused').checked = false;
 	Ext.getDom('cancel').checked = false;
 	
@@ -146,6 +151,7 @@ Ext.get('idBtnConfirm').on('click',function(e) {
 });
 
 
+
 ///////End Operater Function
 //************************ set value By SCP007C **************************************/
 SCP007C.scpForPayGive.setValue(SVD006Domain.name);
@@ -165,4 +171,6 @@ else{
 	SCP007C.scpTypeForpay2.checked = true;
 
 }
+
+
 });

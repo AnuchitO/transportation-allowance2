@@ -1,29 +1,34 @@
+
+
 var SVD006C = {};
 
 SVD006C.No = new Ext.form.TextField({
 	id : 'noDoc',
 	fieldLabel : "No",
-	disabled : true
+	readOnly: true
 });
 SVD006C.date = new Ext.form.TextField({
 	id : 'date',
 	fieldLabel : "วันที่รับเอกสาร",
+	readOnly: true
 });
 
 SVD006C.name = new Ext.form.TextField({
 	id : 'name',
 	fieldLabel : "ชื่อ - สกุล",
+	readOnly: true
 });
 
 SVD006C.id = new Ext.form.TextField({
 	id : 'id',
 	fieldLabel : "รหัสพนักงาน",
+	readOnly: true
 });
 
 SVD006C.company = new Ext.form.TextField({
 	id : 'company',
 	fieldLabel : "บริษัท",
-
+	readOnly: true
 });
 
 // ฝ่าย/แผนก
@@ -37,7 +42,6 @@ SVD006C.comboboxStore = new Ext.data.JsonStore({
 	root : 'records',
 	idProperty : 'code',
 	autoLoad : true,
-	// fieldLabel : 'comboStrore',
 	fields : [ {
 		name : 'code'
 
@@ -51,13 +55,15 @@ SVD006C.comboboxStore = new Ext.data.JsonStore({
 SVD006C.txtDepartment = new Ext.form.TextField({
 	id : 'department',
 	fieldLabel : "ฝ่าย / แผนก",
-	width : 188
+	width : 188,
+	readOnly: true
 });
 
 SVD006C.idCardEmp = new Ext.form.TextField({
 	id : 'idCardEmp',
 	fieldLabel : "รหัสประจำตัวประชาชน",
-	width : 250
+	width : 250,
+	readOnly: true
 });
 
 SVD006C.textArea = new Ext.ss.form.TextArea({
@@ -65,45 +71,28 @@ SVD006C.textArea = new Ext.ss.form.TextArea({
 	id : 'address',
 	width : 600,
 	bodyPadding : 10,
-
+	readOnly: true
 });
 
-SVD006C.comboboxStoreA = new Ext.data.JsonStore({
-	baseParams : {
-		method : 'antercedent2'
-	},
-	url : '/TransportationAllowance/SCF003.html',
-	method : 'POST',
-	storeId : 'comboStroreA',
-	root : 'records',
-	idProperty : 'code',
-	autoLoad : true,
-	fieldLabel : 'comboStroreA',
-	fields : [ {
-		name : 'code'
-
-	}, {
-		name : 'description'
-	} ]
-});
 SVD006C.comboProvince = new Ext.form.TextField({
 	fieldLabel : 'จังหวัด',
 	id : 'province',
 	width : 135,
+	readOnly: true
 });
 
 SVD006C.phoneNumber = new Ext.form.TextField({
 	id : 'phoneNumber',
 	fieldLabel : "เบอร์โทร",
-	width : 120
-
+	width : 120,
+	readOnly: true
 });
 
 SVD006C.email = new Ext.form.TextField({
 	id : 'email',
 	fieldLabel : "E-mail",
-	width : 200
-
+	width : 200,
+	readOnly: true
 });
 
 // /////////////////////set Field/////////////////////////
@@ -241,45 +230,52 @@ SVD006C.gridStrore = new Ext.data.JsonStore({
 SVD006C.totalPayCharector = new Ext.form.TextField({
 	id : 'totalPayCharector',
 	fieldLabel : "จำนวนเงินเป็นตัวอักษร",
-	width : 300
+	width : 300,
+	readOnly: true
 });
 
 SVD006C.document = new Ext.form.TextField({
 	id : 'document',
 	fieldLabel : "เอกสารแนบ",
-	width : 120
-
+	width : 120,
+	readOnly: true
 });
+
 SVD006C.forPay = new Ext.form.TextField({
 	id : 'forPay',
 	fieldLabel : "ใบ เพื่อชำระ",
-	width : 400
-
+	width : 400,
+	readOnly: true
 });
+
 SVD006C.bank = new Ext.form.TextField({
 	id : 'bank',
 	fieldLabel : "บัญชีธนาคาร",
-	width : 120
-
+	width : 120,
+	readOnly: true
 });
+
 SVD006C.branch = new Ext.form.TextField({
 	id : 'branch',
 	fieldLabel : "สาขา",
-	width : 240
-
+	width : 240,
+	readOnly: true
 });
+
 SVD006C.accountNumber = new Ext.form.TextField({
 	id : 'accountNumber',
 	fieldLabel : "เลขที่บัญชี",
-	width : 240
-
+	width : 240,
+	readOnly: true
 });
+
 SVD006C.typeAccount = new Ext.form.TextField({
 	id : 'typeAccount',
 	fieldLabel : "ประเภทบัญชี",
-	width : 240
-
+	width : 240,
+	readOnly: true
 });
+
 SVD006C.textLabel = new Ext.form.Label({
 	fieldLabel : "ได้รับ"
 });
@@ -369,17 +365,20 @@ SVD006C.typeAccount.setValue(SVD006Domain.typeAccount);
 
 SVD006C.totalPayExpresses = new Ext.form.TextField({
 	id : 'totalPayExpresses',
-	width : 80
+	width : 80,
+	readOnly: true
 });
 
 SVD006C.totalPayMotorWay = new Ext.form.TextField({
 	id : 'totalPayMotorWay',
-	width : 80
+	width : 80,
+	readOnly: true
 });
 
 SVD006C.totalPayAll = new Ext.form.TextField({
 	id : 'totalPayAll',
 	width : 80,
+	readOnly: true
 });
 
 // //////////////////////Begin Debug Start//////////////////
@@ -668,8 +667,9 @@ SVD006C.tabPanelSVD006 = new Ext.Panel({
 	} ]
 });
 
-// /////// Tab Panel //////
 
+
+// /////// Tab Panel //////
 SVD006C.tabPanel = new Ext.TabPanel({
 	autoHeight : true,
 	autoWidth : true,
@@ -691,8 +691,4 @@ SVD006C.tabPanel = new Ext.TabPanel({
 //		disabled : true
 	} ]
 });
-
-
-
-
 

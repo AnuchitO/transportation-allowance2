@@ -17,6 +17,7 @@ public interface TravelHeader01Service {
 	 
 	 public List<BigDecimal> findTravelTotal(String domain);
 	///nong
-		 public void saveHeaderCreateFrom(TravelHeader travelHeader);
-		 public List<TravelHeader> findByDocNoForSaveOrUpdate(String docNo);
+	 public void saveHeaderCreateFrom(TravelHeader travelHeader);
+	 public List<TravelHeader> findByDocNoForSaveOrUpdate(String docNo);
+	 public List<TravelHeader> findByEmpIdInTravelHeader(Employee employee);
 }

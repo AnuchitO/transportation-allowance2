@@ -21,5 +21,6 @@ public interface TravelHeader01Dao {
 	 ///nong
 	 public void saveHeaderCreateFrom(TravelHeader travelHeader);
 	 public List<TravelHeader> findByDocNoForSaveOrUpdate(String docNo);
+	 public List<TravelHeader> findByEmpIdInTravelHeader(Employee employee);
 	
 }

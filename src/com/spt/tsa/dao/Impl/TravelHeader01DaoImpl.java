@@ -114,7 +114,7 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 				.add(Restrictions.eq("no", docNo));
 		return this.getHibernateTemplate().findByCriteria(criteria);
 	}
-	
+
 	 public List<BigDecimal> findTravelTotal(String domain){
 		   String no = domain;
 		   Session ses = (Session) this.getSession();
@@ -127,7 +127,12 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 		   
 	   }
 	
-	
-	
+
+	public List<TravelHeader> findByEmpIdInTravelHeader(Employee employee) {
+		DetachedCriteria criteria =  DetachedCriteria.forClass(TravelHeader.class);
+				criteria.add(Restrictions.eq("employee", employee));
+				criteria.addOrder(Order.asc("no"));
+		return this.getHibernateTemplate().findByCriteria(criteria);
+	}
     
 }

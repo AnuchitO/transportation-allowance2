@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import org.tuxilla.BahtText;
 
 import com.fission.web.view.extjs.grid.GridData;
@@ -87,26 +86,37 @@ public class SCF003Controller {
 	@RequestMapping(value = "/SCF003.html", method = RequestMethod.GET)
 	public ModelAndView view(HttpServletRequest request,
 			HttpServletResponse response) {
-
+		
+		String empId = null;
+		if(request.getParameter("empId")==null){
+			logger.debug("pagepppppppppppPPPPPPPPPPPPPPPPPPPPppppppppp  IF  pppppppppppppppppppppppppppppppp");
+		}else{
+			empId = request.getParameter("empId").toString();
+			logger.debug("pagepppppppppppPPPPPPPPPPPPPPPPPPPPppppppppp  {} pppppppppppppppppppppppppppppppp",empId);
+		}
+		
+		
+		
+		
 		Map<String, Object> model = new HashMap<String, Object>();
 		Employee resultsEmp = this.employee01Service.findEmployeeWhereId();
 		System.out.println("view 2");
 		List<String> resu = this.employee01Service.findBankWhereEmp();
-		List<String> resultsBranch = this.employee01Service
-				.findBranchBankWhereEmp();
+		List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp();
 		List<String> resultsDept = this.employee01Service.findDeptWhereEmp();
 		List<String> resultsProvince = this.employee01Service.findProvinceEmp();
 		Date date = new Date();
 		SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
 		SCF003Domain01 domain = new SCF003Domain01();
 		List<TravelHeader> lastNoDocList = this.travelHeader01Service.findTravelHanderGetLastNoDoc();
+		
 		String numberDoc = " ";
-		if (lastNoDocList.size() != 0) {
+		if ((lastNoDocList.size() != 0)) {
 			logger.debug("!!!!!!!!!!!!  {}",lastNoDocList.get(0).getNo());
 			numberDoc = new RunNumberDocument(lastNoDocList.get(0).getNo()).generatNumberDocumentV2();
 			logger.debug("!!!!!!!!!!!!!  {}",numberDoc);
+		}else{
 		}
-
 		domain.setNo(numberDoc);
 		domain.setDate(ft.format(date));
 		domain.setName(resultsEmp.getName());

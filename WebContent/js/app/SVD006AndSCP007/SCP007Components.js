@@ -632,3 +632,12 @@ SCP007C.tabPanelSCP007C = new Ext.Panel({
 		items : SCP007C.scpSetHeader
 	}]
 });
+
+SCP007C.checkBox = new Ext.form.Checkbox({
+	id : 'checkBoxAA',
+	name : 'name',
+	labelSeparator : '',
+	hideLabel : true,
+	boxLabel : 'เงินสด',
+	fieldLabel : 'text'
+});

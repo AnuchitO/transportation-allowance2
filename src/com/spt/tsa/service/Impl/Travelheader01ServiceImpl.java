@@ -59,5 +59,9 @@ public class Travelheader01ServiceImpl implements TravelHeader01Service{
 	    	return send;
 	    }
 
+	public List<TravelHeader> findByEmpIdInTravelHeader(Employee employee) {
+		return this.travelHeader01Dao.findByEmpIdInTravelHeader(employee);
+	}
+
 }
 	

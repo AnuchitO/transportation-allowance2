@@ -1335,5 +1335,16 @@ Ext
 					function(e) {
 						Ext.getDom('type1').checked = false;
 					});
+			
+			Ext.get('back').on('click',function(e) {
+						Ext.MessageBox.confirm('Confirmation','คุณต้องการกลับไปหน้าหลัก',confirmFunction);
+						function confirmFunction(btn) {
+							if (btn == 'yes') {
+								var urlPreviwPage = "/TransportationAllowance/SHI002.html";
+								window.location.assign(urlPreviwPage);
+							}
+						}
 
-		});
+					});
+
+});

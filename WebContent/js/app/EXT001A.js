@@ -124,6 +124,7 @@ EXT001A.panel = new Ext.Panel({
 	    }  ]
 	    
 });
+
 EXT001A.gridColumns=[{
 	header:'Firstname',
 	dataIndex:'fname',
@@ -168,9 +169,7 @@ EXT001A.createGrid = new Ext.grid.EditorGridPanel({
 	store:EXT001A.gridStrore,
 	columns: EXT001A.gridColumns,
 	height:127,
-	width:500,
-	
-	
+	width:500,	
 });
 
 EXT001A.tabPanel = new Ext.TabPanel({

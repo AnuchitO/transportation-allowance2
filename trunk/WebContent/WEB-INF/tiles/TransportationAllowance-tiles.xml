@@ -34,5 +34,18 @@
       	<put-attribute name="content" value="/WEB-INF/jsp/app/SVD006/SVD006.jsp"/>
      	<put-attribute name="pageJsIncluded" value="/js/app/SVD006AndSCP007/SCP007Components.js, /js/app/SVD006AndSCP007/SVD006Components.js, /js/app/SVD006AndSCP007/SVD006.js"/>    
     </definition>
+    
+    
+    <definition name="/SHI002.tiles" extends=".emptytemplate">
+      	<put-attribute name="title" value="SHI002"/>
+      	<put-attribute name="content" value="/WEB-INF/jsp/app/SHI002/SHI002.jsp"/>
+     	<put-attribute name="pageJsIncluded" value="/js/app/SHI002/SHI002Component.js, /js/app/SHI002/SHI002.js"/>  
+    </definition>
+   
+    <definition name="/SAC008.tiles" extends=".emptytemplate">
+      	<put-attribute name="title" value="SAC008"/>
+      	<put-attribute name="content" value="/WEB-INF/jsp/app/SAC008/SAC008.jsp"/>
+     	<put-attribute name="pageJsIncluded" value="/js/app/SAC008/SAC008Component.js, /js/app/SAC008/SAC008.js"/>  
+    </definition>
    
 </tiles-definitions>

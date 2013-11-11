@@ -1,5 +1,3 @@
-
-
 var SVD006C = {};
 
 SVD006C.No = new Ext.form.TextField({

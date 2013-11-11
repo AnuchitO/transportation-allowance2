@@ -2,9 +2,10 @@ var SCP007C = {};
 
 SCP007C.scpLabelCompany = new Ext.form.Label({
 	id : "scpLabelCompany",
-	text : "บริษัท ซอฟสแควร์ 1999 จำกัด",
+//	text : "บริษัท ซอฟสแควร์ 1999 จำกัด",
 	style : {
 		"font-size" : "200%",
+		"font-align" : "center"
 
 	},
 	anchor : '93%'
@@ -281,6 +282,40 @@ SCP007C.gridRemoveBtn = new Ext.Toolbar.Button({
 	
 });
 
+//******************** save function ***********************************//
+var param = {};
+function saveOrUpdate() {
+
+	param.no = Ext.getCmp('no').getValue();
+	param.date = Ext.getCmp('date').getValue();
+	param.name = Ext.getCmp('name').getValue();
+	param.id = Ext.getCmp('id').getValue();
+	param.company = Ext.getCmp('company').getValue();
+	param.antecedent = Ext.getCmp('antecedent').getValue();
+	param.address = Ext.getCmp('address').getValue();
+	param.antercedentA = Ext.getCmp('antercedentA').getValue();
+	param.phone = Ext.getCmp('phone').getValue();
+	param.email = Ext.getCmp('email').getValue();
+
+	param2.method = "save1";
+	Ext.Ajax.request({
+		url : '/TransportationAllowance/SCF003.html',
+		params : param2,
+		success : function(response, opts) {
+			if (param2 != null) {
+				Ext.Msg.alert('Information', 'บันทึกเรียบร้อย');
+			} else {
+				Ext.Msg.alert('Information', 'Error');
+			}
+		},
+		failure : function(response, opts) {
+			Ext.Msg.alert('ERROR', 'Error.');
+		}
+	});
+}
+
+//**********************************************************************//
+
 SCP007C.gridSaveBtn = new Ext.Toolbar.Button(
 		{
 			tooltip : 'Save',
@@ -294,6 +329,9 @@ SCP007C.gridSaveBtn = new Ext.Toolbar.Button(
 								confirmFunction);
 				function confirmFunction(btn) {
 					if (btn == 'yes') {
+//						param2.status = "001";
+
+//						saveOrUpdate();
 
 					}
 				}
@@ -630,7 +668,7 @@ SCP007C.scpSetHeader = new Ext.form.FieldSet({
 		items : SCP007C.scpLabelCompany,
 		labelAlign : 'right',
 		style : {
-			"margin-left" : "210px",
+			"text-align":"center",
 			"margin-bottom" : "20px",
 
 		},
@@ -639,7 +677,7 @@ SCP007C.scpSetHeader = new Ext.form.FieldSet({
 		items : SCP007C.scpLabelTitle,
 		labelAlign : 'right',
 		style : {
-			"margin-left" : "350px",
+			"text-align":"center",
 			"margin-bottom" : "30px",
 
 		},

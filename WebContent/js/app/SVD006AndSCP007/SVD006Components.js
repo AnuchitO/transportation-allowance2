@@ -1,5 +1,45 @@
 var SVD006C = {};
 
+SVD006C.labCompanyNameHeader = new Ext.form.Label({
+	id : "labCompanyNameHeader",
+	text : "บริษัท ซอฟสแควร์ 1999 จำกัด",
+	style : {
+		"font-size" : "150%",
+		"font-align" : "center"
+	},
+	anchor : '93%'
+});
+
+SVD006C.labAddressHeader = new Ext.form.Label({
+	id : "labAddressHeader",
+	text : "51/597 หมุ่ 7 หมู่บ้านเมืองเอก ถ.พหลโยธิน ต.หลักหก  อ.เมืองปทุมธานี จ.ปทุมธานี  12000",
+	style : {
+		"font-size" : "90%",
+		"font-align" : "center"
+	},
+	anchor : '93%'
+});
+
+SVD006C.labTellFaxHeader = new Ext.form.Label({
+	id : "labTellFaxHeader",
+	text : "โทร 0-2997-2000  โทรสาร 0-2997-2001",
+	style : {
+		"font-size" : "90%",
+		"font-align" : "center"
+	},
+	anchor : '93%'
+});
+
+SVD006C.labTitle = new Ext.form.Label({
+	id : "labTitle",
+	text : " ใบเบิกค่าใช้จ่าย/ค่าเดินทาง/ใบรับเงิน",
+	style : {
+		"font-size" : "120%",
+		"font-align" : "center"
+	},
+	anchor : '93%'
+});
+
 SVD006C.No = new Ext.form.TextField({
 	id : 'noDoc',
 	fieldLabel : "No",
@@ -434,7 +474,7 @@ SVD006C.totalPayCharector.setValue(SVD006Domain.totalPayCharector);
 SVD006C.fieldSetGrid = new Ext.form.FieldSet({
 	collapsible : false,
 	title : 'รายละเอียดการเดินทาง',
-	border : true,
+	border : false,
 	layout : 'column',
 	width : 827,
 	defaults : {
@@ -451,8 +491,7 @@ SVD006C.fieldSetGrid = new Ext.form.FieldSet({
 // field set Information
 SVD006C.fieldSetInformation = new Ext.form.FieldSet({
 	collapsible : false,
-	title : 'ข้อมูลส่วนตัว',
-	border : true,
+	border : false,
 	layout : 'column',
 	width : 827,
 	defaults : {
@@ -461,57 +500,100 @@ SVD006C.fieldSetInformation = new Ext.form.FieldSet({
 		columnWidth : 1
 	},
 
-	items : [ {
-		items : SVD006C.No,
-		labelAlign : 'right',
-		style : {
-			"margin-left" : "530px"
-		}
-	}, {
-		columnWidth : 1,
-		items : SVD006C.date,
-		labelAlign : 'right',
-		style : {
-			"margin-left" : "530px"
-		}
-	}, {
-		columnWidth : 0.5,
-		items : SVD006C.name,
-		labelAlign : 'right'
-	}, {
-		columnWidth : 0.5,
-		items : SVD006C.id,
-		labelAlign : 'right'
-
-	}, {
-		columnWidth : 0.5,
-		items : SVD006C.company,
-		labelAlign : 'right'
-	}, {
-		columnWidth : 0.5,
-		items : SVD006C.txtDepartment,
-		labelAlign : 'right'
-	}, {
-		columnWidth : 1,
-		items : SVD006C.idCardEmp,
-		labelAlign : 'right'
-	}, {
-		columnWidth : 1,
-		items : SVD006C.textArea,
-		labelAlign : 'right'
-	}, {
-		columnWidth : 0.3,
-		items : SVD006C.comboProvince,
-		labelAlign : 'right'
-	}, {
-		columnWidth : 0.3,
-		items : SVD006C.phoneNumber,
-		labelAlign : 'right'
-	}, {
-		columnWidth : 0.4,
-		items : SVD006C.email,
-		labelAlign : 'right'
-	} ]
+	items : [{
+				items : SVD006C.labCompanyNameHeader
+			},{
+				items : SVD006C.labAddressHeader
+			},{
+				items : SVD006C.labTellFaxHeader
+			},{
+				items : new Ext.form.Label({
+					id : "labTop",
+					text : " a",
+					style : {
+						"font-size" : "100%",
+						"font-align" : "center",
+						"padding-left" : "0px",
+						"position" : "relative",
+						"left" : "-30px",
+						"top" : "0px"
+					},
+					anchor : '93%'
+				})
+			},{
+				items : SVD006C.labTitle,
+				labelAlign : 'right',
+				style : {					
+					"padding-left" : "10px",
+					"position" : "relative",
+					"left" : "280px",
+					"top" : "0px"
+				}
+			},{
+				items : new Ext.form.Label({
+					id : "labUnder",
+					text : " a",
+					style : {
+						"font-size" : "100%",
+						"font-align" : "center",
+						"padding-left" : "0px",
+						"position" : "relative",
+						"left" : "-30px",
+						"top" : "0px"
+					},
+					anchor : '93%'
+				})
+			},{
+				items : SVD006C.No,
+				labelAlign : 'right',
+				style : {
+					"margin-left" : "530px"
+				}
+			},{
+				columnWidth : 1,
+				items : SVD006C.date,
+				labelAlign : 'right',
+				style : {
+					"margin-left" : "530px"
+				}
+			},{
+				columnWidth : 0.5,
+				items : SVD006C.name,
+				labelAlign : 'right'
+			},{
+				columnWidth : 0.5,
+				items : SVD006C.id,
+				labelAlign : 'right'
+		
+			},{
+				columnWidth : 0.5,
+				items : SVD006C.company,
+				labelAlign : 'right'
+			},{
+				columnWidth : 0.5,
+				items : SVD006C.txtDepartment,
+				labelAlign : 'right'
+			},{
+				columnWidth : 1,
+				items : SVD006C.idCardEmp,
+				labelAlign : 'right'
+			},{
+				columnWidth : 1,
+				items : SVD006C.textArea,
+				labelAlign : 'right'
+			},{
+				columnWidth : 0.3,
+				items : SVD006C.comboProvince,
+				labelAlign : 'right'
+			},{
+				columnWidth : 0.3,
+				items : SVD006C.phoneNumber,
+				labelAlign : 'right'
+			},{
+				columnWidth : 0.4,
+				items : SVD006C.email,
+				labelAlign : 'right'
+			}]
 });
 
 // Field Set Approving
@@ -548,7 +630,7 @@ SVD006C.fieldSetApproving = new Ext.form.FieldSet({
 // /Field Set Grid
 SVD006C.feildSetBottom = new Ext.form.FieldSet({
 	collapsible : false,
-	border : true,
+	border : false,
 	width : 827,
 	layout : 'column',
 	defaults : {

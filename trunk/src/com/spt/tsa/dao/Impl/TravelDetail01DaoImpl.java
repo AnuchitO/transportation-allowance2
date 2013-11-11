@@ -108,6 +108,10 @@ public class TravelDetail01DaoImpl extends HibernateDaoSupport implements Travel
 //    	logger.debug("{}",this.getHibernateTemplate().findByCriteria(criteria));
     	return this.getHibernateTemplate().findByCriteria(criteria);
 	}
+
+	public void deleteTravelDetail(TravelDetail travelDetail) {
+		getHibernateTemplate().delete(travelDetail);		
+	}
 	
 	
     

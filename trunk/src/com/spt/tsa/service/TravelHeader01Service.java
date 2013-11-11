@@ -24,4 +24,6 @@ public interface TravelHeader01Service {
 	 public void saveHeaderCreateFrom(TravelHeader travelHeader);
 	 public List<TravelHeader> findByDocNoForSaveOrUpdate(String docNo);
 	 public List<TravelHeader> findByEmpIdInTravelHeader(Employee employee);
+	 
+	 public void deleteTravelHeader(TravelHeader travelHeader);
 }

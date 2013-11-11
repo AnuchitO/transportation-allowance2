@@ -12,4 +12,5 @@ public interface TravelDetail01Service {
 	 
 	 public void saveTravelDetailCreateForm(TravelDetail travelDetail);
 	 public List<TravelDetail> findRowOfGridForUpdateRow(TravelHeader travelHeader, String no);
+	 public void deleteTravelDetail(TravelDetail travelDetail);
 }

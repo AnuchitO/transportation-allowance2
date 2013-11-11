@@ -17,6 +17,8 @@ public interface TravelDetail01Dao {
 	
 	public void saveTravelDetailCreateForm(TravelDetail travelDetail);
 	public List<TravelDetail> findRowOfGridForUpdateRow(TravelHeader travelHeader,String no);
+	public void deleteTravelDetail(TravelDetail travelDetail);
+	
 	
 	
 	

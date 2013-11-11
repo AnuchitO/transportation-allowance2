@@ -44,5 +44,9 @@ public class TravelDetail01ServiceImpl implements TravelDetail01Service{
 	}
 	 public List<Customer> findCustomerWhereId(String domain){
 		return this.travelDetail01Dao.findCustomerWhereId(domain);
+	}
+
+	public void deleteTravelDetail(TravelDetail travelDetail) {
+		this.travelDetail01Dao.deleteTravelDetail(travelDetail);		
 	}    
 }

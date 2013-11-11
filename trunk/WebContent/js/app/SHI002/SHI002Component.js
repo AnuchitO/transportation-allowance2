@@ -238,7 +238,37 @@ SHI002C.gridStore = new Ext.data.JsonStore({
 	remoteSort : true
 
 });
- 
+
+/////////////////////////////////
+//Event OnClick number Document
+////////////////////////////////
+SHI002C.numberDocumentOnClick = function(grid, rowIndex, cellIndex, e){
+							    var store = grid.getStore().getAt(rowIndex);
+							    var columnName = grid.getColumnModel().getDataIndex(cellIndex);
+							    var cellValue = store.get(columnName);
+							    if(columnName == 'docNo'){
+//							    	alert(columnName+" >>> <<<< "+cellValue);
+							    	var param = {};
+							    	param.method = "previewDoc";
+							    	Ext.Ajax.request({
+							    		url : '/TransportationAllowance/SCF003.html',
+							    		params : param,
+							    		success : function(response, opts) {
+							    			if (param != null) {
+//							    				Ext.Msg.alert('Information', 'บันทึกเรียบร้อย');
+							    			} else {
+//							    				Ext.Msg.alert('Information', 'Error');
+							    			}
+							    		},
+							    		failure : function(response, opts) {
+							    			Ext.Msg.alert('ERROR', 'Error.');
+							    		}
+							    	});
+							    }else{
+							    	
+							    }
+          			         
+							};
     
 SHI002C.grid4 = new Ext.grid.GridPanel({
         id:'idGrid',
@@ -257,14 +287,16 @@ SHI002C.grid4 = new Ext.grid.GridPanel({
         cm: new Ext.grid.ColumnModel([
             SHI002C.sm2,
             {id:'no',header: "ลำดับ", width: 10, sortable: true, dataIndex: 'no'},
-            {header: "เลขที่เอกสาร", width: 20, sortable: true, dataIndex: 'docNo'},
+            {id:'noDoc',header: "เลขที่เอกสาร", width: 20, sortable: true,dataIndex: 'docNo', renderer: function (val, metadata, record) {
+                metadata.style = 'cursor: pointer;'; 
+                return val;
+            }},
             {header: "วันที่เอกสาร", width: 20, sortable: true, dataIndex: 'docDate'},
             {header: "วันที่ส่งเอกสาร", width: 20, sortable: true, dataIndex: 'sendDate'},
             {header: "วันที่อนุมัติ", width: 20, sortable: true,  dataIndex: 'approve'},
             {header: "สถานะ", width: 20, sortable: true, dataIndex: 'status'},
             {header: "จำนวนเงิน (บาท)", width: 20, sortable: true, dataIndex: 'amount'},
-            {header: "หมายเหตุ", width: 20, sortable: true, dataIndex: 'remark'}
-            
+            {header: "หมายเหตุ", width: 20, sortable: true, dataIndex: 'remark'}            
         ]),
         sm: SHI002C.sm2,
 
@@ -282,7 +314,9 @@ SHI002C.grid4 = new Ext.grid.GridPanel({
             ref: '../removeButton',
             disabled: true
         }],
-
+        listeners : {
+        	'cellclick' : SHI002C.numberDocumentOnClick
+        },
         width:805,
         height:300,
         frame:false,
@@ -290,18 +324,37 @@ SHI002C.grid4 = new Ext.grid.GridPanel({
         iconCls:'icon-grid',
 });
 
+
+
+
+/////////////////////////////////
+//Event RemoveButton of grid
+////////////////////////////////
 SHI002C.grid4.removeButton.on('click',function(e) {
+	var param2 = {}; 
 	var rowSelected = Ext.getCmp('idGrid').getSelectionModel().getSelections();
+		param2.noDoc = ""; 
 	Ext.MessageBox.confirm('Confirm', 'ยืนยัน "ลบ" ข้อมูลที่เลือก', function(btn) {
 		if (btn == 'yes') {
-			var xx = " ";
-			for ( var i in rowSelected) {
-				alert(rowSelected[i].data.docNo);
-				xx += rowSelected[i].data.docNo+",";				
+			for(var i=0;i<rowSelected.length;i++) {
+				param2.noDoc += rowSelected[i].data.docNo+","; // concat No Document //
 				Ext.getCmp('idGrid').store.remove(rowSelected[i]);
 			}
-//			alert(xx);
-//			Ext.Msg.alert('Information', 'ทำรายการสำเร็จ');
+			param2.method = "gridRemoveData";
+			Ext.Ajax.request({
+				url : '/TransportationAllowance/SHI002.html',
+				params : param2,
+				success : function(response, opts) {
+					if (param2 != null) {
+						Ext.Msg.alert('Information', 'ลบข้อมูล เรียบร้อยแล้ว');
+					} else {
+						Ext.Msg.alert('Information', 'Error');
+					}
+				},
+				failure : function(response, opts) {
+					Ext.Msg.alert('ERROR', 'Error.');
+				}
+			});
 		}
 	});
 });

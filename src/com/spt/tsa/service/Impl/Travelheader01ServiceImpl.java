@@ -77,5 +77,9 @@ public class Travelheader01ServiceImpl implements TravelHeader01Service{
 		return this.travelHeader01Dao.findByEmpIdInTravelHeader(employee);
 	}
 
+	public void deleteTravelHeader(TravelHeader travelHeader) {
+		this.travelHeader01Dao.deleteTravelHeader(travelHeader);
+	}
+
 }
 	

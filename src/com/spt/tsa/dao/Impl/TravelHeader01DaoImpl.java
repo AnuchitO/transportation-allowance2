@@ -170,5 +170,9 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 				criteria.addOrder(Order.asc("no"));
 		return this.getHibernateTemplate().findByCriteria(criteria);
 	}
+
+	public void deleteTravelHeader(TravelHeader travelHeader) {
+		this.getHibernateTemplate().delete(travelHeader);
+	}
     
 }

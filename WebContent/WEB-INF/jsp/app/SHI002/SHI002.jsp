@@ -12,6 +12,6 @@ var SHI01Label = {};
 <title>Insert title here</title>
 </head>
 <body>
-SHI002
+
 </body>
 </html>

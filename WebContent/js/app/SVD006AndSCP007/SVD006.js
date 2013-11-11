@@ -29,7 +29,7 @@ Ext.onReady(function() {
 			});
 
 
-////////Operater Function
+//////// Operator Function
 
 
 SVD006C.btnCreatePay.disable();

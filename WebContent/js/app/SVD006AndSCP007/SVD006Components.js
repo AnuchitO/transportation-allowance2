@@ -48,7 +48,6 @@ SVD006C.No = new Ext.form.TextField({
 SVD006C.date = new Ext.form.TextField({
 	id : 'date',
 	fieldLabel : "วันที่รับเอกสาร",
-	readOnly: true
 });
 
 SVD006C.name = new Ext.form.TextField({

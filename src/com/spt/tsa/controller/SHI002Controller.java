@@ -23,15 +23,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fission.web.view.extjs.grid.GridData;
-import com.spt.tsa.controller.datasource.RunNumberDocument;
-import com.spt.tsa.domain.SCF003Domain01;
 import com.spt.tsa.domain.SHI002Domain01;
-import com.spt.tsa.entity.Customer;
 import com.spt.tsa.entity.Employee;
 import com.spt.tsa.entity.ParameterTable;
+import com.spt.tsa.entity.TravelDetail;
 import com.spt.tsa.entity.TravelHeader;
 import com.spt.tsa.service.Employee01Service;
 import com.spt.tsa.service.ParameterTable01Service;
+import com.spt.tsa.service.TravelDetail01Service;
 import com.spt.tsa.service.TravelHeader01Service;
 import com.spt.tsa.util.BeanUtils;
 
@@ -41,9 +40,11 @@ public class SHI002Controller {
 	private Employee01Service employee01Service;
 	private ParameterTable01Service parameterTable01Service;
 	private TravelHeader01Service travelHeader01Service;
+	private TravelDetail01Service travelDetail01Service;
 
 	private Employee  employees; 
 	private List<TravelHeader> listTravelHeader; 
+	private List<TravelDetail> listTravelDetail; 
 	private List<ParameterTable> listParameterTables;
 	@Autowired
 	public void setParameterTable01Service(ParameterTable01Service parameterTable01Service) {
@@ -58,6 +59,11 @@ public class SHI002Controller {
 	@Autowired
 	public void setTravelHeader01Service(TravelHeader01Service travelHeader01Service) {
 		this.travelHeader01Service = travelHeader01Service;
+	}
+	
+	@Autowired
+	public void setTravelDetail01Service(TravelDetail01Service travelDetail01Service) {
+		this.travelDetail01Service = travelDetail01Service;
 	}
 
 
@@ -96,9 +102,7 @@ public class SHI002Controller {
 		String EmpId = "EMp001";
 		try{ 
 			this.employees = this.employee01Service.findEmployeeByIdName(EmpId);
-			logger.debug("--------------------  {}",this.employees);
 			this.listTravelHeader = this.travelHeader01Service.findByEmpIdInTravelHeader(this.employees);
-			
 		}catch (Exception e){
 			
 		}
@@ -145,7 +149,6 @@ public class SHI002Controller {
 		domain.setEmployeeId(empId);
 		try{ 
 			this.employees = this.employee01Service.findEmployeeByIdName(domain.getEmployeeId());
-			logger.debug("--------------------  {}",this.employees);
 			this.listTravelHeader = this.travelHeader01Service.findByEmpIdInTravelHeader(this.employees);
 		}catch (Exception e){
 			
@@ -200,5 +203,32 @@ public class SHI002Controller {
 		gridData.setSuccess(true);
 
 		gridData.responseJson(response);
+	}
+	
+	
+	@RequestMapping(value = "/SHI002.html", method = RequestMethod.POST, params = "method=gridRemoveData")
+	public void save1(HttpServletRequest request, HttpServletResponse response,
+	@ModelAttribute SHI002Domain01 domainSHI002,
+	@RequestParam("noDoc") String noDoc){
+		domainSHI002.setNoDoc(noDoc);
+		String packNoDoc = domainSHI002.getNoDoc();
+		String[] noDocSplit = packNoDoc.split(",");
+		for(String eachNoDoc :noDocSplit){
+			try {
+				this.listTravelHeader = this.travelHeader01Service.findByDocNoForSaveOrUpdate(eachNoDoc); //find header
+				try {
+					 this.listTravelDetail = this.travelDetail01Service.findByTravelHeader(this.listTravelHeader.get(0)); //fine detail from header
+					 for(TravelDetail td : this.listTravelDetail){ //loop For delete detail
+						 this.travelDetail01Service.deleteTravelDetail(td);// delete TravelDetail
+				 	 }
+				this.travelHeader01Service.deleteTravelHeader(this.listTravelHeader.get(0));// delete TravelHeader
+				} catch (Exception e) {
+					logger.debug("{}",e);
+				}
+				 
+			} catch (Exception e) {
+				logger.debug("{}",e);
+			}
+		}
 	}
 }

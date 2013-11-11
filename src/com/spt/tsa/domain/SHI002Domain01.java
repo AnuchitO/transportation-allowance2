@@ -5,6 +5,7 @@ public class SHI002Domain01 {
 	private String employeeId;
 	private String code;
 	
+	private String noDoc;
 	public SHI002Domain01() {
 		// TODO Auto-generated constructor stub
 	}
@@ -32,5 +33,14 @@ public class SHI002Domain01 {
 	public void setCode(String code) {
 		this.code = code;
 	}
+
+	public String getNoDoc() {
+		return noDoc;
+	}
+
+	public void setNoDoc(String noDoc) {
+		this.noDoc = noDoc;
+	}
+	
 	
 }

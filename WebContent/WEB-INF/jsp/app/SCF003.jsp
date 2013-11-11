@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript">
 var SCF01Domain = {};
-	SCF01Domain = JSON.parse('${tesrt}');
+	SCF01Domain = JSON.parse('${scf003}');
 var SCF01Label = {}; 
 </script>
 <title>Insert title here</title>

@@ -252,7 +252,7 @@ SCF003.gridRemoveBtn = new Ext.Toolbar.Button({
 							lastIndex).data.no;
 
 					var u = getValueLastIndex - numberSelect;
-
+					var detroyNumber = 0;
 					SCF003.createGrid.store.getAt(lastIndex).set('no', u);
 					for (var j = lastIndex; j >= 0; j--) {
 						if (j == lastIndex) {
@@ -269,6 +269,71 @@ SCF003.gridRemoveBtn = new Ext.Toolbar.Button({
 								detroyNumber);
 						}
 					}
+					SCF003.createGrid.getSelectionModel()
+					.selectAll();
+			var totalLength = SCF003.createGrid
+					.getSelectionModel().getSelections();
+			var a = 0;
+			var b = 0;
+			var c = 0;
+			for (var i = 0; i <= totalLength.length - 1; i++) {
+			
+				a = a
+				+ parseInt(SCF003.createGrid
+						.getStore().getAt(i).data.paymentTravel);
+		SCF003.tatolPaym.setValue(a);
+		b = b
+		+ parseInt(SCF003.createGrid
+				.getStore().getAt(i).data.paymentD);
+
+SCF003.tatolPaymA.setValue(b);
+		c = c
+				+ parseInt(SCF003.createGrid
+						.getStore().getAt(i).data.payment);
+			SCF003.tatolPaymfullCase.setValue(c);
+			SCF003.createGrid.getSelectionModel().deselectRow(i);
+			}
+			var num = Ext.getCmp('tatolPaymfullCase')
+			.getValue();
+	var number = new Array("", "หนึ่ง", "สอง",
+			"สาม", "สี่", "ห้า", "หก", "เจ็ด",
+			"แปด", "เก้า");
+	var number2 = new Array("", "สิบ", "ร้อย",
+			"พัน", "หมื่น", "แสน", "ล้าน");
+	var str = "";
+	var lennum = num.length;
+	var tmp = 0;
+	var count = 0;
+	for (i = lennum - 1; i > -1; --i) {
+		count++;
+
+		if (tmp == 7)
+			tmp = 1;
+		ch = num.charAt(i);
+		digit = number[parseInt(ch)];
+		pos = tmp + 1;
+		if (pos == 2 && ch == "1") {
+			digit = ""
+
+		} else if (pos == 2 && ch == "2") {
+			digit = "ยี่"
+		} else if ((pos == 1 || pos == 7)
+				&& ch == "1" && lennum > count) {
+			digit = "เอ็ด";
+		}
+		last = number2[tmp];
+		if (ch == "0" && pos != 7)
+			last = "";
+		str = digit + last + str;
+
+		tmp++;
+	}
+	if (num.length == 0) {
+		Ext.getCmp('tatolManey').setValue(" ");
+	} else {
+		Ext.getCmp('tatolManey').setValue(
+				str + "บาทถ้วน");
+	}
 
 					for (var j = 0; j <= sm.length - 1; j++) {
 

@@ -100,7 +100,10 @@ SCP007C.scpTypeForpay1 = new Ext.form.Checkbox({
 	labelSeparator : '',
 	hideLabel : true,
 	boxLabel : 'เงินสด',
-	fieldLabel : 'text'
+	fieldLabel : 'text',
+		handler : function() {
+			Ext.getDom('scpTypeForpay2').checked = false;
+		}
 });
 
 SCP007C.scpTypeForpay2 = new Ext.form.Checkbox({
@@ -109,7 +112,11 @@ SCP007C.scpTypeForpay2 = new Ext.form.Checkbox({
 	labelSeparator : '',
 	hideLabel : true,
 	boxLabel : 'เช็ค',
-	fieldLabel : 'text'
+	fieldLabel : 'text',
+	handler : function() {
+		Ext.getDom('scpTypeForpay1').checked = false;
+	}
+	
 });
 
 SCP007C.scpBank = new Ext.form.TextField({
@@ -163,6 +170,7 @@ SCP007C.scpLabelDetail = new Ext.form.Label({
 SCP007C.scfTextArea = new Ext.ss.form.TextArea({
 	id : 'scfTextArea',
 	width : 670,
+	allowBlank : false,
 	bodyPadding : 10,
 
 });
@@ -293,6 +301,104 @@ SCP007C.gridSaveBtn = new Ext.Toolbar.Button(
 
 		});
 
+SCP007C.comboboxStore = new Ext.data.JsonStore({
+	baseParams : {
+		method : 'scpNumberAccountAdmin'
+	},
+	url : '/TransportationAllowance/SVD006.html',
+	method : 'POST',
+	storeId : 'bloodStore',
+	root : 'records',
+	idProperty : 'code',
+	autoLoad : true,
+	// fieldLabel : 'comboStrore',
+	fields : [ {
+		name : 'code'
+
+	}, {
+		name : 'description'
+	} ],
+	model : 'ForumThread',
+	remoteSort : true
+});
+
+
+//SCP007C.createCombobox = new Ext.form.ComboBox({
+//	id : 'antecedent',
+//	fieldLabel : 'ฝ่าย / แผนก',
+//	mode : 'local',
+//	store : SCP007C.comboboxStore,
+//	valueField : 'code',
+//	displayField : 'description',
+//	lazyRender : true,
+//	autoSelect : true,
+//	criterionField : true,
+//	selectOnFocus : true,
+//	typeAhead : true,
+//	forceSelection : true,
+//	triggerAction : 'all',
+//	emptyText : 'Select ...',
+//	  listeners: {
+//		    select: function(combo, record, index) {
+//		      alert(record.json.description);
+//		    }
+//		  }
+//
+//});
+
+
+SCP007C.createCombobox = new Ext.ss.form.ComboBox({
+	id : 'antecedent1',
+	fieldLabel : 'Antecedent',
+	mode : 'local1',
+	width:70,
+	descriptionWidth: 50,
+	
+	
+	 fieldLabel : 'combobox SS',
+   showRowAllRecord: true,
+   displayCode: 'entryCode',
+   displayDesc: 'description',
+   queryParam: 'entryCode',
+   itemWidth: 150, 
+   typeAhead: true,
+   mode: 'remote',
+   triggerAction: 'all',
+  emptyText: 'All',
+   selectOnFocus: true,
+   forceSelection: true,
+	store : SCP007C.comboboxStore,
+	lazyRender : true,
+	autoSelect : true,
+	criterionField : true,
+	selectOnFocus : true,
+	typeAhead : true,
+	forceSelection : true,
+	triggerAction : 'all',
+	emptyText:'Select ...',
+	valueField : 'code',
+	
+
+//	displayField : 'description'
+
+		 listeners: {
+			    select: function(combo, record, index) {
+			    	SCP007C.createGrid.getSelectionModel().selectAll();
+
+					var sm = SCP007C.createGrid.getSelectionModel().getSelections();
+					//					
+
+					var lastIndex = sm.length - 1;
+
+					SCP007C.createGrid.store.getAt(lastIndex).set('scpNameAccount',record.json.description);
+					for (var j = 0; j <= sm.length - 1; j++) {
+
+						SCP007C.createGrid.getSelectionModel().deselectRow(j);
+					}
+//			      SCP007C.scpForPayGive.setValue(record.json.description);
+			    }
+			  }	
+	});
 SCP007C.checkboxselection = new Ext.grid.CheckboxSelectionModel({
 	singleSelect : false,
 
@@ -312,6 +418,7 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 	header : 'รหัสบัญชี',
 	dataIndex : 'scpIdAccount',
 	align : 'center',
+	editor:SCP007C.createCombobox,
 	width : 125,
 
 }, {
@@ -326,12 +433,44 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 	dataIndex : 'scpIdDept',
 	align : 'center',
 	id : 'region',
+	editor : new Ext.form.TextField({
+		id : 'scpEditIdDept',
+	}),
 	width : 125,
 
 }, {
 	header : 'เดบิต',
 	dataIndex : 'scpDebit',
 	align : 'center',
+	editor : new Ext.form.TextField({
+		id : 'scpEditDebit',
+		listeners : {
+			change : function(f, e) {
+				SCP007C.createGrid.getSelectionModel().selectAll();
+				var totalLength = SCP007C.createGrid.getSelectionModel().getSelections();
+				var totalDebit = 0;
+				
+			
+				for (var i = 0; i <= totalLength.length - 1; i++) {
+					var test = SCP007C.createGrid.getStore().getAt(i).data.scpDebit;
+				
+			if (Ext.isEmpty(test)) {
+				SCP007C.createGrid.store.getAt(i).set('scpDebit', "0");
+			}	
+				 totalDebit = totalDebit + parseInt(SCP007C.createGrid.getStore().getAt(i).data.scpDebit);
+				 
+				 SCP007C.scfTatolDebit.setValue(totalDebit);
+				 
+				 SCP007C.createGrid.getSelectionModel()
+					.deselectRow(i);
+				 
+
+					
+				}
+			}
+		}
+	}),
+	
 
 	width : 125,
 
@@ -339,6 +478,34 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 	header : 'เครดิต',
 	dataIndex : 'scpCredit',
 	align : 'center',
+	editor : new Ext.form.TextField({
+		id : 'scpEditCredit',
+		listeners : {
+			change : function(f, e) {
+				SCP007C.createGrid.getSelectionModel().selectAll();
+				var totalLength = SCP007C.createGrid.getSelectionModel().getSelections();
+				var totalCredit = 0;
+				
+			
+				for (var i = 0; i <= totalLength.length - 1; i++) {
+					var test = SCP007C.createGrid.getStore().getAt(i).data.scpCredit;
+				
+			if (Ext.isEmpty(test)) {
+				SCP007C.createGrid.store.getAt(i).set('scpCredit', "0");
+			}	
+			totalCredit = totalCredit + parseInt(SCP007C.createGrid.getStore().getAt(i).data.scpCredit);
+				 
+				 SCP007C.scfTatolCredit.setValue(totalCredit);
+				 
+				 SCP007C.createGrid.getSelectionModel()
+					.deselectRow(i);
+				 
+
+					
+				}
+			}
+		}
+	}),
 
 	width : 125,
 
@@ -424,14 +591,14 @@ SCP007C.createGrid = new Ext.ss.grid.EditorGridPanel({
 			text : 'Show Preview',
 			cls : 'x-btn-text-icon details',
 			toggleHandler : function(btn, pressed) {
-				var view = SCF003.createGrid.getView();
+				var view = SCP007C.createGrid.getView();
 				view.showPreview = pressed;
 				view.refresh();
 
 			}
 		}, '-', "รวมยอดเงินทั้งสิ้น", '-', '-', '-', '-', '-', '-', '-', '-',
-				'-', '-', '-', '-', '-', '-', '-', '-', SCP007C.scfTatolCredit,
-				'-', '-', '-', SCP007C.scfTatolDebit, '-','-', '-', '-', '-', '-', '-', '-', '-', ]
+				'-', '-', '-', '-', '-', '-', '-', '-', SCP007C.scfTatolDebit,
+				'-', '-', '-', SCP007C.scfTatolCredit, '-','-', '-', '-', '-', '-', '-', '-', '-', ]
 	})
 });
 SCP007C.scpButtonPrint = new Ext.Button({
@@ -631,13 +798,4 @@ SCP007C.tabPanelSCP007C = new Ext.Panel({
 	items : [ {
 		items : SCP007C.scpSetHeader
 	}]
-});
-
-SCP007C.checkBox = new Ext.form.Checkbox({
-	id : 'checkBoxAA',
-	name : 'name',
-	labelSeparator : '',
-	hideLabel : true,
-	boxLabel : 'เงินสด',
-	fieldLabel : 'text'
 });

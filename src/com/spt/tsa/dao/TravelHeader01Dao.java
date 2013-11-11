@@ -17,6 +17,10 @@ public interface TravelHeader01Dao {
 	 public void updateStatusSubmit(SCF003Domain01 domain);
 	 
 	 public List<BigDecimal> findTravelTotal(String domain);
+	 public List<String> findDateMinMaxFromTravelHeader(String domain);
+	 public List<TravelDetail> findDateMinMax(String domain);
+	 public List<String> findNameCustomer(String domain);
+	 public List<TravelDetail> findByCustomer(String domain);
 	 
 	 ///nong
 	 public void saveHeaderCreateFrom(TravelHeader travelHeader);

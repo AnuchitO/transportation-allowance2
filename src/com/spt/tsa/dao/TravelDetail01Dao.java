@@ -1,5 +1,6 @@
 package com.spt.tsa.dao;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 import com.spt.tsa.domain.SCF003Domain01;
@@ -16,6 +17,7 @@ public interface TravelDetail01Dao {
 	
 	public void saveTravelDetailCreateForm(TravelDetail travelDetail);
 	public List<TravelDetail> findRowOfGridForUpdateRow(TravelHeader travelHeader,String no);
+	
 	
 	
 }

@@ -1,5 +1,3 @@
-
-
 var SVD006 = {};
 
 Ext.onReady(function() {
@@ -159,6 +157,7 @@ SCP007C.scpBank.setValue(SVD006Domain.bank);
 SCP007C.scpBranch.setValue(SVD006Domain.branch);
 SCP007C.scpTotalMoney.setValue(SVD006Domain.totalPayment);
 SCP007C.scpNumberCharactor.setValue(SVD006Domain.charactorNumber);
+SCP007C.scfTextArea.setValue(SVD006Domain.minMaxDate);
 var totalPayment = Ext.getCmp('scpTotalMoney').getValue();
 var a = parseInt(totalPayment);
 

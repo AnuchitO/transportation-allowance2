@@ -24,7 +24,7 @@ public class TravelDetail implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name="Trad_Cuid")
-	private Customer Customer;
+	private Customer customer;
 	
 	@Column(name="Trad_tddate")
 	private Date date;
@@ -64,11 +64,11 @@ public class TravelDetail implements Serializable {
 	
 
 	public Customer getCustomer() {
-		return Customer;
+		return customer;
 	}
 
 	public void setCustomer(Customer customer) {
-		this.Customer = customer;
+		this.customer = customer;
 	}
 
 	public TravelHeader getTravelHeader() {

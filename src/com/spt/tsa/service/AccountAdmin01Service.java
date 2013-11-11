@@ -5,4 +5,5 @@ import com.spt.tsa.entity.*;
 
 public interface AccountAdmin01Service {
 	public List<AccountAdmin> findAccountAdmin();
+
 }

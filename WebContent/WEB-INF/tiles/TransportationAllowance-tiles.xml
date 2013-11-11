@@ -35,8 +35,19 @@
      	<put-attribute name="pageJsIncluded" value="/js/app/SVD006AndSCP007/SCP007Components.js, /js/app/SVD006AndSCP007/SVD006Components.js, /js/app/SVD006AndSCP007/SVD006.js"/>    
     </definition>
     
+    <definition name="/SEI005.tiles" extends=".emptytemplate">
+      	<put-attribute name="title" value="SEI005"/>
+      	<put-attribute name="content" value="/WEB-INF/jsp/app/SEI005.jsp"/>
+     	<put-attribute name="pageJsIncluded" value="/js/app/SEI005.js"/>  
+    </definition>
     
-    <definition name="/SHI002.tiles" extends=".emptytemplate">
+    <definition name="/SDM009.tiles" extends=".emptytemplate">
+      	<put-attribute name="title" value="SDM009"/>
+      	<put-attribute name="content" value="/WEB-INF/jsp/app/SDM009.jsp"/>
+     	<put-attribute name="pageJsIncluded" value="/js/app/SDM009.js"/>  
+    </definition>
+    
+     <definition name="/SHI002.tiles" extends=".emptytemplate">
       	<put-attribute name="title" value="SHI002"/>
       	<put-attribute name="content" value="/WEB-INF/jsp/app/SHI002/SHI002.jsp"/>
      	<put-attribute name="pageJsIncluded" value="/js/app/SHI002/SHI002Component.js, /js/app/SHI002/SHI002.js"/>  
@@ -47,5 +58,6 @@
       	<put-attribute name="content" value="/WEB-INF/jsp/app/SAC008/SAC008.jsp"/>
      	<put-attribute name="pageJsIncluded" value="/js/app/SAC008/SAC008Component.js, /js/app/SAC008/SAC008.js"/>  
     </definition>
+   
    
 </tiles-definitions>

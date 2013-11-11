@@ -23,5 +23,5 @@ public class AccountAdmin01ServiceImpl implements AccountAdmin01Service{
    	 // TODO Auto-generated method stub
    	 return accountAdmin01Dao.findAccountAdmin();
     }
-    
+   
 }

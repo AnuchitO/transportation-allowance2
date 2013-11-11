@@ -23,14 +23,14 @@ public class Employee01DaoImpl extends HibernateDaoSupport implements Employee01
     public List<Employee> findEmployee() {
    	 return this.getHibernateTemplate().find("FROM Employee");
     }
-   public Employee findEmployeeWhereId(){
-	   return this.getHibernateTemplate().get(Employee.class,"EMp001");
+   public Employee findEmployeeWhereId(String domain){
+	   return this.getHibernateTemplate().get(Employee.class,domain);
    }
    
 
    
-   public List<String> findBankWhereEmp(){
-	   String id =  this.findEmployeeWhereId().getBank();
+   public List<String> findBankWhereEmp(String domain){
+	   String id =  this.findEmployeeWhereId(domain).getBank();
 	   System.out.println("findBankWhereEmpDao");
 	   Session ses = (Session) this.getSession();
 	   StringBuffer sql = new StringBuffer();
@@ -41,8 +41,8 @@ public class Employee01DaoImpl extends HibernateDaoSupport implements Employee01
 	   return send;
 
 }
-   public List<String> findBranchBankWhereEmp(){
-	   String branch = this.findEmployeeWhereId().getAccountType();
+   public List<String> findBranchBankWhereEmp(String domain){
+	   String branch = this.findEmployeeWhereId(domain).getAccountType();
 	   Session ses = (Session) this.getSession();
 	   StringBuffer sql = new StringBuffer();
 	   sql.append("select DETAIL from PARAMETERTABLE where CODE = '8' and ENTRY = "+"'"+branch+"'");
@@ -51,8 +51,8 @@ public class Employee01DaoImpl extends HibernateDaoSupport implements Employee01
 	   ses.close();
 	   return send;
    }
-   public List<String> findDeptWhereEmp(){
-	   String dept = this.findEmployeeWhereId().getDepId();
+   public List<String> findDeptWhereEmp(String domain){
+	   String dept = this.findEmployeeWhereId(domain).getDepId();
 	   Session ses = (Session) this.getSession();
 	   StringBuffer sql = new StringBuffer();
 	   sql.append("select DETAIL from PARAMETERTABLE where CODE = '4' and ENTRY = "+"'"+dept+"'");
@@ -61,8 +61,8 @@ public class Employee01DaoImpl extends HibernateDaoSupport implements Employee01
 	   ses.close();
 	   return send;
    }
-   public List<String> findProvinceEmp(){
-	   String province = this.findEmployeeWhereId().getProvince();
+   public List<String> findProvinceEmp(String domain){
+	   String province = this.findEmployeeWhereId(domain).getProvince();
 	   Session ses = (Session) this.getSession();
 	   StringBuffer sql = new StringBuffer();
 	   sql.append("select DETAIL from PARAMETERTABLE where CODE = '2' and ENTRY = "+"'"+province+"'");

@@ -30,20 +30,20 @@ public class PaymentDetail implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn (name = "PAYD_PHID")
-	private PaymentHeader PaymentHeader;
+	private PaymentHeader paymentHeader;
 	
 	@ManyToOne
 	@JoinColumn (name = "PAYD_ACID")
-	private AccountAdmin AccountAdmin;
+	private AccountAdmin accountAdmin;
 	
 	@Column (name = "PAYD_PDDEP")
 	private String department;
 	
 	@Column (name = "PAYD_PDDEBIT")
-	private double debit;
+	private Long debit;
 	
 	@Column (name = "PAYD_PDCREDIT")
-	private double credit;
+	private Long credit;
 	
 	@Column (name = "PAYD_PDUSERCREATION")
 	private String userCreation;
@@ -57,23 +57,35 @@ public class PaymentDetail implements Serializable {
 	@Column (name = "PAYD_PDMODIFYDATE")
 	private Date modifyDate;
 	
+	@Column (name = "PAYD_NO")
+	private String no;
 	
-
-	public AccountAdmin getAccountAdmin() {
-		return AccountAdmin;
-	}
-
-	public void setAccountAdmin(AccountAdmin accountAdmin) {
-		AccountAdmin = accountAdmin;
-	}
-
+	
 	public PaymentHeader getPaymentHeader() {
-		return PaymentHeader;
+		return paymentHeader;
 	}
 
 	public void setPaymentHeader(PaymentHeader paymentHeader) {
-		PaymentHeader = paymentHeader;
+		this.paymentHeader = paymentHeader;
 	}
+
+	public AccountAdmin getAccountAdmin() {
+		return accountAdmin;
+	}
+
+	public void setAccountAdmin(AccountAdmin accountAdmin) {
+		this.accountAdmin = accountAdmin;
+	}
+
+	public String getNo() {
+		return no;
+	}
+
+	public void setNo(String no) {
+		this.no = no;
+	}
+
+
 
 	public String getpDetailId() {
 		return pDetailId;
@@ -92,19 +104,21 @@ public class PaymentDetail implements Serializable {
 		this.department = department;
 	}
 
-	public double getDebit() {
+
+
+	public Long getDebit() {
 		return debit;
 	}
 
-	public void setDebit(double debit) {
+	public void setDebit(Long debit) {
 		this.debit = debit;
 	}
 
-	public double getCredit() {
+	public Long getCredit() {
 		return credit;
 	}
 
-	public void setCredit(double credit) {
+	public void setCredit(Long credit) {
 		this.credit = credit;
 	}
 

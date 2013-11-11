@@ -38,18 +38,21 @@ import com.spt.tsa.controller.datasource.RunNumberDocument;
 import com.spt.tsa.controller.datasource.SPV004JasperDataSource;
 import com.spt.tsa.dao.ParameterTableDao;
 import com.spt.tsa.domain.SCF003Domain01;
+import com.spt.tsa.domain.SCP007Domain01;
 import com.spt.tsa.domain.SVD006Domain01;
 import com.spt.tsa.entity.AccountAdmin;
 import com.spt.tsa.entity.Company;
 import com.spt.tsa.entity.Customer;
 import com.spt.tsa.entity.Employee;
 import com.spt.tsa.entity.ParameterTable;
+import com.spt.tsa.entity.PaymentHeader;
 import com.spt.tsa.entity.TravelDetail;
 import com.spt.tsa.entity.TravelHeader;
 import com.spt.tsa.service.AccountAdmin01Service;
 import com.spt.tsa.service.Customer01Service;
 import com.spt.tsa.service.Employee01Service;
 import com.spt.tsa.service.ParameterTable01Service;
+import com.spt.tsa.service.PaymentHeader01Service;
 import com.spt.tsa.service.TravelDetail01Service;
 import com.spt.tsa.service.TravelHeader01Service;
 import com.spt.tsa.util.BeanUtils;
@@ -69,7 +72,13 @@ public class SVD006Controller{
 	private List<ParameterTable> resultsBank;
 	private List<ParameterTable> resultsBankType;
 	private List<TravelDetail> travelDetails;
-
+	private PaymentHeader01Service paymentHeader01Service;
+	
+	@Autowired
+	public void setPaymentHeader01Service(
+			PaymentHeader01Service paymentHeader01Service) {
+		this.paymentHeader01Service = paymentHeader01Service;
+	}
 	@Autowired
 	public void setAccountAdmin01Service(AccountAdmin01Service accountAdmin01Service) {
 		this.accountAdmin01Service = accountAdmin01Service;
@@ -105,8 +114,9 @@ public class SVD006Controller{
 //			travelDetails = null;
 //			resultsBank = null;
 //			resultsBankType = null;
+			String noDoc = "560004";
 			try{ 
-				this.listLravelHerder = this.travelHeader01Service.findByDocNo("560004");
+				this.listLravelHerder = this.travelHeader01Service.findByDocNo(noDoc);
 				this.travelDetails = this.travelDetail01Service.findByTravelHeader(this.listLravelHerder.get(0));
 				this.resultsBank = this.parameterTable01Service.findRow("7",this.listLravelHerder.get(0).getEmployee().getBank().toString());
 				this.resultsBankType = this.parameterTable01Service.findRow("8",this.listLravelHerder.get(0).getEmployee().getAccountType().toString());
@@ -120,12 +130,12 @@ public class SVD006Controller{
 			///////////////////////old
 			Map<String,Object> model = new HashMap<String,Object>();
 
-			Employee resultsEmp = this.employee01Service.findEmployeeWhereId();
-			System.out.println("view 2");
-			List<String> resu = this.employee01Service.findBankWhereEmp();
-			List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp();
-			List<String> resultsDept = this.employee01Service.findDeptWhereEmp();
-			List<String> resultsProvince = this.employee01Service.findProvinceEmp();
+//			Employee resultsEmp = this.employee01Service.findEmployeeWhereId();
+//			System.out.println("view 2");
+//			List<String> resu = this.employee01Service.findBankWhereEmp();
+//			List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp();
+//			List<String> resultsDept = this.employee01Service.findDeptWhereEmp();
+//			List<String> resultsProvince = this.employee01Service.findProvinceEmp();
 			
 			
 			  Date date = new Date();
@@ -175,18 +185,21 @@ public class SVD006Controller{
 			domain.setCharactorNumber(new BahtText(tra.get(0)).toString());
 			
 			Employee teeeeeee = this.travelHeader01Service.findEmployeeWhereId(domain.getId());
-			Company commmmm = this.travelHeader01Service.findCompanyWhereId(resultsEmp.getCompany().getComId());
-			
-				logger.debug("+++++++------------+{}------",teeeeeee.getAddress());
-				logger.debug("+++++++------------+{}------",commmmm.getComId());
-			
-			logger.debug("+++++++++++++++++++++{}--------------------",resu.get(0));
+//			Company commmmm = this.travelHeader01Service.findCompanyWhereId(resultsEmp.getCompany().getComId());
+//			
+//				logger.debug("+++++++------------+{}------",teeeeeee.getAddress());
+//				logger.debug("+++++++------------+{}------",commmmm.getComId());
+//			
+//			logger.debug("+++++++++++++++++++++{}--------------------",resu.get(0));
 			logger.debug("+++++++++++++++++++++{}--------------------",domain.getName());
 //			List<String> tttdate = this.travelHeader01Service.findDateMinMaxFromTravelHeader("560004");
 //
 //				logger.debug("########################################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",tttdate.get(0));
-			List<TravelDetail> re = this.travelHeader01Service.findDateMinMax("560004");
-			List<String> cus = this.travelHeader01Service.findNameCustomer("560004");
+			
+			
+			//********************************* Push parametor here ******************************************//
+			List<TravelDetail> re = this.travelHeader01Service.findDateMinMax(noDoc);
+			List<String> cus = this.travelHeader01Service.findNameCustomer(noDoc);
 			logger.debug("########################################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",cus.get(0));
 			SimpleDateFormat sim = new SimpleDateFormat("dd MMMM yyyy",new Locale("th","th"));
 			String dateMin = re.get(0).getDate().toString();
@@ -309,6 +322,43 @@ public class SVD006Controller{
 			gridData.setSuccess(true);
 
 			gridData.responseJson(response);
+		}
+		
+		@RequestMapping(value = "/SVD006.html", method = RequestMethod.POST, params = "method=scpSave")
+		public void scpSave(HttpServletRequest request, HttpServletResponse response,
+
+		@ModelAttribute SCP007Domain01 domain,
+				@RequestParam("scpNoDoc") String scpNoDoc,
+				@RequestParam("scpDate") String scpDate,
+				@RequestParam("scpNumber") String scpNumber,
+				@RequestParam("scpLabel3") String scpLabel3,
+				@RequestParam("scpDateCreation") String scpDateCreation, 
+				@RequestParam("scfTatolDebit") Long scfTatolDebit,
+				@RequestParam("scfTatolCredit") Long scfTatolCredit,
+				@RequestParam("scpPack") String scpPack
+			
+				
+
+		) throws Exception {
+
+			try {
+				
+				domain.setScpNoDoc(scpNoDoc);
+				domain.setScpDate(scpDate);
+				domain.setScpNumber(scpNumber);
+				domain.setScpLabel3(scpLabel3);
+				domain.setScpDateCreation(scpDateCreation);
+				domain.setScfTatolDebit(scfTatolDebit);
+				domain.setScfTatolCredit(scfTatolCredit);
+				domain.setScpPack(scpPack);
+
+				this.paymentHeader01Service.saveFromPaymentHeader(domain);
+	
+			} catch (Exception e) {
+				e.printStackTrace();
+				logger.error(e.getMessage());
+			}
+
 		}
 
 }

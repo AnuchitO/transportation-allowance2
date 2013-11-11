@@ -33,7 +33,7 @@ public class PaymentHeader implements Serializable {
 	private TravelHeader travelHeader;
 	
 	@Column (name = "PAYH_PHNO")
-	private String phone;
+	private String no;
 	
 	@Column (name = "PAYH_PHDEP")
 	private String department;
@@ -65,6 +65,15 @@ public class PaymentHeader implements Serializable {
 	@Column (name = "PAYH_PHMODIFYDATE")
 	private Date modifyDate;
 
+	
+	public String getNo() {
+		return no;
+	}
+
+	public void setNo(String no) {
+		this.no = no;
+	}
+
 	public String getpHeaderId() {
 		return pHeaderId;
 	}
@@ -84,13 +93,7 @@ public class PaymentHeader implements Serializable {
 		this.travelHeader = travelHeader;
 	}
 
-	public String getPhone() {
-		return phone;
-	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
 
 	public String getDepartment() {
 		return department;

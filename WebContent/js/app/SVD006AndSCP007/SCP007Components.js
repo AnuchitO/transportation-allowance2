@@ -73,6 +73,7 @@ SCP007C.scpLabel2 = new Ext.form.Label({
 
 });
 SCP007C.scpLabel3 = new Ext.form.Label({
+	id : "scpLabel3",
 	text : "Admin",
 	// labelStyle: 'font-weight:bold;',
 	style : {
@@ -283,26 +284,45 @@ SCP007C.gridRemoveBtn = new Ext.Toolbar.Button({
 });
 
 //******************** save function ***********************************//
-var param = {};
-function saveOrUpdate() {
+var scpParam = {};
+function scpSaveOrUpdate() {
+	scpParam.scpNoDoc = Ext.getCmp('noDoc').getValue();
+	scpParam.scpDate = Ext.getCmp('scpDate').getValue();
+	scpParam.scpNumber = Ext.getCmp('scpNumber').getValue();
+	scpParam.scpLabel3 = Ext.getCmp('scpLabel3').text;
+	scpParam.scpDateCreation = Ext.getCmp('scpDateCreation').getValue();
+	scpParam.scfTatolDebit = Ext.getCmp('scfTatolDebit').getValue();
+	scpParam.scfTatolCredit = Ext.getCmp('scfTatolCredit').getValue();
+	
+	//**************************** get Value in Grid ******************************//
+	
+	SCP007C.createGrid.getSelectionModel().selectAll();
 
-	param.no = Ext.getCmp('no').getValue();
-	param.date = Ext.getCmp('date').getValue();
-	param.name = Ext.getCmp('name').getValue();
-	param.id = Ext.getCmp('id').getValue();
-	param.company = Ext.getCmp('company').getValue();
-	param.antecedent = Ext.getCmp('antecedent').getValue();
-	param.address = Ext.getCmp('address').getValue();
-	param.antercedentA = Ext.getCmp('antercedentA').getValue();
-	param.phone = Ext.getCmp('phone').getValue();
-	param.email = Ext.getCmp('email').getValue();
+	var sm = SCP007C.createGrid.getSelectionModel().getSelections();
+	scpParam.pack = "";
 
-	param2.method = "save1";
+	for (var i = 0; i <= sm.length - 1; i++) {
+		var scpDataGridNo = SCP007C.createGrid.getStore().getAt(i).data.scpNo;
+		var scpDataGridIdAccount = SCP007C.createGrid.getStore().getAt(i).data.scpIdAccount;
+		var scpDataGridNameAccount = SCP007C.createGrid.getStore().getAt(i).data.scpNameAccount;
+		var scpDataGridIdDept = SCP007C.createGrid.getStore().getAt(i).data.scpIdDept;
+		var scpDataGridDebit = SCP007C.createGrid.getStore().getAt(i).data.scpDebit;
+		var scpDateGridCredit = SCP007C.createGrid.getStore().getAt(i).data.scpCredit;
+		
+		SCP007C.createGrid.getSelectionModel().deselectRow(i);
+		scpParam.scpPack += scpDataGridNo + "," + scpDataGridIdAccount + "," + scpDataGridNameAccount
+				+ "," + scpDataGridIdDept + "," + scpDataGridDebit + ","
+				+ scpDateGridCredit + "!";
+	}
+	
+	//*****************************************************************************//
+
+	scpParam.method = "scpSave";
 	Ext.Ajax.request({
-		url : '/TransportationAllowance/SCF003.html',
-		params : param2,
+		url : '/TransportationAllowance/SVD006.html',
+		params : scpParam,
 		success : function(response, opts) {
-			if (param2 != null) {
+			if (scpParam != null) {
 				Ext.Msg.alert('Information', 'บันทึกเรียบร้อย');
 			} else {
 				Ext.Msg.alert('Information', 'Error');
@@ -329,9 +349,9 @@ SCP007C.gridSaveBtn = new Ext.Toolbar.Button(
 								confirmFunction);
 				function confirmFunction(btn) {
 					if (btn == 'yes') {
-//						param2.status = "001";
 
-//						saveOrUpdate();
+						
+						scpSaveOrUpdate();
 
 					}
 				}

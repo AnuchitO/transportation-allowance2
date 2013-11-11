@@ -99,12 +99,12 @@ public class SCF003Controller {
 		
 		
 		Map<String, Object> model = new HashMap<String, Object>();
-		Employee resultsEmp = this.employee01Service.findEmployeeWhereId();
+		Employee resultsEmp = this.employee01Service.findEmployeeWhereId(empId);
 		System.out.println("view 2");
-		List<String> resu = this.employee01Service.findBankWhereEmp();
-		List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp();
-		List<String> resultsDept = this.employee01Service.findDeptWhereEmp();
-		List<String> resultsProvince = this.employee01Service.findProvinceEmp();
+		List<String> resu = this.employee01Service.findBankWhereEmp(empId);
+		List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp(empId);
+		List<String> resultsDept = this.employee01Service.findDeptWhereEmp(empId);
+		List<String> resultsProvince = this.employee01Service.findProvinceEmp(empId);
 		Date date = new Date();
 		SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
 		SCF003Domain01 domain = new SCF003Domain01();

@@ -24,26 +24,26 @@ public class Employee01ServiceImpl implements Employee01Service{
    	 // TODO Auto-generated method stub
    	 return employee01Dao.findEmployee();
     }
-    public Employee findEmployeeWhereId(){
-    	return employee01Dao.findEmployeeWhereId();
+    public Employee findEmployeeWhereId(String domain){
+    	return employee01Dao.findEmployeeWhereId(domain);
     }
-    public List<String> findBankWhereEmp(){
+    public List<String> findBankWhereEmp(String domain){
     	System.out.println("findBankWhereEmpService");
-    	List<String> send = employee01Dao.findBankWhereEmp();
+    	List<String> send = employee01Dao.findBankWhereEmp(domain);
     	System.out.println("narukjungbey"+send);
     	return send;
     	
     }
-    public List<String> findBranchBankWhereEmp(){
-    	List<String> send = employee01Dao.findBranchBankWhereEmp();
+    public List<String> findBranchBankWhereEmp(String domain){
+    	List<String> send = employee01Dao.findBranchBankWhereEmp(domain);
     	return send;
     }
-    public List<String> findDeptWhereEmp(){
-    	List<String> send = employee01Dao.findDeptWhereEmp();
+    public List<String> findDeptWhereEmp(String domain){
+    	List<String> send = employee01Dao.findDeptWhereEmp(domain);
     	return send;
     }
-    public List<String> findProvinceEmp(){
-    	List<String> send = employee01Dao.findProvinceEmp();
+    public List<String> findProvinceEmp(String domain){
+    	List<String> send = employee01Dao.findProvinceEmp(domain);
     	return send;
     }
 

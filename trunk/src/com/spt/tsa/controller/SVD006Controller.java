@@ -4,9 +4,7 @@ package com.spt.tsa.controller;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-
 import java.text.DateFormat;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,6 +12,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.persistence.Cache;
 import javax.persistence.Parameter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,11 +39,14 @@ import com.spt.tsa.controller.datasource.SPV004JasperDataSource;
 import com.spt.tsa.dao.ParameterTableDao;
 import com.spt.tsa.domain.SCF003Domain01;
 import com.spt.tsa.domain.SVD006Domain01;
+import com.spt.tsa.entity.AccountAdmin;
 import com.spt.tsa.entity.Company;
+import com.spt.tsa.entity.Customer;
 import com.spt.tsa.entity.Employee;
 import com.spt.tsa.entity.ParameterTable;
 import com.spt.tsa.entity.TravelDetail;
 import com.spt.tsa.entity.TravelHeader;
+import com.spt.tsa.service.AccountAdmin01Service;
 import com.spt.tsa.service.Customer01Service;
 import com.spt.tsa.service.Employee01Service;
 import com.spt.tsa.service.ParameterTable01Service;
@@ -62,12 +64,16 @@ public class SVD006Controller{
 	private TravelHeader01Service travelHeader01Service;
 	private TravelDetail01Service travelDetail01Service;
 	private Customer01Service customer01Service;
-	
+	private AccountAdmin01Service accountAdmin01Service;
 	private List<TravelHeader> listLravelHerder;
 	private List<ParameterTable> resultsBank;
 	private List<ParameterTable> resultsBankType;
 	private List<TravelDetail> travelDetails;
-	
+
+	@Autowired
+	public void setAccountAdmin01Service(AccountAdmin01Service accountAdmin01Service) {
+		this.accountAdmin01Service = accountAdmin01Service;
+	}
 	@Autowired
     public void setParameterTable01Service(ParameterTable01Service parameterTable01Service) {
    	 this.parameterTable01Service= parameterTable01Service;
@@ -176,7 +182,29 @@ public class SVD006Controller{
 			
 			logger.debug("+++++++++++++++++++++{}--------------------",resu.get(0));
 			logger.debug("+++++++++++++++++++++{}--------------------",domain.getName());
-
+//			List<String> tttdate = this.travelHeader01Service.findDateMinMaxFromTravelHeader("560004");
+//
+//				logger.debug("########################################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",tttdate.get(0));
+			List<TravelDetail> re = this.travelHeader01Service.findDateMinMax("560004");
+			List<String> cus = this.travelHeader01Service.findNameCustomer("560004");
+			logger.debug("########################################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",cus.get(0));
+			SimpleDateFormat sim = new SimpleDateFormat("dd MMMM yyyy",new Locale("th","th"));
+			String dateMin = re.get(0).getDate().toString();
+			String [] dayMin = dateMin.split("-");
+			String [] dayMinday = dayMin[2].split(" ");
+			String dayTotalMinMax = " "+"-"+" "+cus.get(0)+" "+dayMinday[0]+" , " + sim.format(re.get(re.size()-1).getDate())+"เดินทางพบลูกค้า";
+			
+			
+			
+			
+			logger.debug("########################################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",dayTotalMinMax);
+				logger.debug("########################################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",re.get(0).getDate());
+				logger.debug("########################################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",re.get(re.size()-1).getDate());
+				
+			
+			
+			
+			domain.setMinMaxDate(dayTotalMinMax);
 			model.put("data", JSONObject.fromObject(BeanUtils.beanToMap(domain)).toString());
 			
 			return new ModelAndView("SVD006",model);
@@ -258,6 +286,29 @@ public class SVD006Controller{
 				logger.error(e.getMessage());
 			}
 
+		}
+		
+		@RequestMapping(value = "/SVD006.html", method = RequestMethod.POST, params = "method=scpNumberAccountAdmin")
+		public void findCustomer(HttpServletRequest request,
+				HttpServletResponse response) {
+			List<AccountAdmin> resultsAcc = this.accountAdmin01Service.findAccountAdmin();
+			JSONArray jsonArray = new JSONArray();
+			GridData gridData = new GridData();
+
+			JSONObject jobect1 = new JSONObject();
+			for (AccountAdmin c : resultsAcc) {
+
+				jobect1.accumulate("code", c.getAcId());
+				jobect1.accumulate("description",c.getName());
+				jsonArray.add(jobect1);
+				jobect1.clear();
+
+			}
+			gridData.setRecords(jsonArray);
+			gridData.setTotal(jsonArray.size());
+			gridData.setSuccess(true);
+
+			gridData.responseJson(response);
 		}
 
 }

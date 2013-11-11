@@ -114,6 +114,11 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 				.add(Restrictions.eq("no", docNo));
 		return this.getHibernateTemplate().findByCriteria(criteria);
 	}
+	public List<TravelDetail> findByCustomer(String domain) {
+		DetachedCriteria criteria =  DetachedCriteria.forClass(TravelDetail.class)
+				.add(Restrictions.eq("travelHeader", findByDocNoForSaveOrUpdate(domain).get(0)));
+		return this.getHibernateTemplate().findByCriteria(criteria);
+	}
 
 	 public List<BigDecimal> findTravelTotal(String domain){
 		   String no = domain;
@@ -126,6 +131,37 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 		   return send;
 		   
 	   }
+	 public List<TravelDetail> findDateMinMax(String domain) {
+			DetachedCriteria criteria =  DetachedCriteria.forClass(TravelDetail.class);
+					criteria.add(Restrictions.eq("travelHeader", findByDocNoForSaveOrUpdate(domain).get(0)));
+					criteria.addOrder(Order.asc("date"));
+			return this.getHibernateTemplate().findByCriteria(criteria);
+		}
+	 
+	 public List<String> findNameCustomer(String domain){
+		 String name = this.findByCustomer(domain).get(0).getCustomer().getCusId();
+		 Session ses = (Session) this.getSession();
+		 StringBuffer sql = new StringBuffer();
+		 sql.append("select CUS_CUNAME from CUSTOMER where CUS_CUID ="+"'"+name+"'");
+		 SQLQuery query = ses.createSQLQuery(sql.toString());
+		   List<String> send = query.list();
+		   ses.close();
+		   return send;
+	 }
+	 
+	 public List<String> findDateMinMaxFromTravelHeader(String domain){
+		 String date = this.findByDocNoForSaveOrUpdate(domain).get(0).gettHeadId();
+		 Session ses = (Session) this.getSession();
+		 StringBuffer sql = new StringBuffer();
+		 sql.append("SELECT MIN(TRAD_TDDATE) mindate, MAX(TRAD_TDDATE) maxdate from TRAVEL_DETAIL where TRAD_THID ="+"'"+date+"'");
+		 SQLQuery query = ses.createSQLQuery(sql.toString());
+		   List<String> send = query.list();
+		   ses.close();
+		   return send;
+		 
+	 }
+	 
+	 
 	
 
 	public List<TravelHeader> findByEmpIdInTravelHeader(Employee employee) {

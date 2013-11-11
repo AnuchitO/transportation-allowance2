@@ -58,6 +58,20 @@ public class Travelheader01ServiceImpl implements TravelHeader01Service{
 		 List<BigDecimal> send = travelHeader01Dao.findTravelTotal(domain);
 	    	return send;
 	    }
+	 public List<String> findDateMinMaxFromTravelHeader(String domain){
+		 List<String> send = travelHeader01Dao.findDateMinMaxFromTravelHeader(domain);
+		 return send;
+	 }
+	 public List<TravelDetail> findDateMinMax(String domain) {
+		 return this.travelHeader01Dao.findDateMinMax(domain);
+	 }
+	 public List<String> findNameCustomer(String domain){
+		 List<String> send = travelHeader01Dao.findNameCustomer(domain);
+		 return send;
+	 }
+	 public List<TravelDetail> findByCustomer(String domain){
+		 return this.travelHeader01Dao.findByCustomer(domain);
+	 }
 
 	public List<TravelHeader> findByEmpIdInTravelHeader(Employee employee) {
 		return this.travelHeader01Dao.findByEmpIdInTravelHeader(employee);

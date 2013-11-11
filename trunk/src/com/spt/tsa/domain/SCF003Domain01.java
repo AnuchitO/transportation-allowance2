@@ -54,9 +54,17 @@ public class SCF003Domain01 {
 	//*************** variable for SCP007 program ************************//
 	BigDecimal totalPayment;
 	String charactorNumber;
+	String minMaxDate;
 	
 	
 	
+	
+	public String getMinMaxDate() {
+		return minMaxDate;
+	}
+	public void setMinMaxDate(String minMaxDate) {
+		this.minMaxDate = minMaxDate;
+	}
 	public String getCharactorNumber() {
 		return charactorNumber;
 	}

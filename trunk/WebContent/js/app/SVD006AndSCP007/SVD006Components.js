@@ -247,9 +247,11 @@ SVD006C.groupHeaderPlugins = new Ext.ux.plugins.GroupHeaderGrid({
 	}, {}, {} ] ],
 });
 
+var noDocParam = Ext.getCmp('noDoc').getValue();
 SVD006C.gridStrore = new Ext.data.JsonStore({
 	baseParams : {
-		method : 'gridDataStore'
+		method : 'gridDataStore',
+		noDocParam : noDocParam
 	},
 	url : '/TransportationAllowance/SVD006.html',
 	method : 'POST',
@@ -445,7 +447,7 @@ SVD006C.createGrid = new Ext.ss.grid.EditorGridPanel({
 	columns : SVD006C.gridColumns,
 	columnLines : true,
 	height : 350,
-	width : 786,
+	width : 801,
 
 	lazyRender : true,
 	autoSelect : true,

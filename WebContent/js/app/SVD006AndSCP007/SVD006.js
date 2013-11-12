@@ -2,7 +2,6 @@ var SVD006 = {};
 
 Ext.onReady(function() {
 
-
 	SVD006.resumeForm = new Ext.form.FormPanel({
 	
 				applyTo : "content",
@@ -12,7 +11,7 @@ Ext.onReady(function() {
 				style : {
 					"margin-left" : "auto",
 					"margin-right" : "auto",
-					"margin-top" : "50px"
+					"margin-top" : "10px"
 				},
 				defaults : {
 					xtype : 'container',
@@ -32,7 +31,14 @@ Ext.onReady(function() {
 //////// Operator Function
 
 
-SVD006C.btnCreatePay.disable();
+SVD006C.autoCheck = Ext.getCmp('totalPayAll').getValue();
+if(SVD006C.autoCheck >= 1500){
+	Ext.getDom('payCash').checked = false;
+	Ext.getDom('payCheck').checked = true;
+}else{
+	Ext.getDom('payCash').checked = true;
+	Ext.getDom('payCheck').checked = false;
+}
 SVD006C.date.disable();
 //SVD006C.btnCreatePay.enable();
 Ext.get('approve').on('click',function(e) {
@@ -56,19 +62,10 @@ Ext.get('cancel').on('click',function(e) {
 
 Ext.get('payCash').on('click',function(e) {
 	Ext.getDom('payCheck').checked = false;
-	
-	Ext.getDom('approve').checked = true;		
-	Ext.getDom('refused').checked = false;
-	Ext.getDom('cancel').checked = false;
 });
 
 Ext.get('payCheck').on('click',function(e) {
 	Ext.getDom('payCash').checked = false;
-	
-	Ext.getDom('approve').checked = true;	
-	Ext.getDom('refused').checked = false;
-	Ext.getDom('cancel').checked = false;
-	
 });
 
 var paramConfirmCheckbox = {};

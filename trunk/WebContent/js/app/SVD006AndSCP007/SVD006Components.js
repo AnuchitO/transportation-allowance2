@@ -2,7 +2,7 @@ var SVD006C = {};
 
 SVD006C.labCompanyNameHeader = new Ext.form.Label({
 	id : "labCompanyNameHeader",
-	text : "บริษัท ซอฟสแควร์ 1999 จำกัด",
+	text : " ",
 	style : {
 		"font-size" : "150%",
 		"font-align" : "center"
@@ -12,7 +12,7 @@ SVD006C.labCompanyNameHeader = new Ext.form.Label({
 
 SVD006C.labAddressHeader = new Ext.form.Label({
 	id : "labAddressHeader",
-	text : "51/597 หมุ่ 7 หมู่บ้านเมืองเอก ถ.พหลโยธิน ต.หลักหก  อ.เมืองปทุมธานี จ.ปทุมธานี  12000",
+	text : " ",
 	style : {
 		"font-size" : "90%",
 		"font-align" : "center"
@@ -20,15 +20,34 @@ SVD006C.labAddressHeader = new Ext.form.Label({
 	anchor : '93%'
 });
 
-SVD006C.labTellFaxHeader = new Ext.form.Label({
-	id : "labTellFaxHeader",
-	text : "โทร 0-2997-2000  โทรสาร 0-2997-2001",
+SVD006C.labTellHeader = new Ext.form.Label({
+	id : "labTellHeader",
+	text : " ",
 	style : {
 		"font-size" : "90%",
 		"font-align" : "center"
 	},
 	anchor : '93%'
 });
+
+SVD006C.labFaxHeader = new Ext.form.Label({
+	id : "labFaxHeader",
+	text : " ",
+	style : {
+		"font-size" : "90%",
+		"font-align" : "center"
+	},
+	anchor : '93%'
+});
+
+//////////////////////////////////////////////////////
+//Set data For Information Header Company of Employee
+/////////////////////////////////////////////////////
+SVD006C.labCompanyNameHeader.setText(SVD006Domain.headerCompName);
+SVD006C.labAddressHeader.setText(SVD006Domain.headerCompAddress);
+SVD006C.labTellHeader.setText("โทร "+SVD006Domain.headerCompTell);
+SVD006C.labFaxHeader.setText("โทรสาร "+SVD006Domain.headerCompFax);
+//////End Set data For Information Header Company of Employee ///////
 
 SVD006C.labTitle = new Ext.form.Label({
 	id : "labTitle",
@@ -144,6 +163,7 @@ SVD006C.email.setValue(SVD006Domain.email);
 SVD006C.txtDepartment.setValue(SVD006Domain.antecedent);
 SVD006C.comboProvince.setValue(SVD006Domain.antercedentA);// /Province
 SVD006C.idCardEmp.setValue(SVD006Domain.idCard);
+
 
 SVD006C.gridColumns = [
 
@@ -504,7 +524,11 @@ SVD006C.fieldSetInformation = new Ext.form.FieldSet({
 			},{
 				items : SVD006C.labAddressHeader
 			},{
-				items : SVD006C.labTellFaxHeader
+				columnWidth : 0.2,
+				items : SVD006C.labTellHeader
+			},{
+				columnWidth : 0.2,
+				items : SVD006C.labFaxHeader
 			},{
 				items : new Ext.form.Label({
 					id : "labTop",
@@ -770,3 +794,4 @@ SVD006C.tabPanel = new Ext.TabPanel({
 //		disabled : true
 	} ]
 });
+

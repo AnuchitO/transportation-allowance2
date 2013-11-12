@@ -126,6 +126,7 @@ public class SVD006Controller{
 			TravelHeader travelHeader = this.listLravelHerder.get(0);
 			ParameterTable parameterTableBank = this.resultsBank.get(0);
 			ParameterTable parameterTableBankType = this.resultsBankType.get(0);
+			Company company = this.listLravelHerder.get(0).getCompany();
 			
 			///////////////////////old
 			Map<String,Object> model = new HashMap<String,Object>();
@@ -184,6 +185,14 @@ public class SVD006Controller{
 			domain.setTotalPayment(tra.get(0));
 			domain.setCharactorNumber(new BahtText(tra.get(0)).toString());
 			
+			//////////////////////////////////////
+			//Nong Set Address Company
+			//////////////////////////////////////
+			domain.setHeaderCompName(company.getName());
+			domain.setHeaderCompAddress(company.getAddress());
+			domain.setHeaderCompTell(company.getTelephone());
+			domain.setHeaderCompFax(company.getFax());
+			//// End Nong Set Address Company ////
 			Employee teeeeeee = this.travelHeader01Service.findEmployeeWhereId(domain.getId());
 //			Company commmmm = this.travelHeader01Service.findCompanyWhereId(resultsEmp.getCompany().getComId());
 //			

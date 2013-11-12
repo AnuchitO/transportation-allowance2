@@ -39,6 +39,7 @@ import com.spt.tsa.controller.datasource.SPV004JasperDataSource;
 import com.spt.tsa.dao.ParameterTableDao;
 import com.spt.tsa.domain.SCF003Domain01;
 import com.spt.tsa.domain.SCP007Domain01;
+import com.spt.tsa.domain.SHI002Domain01;
 import com.spt.tsa.domain.SVD006Domain01;
 import com.spt.tsa.entity.AccountAdmin;
 import com.spt.tsa.entity.Company;
@@ -234,11 +235,14 @@ public class SVD006Controller{
 		}
 		
 		@RequestMapping(value = "/SVD006.html", method = RequestMethod.POST, params = "method=gridDataStore")
-		public void findGrid(HttpServletRequest request,
-				HttpServletResponse response) {
+		public void findGrid(HttpServletRequest request,HttpServletResponse response,
+				@ModelAttribute SVD006Domain01 domain,
+				@RequestParam("noDocParam") String noDoc) {
+				
+				domain.setNo(noDoc);
 
 			try{ 
-				this.listLravelHerder = this.travelHeader01Service.findByDocNo("560004");
+				this.listLravelHerder = this.travelHeader01Service.findByDocNo(domain.getNo());
 				this.travelDetails = this.travelDetail01Service.findByTravelHeader(this.listLravelHerder.get(0));
 			}catch (Exception e){
 				

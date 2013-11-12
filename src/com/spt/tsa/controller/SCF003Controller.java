@@ -94,7 +94,17 @@ public class SCF003Controller {
 			empId = request.getParameter("empId").toString();
 			logger.debug("pagepppppppppppPPPPPPPPPPPPPPPPPPPPppppppppp  {} pppppppppppppppppppppppppppppppp",empId);
 		}
+		////////////////////////////////////////////////////////
+		//Nong getParameter From SHI002 page
+		///////////////////////////////////////////////////////
+		String noDoc = "noDoc";
+		if(request.getParameter("noDoc") == null){
 		
+		}else{
+			noDoc = request.getParameter("noDoc");
+		}
+		
+		/////// End Nong getParameter From SHI002 page ///////
 		
 		
 		
@@ -539,85 +549,4 @@ public class SCF003Controller {
 
 	}
 	
-	////////////////////////////////////////////////////////
-	//method for Ajax request when onClick number Document
-	///////////////////////////////////////////////////////
-	@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=previewDoc")
-	public ModelAndView previewDoc(HttpServletRequest request, HttpServletResponse response
-//	@ModelAttribute SCF003Domain01 domain,
-//	@RequestParam("no") String no, 
-//	@RequestParam("name") String name
-	) throws Exception {
-
-		try {
-//			domain.setNo(no);
-//			domain.setName(name);
-	
-		}catch (Exception e){
-			
-		}
-		/////////////////////////////////
-		//code for return modelAndView
-		////////////////////////////////
-		
-		String empId = "EMp001";
-//		if(request.getParameter("empId")==null){
-//			logger.debug("pagepppppppppppPPPPPPPPPPPPPPPPPPPPppppppppp  IF  pppppppppppppppppppppppppppppppp");
-//		}else{
-//			empId = request.getParameter("empId").toString();
-//			logger.debug("pagepppppppppppPPPPPPPPPPPPPPPPPPPPppppppppp  {} pppppppppppppppppppppppppppppppp",empId);
-//		}
-						
-		Map<String, Object> model = new HashMap<String, Object>();
-		Employee resultsEmp = this.employee01Service.findEmployeeWhereId(empId);
-		List<String> resu = this.employee01Service.findBankWhereEmp(empId);
-		List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp(empId);
-		List<String> resultsDept = this.employee01Service.findDeptWhereEmp(empId);
-		List<String> resultsProvince = this.employee01Service.findProvinceEmp(empId);
-		Date date = new Date();
-		SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
-		SCF003Domain01 domain = new SCF003Domain01();
-		List<TravelHeader> lastNoDocList = this.travelHeader01Service.findTravelHanderGetLastNoDoc();
-		
-		String numberDoc = " ";
-		if ((lastNoDocList.size() != 0)) {
-			logger.debug("!!!!!!!!!!!!  {}",lastNoDocList.get(0).getNo());
-			numberDoc = new RunNumberDocument(lastNoDocList.get(0).getNo()).generatNumberDocumentV2();
-			logger.debug("!!!!!!!!!!!!!  {}",numberDoc);
-		}else{
-		}
-		domain.setNo(numberDoc);
-		domain.setDate(ft.format(date));
-		domain.setName(resultsEmp.getName());
-		domain.setId(resultsEmp.getEmpId());
-		new BahtText(11).toString();
-
-		domain.setCompany(resultsEmp.getCompany().getName());
-		domain.setIdCard(resultsEmp.getIdCard());
-		domain.setAddress(resultsEmp.getAddress());
-		domain.setPhone(resultsEmp.getTelephone());
-		domain.setEmail(resultsEmp.getEmail());
-		domain.setAntecedent(resultsDept.get(0));
-		domain.setAntercedentA(resultsProvince.get(0));
-		// ************* set value Button *****************//
-
-		// domain.setTatolManey(new BahtText(arg0).totalPayment);
-		domain.setBank(resu.get(0));
-		domain.setBranch(resultsEmp.getBranch());
-		domain.setAccountNumber(resultsEmp.getAccountNo());
-		domain.setTypeAccount(resultsBranch.get(0));
-		Employee teeeeeee = this.travelHeader01Service
-				.findEmployeeWhereId(domain.getId());
-		Company commmmm = this.travelHeader01Service
-				.findCompanyWhereId(resultsEmp.getCompany().getComId());
-
-		logger.debug("+++++++------------+{}------", teeeeeee.getAddress());
-		logger.debug("+++++++------------+{}------", commmmm.getComId());
-
-		logger.debug("+++++++++++++++++++++{}--------------------", resu.get(0));
-		logger.debug("+pppppppppppppppppppppppppppppppppppppp++++{}--------------------",
-				domain.getName());
-		model.put("scf003", JSONObject.fromObject(BeanUtils.beanToMap(domain)).toString());
-		return new ModelAndView("SCF003", model);
-	}
 }

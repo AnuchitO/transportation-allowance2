@@ -239,6 +239,7 @@ SHI002C.gridStore = new Ext.data.JsonStore({
 
 });
 
+
 /////////////////////////////////
 //Event OnClick number Document
 ////////////////////////////////
@@ -247,29 +248,23 @@ SHI002C.numberDocumentOnClick = function(grid, rowIndex, cellIndex, e){
 							    var columnName = grid.getColumnModel().getDataIndex(cellIndex);
 							    var cellValue = store.get(columnName);
 							    if(columnName == 'docNo'){
-//							    	alert(columnName+" >>> <<<< "+cellValue);
-							    	var param = {};
-							    	param.method = "previewDoc";
-							    	Ext.Ajax.request({
-							    		url : '/TransportationAllowance/SCF003.html',
-							    		params : param,
-							    		success : function(response, opts) {
-							    			if (param != null) {
-//							    				Ext.Msg.alert('Information', 'บันทึกเรียบร้อย');
-							    			} else {
-//							    				Ext.Msg.alert('Information', 'Error');
-							    			}
-							    		},
-							    		failure : function(response, opts) {
-							    			Ext.Msg.alert('ERROR', 'Error.');
-							    		}
-							    	});
+							    	if(confirm("AAAAAA")){
+//							    		Ext.Msg.alert('Information', 'บันทึกเรียบร้อย');
+							    	
+//							    	alert(columnName+" >>> <<<< "+cellValue);			    	
+							    	var empId = Ext.getCmp('employeeId').getValue();
+							    	var noDoc = cellValue;
+
+									var urlPreviwPage = "/TransportationAllowance/SCF003.html?empId="+empId+"&noDoc="+noDoc;
+									window.location.assign(urlPreviwPage);	    	
+							    	}
 							    }else{
 							    	
 							    }
-          			         
+        			         
 							};
-    
+  
+
 SHI002C.grid4 = new Ext.grid.GridPanel({
         id:'idGrid',
         columnLines : true,

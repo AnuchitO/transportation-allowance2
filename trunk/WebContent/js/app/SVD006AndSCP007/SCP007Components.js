@@ -857,3 +857,4 @@ SCP007C.tabPanelSCP007C = new Ext.Panel({
 		items : SCP007C.scpSetHeader
 	}]
 });
+

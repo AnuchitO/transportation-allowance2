@@ -49,6 +49,9 @@ Ext.onReady(function() {SHI002.resumeForm = new Ext.form.FormPanel({
 			}
 		}
 	});
+	
+	
+	
 
 });
 

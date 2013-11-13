@@ -266,7 +266,7 @@ public class SVD006Controller{
 				 jobect.accumulate("region", td.getFrom());
 				 jobect.accumulate("goal", td.getTo());
 				 jobect.accumulate("paymentTravel", td.getTravelExpenses());
-				 jobect.accumulate("paymentD", td.getMotorWay());
+				 jobect.accumulate("motorWayId", td.getMotorWay());
 				 jobect.accumulate("payment", td.getTotalDay());
 				 jobect.accumulate("remark", td.getRemark());
 				 jsonArray.add(jobect);

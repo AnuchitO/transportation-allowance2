@@ -2,20 +2,79 @@ var SHI002C = {};
 /////////////////////////////////////
 //define element for Header
 ////////////////////////////////////
+SHI002C.style = {
+		"color":"black",
+	    "background-image":"none",
+	    "background-color":"#BEBEBE"
+	};
+SHI002C.disable = true;
+
 SHI002C.name = new Ext.form.TextField({
 	id : 'name',
 	fieldLabel : "ชื่อ - สกุล",
 	width : 200,
-	readOnly: true
+	readOnly: true,
+	disabled : SHI002C.disable,
+	style: SHI002C.style
 });
 
 SHI002C.employeeId = new Ext.form.TextField({
 	id : 'employeeId',
 	fieldLabel : "รหัสพนักงาน",
 	width : 200,
-	readOnly: true
+	readOnly: true,
+	disabled : SHI002C.disable,
+	style: SHI002C.style
 });
 
+
+
+//////////////////////////////////////////
+//Set value into TextField name and empId
+//////////////////////////////////////////
+SHI002C.name.setValue(SHI01Domain.employeeName);
+SHI002C.employeeId.setValue(SHI01Domain.employeeId);
+
+
+
+var employeeIdValue = Ext.getCmp('employeeId').getValue();
+SHI002C.comboYearStore = new Ext.data.JsonStore({
+	
+	baseParams : {
+		method : 'yearStore',
+		empId  : employeeIdValue
+	},
+	url : '/TransportationAllowance/SHI002.html',
+	method : 'POST',
+	storeId : 'comboStatusStore',
+	root : 'records',
+	idProperty : 'code',
+	autoLoad : true,
+	fieldLabel : 'comboYear',
+	fields : [{
+				name : 'code'
+			},{
+				name : 'description'
+			}]
+});
+
+
+SHI002C.comboYear = new Ext.form.ComboBox({
+	fieldLabel : 'เลือกปี',
+	id : 'comboYear',
+	width : 120,
+	store : SHI002C.comboYearStore,
+	valueField : 'code',
+	displayField : 'description',
+	autoSelect : true,
+	mode : 'local',
+	lazyRender : true,
+	criterionField : true,
+	typeAhead : true,
+	forceSelection : true,
+	triggerAction : 'all',
+	emptyText : 'Select ...'
+});
 
 SHI002C.comboStatusStore = new Ext.data.JsonStore({
 	baseParams : {
@@ -55,53 +114,15 @@ SHI002C.comboStatus = new Ext.form.ComboBox({
 	emptyText : 'Select ...'
 });
 
-//////////////////////////////////////////
-//Set value into TextField name and empId
-//////////////////////////////////////////
-SHI002C.name.setValue(SHI01Domain.employeeName);
-SHI002C.employeeId.setValue(SHI01Domain.employeeId);
+SHI002C.yearQuery = Ext.getCmp('comboYear').getValue();
+if(SHI002C.yearQuery == ""){
+	SHI002C.yearQuery  = "*";
+}
 
-
-
-var employeeIdValue = Ext.getCmp('employeeId').getValue();
-SHI002C.comboYearStore = new Ext.data.JsonStore({
-	
-	baseParams : {
-		method : 'yearStore',
-		empId  : employeeIdValue
-	},
-	url : '/TransportationAllowance/SHI002.html',
-	method : 'POST',
-	storeId : 'comboStatusStore',
-	root : 'records',
-	idProperty : 'code',
-	autoLoad : true,
-	fieldLabel : 'comboYear',
-	fields : [ {
-		name : 'code'
-
-	}, {
-		name : 'description'
-	} ]
-});
-
-
-SHI002C.comboYear = new Ext.form.ComboBox({
-	fieldLabel : 'เลือกปีA',
-	id : 'comboYear',
-	width : 120,
-	store : SHI002C.comboYearStore,
-	valueField : 'code',
-	displayField : 'description',
-	autoSelect : true,
-	mode : 'local',
-	lazyRender : true,
-	criterionField : true,
-	typeAhead : true,
-	forceSelection : true,
-	triggerAction : 'all',
-	emptyText : 'Select ...'
-});
+SHI002C.statusQuery = Ext.getCmp('comboStatus').getValue();
+if(SHI002C.statusQuery == ""){
+	SHI002C.statusQuery  = "*";
+}
 
 SHI002C.btnSearch = new Ext.Button({
 	id : 'btnSearch',
@@ -206,9 +227,13 @@ SHI002C.sm2 = new Ext.grid.CheckboxSelectionModel({
     }
 });
     
+var empId = Ext.getCmp('employeeId').getValue();
 SHI002C.gridStore = new Ext.data.JsonStore({
 	baseParams : {
-		method : 'gridStore'
+		method : 'gridStore',
+		empId  : empId,
+		year   : SHI002C.yearQuery,
+		status : SHI002C.statusQuery
 	},
 	url : '/TransportationAllowance/SHI002.html',
 	method : 'POST',

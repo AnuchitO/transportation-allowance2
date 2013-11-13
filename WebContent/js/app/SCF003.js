@@ -1458,7 +1458,7 @@ Ext
 								function confirmFunction(btn) {
 									if (btn == 'yes') {
 										// var param3 = {};
-										var noDoc = Ext.getCmp('no').getValue();
+										var noDoc = SCF01Domain.no;
 										// var noDoc = SCF01Domain.no; //ลองดู
 										// param3.no = "no001";
 

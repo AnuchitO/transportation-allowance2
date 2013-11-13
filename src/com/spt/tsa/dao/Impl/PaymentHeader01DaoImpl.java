@@ -50,4 +50,10 @@ public class PaymentHeader01DaoImpl extends HibernateDaoSupport implements Payme
     public AccountAdmin findIdAccount(String domain){
  	   return this.getHibernateTemplate().get(AccountAdmin.class,domain);
     }
+
+	public List<PaymentHeader> findByTravelHeader(TravelHeader travelHeader) {
+		 DetachedCriteria criteria =  DetachedCriteria.forClass(PaymentHeader.class);
+		  				  criteria.add(Restrictions.eq("travelHeader", travelHeader));
+		 return this.getHibernateTemplate().findByCriteria(criteria);
+	}
 }

@@ -1,4 +1,24 @@
 var SVD006C = {};
+SVD006C.style = {
+		"color":"black",
+	    "background-image":"none",
+	    "background-color":"#BEBEBE"
+	};
+SVD006C.disable = true;
+
+SVD006C.styleGridColumn = {
+		"color":"black",
+	    "background-image":"none",
+	    "background-color":"#BEBEBE"
+	};
+SVD006C.disableGridColumn = true;
+
+SVD006C.styleTotal ={
+		"color":"black",
+	    "background-image":"none",
+	    "background-color":"#FFFACD"
+	};
+SVD006C.disableTotal = false;
 
 SVD006C.labCompanyNameHeader = new Ext.form.Label({
 	id : "labCompanyNameHeader",
@@ -45,8 +65,8 @@ SVD006C.labFaxHeader = new Ext.form.Label({
 /////////////////////////////////////////////////////
 SVD006C.labCompanyNameHeader.setText(SVD006Domain.headerCompName);
 SVD006C.labAddressHeader.setText(SVD006Domain.headerCompAddress);
-SVD006C.labTellHeader.setText("โทร "+SVD006Domain.headerCompTell);
-SVD006C.labFaxHeader.setText("โทรสาร "+SVD006Domain.headerCompFax);
+SVD006C.labTellHeader.setText("โทร "+SVD006Domain.headerCompTell);//hard code
+SVD006C.labFaxHeader.setText("โทรสาร "+SVD006Domain.headerCompFax);//hard code
 //////End Set data For Information Header Company of Employee ///////
 
 SVD006C.labTitle = new Ext.form.Label({
@@ -62,29 +82,40 @@ SVD006C.labTitle = new Ext.form.Label({
 SVD006C.No = new Ext.form.TextField({
 	id : 'noDoc',
 	fieldLabel : "No",
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disable,
+	style: SVD006C.style
 });
 SVD006C.date = new Ext.form.TextField({
 	id : 'date',
 	fieldLabel : "วันที่รับเอกสาร",
+	readOnly: true,
+	disabled : SVD006C.disable,
+	style: SVD006C.style
 });
 
 SVD006C.name = new Ext.form.TextField({
 	id : 'name',
 	fieldLabel : "ชื่อ - สกุล",
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disable,
+	style: SVD006C.style
 });
 
 SVD006C.id = new Ext.form.TextField({
 	id : 'id',
 	fieldLabel : "รหัสพนักงาน",
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disable,
+	style: SVD006C.style
 });
 
 SVD006C.company = new Ext.form.TextField({
 	id : 'company',
 	fieldLabel : "บริษัท",
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disable,
+	style: SVD006C.style
 });
 
 // ฝ่าย/แผนก
@@ -112,14 +143,18 @@ SVD006C.txtDepartment = new Ext.form.TextField({
 	id : 'department',
 	fieldLabel : "ฝ่าย / แผนก",
 	width : 188,
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disable,
+	style: SVD006C.style
 });
 
 SVD006C.idCardEmp = new Ext.form.TextField({
 	id : 'idCardEmp',
 	fieldLabel : "รหัสประจำตัวประชาชน",
 	width : 250,
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disable,
+	style: SVD006C.style
 });
 
 SVD006C.textArea = new Ext.ss.form.TextArea({
@@ -127,28 +162,36 @@ SVD006C.textArea = new Ext.ss.form.TextArea({
 	id : 'address',
 	width : 600,
 	bodyPadding : 10,
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disable,
+	style: SVD006C.style
 });
 
 SVD006C.comboProvince = new Ext.form.TextField({
 	fieldLabel : 'จังหวัด',
 	id : 'province',
 	width : 135,
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disable,
+	style: SVD006C.style
 });
 
 SVD006C.phoneNumber = new Ext.form.TextField({
 	id : 'phoneNumber',
 	fieldLabel : "เบอร์โทร",
 	width : 120,
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disable,
+	style: SVD006C.style
 });
 
 SVD006C.email = new Ext.form.TextField({
 	id : 'email',
 	fieldLabel : "E-mail",
 	width : 200,
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disable,
+	style: SVD006C.style
 });
 
 // /////////////////////set Field/////////////////////////
@@ -210,19 +253,25 @@ SVD006C.gridColumns = [
 		{
 			header : 'ค่าเดินทาง',
 			dataIndex : 'paymentTravel',
-			align : 'center',
+			align : 'right',
+			xtype: 'numbercolumn', format:'0.00',
+			flex: 0,
 			width : 87.08,
 
 		},
 		{
 			header : 'ค่าทางด่วน',
-			dataIndex : 'paymentD',
-			align : 'center',
+			dataIndex : 'motorWayId',
+			align : 'right',
+			xtype: 'numbercolumn', format:'0.00',
+			flex: 0,
 			width : 87.08
 		}, {
 			header : 'รวมเป็นเงิน',
 			dataIndex : 'payment',
-			align : 'center',
+			align : 'right',
+			xtype: 'numbercolumn', format:'0.00',
+			flex: 0,
 			width : 87.08,
 
 		}, {
@@ -276,7 +325,7 @@ SVD006C.gridStrore = new Ext.data.JsonStore({
 	}, {
 		name : 'paymentTravel'
 	}, {
-		name : 'paymentD'
+		name : 'motorWayId'
 	}, {
 		name : 'payment'
 	}, {
@@ -290,49 +339,63 @@ SVD006C.totalPayCharector = new Ext.form.TextField({
 	id : 'totalPayCharector',
 	fieldLabel : "จำนวนเงินเป็นตัวอักษร",
 	width : 300,
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disable,
+	style: SVD006C.style
 });
 
 SVD006C.document = new Ext.form.TextField({
 	id : 'document',
 	fieldLabel : "เอกสารแนบ",
 	width : 120,
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disable,
+	style: SVD006C.style
 });
 
 SVD006C.forPay = new Ext.form.TextField({
 	id : 'forPay',
 	fieldLabel : "ใบ เพื่อชำระ",
 	width : 400,
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disable,
+	style: SVD006C.style
 });
 
 SVD006C.bank = new Ext.form.TextField({
 	id : 'bank',
 	fieldLabel : "บัญชีธนาคาร",
 	width : 120,
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disable,
+	style: SVD006C.style
 });
 
 SVD006C.branch = new Ext.form.TextField({
 	id : 'branch',
 	fieldLabel : "สาขา",
 	width : 240,
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disable,
+	style: SVD006C.style
 });
 
 SVD006C.accountNumber = new Ext.form.TextField({
 	id : 'accountNumber',
 	fieldLabel : "เลขที่บัญชี",
 	width : 240,
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disable,
+	style: SVD006C.style
 });
 
 SVD006C.typeAccount = new Ext.form.TextField({
 	id : 'typeAccount',
 	fieldLabel : "ประเภทบัญชี",
 	width : 240,
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disable,
+	style: SVD006C.style
 });
 
 SVD006C.textLabel = new Ext.form.Label({
@@ -422,22 +485,28 @@ SVD006C.branch.setValue(SVD006Domain.branch);
 SVD006C.accountNumber.setValue(SVD006Domain.accountNumber);
 SVD006C.typeAccount.setValue(SVD006Domain.typeAccount);
 
-SVD006C.totalPayExpresses = new Ext.form.TextField({
+SVD006C.totalPayExpresses = new Ext.ss.form.NumberField({
 	id : 'totalPayExpresses',
 	width : 80,
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disableTotal,
+	style: SVD006C.styleTotal	
 });
 
-SVD006C.totalPayMotorWay = new Ext.form.TextField({
+SVD006C.totalPayMotorWay = new Ext.ss.form.NumberField({
 	id : 'totalPayMotorWay',
 	width : 80,
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disableTotal,
+	style: SVD006C.styleTotal	
 });
 
-SVD006C.totalPayAll = new Ext.form.TextField({
+SVD006C.totalPayAll = new Ext.ss.form.NumberField({
 	id : 'totalPayAll',
 	width : 80,
-	readOnly: true
+	readOnly: true,
+	disabled : SVD006C.disableTotal,
+	style: SVD006C.styleTotal
 });
 
 // //////////////////////Begin Debug Start//////////////////

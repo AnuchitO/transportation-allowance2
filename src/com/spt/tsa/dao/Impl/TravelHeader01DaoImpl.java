@@ -174,5 +174,25 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 	public void deleteTravelHeader(TravelHeader travelHeader) {
 		this.getHibernateTemplate().delete(travelHeader);
 	}
+
+	public List<TravelHeader> findLikeYearAndStatus(Employee employee,Date yearStart,Date yearEnd, String status) {
+		DetachedCriteria criteria =  DetachedCriteria.forClass(TravelHeader.class);
+						 criteria.add(Restrictions.and(
+								 		Restrictions.eq("employee", employee),
+								 		Restrictions.and(Restrictions.like("status", status),
+								 						 Restrictions.between("creationate", yearStart,yearEnd))
+								 						 )
+								 		);
+    	return this.getHibernateTemplate().findByCriteria(criteria);
+	}
+
+	public List<TravelHeader> findLikeStatusAllYear(Employee employee,String status) {
+    	DetachedCriteria criteria =  DetachedCriteria.forClass(TravelHeader.class);
+		    			 criteria.add(Restrictions.and(
+						 				Restrictions.eq("employee", employee),
+						 				Restrictions.like("status", status))
+						 				);
+    	return this.getHibernateTemplate().findByCriteria(criteria);
+	}
     
 }

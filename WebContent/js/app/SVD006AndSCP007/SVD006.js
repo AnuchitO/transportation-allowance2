@@ -39,8 +39,6 @@ if(SVD006C.autoCheck >= 1500){
 	Ext.getDom('payCash').checked = true;
 	Ext.getDom('payCheck').checked = false;
 }
-SVD006C.date.disable();
-//SVD006C.btnCreatePay.enable();
 Ext.get('approve').on('click',function(e) {
 	Ext.getDom('refused').checked = false;
 	Ext.getDom('cancel').checked = false;

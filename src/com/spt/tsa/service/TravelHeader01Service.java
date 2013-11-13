@@ -2,6 +2,7 @@ package com.spt.tsa.service;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 import com.spt.tsa.domain.SCF003Domain01;
@@ -24,6 +25,7 @@ public interface TravelHeader01Service {
 	 public void saveHeaderCreateFrom(TravelHeader travelHeader);
 	 public List<TravelHeader> findByDocNoForSaveOrUpdate(String docNo);
 	 public List<TravelHeader> findByEmpIdInTravelHeader(Employee employee);
+	 public List<TravelHeader> findLikeYearAndStatus(Employee employee,String year,String status);
 	 
 	 public void deleteTravelHeader(TravelHeader travelHeader);
 }

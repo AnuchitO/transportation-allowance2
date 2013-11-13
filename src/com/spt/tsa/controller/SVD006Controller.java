@@ -171,7 +171,7 @@ public class SVD006Controller{
 			domain.setForPay(travelHeader.getPaymDesc());
 			domain.setDocument(travelHeader.getAttachment());
 			//// Total
-			domain.setTotalPayExpresses(travelHeader.getTotalExpenses());
+			domain.setTotalPayExpresses(new Double(travelHeader.getTotalExpenses()));
 			domain.setTotalPayMotorWay(travelHeader.getTotalMotorWay());
 			domain.setTotalPayAll(travelHeader.getTotal());
 			domain.setTotalPayCharector(new BahtText(travelHeader.getTotal()).toString());
@@ -225,7 +225,8 @@ public class SVD006Controller{
 				logger.debug("########################################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",re.get(re.size()-1).getDate());
 				
 			
-			
+			AccountAdmin test = this.paymentHeader01Service.findIdAccount("11-02-304");
+			logger.debug("########################################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}-------",test.getAcId());
 			
 			domain.setMinMaxDate(dayTotalMinMax);
 			model.put("data", JSONObject.fromObject(BeanUtils.beanToMap(domain)).toString());

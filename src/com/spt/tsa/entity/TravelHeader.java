@@ -33,7 +33,7 @@ public class TravelHeader  implements Serializable {
 	private Company company;
 	
 	@Column(name="Trah_thtotal")
-	private Long total;
+	private Double total;
 	
 	@Column(name="Trah_thcompany")
 	private String comName;
@@ -57,10 +57,10 @@ public class TravelHeader  implements Serializable {
 	private String remark;
 	
 	@Column(name="Trah_thtotalexpenses")
-	private Long totalExpenses;
+	private Double totalExpenses;
 	
 	@Column(name="Trah_thtotalmotorway")
-	private Long totalMotorWay;
+	private Double totalMotorWay;
 	
 	@Column(name="Trah_thattachment")
 	private Long attachment;
@@ -128,13 +128,7 @@ public class TravelHeader  implements Serializable {
 		this.company = company;
 	}
 
-	public Long getTotal() {
-		return total;
-	}
-
-	public void setTotal(Long total) {
-		this.total = total;
-	}
+	
 
 	public String getComName() {
 		return comName;
@@ -192,19 +186,31 @@ public class TravelHeader  implements Serializable {
 		this.remark = remark;
 	}
 
-	public Long getTotalExpenses() {
+	
+
+	
+
+	public Double getTotal() {
+		return total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
+	}
+
+	public Double getTotalExpenses() {
 		return totalExpenses;
 	}
 
-	public void setTotalExpenses(Long totalExpenses) {
+	public void setTotalExpenses(Double totalExpenses) {
 		this.totalExpenses = totalExpenses;
 	}
 
-	public Long getTotalMotorWay() {
+	public Double getTotalMotorWay() {
 		return totalMotorWay;
 	}
 
-	public void setTotalMotorWay(Long totalMotorWay) {
+	public void setTotalMotorWay(Double totalMotorWay) {
 		this.totalMotorWay = totalMotorWay;
 	}
 

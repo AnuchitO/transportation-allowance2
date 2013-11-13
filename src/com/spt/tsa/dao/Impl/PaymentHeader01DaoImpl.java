@@ -46,4 +46,8 @@ public class PaymentHeader01DaoImpl extends HibernateDaoSupport implements Payme
     public void saveFromPaymentDetail(PaymentDetail paymentDetail){
     	this.getHibernateTemplate().saveOrUpdate(paymentDetail);
     }
+    
+    public AccountAdmin findIdAccount(String domain){
+ 	   return this.getHibernateTemplate().get(AccountAdmin.class,domain);
+    }
 }

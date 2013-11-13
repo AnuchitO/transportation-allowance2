@@ -69,7 +69,7 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
     	traH.setNo(domain.getNo().toString());
     	traH.setEmployee(findEmployeeWhereId(domain.getId()));//3
     	traH.setCompany(findEmployeeWhereId(domain.getId()).getCompany());//4
-    	traH.setTotal(new Long(domain.getTatolPaymfullCase()));
+    	traH.setTotal(new Double(domain.getTatolPaymfullCase()));
     	traH.setComName(domain.getCompany());
     	traH.setAddress(domain.getAddress());
     	traH.setProvince(domain.getAntercedentA());
@@ -77,8 +77,8 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
     	traH.setTelephone(domain.getPhone());
     	traH.setStatus("002");
     	traH.setRemark("no");
-    	traH.setTotalExpenses(new Long(domain.getTatolPaym()));
-    	traH.setTotalMotorWay(new Long(domain.getTatolPaymA()));
+    	traH.setTotalExpenses(new Double(domain.getTatolPaym()));
+    	traH.setTotalMotorWay(new Double(domain.getTatolPaymA()));
     	traH.setAttachment(new Long(domain.getDocument()));
     	traH.setPaymDesc(domain.getForPay());
     	traH.setPayType(domain.getType1());

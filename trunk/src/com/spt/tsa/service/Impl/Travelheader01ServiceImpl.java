@@ -2,7 +2,10 @@ package com.spt.tsa.service.Impl;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Date;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,6 +82,25 @@ public class Travelheader01ServiceImpl implements TravelHeader01Service{
 
 	public void deleteTravelHeader(TravelHeader travelHeader) {
 		this.travelHeader01Dao.deleteTravelHeader(travelHeader);
+	}
+
+	public List<TravelHeader> findLikeYearAndStatus(Employee employee,String year, String status) { //Required Thai Year
+		String yearConCat = year;
+		List<TravelHeader> listTravelHeaders = null;
+		String from ="01/01/".concat(yearConCat);
+		String to = "31/12/".concat(yearConCat);		
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", new Locale("th", "th"));//Required Thai Year output English Year
+		Date yearStart = null;
+		Date yearEnd = null;
+		try{
+			yearStart = (Date) format.parse(from);//output English Year
+			yearEnd = (Date) format.parse(to);//output English Year
+		}catch (Exception ex){
+			
+		}
+		
+		listTravelHeaders =  this.travelHeader01Dao.findLikeYearAndStatus(employee,yearStart,yearEnd,status);
+		return listTravelHeaders;
 	}
 
 }

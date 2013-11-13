@@ -24,12 +24,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fission.web.view.extjs.grid.GridData;
 import com.spt.tsa.domain.SHI002Domain01;
+import com.spt.tsa.domain.SVD006Domain01;
 import com.spt.tsa.entity.Employee;
 import com.spt.tsa.entity.ParameterTable;
+import com.spt.tsa.entity.PaymentHeader;
 import com.spt.tsa.entity.TravelDetail;
 import com.spt.tsa.entity.TravelHeader;
 import com.spt.tsa.service.Employee01Service;
 import com.spt.tsa.service.ParameterTable01Service;
+import com.spt.tsa.service.PaymentHeader01Service;
 import com.spt.tsa.service.TravelDetail01Service;
 import com.spt.tsa.service.TravelHeader01Service;
 import com.spt.tsa.util.BeanUtils;
@@ -41,11 +44,14 @@ public class SHI002Controller {
 	private ParameterTable01Service parameterTable01Service;
 	private TravelHeader01Service travelHeader01Service;
 	private TravelDetail01Service travelDetail01Service;
+	private PaymentHeader01Service paymentHeader01Service;
 
 	private Employee  employees; 
 	private List<TravelHeader> listTravelHeader; 
 	private List<TravelDetail> listTravelDetail; 
 	private List<ParameterTable> listParameterTables;
+	private List<PaymentHeader> listPaymentHeaders;
+	
 	@Autowired
 	public void setParameterTable01Service(ParameterTable01Service parameterTable01Service) {
 		this.parameterTable01Service = parameterTable01Service;
@@ -66,7 +72,11 @@ public class SHI002Controller {
 		this.travelDetail01Service = travelDetail01Service;
 	}
 
-
+	@Autowired
+    public void setPaymentHeader01Service(PaymentHeader01Service paymentHeader01Service) {
+   	 this.paymentHeader01Service= paymentHeader01Service;
+    }
+	
 	@RequestMapping(value = "/SHI002.html", method = RequestMethod.GET)
 	public ModelAndView view(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -94,12 +104,23 @@ public class SHI002Controller {
 	}
 	
 	@RequestMapping(value = "/SHI002.html", method = RequestMethod.POST, params = "method=gridStore")
-	public void findGrid(HttpServletRequest request,HttpServletResponse response) {
+	public void findGrid(HttpServletRequest request,HttpServletResponse response,
+			@ModelAttribute SHI002Domain01 domain,
+			@RequestParam("empId") String empId,
+			@RequestParam("year") String yearQuery,
+			@RequestParam("status") String statusQuery) {
 		
-		///////////////////////////////
+		
+		////////////////////////////////
 		///EmpId pass by store request
-		//////////////////////////////
-		String EmpId = "EMp001";
+		///////////////////////////////
+		domain.setEmployeeId(empId);
+		domain.setYear(yearQuery);
+		domain.setStatus(statusQuery);
+		
+		
+		String EmpId = domain.getEmployeeId();
+		
 		try{ 
 			this.employees = this.employee01Service.findEmployeeByIdName(EmpId);
 			this.listTravelHeader = this.travelHeader01Service.findByEmpIdInTravelHeader(this.employees);
@@ -111,20 +132,35 @@ public class SHI002Controller {
 		GridData gridData = new GridData();
 		JSONObject jobect = null;
 		int i = 1;
-		for(TravelHeader th : this.listTravelHeader){
+		for(int  j = this.listTravelHeader.size()-1;j>=0;j--){
+			TravelHeader th = this.listTravelHeader.get(j);
 			 SimpleDateFormat simple_date = new SimpleDateFormat("dd/MM/yyyy", new Locale("th", "th"));
 			 jobect = new JSONObject();
 			 jobect.accumulate("no", i++);
 			 jobect.accumulate("docNo",th.getNo());
 			 jobect.accumulate("docDate",simple_date.format(th.getCreationate()));
 			 jobect.accumulate("sendDate", simple_date.format(th.getModifyDate()));
-			 jobect.accumulate("approve",simple_date.format(th.getModifyDate()));
+			 
+			 String status = " ";
 			 try {
 				 this.listParameterTables = this.parameterTable01Service.findRow("9", th.getStatus());
-				 jobect.accumulate("status",this.listParameterTables.get(0).getDetail());
+				 status = this.listParameterTables.get(0).getDetail();
 			 } catch (Exception e) {
 		
 			 }
+			 jobect.accumulate("status",status);
+			try {
+				this.listPaymentHeaders = this.paymentHeader01Service.findByTravelHeader(th);		
+				if(status.equals("Approved")){
+					jobect.accumulate("approve",simple_date.format(this.listPaymentHeaders.get(0).getModifyDate()));
+				}else{
+					jobect.accumulate("approve"," else ");
+				}
+			} catch (Exception e) {
+				jobect.accumulate("approve","-");
+			}
+			 
+			 
 			 
 			 jobect.accumulate("amount", th.getTotal());
 			 jobect.accumulate("remark", th.getRemark());
@@ -181,7 +217,8 @@ public class SHI002Controller {
 			@ModelAttribute SHI002Domain01 domain,
 			@RequestParam("code") String code) {
 		
-		domain.setCode(code);		
+		domain.setCode(code);
+
 		try{ 
 			this.listParameterTables = this.parameterTable01Service.findTable(domain.getCode());
 		}catch (Exception e){

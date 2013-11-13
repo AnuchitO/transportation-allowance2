@@ -6,6 +6,9 @@ public class SHI002Domain01 {
 	private String code;
 	
 	private String noDoc;
+	private String year;
+	private String status;
+	
 	public SHI002Domain01() {
 		// TODO Auto-generated constructor stub
 	}
@@ -41,6 +44,24 @@ public class SHI002Domain01 {
 	public void setNoDoc(String noDoc) {
 		this.noDoc = noDoc;
 	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
 	
 	
 }

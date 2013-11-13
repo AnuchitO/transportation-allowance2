@@ -127,5 +127,9 @@ public class PaymentHeader01ServiceImpl implements PaymentHeader01Service{
 		
     	
     }
+
+	public List<PaymentHeader> findByTravelHeader(TravelHeader travelHeader) {
+		return this.paymentHeader01Dao.findByTravelHeader(travelHeader);
+	}
     
 }

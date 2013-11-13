@@ -8,7 +8,7 @@ Ext.onReady(function() {SHI002.resumeForm = new Ext.form.FormPanel({
 				style : {
 					"margin-left" : "auto",
 					"margin-right" : "auto",
-					"margin-top" : "50px"
+					"margin-top" : "10px"
 				},
 				defaults : {
 					xtype : 'container',
@@ -35,8 +35,19 @@ Ext.onReady(function() {SHI002.resumeForm = new Ext.form.FormPanel({
 /////////////////////////////////////////
 //Function Handle All Event
 ////////////////////////////////////////
+
 	Ext.get('btnSearch').on('click',function(e) {
-		alert("AAAAA");
+		var yearQuery =  Ext.getCmp('comboYear').getValue();
+		var statusQuery =  Ext.getCmp('comboStatus').getValue();
+		if(yearQuery == ""){
+			yearQuery = "*";
+		}
+		
+		if(statusQuery == ""){
+			statusQuery = "*";
+		}
+//		alert("AAAAA "+yearQuery+ "  NNA "+statusQuery );
+		alert("DDD "+SHI002C.yearQuery + "SSSSS "+SHI002C.statusQuery );
 	});
 	
 	Ext.get('btnCreateBin').on('click',function(e) {

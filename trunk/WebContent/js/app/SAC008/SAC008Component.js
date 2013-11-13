@@ -1,35 +1,29 @@
 var SAC008C = {};
 
 SAC008C.gridStore = new Ext.data.JsonStore({
-//	baseParams : {
-//		method : 'gridStore'
-//	},
-//	url : '/TransportationAllowance/SHI002.html',
-//	method : 'POST',
-//	pageSize : 10,
-//	storeId : 'gridStore',
-//	root : 'records',
-//	idProperty : 'no',
-//	autoLoad : true,
-//	fields : [ {
-//		name : 'no'
-//	}, {
-//		name : 'docNo'
-//	}, {
-//		name : 'docDate'
-//	}, {
-//		name : 'sendDate'
-//	}, {
-//		name : 'approve'
-//	}, {
-//		name : 'status'
-//	}, {
-//		name : 'amount'
-//	}, {
-//		name : 'remark'
-//	} ],
-//	model : 'ForumThread',
-//	remoteSort : true
+	baseParams : {
+		method : 'gridDataStore'
+	},
+	url : '/TransportationAllowance/SAC008.html',
+	method : 'POST',
+	pageSize : 10,
+	storeId : 'gridStore',
+	root : 'records',
+	idProperty : 'no',
+	autoLoad : true,
+	fields : [ {
+		name : 'no'
+	}, {
+		name : 'accountId'
+	}, {
+		name : 'accountName'
+	}, {
+		name : 'debit'
+	}, {
+		name : 'credit'
+	}],
+	model : 'ForumThread',
+	remoteSort : true
 
 });
 
@@ -108,10 +102,12 @@ SAC008C.grid = new Ext.grid.GridPanel({
         		allowBlank: false
         	}, 
         	dataIndex: 'no'},
-        {header: "รหัสบัญชี", width: 20, sortable: true, dataIndex: 'docNo'},
-        {header: "ชื่อบัญชี", width: 20, sortable: true, dataIndex: 'docDate'},
-        {header: "เดบิต", width: 20, sortable: true, dataIndex: 'sendDate'},
-        {header: "เครดิต", width: 20, sortable: true,  dataIndex: 'approve'}        
+        {header: "รหัสบัญชี", width: 20, sortable: true, dataIndex: 'accountId',editor : new Ext.form.TextField({
+			id : 'accout',
+		})},
+        {header: "ชื่อบัญชี", width: 20, sortable: true, dataIndex: 'accountName'},
+        {header: "เดบิต", width: 20, sortable: true, dataIndex: 'debit'},
+        {header: "เครดิต", width: 20, sortable: true,  dataIndex: 'credit'}        
     ]),
     sm: SAC008C.sm2,
 
@@ -173,30 +169,42 @@ SAC008C.grid.SAC008CAddButton.on('click',function(e) {
 	Ext.Msg.alert('Information', 'อะไรสักอย่าง');
 });
 
+/////////////////////////////////
+//Event RemoveButton of grid
+////////////////////////////////
 SAC008C.grid.SAC008CRemoveButton.on('click',function(e) {
 	var rowSelected = Ext.getCmp('idGridSAC008C').getSelectionModel().getSelections();
-	Ext.MessageBox.confirm('Confirm', 'ยืนยัน "ลบ" ข้อมูลที่เลือก', function(btn) {
+	var param = {}; 
+		param.accountId = ""; 
+	Ext.MessageBox.confirm('Confirm','ยืนยัน "ลบ" ข้อมูลที่เลือก', function(btn) {
 		if (btn == 'yes') {
-			for ( var i in rowSelected) {
+			for(var i=0;i<rowSelected.length;i++) {
+				param.accountId += rowSelected[i].data.accountId+","; // concat accountId //
 				Ext.getCmp('idGridSAC008C').store.remove(rowSelected[i]);
-//				Ext.Msg.alert('Information', 'B');
 			}
-			Ext.Msg.alert('Information', 'ทำรายการสำเร็จ');
+			param.method = "gridRemoveData";
+			Ext.Ajax.request({
+				url : '/TransportationAllowance/SAC008.html',
+				params : param,
+				success : function(response, opts) {
+					if (param != null) {
+						Ext.Msg.alert('Information', 'ลบข้อมูล เรียบร้อยแล้ว');
+					} else {
+						Ext.Msg.alert('Information', 'Error');
+					}
+				},
+				failure : function(response, opts) {
+					Ext.Msg.alert('ERROR', 'Error.');
+				}
+			});
 		}
 	});
 });
 
+
+
 SAC008C.grid.SAC008CSaveButton.on('click',function(e) {
-	var rowSelected = Ext.getCmp('idGridSAC008C').getSelectionModel().getSelections();
-	Ext.MessageBox.confirm('Confirm', 'ข้อมูลถูกต้อง "บันทึก" รายการนี้', function(btn) {
-		if (btn == 'yes') {
-			for ( var i in rowSelected) {
-//				Ext.getCmp('idGrid').store.remove(rowSelected[i]);
-//				Ext.Msg.alert('Information', 'B');
-			}
-			Ext.Msg.alert('Information', 'ทำรายการสำเร็จ');
-		}
-	});
+	alert("SAVE");
 });
 
 

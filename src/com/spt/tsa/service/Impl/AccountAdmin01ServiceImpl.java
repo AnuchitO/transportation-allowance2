@@ -23,5 +23,19 @@ public class AccountAdmin01ServiceImpl implements AccountAdmin01Service{
    	 // TODO Auto-generated method stub
    	 return accountAdmin01Dao.findAccountAdmin();
     }
+
+    ////////////////////////
+    //Nong
+    ///////////////////////
+       
+	public List<AccountAdmin> findByAccountId(String acId) {
+		 return this.accountAdmin01Dao.findByAccountId(acId);
+	}
+
+	public void deleteByAccountId(AccountAdmin accountAdmin) {
+		this.accountAdmin01Dao.deleteByAccountId(accountAdmin);
+	}
+	 
+	////////End Nong//////
    
 }

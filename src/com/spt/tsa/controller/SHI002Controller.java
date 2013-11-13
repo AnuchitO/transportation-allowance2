@@ -207,7 +207,7 @@ public class SHI002Controller {
 	
 	
 	@RequestMapping(value = "/SHI002.html", method = RequestMethod.POST, params = "method=gridRemoveData")
-	public void save1(HttpServletRequest request, HttpServletResponse response,
+	public void gridRemoveData(HttpServletRequest request, HttpServletResponse response,
 	@ModelAttribute SHI002Domain01 domainSHI002,
 	@RequestParam("noDoc") String noDoc){
 		domainSHI002.setNoDoc(noDoc);

@@ -1,9 +1,9 @@
 package com.spt.tsa.domain;
 
 public class SVD006Domain01 extends SCF003Domain01 {
-	private Long totalPayExpresses;
-	private Long totalPayMotorWay;
-	private Long totalPayAll;
+	private Double totalPayExpresses;
+	private Double totalPayMotorWay;
+	private Double totalPayAll;
 	
 	private String payType;
 	private String reson;
@@ -18,29 +18,43 @@ public class SVD006Domain01 extends SCF003Domain01 {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Long getTotalPayExpresses() {
+	
+
+	public Double getTotalPayExpresses() {
 		return totalPayExpresses;
 	}
 
-	public void setTotalPayExpresses(Long totalPayExpresses) {
+
+
+	public void setTotalPayExpresses(Double totalPayExpresses) {
 		this.totalPayExpresses = totalPayExpresses;
 	}
 
-	public Long getTotalPayMotorWay() {
+
+
+	public Double getTotalPayMotorWay() {
 		return totalPayMotorWay;
 	}
 
-	public void setTotalPayMotorWay(Long totalPayMotorWay) {
+
+
+	public void setTotalPayMotorWay(Double totalPayMotorWay) {
 		this.totalPayMotorWay = totalPayMotorWay;
 	}
 
-	public Long getTotalPayAll() {
+
+
+	public Double getTotalPayAll() {
 		return totalPayAll;
 	}
 
-	public void setTotalPayAll(Long totalPayAll) {
+
+
+	public void setTotalPayAll(Double totalPayAll) {
 		this.totalPayAll = totalPayAll;
 	}
+
+
 
 	public String getTotalPayCharector() {
 		return totalPayCharector;

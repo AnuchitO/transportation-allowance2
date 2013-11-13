@@ -132,9 +132,9 @@ public class APP001Controller{
 		
 		for(TravelDetail c:gridRowList){				
 			logger.debug("++++++@@@@@@@@@@@@@@@@@+++++gridRowList++++++{}-------------{}",c.getNo(),c.getTravelHeader().getNo());
-			c.setTravelExpenses(new Long("1111"));
-			c.setMotorWay(new Long("22222"));
-			c.setTotalDay(new Long("33333"));
+			c.setTravelExpenses(new Double("1111"));
+			c.setMotorWay(new Double("22222"));
+			c.setTotalDay(new Double("33333"));
 			this.travelDetail01Service.saveTravelDetailCreateForm(c);
 		}
 		

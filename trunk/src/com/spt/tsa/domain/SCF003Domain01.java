@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class SCF003Domain01 {
 	/************* no and Date ****************/
+	String numberDocument;
 	String no;
 	String date;
 	String pack;
@@ -30,15 +31,15 @@ public class SCF003Domain01 {
 	String dataGridCustomer;
 	String dataGridRegion;
 	String dataGridGoal;
-	Long dataGridPaymentTravel;
-	Long dataGridPaymentD;
-	Long dataGridPayment;
+	String dataGridPaymentTravel;
+	String dataGridPaymentD;
+	String dataGridPayment;
 	String dataRemark;
 	
 	/************* Bottom ************/
-	Long tatolPaym;
-	Long tatolPaymA;
-	Long tatolPaymfullCase;
+	String tatolPaym;
+	String tatolPaymA;
+	String tatolPaymfullCase;
 	String tatolManey;
 	Long document;
 	String forPay;
@@ -59,6 +60,55 @@ public class SCF003Domain01 {
 	
 	
 	
+	public String getNumberDocument() {
+		return numberDocument;
+	}
+	public void setNumberDocument(String numberDocument) {
+		this.numberDocument = numberDocument;
+	}
+	public String getDataGridPaymentTravel() {
+		return dataGridPaymentTravel;
+	}
+	public void setDataGridPaymentTravel(String dataGridPaymentTravel) {
+		this.dataGridPaymentTravel = dataGridPaymentTravel;
+	}
+	public String getDataGridPaymentD() {
+		return dataGridPaymentD;
+	}
+	public void setDataGridPaymentD(String dataGridPaymentD) {
+		this.dataGridPaymentD = dataGridPaymentD;
+	}
+	public String getDataGridPayment() {
+		return dataGridPayment;
+	}
+	public void setDataGridPayment(String dataGridPayment) {
+		this.dataGridPayment = dataGridPayment;
+	}
+	public String getTatolPaym() {
+		return tatolPaym;
+	}
+	public void setTatolPaym(String tatolPaym) {
+		this.tatolPaym = tatolPaym;
+	}
+	public String getTatolPaymA() {
+		return tatolPaymA;
+	}
+	public void setTatolPaymA(String tatolPaymA) {
+		this.tatolPaymA = tatolPaymA;
+	}
+	public String getTatolPaymfullCase() {
+		return tatolPaymfullCase;
+	}
+	public void setTatolPaymfullCase(String tatolPaymfullCase) {
+		this.tatolPaymfullCase = tatolPaymfullCase;
+	}
+	
+	public Long getDocument() {
+		return document;
+	}
+	public void setDocument(Long document) {
+		this.document = document;
+	}
 	public String getMinMaxDate() {
 		return minMaxDate;
 	}
@@ -119,54 +169,15 @@ public class SCF003Domain01 {
 	public void setDataGridData(Date dataGridData) {
 		this.dataGridData = dataGridData;
 	}
-	public Long getDataGridPaymentTravel() {
-		return dataGridPaymentTravel;
-	}
-	public void setDataGridPaymentTravel(Long dataGridPaymentTravel) {
-		this.dataGridPaymentTravel = dataGridPaymentTravel;
-	}
-	public Long getDataGridPaymentD() {
-		return dataGridPaymentD;
-	}
-	public void setDataGridPaymentD(Long dataGridPaymentD) {
-		this.dataGridPaymentD = dataGridPaymentD;
-	}
-	public Long getDataGridPayment() {
-		return dataGridPayment;
-	}
-	public void setDataGridPayment(Long dataGridPayment) {
-		this.dataGridPayment = dataGridPayment;
-	}
-	public Long getTatolPaym() {
-		return tatolPaym;
-	}
-	public void setTatolPaym(Long tatolPaym) {
-		this.tatolPaym = tatolPaym;
-	}
-	public Long getTatolPaymA() {
-		return tatolPaymA;
-	}
-	public void setTatolPaymA(Long tatolPaymA) {
-		this.tatolPaymA = tatolPaymA;
-	}
-	public Long getTatolPaymfullCase() {
-		return tatolPaymfullCase;
-	}
-	public void setTatolPaymfullCase(Long tatolPaymfullCase) {
-		this.tatolPaymfullCase = tatolPaymfullCase;
-	}
+	
+
 	public String getTatolManey() {
 		return tatolManey;
 	}
 	public void setTatolManey(String tatolManey) {
 		this.tatolManey = tatolManey;
 	}
-	public Long getDocument() {
-		return document;
-	}
-	public void setDocument(Long document) {
-		this.document = document;
-	}
+	
 	public String getForPay() {
 		return forPay;
 	}

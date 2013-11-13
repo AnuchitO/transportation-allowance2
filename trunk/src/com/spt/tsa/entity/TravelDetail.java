@@ -36,13 +36,13 @@ public class TravelDetail implements Serializable {
 	private String to;
 	
 	@Column(name="Trad_tdtravelexpenses")
-	private Long travelExpenses;
+	private Double travelExpenses;
 	
 	@Column(name="Trad_tdmotorway")
-	private Long motorWay;
+	private Double motorWay;
 	
 	@Column(name="Trad_tdtotalday")
-	private Long totalDay;
+	private Double totalDay;
 	
 	@Column(name="Trad_tdremark")
 	private String remark;
@@ -111,27 +111,29 @@ public class TravelDetail implements Serializable {
 		this.to = to;
 	}
 
-	public Long getTravelExpenses() {
+
+
+	public Double getTravelExpenses() {
 		return travelExpenses;
 	}
 
-	public void setTravelExpenses(Long travelExpenses) {
+	public void setTravelExpenses(Double travelExpenses) {
 		this.travelExpenses = travelExpenses;
 	}
 
-	public Long getMotorWay() {
+	public Double getMotorWay() {
 		return motorWay;
 	}
 
-	public void setMotorWay(Long motorWay) {
+	public void setMotorWay(Double motorWay) {
 		this.motorWay = motorWay;
 	}
 
-	public Long getTotalDay() {
+	public Double getTotalDay() {
 		return totalDay;
 	}
 
-	public void setTotalDay(Long totalDay) {
+	public void setTotalDay(Double totalDay) {
 		this.totalDay = totalDay;
 	}
 

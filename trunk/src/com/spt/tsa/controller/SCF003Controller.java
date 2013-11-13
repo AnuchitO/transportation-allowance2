@@ -109,12 +109,12 @@ public class SCF003Controller {
 		
 		
 		Map<String, Object> model = new HashMap<String, Object>();
-		Employee resultsEmp = this.employee01Service.findEmployeeWhereId(empId);
+		Employee resultsEmp = this.employee01Service.findEmployeeWhereId("EMp001");
 		System.out.println("view 2");
-		List<String> resu = this.employee01Service.findBankWhereEmp(empId);
-		List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp(empId);
-		List<String> resultsDept = this.employee01Service.findDeptWhereEmp(empId);
-		List<String> resultsProvince = this.employee01Service.findProvinceEmp(empId);
+		List<String> resu = this.employee01Service.findBankWhereEmp("EMp001");
+		List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp("EMp001");
+		List<String> resultsDept = this.employee01Service.findDeptWhereEmp("EMp001");
+		List<String> resultsProvince = this.employee01Service.findProvinceEmp("EMp001");
 		Date date = new Date();
 		SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
 		SCF003Domain01 domain = new SCF003Domain01();
@@ -305,6 +305,8 @@ public class SCF003Controller {
 	@ModelAttribute SCF003Domain01 domain,
 
 	@RequestParam("no") String no, @RequestParam("date") String date,
+	
+			@RequestParam("numberDocument") String numberDocument,
 			@RequestParam("name") String name, @RequestParam("id") String id,
 			@RequestParam("company") String company,
 			@RequestParam("antecedent") String antecedent,
@@ -312,9 +314,9 @@ public class SCF003Controller {
 			@RequestParam("antercedentA") String antercedentA,
 			@RequestParam("phone") String phone,
 			@RequestParam("email") String email,
-			@RequestParam("tatolPaym") Long tatolPaym,
-			@RequestParam("tatolPaymA") Long tatolPaymA,
-			@RequestParam("tatolPaymfullCase") Long tatolPaymfullCase,
+			@RequestParam("tatolPaym") String tatolPaym,
+			@RequestParam("tatolPaymA") String tatolPaymA,
+			@RequestParam("tatolPaymfullCase") String tatolPaymfullCase,
 			@RequestParam("tatolManey") String tatolManey,
 			@RequestParam("document") Long document,
 			@RequestParam("forPay") String forPay,
@@ -330,6 +332,7 @@ public class SCF003Controller {
 	) throws Exception {
 
 		try {
+			domain.setNumberDocument(numberDocument);
 			domain.setNo(no);
 			domain.setDate(date);
 			domain.setName(name);
@@ -346,6 +349,9 @@ public class SCF003Controller {
 			domain.setTatolPaymfullCase(tatolPaymfullCase);
 
 			domain.setTatolManey(tatolManey);
+			if(document == null){
+				document = 0L;
+			}
 			domain.setDocument(document);
 			domain.setForPay(forPay);
 			domain.setBank(bank);
@@ -356,25 +362,37 @@ public class SCF003Controller {
 			domain.setType2(type2);
 			domain.setPack(pack);
 			domain.setStatus(status);
+			logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}------------------------------------",document);
 
 			// this.travelHeader01Service.save(domain);
 			// this.travelHeader01Service.save2();
 
 			TravelHeader travelHeader = null;
 			List<TravelHeader> getObjectByDocNo = this.travelHeader01Service
-					.findByDocNoForSaveOrUpdate(domain.getNo());
+					.findByDocNoForSaveOrUpdate(domain.getNumberDocument());
 			if (getObjectByDocNo.size() != 0) {
 				travelHeader = getObjectByDocNo.get(0);
 			} else {
 				travelHeader = new TravelHeader();
 				travelHeader.settHeadId("1");
 			}
-			travelHeader.setNo(domain.getNo());
+			
+			List<TravelHeader> lastNoDocList = this.travelHeader01Service.findTravelHanderGetLastNoDoc();
+			
+			String numberDoc = " ";
+			if ((lastNoDocList.size() != 0)) {
+				logger.debug("!!!!!!!!!!!!  {}",lastNoDocList.get(0).getNo());
+				numberDoc = new RunNumberDocument(lastNoDocList.get(0).getNo()).generatNumberDocumentV2();
+				logger.debug("!!!!!!!!!!!!!  {}",numberDoc);
+			}else{
+			}
+			
+			travelHeader.setNo(domain.getNumberDocument());
 			travelHeader.setEmployee(this.employee01Service
 					.findEmployeeByIdName(domain.getId()));
 			travelHeader.setCompany(this.employee01Service
 					.findEmployeeByIdName(domain.getId()).getCompany());
-			travelHeader.setTotal(new Long(domain.getTatolPaymfullCase()));
+			travelHeader.setTotal(new Double(domain.getTatolPaymfullCase()));
 			travelHeader.setComName(domain.getCompany());
 			travelHeader.setAddress(domain.getAddress());
 			travelHeader.setProvince(domain.getAntercedentA());
@@ -386,9 +404,11 @@ public class SCF003Controller {
 				travelHeader.setStatus("002");
 			}
 			travelHeader.setRemark("no");
-			travelHeader.setTotalExpenses(new Long(domain.getTatolPaym()));
-			travelHeader.setTotalMotorWay(new Long(domain.getTatolPaymA()));
+			travelHeader.setTotalExpenses(new Double(domain.getTatolPaym()));
+			travelHeader.setTotalMotorWay(new Double(domain.getTatolPaymA()));
+			
 			travelHeader.setAttachment(new Long(domain.getDocument()));
+		
 			travelHeader.setPaymDesc(domain.getForPay());
 			if (domain.getType1().equals("true")) {
 				travelHeader.setPayType("1");
@@ -412,7 +432,7 @@ public class SCF003Controller {
 
 				TravelDetail travelDetail = null;
 				TravelHeader travelHeaderForDetail = this.travelHeader01Service
-						.findByDocNoForSaveOrUpdate(domain.getNo()).get(0);
+						.findByDocNoForSaveOrUpdate(domain.getNumberDocument()).get(0);
 				List<TravelDetail> gridRowList = this.travelDetail01Service
 						.findRowOfGridForUpdateRow(travelHeaderForDetail,
 								gridRowContent[0]);
@@ -494,15 +514,15 @@ public class SCF003Controller {
 				// ********************* format complete ********************//
 
 				// travelDetail.setDate(dateGridRow);
-
+				logger.debug("@@@@@@@@@@@@@@@@@@@@@@@---------------------------{}-----------{}",gridRowContent[6],gridRowContent[7]);
 				travelDetail.setDate(datett);
 				travelDetail.setCustomer(this.customer01Service.findByName(
 						gridRowContent[2]).get(0));
 				travelDetail.setFrom(gridRowContent[3]);
 				travelDetail.setTo(gridRowContent[4]);
-				travelDetail.setTravelExpenses(new Long(gridRowContent[5]));
-				travelDetail.setMotorWay(new Long(gridRowContent[6]));
-				travelDetail.setTotalDay(new Long(gridRowContent[7]));
+				travelDetail.setTravelExpenses(new Double(gridRowContent[5]));
+				travelDetail.setMotorWay(new Double(gridRowContent[6]));
+				travelDetail.setTotalDay(new Double(gridRowContent[7]));
 				travelDetail.setRemark(gridRowContent[8]);
 				travelDetail.setUserCreation(domain.getName());
 				travelDetail.setUserUpdate(domain.getName());

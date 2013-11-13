@@ -85,9 +85,9 @@ public class TravelDetail01DaoImpl extends HibernateDaoSupport implements Travel
 			
 			traD.setFrom("AAA");//5
 			traD.setTo("AAAAAAA");//6
-			traD.setTravelExpenses(111L);//7
-			traD.setMotorWay(222L);//8
-			traD.setTotalDay(333L);//9
+			traD.setTravelExpenses(111.00);//7
+			traD.setMotorWay(222.00);//8
+			traD.setTotalDay(333.00);//9
 			traD.setRemark("no");//10
 			traD.setUserCreation("sada");//11
 			traD.setUserUpdate("fsdfsda");//12

@@ -36,6 +36,10 @@ public class PaymentHeader01ServiceImpl implements PaymentHeader01Service{
     	return paymentHeader01Dao.findPaymentNo(domain);
     }
     
+    public AccountAdmin findIdAccount(String domain){
+    	return paymentHeader01Dao.findIdAccount(domain);
+    }
+    
     public void saveFromPaymentHeader(SCP007Domain01 domain){
     	try {
     		
@@ -99,6 +103,17 @@ public class PaymentHeader01ServiceImpl implements PaymentHeader01Service{
 			System.out.println(dataRow[3]);
 			System.out.println(dataRow[4]);
 			System.out.println(dataRow[5]);
+			AccountAdmin idAccount = this.paymentHeader01Dao.findIdAccount(dataRow[0]);
+			paymentDetail.setAccountAdmin(idAccount);
+			paymentDetail.setDepartment(dataRow[3]);
+			paymentDetail.setDebit(new Long(dataRow[4]));
+			paymentDetail.setCredit(new Long(dataRow[5]));
+			paymentDetail.setUserCreation("testUserCreation");
+			paymentDetail.setUserUpdate("testUserUpdate");
+			paymentDetail.setCreationDate(datettCreate);
+			paymentDetail.setModifyDate(new Date());
+			paymentDetail.setNo(dataRow[0]);
+			this.paymentHeader01Dao.saveFromPaymentDetail(paymentDetail);
 			
 		}
 		

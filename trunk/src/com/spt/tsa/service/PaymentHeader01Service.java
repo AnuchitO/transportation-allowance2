@@ -8,5 +8,6 @@ public interface PaymentHeader01Service {
 	 public List<TravelHeader> findTravelHWhereId(String domain);
 	 public List<PaymentHeader> findPaymentNo(String domain);
 	 public void saveFromPaymentHeader(SCP007Domain01 domain);
+	 public AccountAdmin findIdAccount(String domain);
 
 }

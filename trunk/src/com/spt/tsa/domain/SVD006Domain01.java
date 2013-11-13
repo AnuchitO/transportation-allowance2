@@ -7,6 +7,10 @@ public class SVD006Domain01 extends SCF003Domain01 {
 	
 	private String payType;
 	private String reson;
+	private String headerCompName;
+	private String headerCompAddress;
+	private String headerCompTell;
+	private String headerCompFax;
 	
 	private String totalPayCharector;
 	
@@ -62,5 +66,38 @@ public class SVD006Domain01 extends SCF003Domain01 {
 		this.reson = reson;
 	}
 
+	public String getHeaderCompName() {
+		return headerCompName;
+	}
+
+	public void setHeaderCompName(String headerCompName) {
+		this.headerCompName = headerCompName;
+	}
+
+	public String getHeaderCompAddress() {
+		return headerCompAddress;
+	}
+
+	public void setHeaderCompAddress(String headerCompAddress) {
+		this.headerCompAddress = headerCompAddress;
+	}
+
+	public String getHeaderCompTell() {
+		return headerCompTell;
+	}
+
+	public void setHeaderCompTell(String headerCompTell) {
+		this.headerCompTell = headerCompTell;
+	}
+
+	public String getHeaderCompFax() {
+		return headerCompFax;
+	}
+
+	public void setHeaderCompFax(String headerCompFax) {
+		this.headerCompFax = headerCompFax;
+	}
+	
+	
 	
 }

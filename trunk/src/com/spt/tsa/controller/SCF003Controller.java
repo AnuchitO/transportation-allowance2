@@ -14,6 +14,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.xmlbeans.impl.regex.REUtil;
+import org.hibernate.classic.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.tuxilla.BahtText;
 
+import com.fission.web.view.extjs.data.Data;
 import com.fission.web.view.extjs.grid.GridData;
 import com.spt.tsa.controller.datasource.RunNumberDocument;
 import com.spt.tsa.dao.ParameterTableDao;
@@ -330,9 +332,41 @@ public class SCF003Controller {
 			@RequestParam("status") String status
 
 	) throws Exception {
+		
 
 		try {
-			domain.setNumberDocument(numberDocument);
+		
+			
+			List<TravelHeader> lastNoDocList = this.travelHeader01Service.findTravelHanderGetLastNoDoc();
+			
+			String numberDoc = " ";
+			if ((lastNoDocList.size() != 0)) {
+				logger.debug("!!!!!!!!!!!!  {}",lastNoDocList.get(0).getNo());
+				numberDoc = new RunNumberDocument(lastNoDocList.get(0).getNo()).generatNumberDocumentV2();
+				logger.debug("!!!!!!!!!!!!!  {}",numberDoc);
+			}else{
+			}
+			
+			if(numberDocument.equals("AUTO")){
+				domain.setNumberDocument(numberDoc);
+			
+				Data data = new Data();
+				Map<String, Object> maps = new HashMap<String, Object>();
+				maps.put("numberDoc", numberDoc);
+				data.setData(maps);
+				data.responseJson(response);
+				
+			}
+			
+			else{
+				domain.setNumberDocument(numberDocument);
+				Data data = new Data();
+				Map<String, Object> maps = new HashMap<String, Object>();
+				maps.put("numberDoc", numberDocument);
+				data.setData(maps);
+				data.responseJson(response);
+			}
+		
 			domain.setNo(no);
 			domain.setDate(date);
 			domain.setName(name);
@@ -362,10 +396,9 @@ public class SCF003Controller {
 			domain.setType2(type2);
 			domain.setPack(pack);
 			domain.setStatus(status);
+			
 			logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}------------------------------------",document);
 
-			// this.travelHeader01Service.save(domain);
-			// this.travelHeader01Service.save2();
 
 			TravelHeader travelHeader = null;
 			List<TravelHeader> getObjectByDocNo = this.travelHeader01Service
@@ -377,15 +410,7 @@ public class SCF003Controller {
 				travelHeader.settHeadId("1");
 			}
 			
-			List<TravelHeader> lastNoDocList = this.travelHeader01Service.findTravelHanderGetLastNoDoc();
 			
-			String numberDoc = " ";
-			if ((lastNoDocList.size() != 0)) {
-				logger.debug("!!!!!!!!!!!!  {}",lastNoDocList.get(0).getNo());
-				numberDoc = new RunNumberDocument(lastNoDocList.get(0).getNo()).generatNumberDocumentV2();
-				logger.debug("!!!!!!!!!!!!!  {}",numberDoc);
-			}else{
-			}
 			
 			travelHeader.setNo(domain.getNumberDocument());
 			travelHeader.setEmployee(this.employee01Service
@@ -446,20 +471,7 @@ public class SCF003Controller {
 
 				travelDetail.setNo(gridRowContent[0]);
 				travelDetail.setTravelHeader(travelHeaderForDetail);
-				// Convert year
-				// SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				// String time = sdf.format(gridRowContent[1]);
-				// String[] thaiFormatSplit = time.split("/");
-				// Integer year = Integer.parseInt(thaiFormatSplit[2]);
-				// year-=543;
-				// System.out.println(year);
-				// Date dateGridRow =
-				// sdf.parse(thaiFormatSplit[0]+"/"+thaiFormatSplit[1]+"/"+year);
-				//
-				// //End Convert year
-
-				// ********************** format Date in Grid
-				// **************************//
+				
 				String mount = "";
 				String time = gridRowContent[1];
 				String[] thaiFormatSplitCreate = time.split(" ");
@@ -506,14 +518,11 @@ public class SCF003Controller {
 
 				String datet = thaiFormatSplitCreate[2] + "/" + mount + "/"
 						+ year;
-				// System.out.println(date);
+				
 				DateFormat formatter = new SimpleDateFormat("dd/MM/yy");
 
 				Date datett = formatter.parse(datet);
-				// System.out.println(datet);
-				// ********************* format complete ********************//
-
-				// travelDetail.setDate(dateGridRow);
+				
 				logger.debug("@@@@@@@@@@@@@@@@@@@@@@@---------------------------{}-----------{}",gridRowContent[6],gridRowContent[7]);
 				travelDetail.setDate(datett);
 				travelDetail.setCustomer(this.customer01Service.findByName(
@@ -527,28 +536,30 @@ public class SCF003Controller {
 				travelDetail.setUserCreation(domain.getName());
 				travelDetail.setUserUpdate(domain.getName());
 
-				// /Convert year
+			
 				SimpleDateFormat sdfCreate = new SimpleDateFormat("dd/MM/yyyy");
 				String[] thaiFormatSplitCreatetion = domain.getDate()
 						.split("/");
 				Integer yearCreate = Integer
 						.parseInt(thaiFormatSplitCreatetion[2]);
-//				yearCreate -= 543;
+
 				Date dateCreate = sdfCreate
 						.parse(thaiFormatSplitCreatetion[0] + "/"
 								+ thaiFormatSplitCreatetion[1] + "/"
 								+ yearCreate);
-				// End Convert year
+		
 				travelDetail.setCreationDate(dateCreate);
 				travelDetail.setModifyDate(new Date());
 				this.travelDetail01Service
 						.saveTravelDetailCreateForm(travelDetail);
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
-
+		
+		
 	}
 
 	@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=save3")

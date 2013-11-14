@@ -1020,7 +1020,9 @@ SCF003.groupHeaderPlugins = new Ext.ux.plugins.GroupHeaderGrid({
 
 SCF003.gridStrore = new Ext.data.JsonStore({
 	baseParams : {
-		method : 'gridData'
+		method : 'gridData',
+		empId  : "-",
+		noDoc  : "-"
 	},
 	url : '/TransportationAllowance/SCF003.html',
 	method : 'POST',
@@ -1541,11 +1543,67 @@ Ext
 						}
 					});
 			
+			SCF003.No.setValue(SCF01Domain.no);
+			var statusPass = SCF01Domain.status;
+			if(SCF01Domain.no != "AUTO"){
+				SCF003.tatolPaym.setValue(SCF01Domain.tatolPaym);
+				SCF003.tatolPaymA.setValue(SCF01Domain.tatolPaymA);
+				SCF003.tatolPaymfullCase.setValue(SCF01Domain.tatolPaymfullCase);
+				SCF003.document.setValue(SCF01Domain.document);
+				SCF003.forPay.setValue(SCF01Domain.forPay);
+				SCF003.totalManey.setValue(SCF01Domain.charactorNumber);
+				var checkAuto = parseFloat(SCF01Domain.tatolPaymfullCase);
+				if(checkAuto <= 1500){
+					Ext.getDom('type1').checked = true;
+					Ext.getDom('type2').checked = false;
+				}
+				else{
+					Ext.getDom('type2').checked = true;
+					Ext.getDom('type1').checked = false;
+				}
+				if(statusPass == "Submitted" || statusPass == "Approved"){
+					Ext.getCmp('company').setReadOnly(true);
+					Ext.getCmp('company').setDisabled(true);
+					Ext.get('company').setStyle('background', '#FFFACD');
+					Ext.getCmp('antecedent').setReadOnly(true);
+					Ext.getCmp('antecedent').setDisabled(true);
+					Ext.get('antecedent').setStyle('background', '#FFFACD');
+					Ext.getCmp('address').setReadOnly(true);
+					Ext.getCmp('address').setDisabled(true);
+					Ext.get('address').setStyle('background', '#FFFACD');
+					Ext.getCmp('antercedentA').setReadOnly(true);
+					Ext.getCmp('antercedentA').setDisabled(true);
+					Ext.get('antercedentA').setStyle('background', '#FFFACD');
+					Ext.getCmp('phone').setReadOnly(true);
+					Ext.getCmp('phone').setDisabled(true);
+					Ext.get('phone').setStyle('background', '#FFFACD');
+					Ext.getCmp('email').setReadOnly(true);
+					Ext.getCmp('email').setDisabled(true);
+					Ext.get('email').setStyle('background', '#FFFACD');
+					Ext.getCmp('gridEducationInfomation').setDisabled(true);
+				
+					Ext.getCmp('document').setReadOnly(true);
+					Ext.getCmp('document').setDisabled(true);
+					Ext.get('document').setStyle('background', '#FFFACD');
+					Ext.getCmp('forPay').setReadOnly(true);
+					Ext.getCmp('forPay').setDisabled(true);
+					Ext.get('forPay').setStyle('background', '#FFFACD');
+					Ext.getCmp('submit').disable();
+					Ext.getCmp('print').enable();
+				}
+				
+				SCF003.createGrid.store.reload( //  reload grid store when click search button
+		                {   
+		                   params:{	method : 'gridData',
+		       						empId  : SCF01Domain.id,
+		       						noDoc  : SCF01Domain.no}
+		                  });
+			}else{
+				SCF003.tatolPaym.setValue(0.00);
+				SCF003.tatolPaymA.setValue(0.00);
+				SCF003.tatolPaymfullCase.setValue(0.00);
+			}
+
 			
-			
-			SCF003.No.setValue("AUTO");
-			SCF003.tatolPaym.setValue(0.00);
-			SCF003.tatolPaymA.setValue(0.00);
-			SCF003.tatolPaymfullCase.setValue(0.00);
 
 });

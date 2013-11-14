@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +33,7 @@ import com.fission.web.view.extjs.grid.GridData;
 import com.spt.tsa.controller.datasource.RunNumberDocument;
 import com.spt.tsa.dao.ParameterTableDao;
 import com.spt.tsa.domain.SCF003Domain01;
+import com.spt.tsa.domain.SHI002Domain01;
 import com.spt.tsa.entity.Company;
 import com.spt.tsa.entity.Customer;
 import com.spt.tsa.entity.Employee;
@@ -89,21 +91,26 @@ public class SCF003Controller {
 	public ModelAndView view(HttpServletRequest request,
 			HttpServletResponse response) {
 		
-		String empId = null;
+		String empId = " ";
 		if(request.getParameter("empId")==null){
-			logger.debug("pagepppppppppppPPPPPPPPPPPPPPPPPPPPppppppppp  IF  pppppppppppppppppppppppppppppppp");
+			
 		}else{
 			empId = request.getParameter("empId").toString();
-			logger.debug("pagepppppppppppPPPPPPPPPPPPPPPPPPPPppppppppp  {} pppppppppppppppppppppppppppppppp",empId);
 		}
 		////////////////////////////////////////////////////////
 		//Nong getParameter From SHI002 page
 		///////////////////////////////////////////////////////
-		String noDoc = "noDoc";
+		String noDoc = "AUTO";
 		if(request.getParameter("noDoc") == null){
-		
+			noDoc = "AUTO";
 		}else{
 			noDoc = request.getParameter("noDoc");
+		}
+		String status = "-";
+		if(request.getParameter("status") == null){
+
+		}else{
+			status = request.getParameter("status");
 		}
 		
 		/////// End Nong getParameter From SHI002 page ///////
@@ -111,25 +118,31 @@ public class SCF003Controller {
 		
 		
 		Map<String, Object> model = new HashMap<String, Object>();
-		Employee resultsEmp = this.employee01Service.findEmployeeWhereId("EMp001");
+		Employee resultsEmp = this.employee01Service.findEmployeeWhereId(empId);
 		System.out.println("view 2");
-		List<String> resu = this.employee01Service.findBankWhereEmp("EMp001");
-		List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp("EMp001");
-		List<String> resultsDept = this.employee01Service.findDeptWhereEmp("EMp001");
-		List<String> resultsProvince = this.employee01Service.findProvinceEmp("EMp001");
+		List<String> resu = this.employee01Service.findBankWhereEmp(empId);
+		List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp(empId);
+		List<String> resultsDept = this.employee01Service.findDeptWhereEmp(empId);
+		List<String> resultsProvince = this.employee01Service.findProvinceEmp(empId);
 		Date date = new Date();
 		SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
 		SCF003Domain01 domain = new SCF003Domain01();
-		List<TravelHeader> lastNoDocList = this.travelHeader01Service.findTravelHanderGetLastNoDoc();
 		
-		String numberDoc = " ";
-		if ((lastNoDocList.size() != 0)) {
-			logger.debug("!!!!!!!!!!!!  {}",lastNoDocList.get(0).getNo());
-			numberDoc = new RunNumberDocument(lastNoDocList.get(0).getNo()).generatNumberDocumentV2();
-			logger.debug("!!!!!!!!!!!!!  {}",numberDoc);
-		}else{
+		try {
+			List<TravelHeader> lastNoDocList = this.travelHeader01Service.findByDocNoForSaveOrUpdate(noDoc);
+			TravelHeader travelHeader = lastNoDocList.get(0);
+			domain.setStatus(status);
+			domain.setTatolPaym(travelHeader.getTotalExpenses().toString());
+			domain.setTatolPaymA(travelHeader.getTotalMotorWay().toString());
+			domain.setTatolPaymfullCase(travelHeader.getTotal().toString());
+			domain.setDocument(travelHeader.getAttachment());
+			domain.setForPay(travelHeader.getPaymDesc());
+			domain.setCharactorNumber(new BahtText(travelHeader.getTotal().toString()).toString());
+		} catch (Exception e) {
+
 		}
-		domain.setNo(numberDoc);
+		
+		domain.setNo(noDoc);
 		domain.setDate(ft.format(date));
 		domain.setName(resultsEmp.getName());
 		domain.setId(resultsEmp.getEmpId());
@@ -143,31 +156,14 @@ public class SCF003Controller {
 		domain.setAntecedent(resultsDept.get(0));
 		domain.setAntercedentA(resultsProvince.get(0));
 		// ************* set value Button *****************//
-
-		// domain.setTatolManey(new BahtText(arg0).totalPayment);
+			
+		
 		domain.setBank(resu.get(0));
 		domain.setBranch(resultsEmp.getBranch());
 		domain.setAccountNumber(resultsEmp.getAccountNo());
 		domain.setTypeAccount(resultsBranch.get(0));
-		// domain.setName("ffasfds");
-		// domain.setId("fdsaf");
-		// domain.setCompany("fdsfsdfs");
-		// domain.setAddress("fdsfa");
-		// domain.setPhone("fsdf");
-		// domain.setEmail("fsdfa");
-		Employee teeeeeee = this.travelHeader01Service
-				.findEmployeeWhereId(domain.getId());
-		Company commmmm = this.travelHeader01Service
-				.findCompanyWhereId(resultsEmp.getCompany().getComId());
-
-		logger.debug("+++++++------------+{}------", teeeeeee.getAddress());
-		logger.debug("+++++++------------+{}------", commmmm.getComId());
-
-		logger.debug("+++++++++++++++++++++{}--------------------", resu.get(0));
-		logger.debug("+++++++++++++++++++++{}--------------------",
-				domain.getName());
-		model.put("scf003", JSONObject.fromObject(BeanUtils.beanToMap(domain))
-				.toString());
+		
+		model.put("scf003", JSONObject.fromObject(BeanUtils.beanToMap(domain)).toString());
 
 		return new ModelAndView("SCF003", model);
 
@@ -250,10 +246,46 @@ public class SCF003Controller {
 
 	@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=gridData")
 	public void findGrid(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,
+			@ModelAttribute SCF003Domain01 domain,
+			@RequestParam("empId") String empIdPass,
+			@RequestParam("noDoc") String noDocPass) {
 
 		JSONArray jsonArray = new JSONArray();
-		GridData gridData = new GridData();
+		GridData gridData = new GridData(); 
+		JSONObject jobect = null;
+		//////////////////////
+		//Nong
+		/////////////////////
+		if(!(noDocPass.equals("-"))){
+			domain.setNo(noDocPass);
+			domain.setId(empIdPass);
+			List<TravelHeader> travelHeaders = null;
+			List<TravelDetail> travelDetails = null;
+			
+			try {
+				 travelHeaders = this.travelHeader01Service.findByDocNoForSaveOrUpdate(domain.getNo());
+				 travelDetails = this.travelDetail01Service.findByTravelHeader(travelHeaders.get(0));			
+			} catch (Exception e) {
+				
+			}
+			for(TravelDetail td : travelDetails){
+				 jobect = new JSONObject();
+				 jobect.accumulate("no", td.getNo());
+				 SimpleDateFormat simple_date = new SimpleDateFormat("dd/MM/yyyy", new Locale("th", "th"));
+				 jobect.accumulate("gridDate", simple_date.format(td.getDate()));
+				 jobect.accumulate("customer", td.getCustomer().getName());
+				 jobect.accumulate("region", td.getFrom());
+				 jobect.accumulate("goal", td.getTo());
+				 jobect.accumulate("paymentTravel", td.getTravelExpenses());
+				 jobect.accumulate("paymentD", td.getMotorWay());
+				 jobect.accumulate("payment", td.getTotalDay());
+				 jobect.accumulate("remark", td.getRemark());
+				 jsonArray.add(jobect);
+			}
+		}
+		/////// End Nong ////
+
 
 		// JSONObject jobect1 = new JSONObject();
 		// jobect1.accumulate("no", "01");

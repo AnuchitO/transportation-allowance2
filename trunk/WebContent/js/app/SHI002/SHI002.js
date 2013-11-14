@@ -39,15 +39,35 @@ Ext.onReady(function() {SHI002.resumeForm = new Ext.form.FormPanel({
 	Ext.get('btnSearch').on('click',function(e) {
 		var yearQuery =  Ext.getCmp('comboYear').getValue();
 		var statusQuery =  Ext.getCmp('comboStatus').getValue();
-		if(yearQuery == ""){
-			yearQuery = "*";
+		var empId = Ext.getCmp('employeeId').getValue();
+		var confirmMessage = "ค้นหาเอกสาร";
+		var statusLastValue = Ext.getCmp('comboStatus').lastSelectionText;
+		if( yearQuery != ""  && statusQuery != ""){
+			confirmMessage += " ของปี "+yearQuery+" สถานะ "+statusLastValue;
+		}else if(yearQuery == "" && statusQuery != "" ){
+			yearQuery = "%";
+			confirmMessage += "ที่สถานะเป็น "+statusLastValue+" ทั้งหมด" ;
+		}else if(yearQuery != "" && statusQuery == ""){
+			statusQuery = "%";
+			confirmMessage += "ทั้งหมด ของปี "+yearQuery;
+		}else{
+			yearQuery = "%";
+			statusQuery = "%";
+			confirmMessage = "ค้นหาเอกสารทั้งหมด";
 		}
-		
-		if(statusQuery == ""){
-			statusQuery = "*";
-		}
-//		alert("AAAAA "+yearQuery+ "  NNA "+statusQuery );
-		alert("DDD "+SHI002C.yearQuery + "SSSSS "+SHI002C.statusQuery );
+				
+		Ext.MessageBox.confirm('Confirmation',confirmMessage,confirmFunction);
+		function confirmFunction(btn) {
+			if (btn == 'yes') {
+				SHI002C.grid4.store.reload( //  reload grid store when click search button
+		                {   
+		                   params:{method : 'gridStore',
+		               				empId  : empId,
+		               				year   : yearQuery,
+		               				status : statusQuery},
+		                  });
+//				Ext.Msg.alert('Information', 'ทำรายการสำเร็จ');
+			}}		
 	});
 	
 	Ext.get('btnCreateBin').on('click',function(e) {

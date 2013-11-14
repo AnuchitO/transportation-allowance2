@@ -245,6 +245,10 @@ SCP007C.gridRemoveBtn = new Ext.Toolbar.Button({
 					var numberSelect = rowSelected.length;
 
 					var lastIndex = sm.length - 1;
+					if(lastIndex == -1){
+						SCP007C.scfTatolDebit.setValue(0.00);
+						SCP007C.scfTatolCredit.setValue(0.00);
+					}
 
 					var getValueLastIndex = SCP007C.createGrid.getStore().getAt(
 							lastIndex).data.scpNo;
@@ -267,6 +271,7 @@ SCP007C.gridRemoveBtn = new Ext.Toolbar.Button({
 								detroyNumber);
 						}
 					}
+					SCP007C.createGrid.store.getAt(0).set('scpNo',1);
 
 					for (var j = 0; j <= sm.length - 1; j++) {
 
@@ -405,27 +410,16 @@ SCP007C.comboboxStore = new Ext.data.JsonStore({
 //});
 
 
-SCP007C.createCombobox = new Ext.ss.form.ComboBox({
+SCP007C.createCombobox = new Ext.form.ComboBox({
 	id : 'antecedent1',
 	fieldLabel : 'Antecedent',
 	mode : 'local1',
 	width:70,
-	descriptionWidth: 50,
-	
-	
-	 fieldLabel : 'combobox SS',
-   showRowAllRecord: true,
-   displayCode: 'entryCode',
-   displayDesc: 'description',
-   queryParam: 'entryCode',
-   itemWidth: 150, 
-   typeAhead: true,
-   mode: 'remote',
-   triggerAction: 'all',
-  emptyText: 'All',
-   selectOnFocus: true,
-   forceSelection: true,
+
+
 	store : SCP007C.comboboxStore,
+	valueField : 'code',
+	displayField : 'code',
 	lazyRender : true,
 	autoSelect : true,
 	criterionField : true,
@@ -433,8 +427,8 @@ SCP007C.createCombobox = new Ext.ss.form.ComboBox({
 	typeAhead : true,
 	forceSelection : true,
 	triggerAction : 'all',
-	emptyText:'Select ...',
-	valueField : 'code',
+	emptyText : 'Select ...',
+	
 	
 
 //	displayField : 'description'
@@ -500,7 +494,8 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 	header : 'เดบิต',
 	dataIndex : 'scpDebit',
 	align : 'center',
-	editor : new Ext.form.TextField({
+	xtype: 'numbercolumn', format:'0.00',
+	editor : new Ext.ss.form.NumberField({
 		id : 'scpEditDebit',
 		listeners : {
 			change : function(f, e) {
@@ -513,9 +508,9 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 					var test = SCP007C.createGrid.getStore().getAt(i).data.scpDebit;
 				
 			if (Ext.isEmpty(test)) {
-				SCP007C.createGrid.store.getAt(i).set('scpDebit', "0");
+				SCP007C.createGrid.store.getAt(i).set('scpDebit', 0.00);
 			}	
-				 totalDebit = totalDebit + parseInt(SCP007C.createGrid.getStore().getAt(i).data.scpDebit);
+				 totalDebit = totalDebit + parseFloat(SCP007C.createGrid.getStore().getAt(i).data.scpDebit);
 				 
 				 SCP007C.scfTatolDebit.setValue(totalDebit);
 				 
@@ -536,7 +531,8 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 	header : 'เครดิต',
 	dataIndex : 'scpCredit',
 	align : 'center',
-	editor : new Ext.form.TextField({
+	xtype: 'numbercolumn', format:'0.00',
+	editor : new Ext.ss.form.NumberField({
 		id : 'scpEditCredit',
 		listeners : {
 			change : function(f, e) {
@@ -549,9 +545,9 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 					var test = SCP007C.createGrid.getStore().getAt(i).data.scpCredit;
 				
 			if (Ext.isEmpty(test)) {
-				SCP007C.createGrid.store.getAt(i).set('scpCredit', "0");
+				SCP007C.createGrid.store.getAt(i).set('scpCredit', 0.00);
 			}	
-			totalCredit = totalCredit + parseInt(SCP007C.createGrid.getStore().getAt(i).data.scpCredit);
+			totalCredit = totalCredit + parseFloat(SCP007C.createGrid.getStore().getAt(i).data.scpCredit);
 				 
 				 SCP007C.scfTatolCredit.setValue(totalCredit);
 				 
@@ -601,12 +597,12 @@ SCP007C.gridStrore = new Ext.data.JsonStore({
 
 });
 
-SCP007C.scfTatolDebit = new Ext.form.TextField({
+SCP007C.scfTatolDebit = new Ext.ss.form.NumberField({
 	id : 'scfTatolDebit',
 	width : 80
 
 });
-SCP007C.scfTatolCredit = new Ext.form.TextField({
+SCP007C.scfTatolCredit = new Ext.ss.form.NumberField({
 	id : 'scfTatolCredit',
 
 	width : 80

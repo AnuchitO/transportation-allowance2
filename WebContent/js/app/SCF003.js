@@ -840,7 +840,11 @@ SCF003.gridColumns = [
 								var b = 0;
 								var totalPaymentTravel = 0;
 								var c = 0;
+								
 								for (var i = 0; i <= totalLength.length - 1; i++) {
+									if(Ext.isEmpty(SCF003.createGrid.getStore().getAt(i).data.paymentTravel)){
+										SCF003.createGrid.store.getAt(i).set('paymentTravel', 0.00);
+									}
 									var test = SCF003.createGrid.getStore().getAt(i).data.paymentD;
 									if (Ext.isEmpty(test)) {
 										totalPaymentTravel = (parseFloat(SCF003.createGrid.getStore().getAt(i).data.paymentTravel)).toFixed(2);
@@ -918,6 +922,9 @@ SCF003.gridColumns = [
 								var totalPayment = 0;
 								var c = 0;
 								for (var i = 0; i <= totalLength.length - 1; i++) {
+									if(Ext.isEmpty(SCF003.createGrid.getStore().getAt(i).data.paymentD)){
+										SCF003.createGrid.store.getAt(i).set('paymentD', 0.00);
+									}
 									var test = SCF003.createGrid.getStore().getAt(i).data.paymentTravel;
 									if (Ext.isEmpty(test)) {
 										test = 0;
@@ -1495,7 +1502,7 @@ Ext
 								function confirmFunction(btn) {
 									if (btn == 'yes') {
 										// var param3 = {};
-										var noDoc = SCF01Domain.no;
+										var noDoc = Ext.getCmp('no').getValue();
 										// var noDoc = SCF01Domain.no; //ลองดู
 										// param3.no = "no001";
 

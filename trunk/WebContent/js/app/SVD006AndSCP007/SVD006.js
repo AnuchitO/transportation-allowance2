@@ -1,5 +1,5 @@
 var SVD006 = {};
-
+Ext.getCmp('svdtabPanel').items.get(1).setDisabled(true);
 Ext.onReady(function() {
 
 	SVD006.resumeForm = new Ext.form.FormPanel({
@@ -64,6 +64,12 @@ Ext.get('payCash').on('click',function(e) {
 
 Ext.get('payCheck').on('click',function(e) {
 	Ext.getDom('payCash').checked = false;
+});
+
+Ext.get('idBtnCreatePay').on('click',function(e) {
+	Ext.getCmp('svdtabPanel').items.get(1).setDisabled(false);
+	SVD006C.tabPanel.setActiveTab(1);
+	
 });
 
 var paramConfirmCheckbox = {};
@@ -155,6 +161,7 @@ SCP007C.scpTotalMoney.setValue(SVD006Domain.totalPayment);
 SCP007C.scpNumberCharactor.setValue(SVD006Domain.charactorNumber);
 SCP007C.scfTextArea.setValue(SVD006Domain.minMaxDate);
 var totalPayment = Ext.getCmp('scpTotalMoney').getValue();
+
 var a = parseInt(totalPayment);
 
 if(a <= 1500){

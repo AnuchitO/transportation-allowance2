@@ -163,7 +163,7 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 	 
 	 
 	
-
+	//Nong
 	public List<TravelHeader> findByEmpIdInTravelHeader(Employee employee) {
 		DetachedCriteria criteria =  DetachedCriteria.forClass(TravelHeader.class);
 				criteria.add(Restrictions.eq("employee", employee));
@@ -179,7 +179,7 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 		DetachedCriteria criteria =  DetachedCriteria.forClass(TravelHeader.class);
 						 criteria.add(Restrictions.and(
 								 		Restrictions.eq("employee", employee),
-								 		Restrictions.and(Restrictions.like("status", status),
+								 		Restrictions.and(Restrictions.like("status", status),// before is .like
 								 						 Restrictions.between("creationate", yearStart,yearEnd))
 								 						 )
 								 		);
@@ -190,7 +190,7 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
     	DetachedCriteria criteria =  DetachedCriteria.forClass(TravelHeader.class);
 		    			 criteria.add(Restrictions.and(
 						 				Restrictions.eq("employee", employee),
-						 				Restrictions.like("status", status))
+						 				Restrictions.eq("status", status))
 						 				);
     	return this.getHibernateTemplate().findByCriteria(criteria);
 	}

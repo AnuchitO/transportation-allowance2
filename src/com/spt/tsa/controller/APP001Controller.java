@@ -1,5 +1,6 @@
 package com.spt.tsa.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,73 +85,86 @@ public class APP001Controller{
 	@RequestMapping(value="/app001.html",method=RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest arg0,
    		 HttpServletResponse arg1) throws Exception {
-		List<AccountAdmin> results = this.accountAdmin01Service.findAccountAdmin();
-		List<Company> resultsCom = this.company01Service.findCompany();
-		List<Customer> resultsCus = this.customer01Service.findCustomer();
-		List<Employee> resultsEmp = this.employee01Service.findEmployee();
-		List<PaymentDetail> resultsPayD = this.paymentDetail01Service.findPaymentDetail();
-		List<PaymentHeader> resultsPayH = this.paymentHeader01Service.findPaymentHeader();
-		List<TravelDetail> resultsTravelD = this.travelDetail01Service.findTravelDetail();
-		List<TravelHeader> resultsTravelH = this.travelHeader01Service.findTravelHeader();
-		List<ParameterTable> resultsParame = this.parameterTable01Service.findTable("2");
-		List<ParameterTable> resultsPara = this.parameterTable01Service.findByDept();
-		for(ParameterTable c:resultsPara){
-			logger.debug("++++++++++++++++++++++++++++++++++++{}",c.getDetail());
+//		List<AccountAdmin> results = this.accountAdmin01Service.findAccountAdmin();
+//		List<Company> resultsCom = this.company01Service.findCompany();
+//		List<Customer> resultsCus = this.customer01Service.findCustomer();
+//		List<Employee> resultsEmp = this.employee01Service.findEmployee();
+//		List<PaymentDetail> resultsPayD = this.paymentDetail01Service.findPaymentDetail();
+//		List<PaymentHeader> resultsPayH = this.paymentHeader01Service.findPaymentHeader();
+//		List<TravelDetail> resultsTravelD = this.travelDetail01Service.findTravelDetail();
+//		List<TravelHeader> resultsTravelH = this.travelHeader01Service.findTravelHeader();
+//		List<ParameterTable> resultsParame = this.parameterTable01Service.findTable("2");
+//		List<ParameterTable> resultsPara = this.parameterTable01Service.findByDept();
+//		for(ParameterTable c:resultsPara){
+//			logger.debug("++++++++++++++++++++++++++++++++++++{}",c.getDetail());
+//		}
+//		logger.debug("++++++++++++++++++++++++++++++++++++");
+//		for(ParameterTable parame : resultsParame){
+//			logger.debug("++++++++++++++++++++++++++++++++++++{}",parame.getDetail());
+//		}
+//
+//		
+//		
+//		for(PaymentHeader c:resultsPayH){
+//			
+//			
+//			logger.debug("+++++++++++++++++{}-------------{}",c.getTravelHeader().getNo(),c.getCreationDate());
+//	
+//		}
+//		logger.info("==============================in APP001Controller");
+//		
+//		List<Customer> customer = this.customer01Service.findByName("ANUCHIT");
+//		
+//		for(Customer c:customer){
+//			
+//			
+//			logger.debug("+++++++++++++++++{}-------------{}",c.getName(),c);
+//			
+//	
+//		}
+//		
+//		TravelHeader travelHeader2 = this.travelHeader01Service.findByDocNoForSaveOrUpdate("990086").get(0);
+//			logger.debug("++++++findByDocNoForSaveOrUpdate+++++++++{}-------------",travelHeader2.getStatus());
+//		travelHeader2.setStatus("001");
+//		this.travelHeader01Service.saveHeaderCreateFrom(travelHeader2);
+//		
+//		TravelHeader travelHeaderForDetail = this.travelHeader01Service.findByDocNoForSaveOrUpdate("990099").get(0);
+//		List<TravelDetail>  gridRowList =  this.travelDetail01Service.findRowOfGridForUpdateRow(travelHeaderForDetail, "01");
+//		
+//		for(TravelDetail c:gridRowList){				
+//			logger.debug("++++++@@@@@@@@@@@@@@@@@+++++gridRowList++++++{}-------------{}",c.getNo(),c.getTravelHeader().getNo());
+//			c.setTravelExpenses(new Double("1111"));
+//			c.setMotorWay(new Double("22222"));
+//			c.setTotalDay(new Double("33333"));
+//			this.travelDetail01Service.saveTravelDetailCreateForm(c);
+//		}
+//		
+		String from ="2013/11/12";
+//		String to = "2013/12/12";
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+		Date startDate = (Date) format.parse(from);
+		Employee employees = this.employee01Service.findEmployeeByIdName("EMp001");
+		List<TravelHeader> resultsTravelH  =null;
+//		resultsTravelH = this.travelHeader01Service.findLikeYearAndStatus(employees,"2554", "%");
+//		resultsTravelH = this.travelHeader01Service.findLikeYearAndStatus(employees,"%", "005");// work
+//		resultsTravelH = this.travelHeader01Service.findLikeYearAndStatus(employees,"%", "001");//work
+//		resultsTravelH = this.travelHeader01Service.findLikeYearAndStatus(employees,"%", "002");//work
+//		resultsTravelH = this.travelHeader01Service.findLikeYearAndStatus(employees,"%", "003");//work
+//		resultsTravelH = this.travelHeader01Service.findLikeYearAndStatus(employees,"%", "004");//work
+		for(TravelHeader c:resultsTravelH){				
+			logger.debug("++++++@@@@@@@@@@@@@@@@@+++++gridRowList++++++{}-------------{}",c.getCreationate(),c.getStatus());
 		}
-		logger.debug("++++++++++++++++++++++++++++++++++++");
-		for(ParameterTable parame : resultsParame){
-			logger.debug("++++++++++++++++++++++++++++++++++++{}",parame.getDetail());
-		}
-
-		
-		
-		for(PaymentHeader c:resultsPayH){
-			
-			
-			logger.debug("+++++++++++++++++{}-------------{}",c.getTravelHeader().getNo(),c.getCreationDate());
-	
-		}
-		logger.info("==============================in APP001Controller");
-		
-		List<Customer> customer = this.customer01Service.findByName("ANUCHIT");
-		
-		for(Customer c:customer){
-			
-			
-			logger.debug("+++++++++++++++++{}-------------{}",c.getName(),c);
-			
-	
-		}
-		
-		TravelHeader travelHeader2 = this.travelHeader01Service.findByDocNoForSaveOrUpdate("990086").get(0);
-			logger.debug("++++++findByDocNoForSaveOrUpdate+++++++++{}-------------",travelHeader2.getStatus());
-		travelHeader2.setStatus("001");
-		this.travelHeader01Service.saveHeaderCreateFrom(travelHeader2);
-		
-		TravelHeader travelHeaderForDetail = this.travelHeader01Service.findByDocNoForSaveOrUpdate("990099").get(0);
-		List<TravelDetail>  gridRowList =  this.travelDetail01Service.findRowOfGridForUpdateRow(travelHeaderForDetail, "01");
-		
-		for(TravelDetail c:gridRowList){				
-			logger.debug("++++++@@@@@@@@@@@@@@@@@+++++gridRowList++++++{}-------------{}",c.getNo(),c.getTravelHeader().getNo());
-			c.setTravelExpenses(new Double("1111"));
-			c.setMotorWay(new Double("22222"));
-			c.setTotalDay(new Double("33333"));
-			this.travelDetail01Service.saveTravelDetailCreateForm(c);
-		}
-		
-		
-		
-		
 		Map model = new HashMap();
 		
 		
-		model.put("account",results);
-		model.put("com",resultsCom);
-		model.put("customer",resultsCus);
-		model.put("employee",resultsEmp);
-		model.put("paymentDetail", resultsPayD);
-		model.put("paymentHeader", resultsPayH);
-		model.put("travelDetail", resultsTravelD);
+//		model.put("account",results);
+//		model.put("com",resultsCom);
+//		model.put("customer",resultsCus);
+//		model.put("employee",resultsEmp);
+//		model.put("paymentDetail", resultsPayD);
+//		model.put("paymentHeader", resultsPayH);
+//		model.put("travelDetail", resultsTravelD);
 		model.put("travelHeader", resultsTravelH);
 	
 		

@@ -119,11 +119,12 @@ public class SHI002Controller {
 		domain.setStatus(statusQuery);
 		
 		
-		String EmpId = domain.getEmployeeId();
-		
+		String employeeId = domain.getEmployeeId();
+		String yearFind	  = domain.getYear();
+		String statusFind = domain.getStatus();
 		try{ 
-			this.employees = this.employee01Service.findEmployeeByIdName(EmpId);
-			this.listTravelHeader = this.travelHeader01Service.findByEmpIdInTravelHeader(this.employees);
+			this.employees = this.employee01Service.findEmployeeByIdName(employeeId);
+			this.listTravelHeader = this.travelHeader01Service.findLikeYearAndStatus(this.employees,yearFind,statusFind);
 		}catch (Exception e){
 			
 		}
@@ -131,6 +132,18 @@ public class SHI002Controller {
 		JSONArray jsonArray = new JSONArray();
 		GridData gridData = new GridData();
 		JSONObject jobect = null;
+		if(this.listTravelHeader.size()==0){ // IF this.listTravelHeader Null
+			 jobect = new JSONObject();
+			 jobect.accumulate("no", "-");
+			 jobect.accumulate("docNo","-");
+			 jobect.accumulate("docDate","-");
+			 jobect.accumulate("sendDate","-");
+			 jobect.accumulate("status","-");
+			 jobect.accumulate("approve","-");
+			 jobect.accumulate("amount", "-");
+			 jobect.accumulate("remark", "-");
+			 jsonArray.add(jobect);
+		}
 		int i = 1;
 		for(int  j = this.listTravelHeader.size()-1;j>=0;j--){
 			TravelHeader th = this.listTravelHeader.get(j);
@@ -139,7 +152,8 @@ public class SHI002Controller {
 			 jobect.accumulate("no", i++);
 			 jobect.accumulate("docNo",th.getNo());
 			 jobect.accumulate("docDate",simple_date.format(th.getCreationate()));
-			 jobect.accumulate("sendDate", simple_date.format(th.getModifyDate()));
+			 
+			 
 			 
 			 String status = " ";
 			 try {
@@ -149,19 +163,22 @@ public class SHI002Controller {
 		
 			 }
 			 jobect.accumulate("status",status);
+			 if(status.equals("Saved")){
+				 jobect.accumulate("sendDate", " ");
+			 }else{
+				 jobect.accumulate("sendDate", simple_date.format(th.getModifyDate()));
+			 }
 			try {
 				this.listPaymentHeaders = this.paymentHeader01Service.findByTravelHeader(th);		
 				if(status.equals("Approved")){
 					jobect.accumulate("approve",simple_date.format(this.listPaymentHeaders.get(0).getModifyDate()));
 				}else{
-					jobect.accumulate("approve"," else ");
+					jobect.accumulate("approve","  ");
 				}
 			} catch (Exception e) {
 				jobect.accumulate("approve","-");
-			}
-			 
-			 
-			 
+			}	 
+			 			 
 			 jobect.accumulate("amount", th.getTotal());
 			 jobect.accumulate("remark", th.getRemark());
 			 jsonArray.add(jobect);

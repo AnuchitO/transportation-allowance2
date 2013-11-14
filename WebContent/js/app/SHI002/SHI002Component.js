@@ -116,12 +116,12 @@ SHI002C.comboStatus = new Ext.form.ComboBox({
 
 SHI002C.yearQuery = Ext.getCmp('comboYear').getValue();
 if(SHI002C.yearQuery == ""){
-	SHI002C.yearQuery  = "*";
+	SHI002C.yearQuery  = "%";
 }
 
 SHI002C.statusQuery = Ext.getCmp('comboStatus').getValue();
 if(SHI002C.statusQuery == ""){
-	SHI002C.statusQuery  = "*";
+	SHI002C.statusQuery  = "%";
 }
 
 SHI002C.btnSearch = new Ext.Button({
@@ -279,8 +279,9 @@ SHI002C.numberDocumentOnClick = function(grid, rowIndex, cellIndex, e){
 //							    	alert(columnName+" >>> <<<< "+cellValue);			    	
 							    	var empId = Ext.getCmp('employeeId').getValue();
 							    	var noDoc = cellValue;
+							    	var status = store.get('status');
 
-									var urlPreviwPage = "/TransportationAllowance/SCF003.html?empId="+empId+"&noDoc="+noDoc;
+									var urlPreviwPage = "/TransportationAllowance/SCF003.html?empId="+empId+"&noDoc="+noDoc+"&status="+status;
 									window.location.assign(urlPreviwPage);	    	
 							    	}
 							    }else{
@@ -292,17 +293,17 @@ SHI002C.numberDocumentOnClick = function(grid, rowIndex, cellIndex, e){
 
 SHI002C.grid4 = new Ext.grid.GridPanel({
         id:'idGrid',
-        columnLines : true,
-    	lazyRender : true,
-    	autoSelect : true,
-    	criterionField : true,
-    	selectOnFocus : true,
-    	typeAhead : true,
-    	forceSelection : true,
-    	triggerAction : 'all',
-    	trackMouseOver : false,
-    	disableSelection : true,
-    	loadMask : true,
+//        columnLines : true,
+//    	lazyRender : true,
+//    	autoSelect : true,
+//    	criterionField : true,
+//    	selectOnFocus : true,
+//    	typeAhead : true,
+//    	forceSelection : true,
+//    	triggerAction : 'all',
+//    	trackMouseOver : false,
+//    	disableSelection : true,
+//    	loadMask : true,
     	store:SHI002C.gridStore,
         cm: new Ext.grid.ColumnModel([
             SHI002C.sm2,
@@ -315,11 +316,10 @@ SHI002C.grid4 = new Ext.grid.GridPanel({
             {header: "วันที่ส่งเอกสาร", width: 20, sortable: true, dataIndex: 'sendDate'},
             {header: "วันที่อนุมัติ", width: 20, sortable: true,  dataIndex: 'approve'},
             {header: "สถานะ", width: 20, sortable: true, dataIndex: 'status'},
-            {header: "จำนวนเงิน (บาท)", width: 20, sortable: true, dataIndex: 'amount'},
+            {header: "จำนวนเงิน (บาท)", width: 20, sortable: true, dataIndex: 'amount',xtype: 'numbercolumn', format:'0.00', flex:0},
             {header: "หมายเหตุ", width: 20, sortable: true, dataIndex: 'remark'}            
         ]),
         sm: SHI002C.sm2,
-
         viewConfig: {
             forceFit:true
         },

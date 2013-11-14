@@ -85,8 +85,12 @@ public class Travelheader01ServiceImpl implements TravelHeader01Service{
 	}
 
 	public List<TravelHeader> findLikeYearAndStatus(Employee employee,String year, String status) { //Required Thai Year
-		String yearConCat = year;
 		List<TravelHeader> listTravelHeaders = null;
+		
+
+		
+		String yearConCat = year;
+		
 		String from ="01/01/".concat(yearConCat);
 		String to = "31/12/".concat(yearConCat);		
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", new Locale("th", "th"));//Required Thai Year output English Year
@@ -98,8 +102,16 @@ public class Travelheader01ServiceImpl implements TravelHeader01Service{
 		}catch (Exception ex){
 			
 		}
-		
-		listTravelHeaders =  this.travelHeader01Dao.findLikeYearAndStatus(employee,yearStart,yearEnd,status);
+
+		if(year.equals("%")&&status.equals("%")){
+			listTravelHeaders =  this.travelHeader01Dao.findByEmpIdInTravelHeader(employee);
+		}else if(!(year.equals("%"))&&status.equals("%")){
+			listTravelHeaders =  this.travelHeader01Dao.findLikeYearAndStatus(employee,yearStart,yearEnd,status);
+		}else if(year.equals("%")&&!(status.equals("%"))){
+			listTravelHeaders = this.travelHeader01Dao.findLikeStatusAllYear(employee, status);			
+		}else {
+			listTravelHeaders = this.travelHeader01Dao.findLikeYearAndStatus(employee, yearStart, yearEnd, status);
+		}
 		return listTravelHeaders;
 	}
 

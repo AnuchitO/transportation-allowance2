@@ -399,4 +399,13 @@ Ext
 		 ],
 
 	});
+	Ext.get('seiButtonSearch').on('click',function(e) {
+		Ext.MessageBox.confirm('Confirmation','คุณต้องการกลับไปหน้าหลัก',confirmFunction);
+		function confirmFunction(btn) {
+			if (btn == 'yes') {
+			
+
+		}
+		}
+	});
 });

@@ -6,7 +6,7 @@ SCF003.No = new Ext.form.TextField({
 	readOnly : true,
 	disabled : true,
 	style:{
-		"color":"black",
+		"color":"blue",
 	    "background-image":"none",
 	    "background-color":"#BEBEBE"
 	}
@@ -19,7 +19,7 @@ SCF003.date = new Ext.form.TextField({
 	readOnly : true,
 	disabled : true,
 	style:{
-		"color":"black",
+		"color":"blue",
 	    "background-image":"none",
 	    "background-color":"#BEBEBE"
 	}
@@ -31,7 +31,7 @@ SCF003.name = new Ext.form.TextField({
 	readOnly : true,
 	disabled : true,
 	style:{
-		"color":"black",
+		"color":"blue",
 	    "background-image":"none",
 	    "background-color":"#BEBEBE"
 	}
@@ -43,7 +43,7 @@ SCF003.id = new Ext.form.TextField({
 	readOnly : true,
 	disabled : true,
 	style:{
-		"color":"black",
+		"color":"blue",
 	    "background-image":"none",
 	    "background-color":"#BEBEBE"
 	}
@@ -101,7 +101,7 @@ SCF003.idCardEmp = new Ext.form.TextField({
 	readOnly : true,
 	disabled : true,
 	style:{
-		"color":"black",
+		"color":"blue",
 	    "background-image":"none",
 	    "background-color":"#BEBEBE"
 	}
@@ -170,7 +170,7 @@ SCF003.email = new Ext.form.TextField({
 
 // /////////////////////set Field/////////////////////////
 
-//SCF003.No.setValue(SCF01Domain.no);
+//SCF003.No.setValue(SCF01Domain.numberDocument);
 SCF003.date.setValue(SCF01Domain.date);
 SCF003.name.setValue(SCF01Domain.name);
 SCF003.id.setValue(SCF01Domain.id);
@@ -529,7 +529,7 @@ function saveOrUpdate() {
 	param2.typeAccount = Ext.getCmp('typeAccount').getValue();
 	param2.type1 = Ext.getCmp('type1').getValue();
 	param2.type2 = Ext.getCmp('type2').getValue();
-	param2.numberDocument = SCF01Domain.no;
+	param2.numberDocument = Ext.getCmp('no').getValue();
 
 	
 
@@ -547,13 +547,21 @@ function saveOrUpdate() {
 		var dataGridCustomer = SCF003.createGrid.getStore().getAt(i).data.customer;
 		var dataGridRegion = SCF003.createGrid.getStore().getAt(i).data.region;
 		var dataGridGoal = SCF003.createGrid.getStore().getAt(i).data.goal;
-		
+		var dataGridPaymentTravelDouble = " ";
 		var dataGridPaymentTravel = SCF003.createGrid.getStore().getAt(i).data.paymentTravel;
-		var dataGridPaymentTravelDouble = dataGridPaymentTravel.toFixed(2);
-		
+		if(dataGridPaymentTravel == "0.00"){
+			 dataGridPaymentTravelDouble = dataGridPaymentTravel;
+		}else{
+			dataGridPaymentTravelDouble = dataGridPaymentTravel.toFixed(2);
+		}
+		var dataGridPaymentDdouble = " ";
 		var dataGridPaymentD = SCF003.createGrid.getStore().getAt(i).data.paymentD;
-		var dataGridPaymentDdouble = dataGridPaymentD.toFixed(2);
-		
+		if(dataGridPaymentD == "0.00"){
+			 dataGridPaymentDdouble = dataGridPaymentD;
+		}
+		else{
+			 dataGridPaymentDdouble = dataGridPaymentD.toFixed(2);
+		}
 		var dataGridPayment = SCF003.createGrid.getStore().getAt(i).data.payment;
 	
 		
@@ -574,6 +582,7 @@ function saveOrUpdate() {
 		success : function(response, opts) {
 			if (param2 != null) {
 				Ext.Msg.alert('Information', 'บันทึกเรียบร้อย');
+				SCF003.No.setValue(JSON.parse(response.responseText).numberDoc);
 			} else {
 				Ext.Msg.alert('Information', 'Error');
 			}
@@ -767,7 +776,9 @@ SCF003.gridColumns = [
 			align : 'center',
 			type : 'date',
 			editor : new Ext.form.DateField({
+				
 				id : 'editGridDate',
+				maxValue : new Date(),
 				emptyText : 'Select ...',
 				
 
@@ -1045,7 +1056,7 @@ SCF003.totalManey = new Ext.form.TextField({
 	readOnly : true,
 	disabled : true,
 	style:{
-		"color":"black",
+		"color":"blue",
 	    "background-image":"none",
 	    "background-color":"#BEBEBE"
 	}
@@ -1071,7 +1082,7 @@ SCF003.bank = new Ext.form.TextField({
 	readOnly : true,
 	disabled : true,
 	style:{
-		"color":"black",
+		"color":"blue",
 	    "background-image":"none",
 	    "background-color":"#BEBEBE"
 	}
@@ -1084,7 +1095,7 @@ SCF003.branch = new Ext.form.TextField({
 	readOnly : true,
 	disabled : true,
 	style:{
-		"color":"black",
+		"color":"blue",
 	    "background-image":"none",
 	    "background-color":"#BEBEBE"
 	}
@@ -1097,7 +1108,7 @@ SCF003.accountNumber = new Ext.form.TextField({
 	readOnly : true,
 	disabled : true,
 	style:{
-		"color":"black",
+		"color":"blue",
 	    "background-image":"none",
 	    "background-color":"#BEBEBE"
 	}
@@ -1110,7 +1121,7 @@ SCF003.typeAccount = new Ext.form.TextField({
 	readOnly : true,
 	disabled : true,
 	style:{
-		"color":"black",
+		"color":"blue",
 	    "background-image":"none",
 	    "background-color":"#BEBEBE"
 	}
@@ -1228,7 +1239,7 @@ SCF003.tatolPaym = new Ext.ss.form.NumberField({
 	width : 80,
 	readOnly : true,
 	style:{
-		"color":"black",
+		"color":"blue",
 	    "background-image":"none",
 	    "background-color":"#FFFACD"
 	}
@@ -1240,7 +1251,7 @@ SCF003.tatolPaymA = new Ext.ss.form.NumberField({
 	width : 80,
 	readOnly : true,
 	style:{
-		"color":"black",
+		"color":"blue",
 	    "background-image":"none",
 	    "background-color":"#FFFACD"
 	}
@@ -1252,7 +1263,7 @@ SCF003.tatolPaymfullCase = new Ext.ss.form.NumberField({
 	width : 80,
 	readOnly : true,
 	style:{
-		"color":"black",
+		"color":"blue",
 	    "background-image":"none",
 	    "background-color":"#FFFACD"
 	}
@@ -1437,6 +1448,32 @@ Ext
 										} else {
 											param2.status = "002";
 											saveOrUpdate();
+											Ext.getCmp('company').setReadOnly(true);
+											Ext.getCmp('company').setDisabled(true);
+											Ext.get('company').setStyle('background', '#FFFACD');
+											Ext.getCmp('antecedent').setReadOnly(true);
+											Ext.getCmp('antecedent').setDisabled(true);
+											Ext.get('antecedent').setStyle('background', '#FFFACD');
+											Ext.getCmp('address').setReadOnly(true);
+											Ext.getCmp('address').setDisabled(true);
+											Ext.get('address').setStyle('background', '#FFFACD');
+											Ext.getCmp('antercedentA').setReadOnly(true);
+											Ext.getCmp('antercedentA').setDisabled(true);
+											Ext.get('antercedentA').setStyle('background', '#FFFACD');
+											Ext.getCmp('phone').setReadOnly(true);
+											Ext.getCmp('phone').setDisabled(true);
+											Ext.get('phone').setStyle('background', '#FFFACD');
+											Ext.getCmp('email').setReadOnly(true);
+											Ext.getCmp('email').setDisabled(true);
+											Ext.get('email').setStyle('background', '#FFFACD');
+											Ext.getCmp('gridEducationInfomation').setDisabled(true);
+										
+											Ext.getCmp('document').setReadOnly(true);
+											Ext.getCmp('document').setDisabled(true);
+											Ext.get('document').setStyle('background', '#FFFACD');
+											Ext.getCmp('forPay').setReadOnly(true);
+											Ext.getCmp('forPay').setDisabled(true);
+											Ext.get('forPay').setStyle('background', '#FFFACD');
 											Ext.getCmp('submit').disable();
 											Ext.getCmp('print').enable();
 										}
@@ -1496,6 +1533,9 @@ Ext
 						}
 						}
 					});
+			
+			
+			
 			SCF003.No.setValue("AUTO");
 			SCF003.tatolPaym.setValue(0.00);
 			SCF003.tatolPaymA.setValue(0.00);

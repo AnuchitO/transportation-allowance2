@@ -90,8 +90,8 @@ public class SHI002Controller {
 			
 		}
 		
-		Date date = new Date();
-		SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
+//		Date date = new Date();
+//		SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
 		SHI002Domain01 domain = new SHI002Domain01();
 		
 		domain.setEmployeeName(this.employees.getName());
@@ -122,17 +122,69 @@ public class SHI002Controller {
 		String employeeId = domain.getEmployeeId();
 		String yearFind	  = domain.getYear();
 		String statusFind = domain.getStatus();
-		try{ 
-			this.employees = this.employee01Service.findEmployeeByIdName(employeeId);
-			this.listTravelHeader = this.travelHeader01Service.findLikeYearAndStatus(this.employees,yearFind,statusFind);
-		}catch (Exception e){
-			
-		}
-		
 		JSONArray jsonArray = new JSONArray();
 		GridData gridData = new GridData();
-		JSONObject jobect = null;
-		if(this.listTravelHeader.size()==0){ // IF this.listTravelHeader Null
+		JSONObject jobect = new JSONObject();
+		if(!(employeeId.equals("firstRequest"))){
+			try{ 
+				this.employees = this.employee01Service.findEmployeeByIdName(employeeId);
+				this.listTravelHeader = this.travelHeader01Service.findLikeYearAndStatus(this.employees,yearFind,statusFind);
+			}catch (Exception e){
+				
+			}
+			
+			if(this.listTravelHeader.size()==0){ // IF this.listTravelHeader Null
+				 jobect = new JSONObject();
+				 jobect.accumulate("no", "-");
+				 jobect.accumulate("docNo","-");
+				 jobect.accumulate("docDate","-");
+				 jobect.accumulate("sendDate","-");
+				 jobect.accumulate("status","-");
+				 jobect.accumulate("approve","-");
+				 jobect.accumulate("amount", "-");
+				 jobect.accumulate("remark", "-");
+				 jsonArray.add(jobect);
+			}
+			int i = 1;
+			for(int  j = this.listTravelHeader.size()-1;j>=0;j--){
+				TravelHeader th = this.listTravelHeader.get(j);
+				 SimpleDateFormat simple_date = new SimpleDateFormat("dd/MM/yyyy", new Locale("th", "th"));
+				 jobect = new JSONObject();
+				 jobect.accumulate("no", i++);
+				 jobect.accumulate("docNo",th.getNo());
+				 jobect.accumulate("docDate",simple_date.format(th.getCreationate()));
+				 
+				 
+				 
+				 String status = " ";
+				 try {
+					 this.listParameterTables = this.parameterTable01Service.findRow("9", th.getStatus());
+					 status = this.listParameterTables.get(0).getDetail();
+				 } catch (Exception e) {
+			
+				 }
+				 jobect.accumulate("status",status);
+				 if(status.equals("Saved")){
+					 jobect.accumulate("sendDate", " ");
+				 }else{
+					 jobect.accumulate("sendDate", simple_date.format(th.getModifyDate()));
+				 }
+				try {
+					this.listPaymentHeaders = this.paymentHeader01Service.findByTravelHeader(th);		
+					if(status.equals("Approved")){
+						jobect.accumulate("approve",simple_date.format(this.listPaymentHeaders.get(0).getModifyDate()));
+					}else{
+						jobect.accumulate("approve","  ");
+					}
+				} catch (Exception e) {
+					jobect.accumulate("approve","-");
+				}	 
+				 			 
+				 jobect.accumulate("amount", th.getTotal());
+				 jobect.accumulate("remark", th.getRemark());
+				 jsonArray.add(jobect);
+			}
+		}else{
 			 jobect = new JSONObject();
 			 jobect.accumulate("no", "-");
 			 jobect.accumulate("docNo","-");
@@ -144,45 +196,7 @@ public class SHI002Controller {
 			 jobect.accumulate("remark", "-");
 			 jsonArray.add(jobect);
 		}
-		int i = 1;
-		for(int  j = this.listTravelHeader.size()-1;j>=0;j--){
-			TravelHeader th = this.listTravelHeader.get(j);
-			 SimpleDateFormat simple_date = new SimpleDateFormat("dd/MM/yyyy", new Locale("th", "th"));
-			 jobect = new JSONObject();
-			 jobect.accumulate("no", i++);
-			 jobect.accumulate("docNo",th.getNo());
-			 jobect.accumulate("docDate",simple_date.format(th.getCreationate()));
-			 
-			 
-			 
-			 String status = " ";
-			 try {
-				 this.listParameterTables = this.parameterTable01Service.findRow("9", th.getStatus());
-				 status = this.listParameterTables.get(0).getDetail();
-			 } catch (Exception e) {
 		
-			 }
-			 jobect.accumulate("status",status);
-			 if(status.equals("Saved")){
-				 jobect.accumulate("sendDate", " ");
-			 }else{
-				 jobect.accumulate("sendDate", simple_date.format(th.getModifyDate()));
-			 }
-			try {
-				this.listPaymentHeaders = this.paymentHeader01Service.findByTravelHeader(th);		
-				if(status.equals("Approved")){
-					jobect.accumulate("approve",simple_date.format(this.listPaymentHeaders.get(0).getModifyDate()));
-				}else{
-					jobect.accumulate("approve","  ");
-				}
-			} catch (Exception e) {
-				jobect.accumulate("approve","-");
-			}	 
-			 			 
-			 jobect.accumulate("amount", th.getTotal());
-			 jobect.accumulate("remark", th.getRemark());
-			 jsonArray.add(jobect);
-		}
 		
 		gridData.setRecords(jsonArray);
 		gridData.setTotal(jsonArray.size());

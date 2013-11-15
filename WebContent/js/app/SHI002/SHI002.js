@@ -56,7 +56,7 @@ Ext.onReady(function() {SHI002.resumeForm = new Ext.form.FormPanel({
 			confirmMessage = "ค้นหาเอกสารทั้งหมด";
 		}
 				
-		Ext.MessageBox.confirm('Confirmation',confirmMessage,confirmFunction);
+		Ext.MessageBox.confirm('ค้นหาข้อมูล',confirmMessage,confirmFunction);
 		function confirmFunction(btn) {
 			if (btn == 'yes') {
 				SHI002C.grid4.store.reload( //  reload grid store when click search button

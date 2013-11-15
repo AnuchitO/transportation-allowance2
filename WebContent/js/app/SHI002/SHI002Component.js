@@ -231,7 +231,7 @@ var empId = Ext.getCmp('employeeId').getValue();
 SHI002C.gridStore = new Ext.data.JsonStore({
 	baseParams : {
 		method : 'gridStore',
-		empId  : empId,
+		empId  : 'firstRequest',
 		year   : SHI002C.yearQuery,
 		status : SHI002C.statusQuery
 	},
@@ -273,10 +273,7 @@ SHI002C.numberDocumentOnClick = function(grid, rowIndex, cellIndex, e){
 							    var columnName = grid.getColumnModel().getDataIndex(cellIndex);
 							    var cellValue = store.get(columnName);
 							    if(columnName == 'docNo'){
-							    	if(confirm("AAAAAA")){
-//							    		Ext.Msg.alert('Information', 'บันทึกเรียบร้อย');
-							    	
-//							    	alert(columnName+" >>> <<<< "+cellValue);			    	
+							    	if(confirm("ดูข้อมูลของเอกสาร "+cellValue)){		    	
 							    	var empId = Ext.getCmp('employeeId').getValue();
 							    	var noDoc = cellValue;
 							    	var status = store.get('status');
@@ -293,17 +290,6 @@ SHI002C.numberDocumentOnClick = function(grid, rowIndex, cellIndex, e){
 
 SHI002C.grid4 = new Ext.grid.GridPanel({
         id:'idGrid',
-//        columnLines : true,
-//    	lazyRender : true,
-//    	autoSelect : true,
-//    	criterionField : true,
-//    	selectOnFocus : true,
-//    	typeAhead : true,
-//    	forceSelection : true,
-//    	triggerAction : 'all',
-//    	trackMouseOver : false,
-//    	disableSelection : true,
-//    	loadMask : true,
     	store:SHI002C.gridStore,
         cm: new Ext.grid.ColumnModel([
             SHI002C.sm2,
@@ -354,7 +340,7 @@ SHI002C.grid4.removeButton.on('click',function(e) {
 	var param2 = {}; 
 	var rowSelected = Ext.getCmp('idGrid').getSelectionModel().getSelections();
 		param2.noDoc = ""; 
-	Ext.MessageBox.confirm('Confirm', 'ยืนยัน "ลบ" ข้อมูลที่เลือก', function(btn) {
+	Ext.MessageBox.confirm('ยืนยันการทำรายการ', ' \"ลบ\" ข้อมูลที่เลือก', function(btn) {
 		if (btn == 'yes') {
 			for(var i=0;i<rowSelected.length;i++) {
 				param2.noDoc += rowSelected[i].data.docNo+","; // concat No Document //

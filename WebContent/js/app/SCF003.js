@@ -1500,30 +1500,11 @@ Ext
 							}
 							);
 
-			Ext
-					.get('print')
-					.on(
-							'click',
-							function(e) {
-
-								Ext.MessageBox.confirm('Confirmation',
-										'ยืนยันข้อมูลถูกต้อง ?',
-										confirmFunction);
-
-								function confirmFunction(btn) {
-									if (btn == 'yes') {
-										// var param3 = {};
+			Ext.get('print').on('click',function(e) {
 										var noDoc = Ext.getCmp('no').getValue();
-										// var noDoc = SCF01Domain.no; //ลองดู
-										// param3.no = "no001";
-
-										var urlPreviwPage = "/TransportationAllowance/jasperReport.pdf?docNo="
-												+ noDoc;
-										// window.location.assign("/TransportationAllowance/jasperReport.pdf?docNo=56000");
-										window.location.assign(urlPreviwPage);
-									}
-								}
-
+										var urlPreviwPage = "/TransportationAllowance/jasperReport.pdf?docNo="+noDoc;
+										var win = window.open(urlPreviwPage, '_blank');
+										win.focus();
 							});
 			Ext
 			.get('type1')

@@ -19,6 +19,7 @@ public class SPV004Pojo {
 	private String hFaxName;
 
 	//Table Information
+	private String noTable;
 	private String tDate;
 	private String tCustomer;
 	private String tFrom;
@@ -330,6 +331,14 @@ public class SPV004Pojo {
 
 	public void sethFaxName(String hFaxName) {
 		this.hFaxName = hFaxName;
+	}
+
+	public String getNoTable() {
+		return noTable;
+	}
+
+	public void setNoTable(String noTable) {
+		this.noTable = noTable;
 	}
 	
 	

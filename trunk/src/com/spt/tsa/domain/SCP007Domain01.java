@@ -8,8 +8,8 @@ public class SCP007Domain01 extends SCF003Domain01 {
 	String scpNumber;
 	String scpLabel3;
 	String scpDateCreation;
-	Long scfTatolDebit;
-	Long scfTatolCredit;
+	String scfTatolDebit;
+	String scfTatolCredit;
 	String scpPack;
 	
 	
@@ -50,18 +50,19 @@ public class SCP007Domain01 extends SCF003Domain01 {
 	public void setScpDateCreation(String scpDateCreation) {
 		this.scpDateCreation = scpDateCreation;
 	}
-	public Long getScfTatolDebit() {
+	public String getScfTatolDebit() {
 		return scfTatolDebit;
 	}
-	public void setScfTatolDebit(Long scfTatolDebit) {
+	public void setScfTatolDebit(String scfTatolDebit) {
 		this.scfTatolDebit = scfTatolDebit;
 	}
-	public Long getScfTatolCredit() {
+	public String getScfTatolCredit() {
 		return scfTatolCredit;
 	}
-	public void setScfTatolCredit(Long scfTatolCredit) {
+	public void setScfTatolCredit(String scfTatolCredit) {
 		this.scfTatolCredit = scfTatolCredit;
 	}
+	
 	
 	
 

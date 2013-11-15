@@ -10,6 +10,7 @@ import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spt.tsa.dao.PaymentDetail01Dao;
 import com.spt.tsa.dao.PaymentHeader01Dao;
 import com.spt.tsa.domain.SCP007Domain01;
 import com.spt.tsa.entity.*;
@@ -20,7 +21,13 @@ import com.spt.tsa.service.PaymentHeader01Service;
 public class PaymentHeader01ServiceImpl implements PaymentHeader01Service{
 
     private PaymentHeader01Dao paymentHeader01Dao;
+    private PaymentDetail01Dao paymentDetail01Dao;
     @Autowired
+    public void setPaymentDetail01Dao(PaymentDetail01Dao paymentDetail01Dao) {
+		this.paymentDetail01Dao = paymentDetail01Dao;
+	}
+
+	@Autowired
     public void setPaymentHeader01Dao(PaymentHeader01Dao paymentHeader01Dao) {
    	 this.paymentHeader01Dao = paymentHeader01Dao;
     }
@@ -45,9 +52,16 @@ public class PaymentHeader01ServiceImpl implements PaymentHeader01Service{
     		
     	//**************************** save to TravelHeader *********************************************//
     	PaymentHeader paymentHeader = new PaymentHeader();
+    	List<PaymentHeader> paymentDataOld = this.paymentHeader01Dao.findByPaymentHeaderSaveOrUpdate(domain.getScpNumber());
+    	if(paymentDataOld.size() != 0){
+    		paymentHeader = paymentDataOld.get(0);
+    	}else{
+    		paymentHeader = new PaymentHeader();
+    		paymentHeader.setpHeaderId("pv0001");
+    	}
     	List<TravelHeader> test = this.paymentHeader01Dao.findTravelHWhereId(domain.getScpNoDoc());
 //		logger.debug("########################################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}tests",test.get(0).gettHeadId());
-    	paymentHeader.setpHeaderId("pv0001");
+    	
     	paymentHeader.setTravelHeader(test.get(0));
     	paymentHeader.setNo(domain.getScpNumber());
     	paymentHeader.setDepartment(domain.getScpLabel3());
@@ -62,8 +76,8 @@ public class PaymentHeader01ServiceImpl implements PaymentHeader01Service{
 		Date datett = formatter.parse(checkDate);
 		//*****************************************************//
 		paymentHeader.setChequedate(datett);
-		paymentHeader.setTotalDebit(new Long(domain.getScfTatolDebit()));
-		paymentHeader.setTotalCredit(new Long(domain.getScfTatolCredit()));
+		paymentHeader.setTotalDebit(new Double(domain.getScfTatolDebit()));
+		paymentHeader.setTotalCredit(new Double(domain.getScfTatolCredit()));
 		paymentHeader.setStatus(test.get(0).getStatus());
 		paymentHeader.setRemark("No");
 		paymentHeader.setUserCreation("testUserCreate");
@@ -82,32 +96,42 @@ public class PaymentHeader01ServiceImpl implements PaymentHeader01Service{
 		this.paymentHeader01Dao.saveFromPaymentHeader(paymentHeader);
 		//******************************** Save TravelHeader Success ***************************************//
 		
-		PaymentDetail paymentDetail = new PaymentDetail();
-		paymentDetail.setpDetailId("PD001");
 		
-		List<PaymentHeader> no = this.paymentHeader01Dao.findPaymentNo(domain.getScpNumber());
-		System.out.println("########################################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@test!!"+no.get(0).getpHeaderId());
-		paymentDetail.setPaymentHeader(no.get(0));
+		
 		
 		//**************** split date in Grid *****************//
 		
 		String[] data = domain.getScpPack().split("!");
 		for (String dataSplit : data) {
 			String[] dataRow = dataSplit.split(",");
-			if(dataRow[0].length() == 10){
-				dataRow[0] = dataRow[0].substring(9, 10);
-			}
+			
 			System.out.println(dataRow[0]);
 			System.out.println(dataRow[1]);
 			System.out.println(dataRow[2]);
 			System.out.println(dataRow[3]);
 			System.out.println(dataRow[4]);
 			System.out.println(dataRow[5]);
-			AccountAdmin idAccount = this.paymentHeader01Dao.findIdAccount(dataRow[0]);
+			PaymentDetail paymentDetail = new PaymentDetail();
+			PaymentHeader paymentHeaderForSaveDetail = this.paymentHeader01Dao.findByPaymentHeaderSaveOrUpdate(domain.getScpNumber()).get(0);
+			List<PaymentDetail> paymentUpdate =  this.paymentDetail01Dao.findPaymentDetailForSaveOrUpdate(paymentHeaderForSaveDetail, dataRow[0]);
+			
+			if (paymentUpdate.size() != 0) {
+				paymentDetail = paymentUpdate.get(0);
+			} else {
+				paymentDetail = new PaymentDetail();
+				paymentDetail.setpDetailId("1");
+			}
+			
+			List<PaymentHeader> no = this.paymentHeader01Dao.findPaymentNo(domain.getScpNumber());
+			System.out.println("########################################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@test!!"+no.get(0).getpHeaderId());
+			AccountAdmin idAccount = this.paymentHeader01Dao.findIdAccount(dataRow[1]);
+			System.out.println("#################!!!!!!!!!!!@@@@@@@@@@@@@@@@@"+idAccount);
+			
+			paymentDetail.setPaymentHeader(no.get(0));
 			paymentDetail.setAccountAdmin(idAccount);
 			paymentDetail.setDepartment(dataRow[3]);
-			paymentDetail.setDebit(new Long(dataRow[4]));
-			paymentDetail.setCredit(new Long(dataRow[5]));
+			paymentDetail.setDebit(new Double(dataRow[4]));
+			paymentDetail.setCredit(new Double(dataRow[5]));
 			paymentDetail.setUserCreation("testUserCreation");
 			paymentDetail.setUserUpdate("testUserUpdate");
 			paymentDetail.setCreationDate(datettCreate);

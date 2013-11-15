@@ -34,4 +34,11 @@ public class ParameterTable01ServiceImpl implements ParameterTable01Service {
 	public List<ParameterTable> findByProvince(){
 		return this.parameterTableDao.findByProvince();
 	}
+	
+	public List<ParameterTable> findByMount(){
+		return this.parameterTableDao.findByMount();
+	}
+	public List<ParameterTable> findByStatus(){
+		return this.parameterTableDao.findByStatus();
+	}
 }

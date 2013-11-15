@@ -80,7 +80,7 @@ public class SAC008Controller {
 		gridData.setRecords(jsonArray);
 		gridData.setTotal(jsonArray.size());
 		gridData.setSuccess(true);
-
+		response.setContentType("application/json;charset=UTF-8"); 
 		gridData.responseJson(response);
 
 	}

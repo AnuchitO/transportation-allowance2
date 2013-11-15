@@ -184,7 +184,7 @@ SCP007C.scpNumberCharactor = new Ext.form.TextField({
 
 });
 
-SCP007C.scpTotalMoney = new Ext.form.TextField({
+SCP007C.scpTotalMoney = new Ext.ss.form.NumberField({
 	id : 'scpTotalMoney',
 	fieldLabel : "จำนวนเงิน",
 	width : 120
@@ -296,28 +296,30 @@ function scpSaveOrUpdate() {
 	scpParam.scpNumber = Ext.getCmp('scpNumber').getValue();
 	scpParam.scpLabel3 = Ext.getCmp('scpLabel3').text;
 	scpParam.scpDateCreation = Ext.getCmp('scpDateCreation').getValue();
-	scpParam.scfTatolDebit = Ext.getCmp('scfTatolDebit').getValue();
-	scpParam.scfTatolCredit = Ext.getCmp('scfTatolCredit').getValue();
+	scpParam.scfTatolDebit = Ext.getCmp('scfTatolDebit').value;
+	scpParam.scfTatolCredit = Ext.getCmp('scfTatolCredit').value;
 	
 	//**************************** get Value in Grid ******************************//
 	
 	SCP007C.createGrid.getSelectionModel().selectAll();
 
-	var sm = SCP007C.createGrid.getSelectionModel().getSelections();
-	scpParam.pack = "";
-
-	for (var i = 0; i <= sm.length - 1; i++) {
+	var selectModel = SCP007C.createGrid.getSelectionModel().getSelections();
+	scpParam.scpPack = "";
+	
+	for (var i = 0; i <= selectModel.length - 1; i++) {
 		var scpDataGridNo = SCP007C.createGrid.getStore().getAt(i).data.scpNo;
 		var scpDataGridIdAccount = SCP007C.createGrid.getStore().getAt(i).data.scpIdAccount;
 		var scpDataGridNameAccount = SCP007C.createGrid.getStore().getAt(i).data.scpNameAccount;
 		var scpDataGridIdDept = SCP007C.createGrid.getStore().getAt(i).data.scpIdDept;
 		var scpDataGridDebit = SCP007C.createGrid.getStore().getAt(i).data.scpDebit;
+		var scpDataGridDebitDouble = scpDataGridDebit.toFixed(2);
 		var scpDateGridCredit = SCP007C.createGrid.getStore().getAt(i).data.scpCredit;
+		var scpDateGridCreditDouble = scpDateGridCredit.toFixed(2);
 		
 		SCP007C.createGrid.getSelectionModel().deselectRow(i);
 		scpParam.scpPack += scpDataGridNo + "," + scpDataGridIdAccount + "," + scpDataGridNameAccount
-				+ "," + scpDataGridIdDept + "," + scpDataGridDebit + ","
-				+ scpDateGridCredit + "!";
+				+ "," + scpDataGridIdDept + "," + scpDataGridDebitDouble + ","
+				+ scpDateGridCreditDouble + "!";
 	}
 	
 	//*****************************************************************************//
@@ -329,6 +331,7 @@ function scpSaveOrUpdate() {
 		success : function(response, opts) {
 			if (scpParam != null) {
 				Ext.Msg.alert('Information', 'บันทึกเรียบร้อย');
+				
 			} else {
 				Ext.Msg.alert('Information', 'Error');
 			}
@@ -386,28 +389,7 @@ SCP007C.comboboxStore = new Ext.data.JsonStore({
 });
 
 
-//SCP007C.createCombobox = new Ext.form.ComboBox({
-//	id : 'antecedent',
-//	fieldLabel : 'ฝ่าย / แผนก',
-//	mode : 'local',
-//	store : SCP007C.comboboxStore,
-//	valueField : 'code',
-//	displayField : 'description',
-//	lazyRender : true,
-//	autoSelect : true,
-//	criterionField : true,
-//	selectOnFocus : true,
-//	typeAhead : true,
-//	forceSelection : true,
-//	triggerAction : 'all',
-//	emptyText : 'Select ...',
-//	  listeners: {
-//		    select: function(combo, record, index) {
-//		      alert(record.json.description);
-//		    }
-//		  }
-//
-//});
+
 
 
 SCP007C.createCombobox = new Ext.form.ComboBox({
@@ -502,6 +484,7 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 				SCP007C.createGrid.getSelectionModel().selectAll();
 				var totalLength = SCP007C.createGrid.getSelectionModel().getSelections();
 				var totalDebit = 0;
+				var totalCredit = 0;
 				
 			
 				for (var i = 0; i <= totalLength.length - 1; i++) {
@@ -509,10 +492,17 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 				
 			if (Ext.isEmpty(test)) {
 				SCP007C.createGrid.store.getAt(i).set('scpDebit', 0.00);
-			}	
+			}
+			if (Ext.isEmpty(SCP007C.createGrid.getStore().getAt(i).data.scpCredit)) {
+				SCP007C.createGrid.store.getAt(i).set('scpCredit', 0.00);
+			}
 				 totalDebit = totalDebit + parseFloat(SCP007C.createGrid.getStore().getAt(i).data.scpDebit);
 				 
 				 SCP007C.scfTatolDebit.setValue(totalDebit);
+				 
+				 totalCredit = totalCredit + parseFloat(SCP007C.createGrid.getStore().getAt(i).data.scpCredit);
+				 
+				 SCP007C.scfTatolCredit.setValue(totalCredit);
 				 
 				 SCP007C.createGrid.getSelectionModel()
 					.deselectRow(i);
@@ -539,7 +529,7 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 				SCP007C.createGrid.getSelectionModel().selectAll();
 				var totalLength = SCP007C.createGrid.getSelectionModel().getSelections();
 				var totalCredit = 0;
-				
+				var totalDebit = 0;
 			
 				for (var i = 0; i <= totalLength.length - 1; i++) {
 					var test = SCP007C.createGrid.getStore().getAt(i).data.scpCredit;
@@ -547,9 +537,16 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 			if (Ext.isEmpty(test)) {
 				SCP007C.createGrid.store.getAt(i).set('scpCredit', 0.00);
 			}	
+			if (Ext.isEmpty(SCP007C.createGrid.getStore().getAt(i).data.scpDebit)) {
+				SCP007C.createGrid.store.getAt(i).set('scpDebit', 0.00);
+			}
 			totalCredit = totalCredit + parseFloat(SCP007C.createGrid.getStore().getAt(i).data.scpCredit);
 				 
 				 SCP007C.scfTatolCredit.setValue(totalCredit);
+				 
+				 totalDebit = totalDebit + parseFloat(SCP007C.createGrid.getStore().getAt(i).data.scpDebit);
+				 
+				 SCP007C.scfTatolDebit.setValue(totalDebit);
 				 
 				 SCP007C.createGrid.getSelectionModel()
 					.deselectRow(i);

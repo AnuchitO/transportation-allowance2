@@ -32,15 +32,15 @@ SEI005.seiLabelTitle = new Ext.form.Label({
 });
 
 SEI005.seiMountComboboxStore = new Ext.data.JsonStore({
-//	baseParams : {
-//		method : 'antecedent'
-//	},
-//	url : '/TransportationAllowance/SEI005.html',
-//	method : 'POST',
+	baseParams : {
+		method : 'selectMount'
+	},
+	url : '/TransportationAllowance/SEI005.html',
+	method : 'POST',
 	storeId : 'bloodStore',
 	root : 'records',
 	idProperty : 'code',
-//	autoLoad : true,
+	autoLoad : true,
 	// fieldLabel : 'comboStrore',
 	fields : [ {
 		name : 'code'
@@ -73,14 +73,14 @@ SEI005.seiMountCombobox = new Ext.form.ComboBox({
 
 SEI005.seiYearComboboxStore = new Ext.data.JsonStore({
 //	baseParams : {
-//		method : 'antecedent'
+//		method : 'selectYear'
 //	},
 //	url : '/TransportationAllowance/SEI005.html',
 //	method : 'POST',
 	storeId : 'bloodStore',
 	root : 'records',
 	idProperty : 'code',
-//	autoLoad : true,
+	autoLoad : true,
 	// fieldLabel : 'comboStrore',
 	fields : [ {
 		name : 'code'
@@ -111,15 +111,15 @@ SEI005.seiYearCombobox = new Ext.form.ComboBox({
 });
 
 SEI005.seiStatusComboboxStore = new Ext.data.JsonStore({
-//	baseParams : {
-//		method : 'antecedent'
-//	},
-//	url : '/TransportationAllowance/SEI005.html',
-//	method : 'POST',
+	baseParams : {
+		method : 'selectStatus'
+	},
+	url : '/TransportationAllowance/SEI005.html',
+	method : 'POST',
 	storeId : 'bloodStore',
 	root : 'records',
 	idProperty : 'code',
-//	autoLoad : true,
+	autoLoad : true,
 	// fieldLabel : 'comboStrore',
 	fields : [ {
 		name : 'code'
@@ -133,7 +133,7 @@ SEI005.seiStatusComboboxStore = new Ext.data.JsonStore({
 
 SEI005.seiStatusCombobox = new Ext.form.ComboBox({
 	id : 'seiStatusCombobox',
-	fieldLabel : 'ค้นหาปี',
+	fieldLabel : 'สถานะ',
 	mode : 'local',
 	store : SEI005.seiStatusComboboxStore,
 	valueField : 'code',

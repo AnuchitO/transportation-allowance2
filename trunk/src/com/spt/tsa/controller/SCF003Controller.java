@@ -50,7 +50,7 @@ import com.spt.tsa.util.BeanUtils;
 @Controller
 public class SCF003Controller {
 	private static Logger logger = LoggerFactory
-			.getLogger(APP001Controller.class);
+			.getLogger(SCF003Controller.class);
 
 	private Employee01Service employee01Service;
 	private ParameterTable01Service parameterTable01Service;
@@ -189,7 +189,7 @@ public class SCF003Controller {
 		gridData.setRecords(jsonArray);
 		gridData.setTotal(jsonArray.size());
 		gridData.setSuccess(true);
-
+		response.setContentType("application/json;charset=UTF-8"); 
 		gridData.responseJson(response);
 	}
 
@@ -203,7 +203,7 @@ public class SCF003Controller {
 		GridData gridData = new GridData();
 
 		JSONObject jobect1 = new JSONObject();
-
+		
 		for (int i = 0; i < resultsParam.size(); i++) {
 			logger.debug("-*-{}-*-", resultsParam.get(i));
 
@@ -217,7 +217,7 @@ public class SCF003Controller {
 		gridData.setRecords(jsonArray);
 		gridData.setTotal(jsonArray.size());
 		gridData.setSuccess(true);
-
+		response.setContentType("application/json;charset=UTF-8"); 
 		gridData.responseJson(response);
 	}
 
@@ -240,7 +240,7 @@ public class SCF003Controller {
 		gridData.setRecords(jsonArray);
 		gridData.setTotal(jsonArray.size());
 		gridData.setSuccess(true);
-
+		response.setContentType("application/json;charset=UTF-8"); 
 		gridData.responseJson(response);
 	}
 
@@ -449,7 +449,10 @@ public class SCF003Controller {
 					.findEmployeeByIdName(domain.getId()));
 			travelHeader.setCompany(this.employee01Service
 					.findEmployeeByIdName(domain.getId()).getCompany());
-			travelHeader.setTotal(new Double(domain.getTatolPaymfullCase()));
+			
+			String totalPaymentDay = domain.getTatolPaymfullCase().replace(",", "");
+			logger.debug("/////////////////***************************@@@@@@@@@@@@@{}",totalPaymentDay);
+			travelHeader.setTotal(new Double(totalPaymentDay));
 			travelHeader.setComName(domain.getCompany());
 			travelHeader.setAddress(domain.getAddress());
 			travelHeader.setProvince(domain.getAntercedentA());
@@ -461,8 +464,10 @@ public class SCF003Controller {
 				travelHeader.setStatus("002");
 			}
 			travelHeader.setRemark("no");
-			travelHeader.setTotalExpenses(new Double(domain.getTatolPaym()));
-			travelHeader.setTotalMotorWay(new Double(domain.getTatolPaymA()));
+			String totalPaymExpenses = domain.getTatolPaym().replace(",", "");
+			travelHeader.setTotalExpenses(new Double(totalPaymExpenses));
+			String totalPaymentMotorWay = domain.getTatolPaymA().replace(",", "");
+			travelHeader.setTotalMotorWay(new Double(totalPaymentMotorWay));
 			
 			travelHeader.setAttachment(new Long(domain.getDocument()));
 		

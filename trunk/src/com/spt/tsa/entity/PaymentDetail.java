@@ -40,10 +40,10 @@ public class PaymentDetail implements Serializable {
 	private String department;
 	
 	@Column (name = "PAYD_PDDEBIT")
-	private Long debit;
+	private Double debit;
 	
 	@Column (name = "PAYD_PDCREDIT")
-	private Long credit;
+	private Double credit;
 	
 	@Column (name = "PAYD_PDUSERCREATION")
 	private String userCreation;
@@ -106,19 +106,21 @@ public class PaymentDetail implements Serializable {
 
 
 
-	public Long getDebit() {
+	
+
+	public Double getDebit() {
 		return debit;
 	}
 
-	public void setDebit(Long debit) {
+	public void setDebit(Double debit) {
 		this.debit = debit;
 	}
 
-	public Long getCredit() {
+	public Double getCredit() {
 		return credit;
 	}
 
-	public void setCredit(Long credit) {
+	public void setCredit(Double credit) {
 		this.credit = credit;
 	}
 

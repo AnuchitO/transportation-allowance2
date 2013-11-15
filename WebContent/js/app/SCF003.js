@@ -127,6 +127,8 @@ SCF003.comboboxStoreA = new Ext.data.JsonStore({
 	idProperty : 'code',
 	autoLoad : true,
 	fieldLabel : 'comboStroreA',
+	
+
 	fields : [ {
 		name : 'code'
 
@@ -148,7 +150,9 @@ SCF003.createComboboxA = new Ext.form.ComboBox({
 	typeAhead : true,
 	forceSelection : true,
 	triggerAction : 'all',
-	emptyText : 'Select ...'
+	emptyText : 'Select ...',
+	
+	
 
 });
 
@@ -288,6 +292,7 @@ SCF003.gridRemoveBtn = new Ext.Toolbar.Button({
 						SCF003.tatolPaym.setValue(0.00);
 						SCF003.tatolPaymA.setValue(0.00);
 						SCF003.tatolPaymfullCase.setValue(0.00);
+						convertString();
 					}
 					
 					var getValueLastIndex = SCF003.createGrid.getStore().getAt(
@@ -598,7 +603,7 @@ function saveOrUpdate() {
 function convertString(){
 	
 	var Number = Ext.getCmp('tatolPaymfullCase').value;
-
+		
 		for (var i = 0; i < Number.length; i++)
 			{
 				Number = Number.replace (",", ""); //ไม่ต้องการเครื่องหมายคอมมาร์
@@ -649,11 +654,15 @@ function convertString(){
 							BahtText += TxtDigitArr[NumberLen - i - 1];
 						}
 					}
+					
 					BahtText += "บาท";
-					if (Number[1] == "00")
+					if (Number[0] == "0"){
+						Ext.getCmp('tatolManey').setValue("ศูนย์บาทถ้วน");
+					}
+					else if (Number[1] == "00")
 					{
 						Ext.getCmp('tatolManey').setValue(BahtText + "ถ้วน");
-						
+					
 					} else
 					{
 						DecimalLen = Number[1].length - 0;
@@ -825,7 +834,7 @@ SCF003.gridColumns = [
 			header : 'ค่าเดินทาง',
 			dataIndex : 'paymentTravel',
 			align : 'center',
-			xtype: 'numbercolumn', format:'0.00',
+			xtype: 'numbercolumn', format:'0,000.00',
 			 flex: 0,
 			editor : new Ext.ss.form.NumberField(
 					{
@@ -908,7 +917,7 @@ SCF003.gridColumns = [
 			header : 'ค่าทางด่วน',
 			dataIndex : 'paymentD',
 			align : 'center',
-			xtype: 'numbercolumn', format:'0.00',
+			xtype: 'numbercolumn', format:'0,000.00',
 			 flex: 0,
 			editor : new Ext.ss.form.NumberField(
 					{
@@ -987,7 +996,7 @@ SCF003.gridColumns = [
 			header : 'รวมเป็นเงิน',
 			dataIndex : 'payment',
 			align : 'center',
-
+			xtype: 'numbercolumn', format:'0,000.00',
 			width : 87.08,
 
 		}, {

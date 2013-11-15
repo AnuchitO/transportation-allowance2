@@ -182,7 +182,7 @@ public class SVD006Controller{
 			domain.setAccountNumber(travelHeader.getEmployee().getAccountNo());
 			domain.setTypeAccount(parameterTableBankType.getDetail());
 
-			List<BigDecimal> tra = this.travelHeader01Service.findTravelTotal("550001");
+			List<BigDecimal> tra = this.travelHeader01Service.findTravelTotal(noDoc);
 			domain.setTotalPayment(tra.get(0));
 			domain.setCharactorNumber(new BahtText(tra.get(0)).toString());
 			
@@ -215,7 +215,7 @@ public class SVD006Controller{
 			String dateMin = re.get(0).getDate().toString();
 			String [] dayMin = dateMin.split("-");
 			String [] dayMinday = dayMin[2].split(" ");
-			String dayTotalMinMax = " "+"-"+" "+cus.get(0)+" "+dayMinday[0]+" , " + sim.format(re.get(re.size()-1).getDate())+"เดินทางพบลูกค้า";
+			String dayTotalMinMax = " "+"-"+" "+cus.get(0)+" "+dayMinday[0]+" , " + sim.format(re.get(re.size()-1).getDate())+" "+"เดินทางพบลูกค้า";
 			
 			
 			
@@ -275,7 +275,7 @@ public class SVD006Controller{
 			gridData.setRecords(jsonArray);
 			gridData.setTotal(jsonArray.size());
 			gridData.setSuccess(true);
-
+			response.setContentType("application/json;charset=UTF-8"); 
 			gridData.responseJson(response);
 
 		}
@@ -334,7 +334,7 @@ public class SVD006Controller{
 			gridData.setRecords(jsonArray);
 			gridData.setTotal(jsonArray.size());
 			gridData.setSuccess(true);
-
+			response.setContentType("application/json;charset=UTF-8"); 
 			gridData.responseJson(response);
 		}
 		
@@ -347,8 +347,8 @@ public class SVD006Controller{
 				@RequestParam("scpNumber") String scpNumber,
 				@RequestParam("scpLabel3") String scpLabel3,
 				@RequestParam("scpDateCreation") String scpDateCreation, 
-				@RequestParam("scfTatolDebit") Long scfTatolDebit,
-				@RequestParam("scfTatolCredit") Long scfTatolCredit,
+				@RequestParam("scfTatolDebit") String scfTatolDebit,
+				@RequestParam("scfTatolCredit") String scfTatolCredit,
 				@RequestParam("scpPack") String scpPack
 			
 				

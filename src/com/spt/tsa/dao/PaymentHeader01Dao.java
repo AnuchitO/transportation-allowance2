@@ -14,6 +14,8 @@ public interface PaymentHeader01Dao {
 	public void saveFromPaymentDetail(PaymentDetail paymentDetail);
 	public AccountAdmin findIdAccount(String domain);
 	
+	public List<PaymentHeader> findByPaymentHeaderSaveOrUpdate(String domain);
+	
 	
 	
 	///////////

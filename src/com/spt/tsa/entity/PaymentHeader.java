@@ -42,10 +42,10 @@ public class PaymentHeader implements Serializable {
 	private Date chequedate;
 	
 	@Column (name = "PAYH_PHTOTALDEBIT")
-	private double totalDebit;
+	private Double totalDebit;
 	
 	@Column (name = "PAYH_PHTOTALCREBIT")
-	private double totalCredit;
+	private Double totalCredit;
 
 	@Column (name = "PAYH_PHSTATUS")
 	private String status;
@@ -111,19 +111,21 @@ public class PaymentHeader implements Serializable {
 		this.chequedate = chequedate;
 	}
 
-	public double getTotalDebit() {
+
+
+	public Double getTotalDebit() {
 		return totalDebit;
 	}
 
-	public void setTotalDebit(double totalDebit) {
+	public void setTotalDebit(Double totalDebit) {
 		this.totalDebit = totalDebit;
 	}
 
-	public double getTotalCredit() {
+	public Double getTotalCredit() {
 		return totalCredit;
 	}
 
-	public void setTotalCredit(double totalCredit) {
+	public void setTotalCredit(Double totalCredit) {
 		this.totalCredit = totalCredit;
 	}
 

@@ -55,6 +55,20 @@ public class ParameterTableDaoImpl extends HibernateDaoSupport  implements Param
 		 return this.getHibernateTemplate().find(hql);
 		
 	}
+	
+	public List<ParameterTable> findByMount(){
+		String hql = "FROM ParameterTable where CODE='3'";
+		 return this.getHibernateTemplate().find(hql);
+		
+	}
+	
+	public List<ParameterTable> findByStatus(){
+		String hql = "FROM ParameterTable where CODE='9'";
+		 return this.getHibernateTemplate().find(hql);
+		
+	}
+	
+	
 
 	
 }

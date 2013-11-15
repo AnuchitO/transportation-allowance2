@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tuxilla.BahtText;
 
+import com.spt.tsa.entity.Customer;
 import com.spt.tsa.entity.ParameterTable;
 import com.spt.tsa.entity.TravelDetail;
 import com.spt.tsa.entity.TravelHeader;
@@ -30,16 +31,27 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 	private List<ParameterTable> resultsBank;
 	private List<ParameterTable> resultsBankType;
 	private List<TravelDetail> travelDetails;
-//	public SPV004JasperDataSource() {
-//	//	super(SPV004Pojo.class);
-//		logger.debug("#####-----------------#########3");
-//	}
+	private Boolean checkTravelDetailsNUll = false;
+	
 	public SPV004JasperDataSource(List<TravelHeader> resutl, List<ParameterTable> resultsBank,List<ParameterTable>  resultsBankType,List<TravelDetail> travelDetails) {
 		super(SPV004Pojo.class);
 		this.listLravelHerder = resutl;
 		this.resultsBank = resultsBank;
 		this.resultsBankType = resultsBankType;
 		this.travelDetails = travelDetails;
+		// catch if travelDeatils null
+		if(this.travelDetails.size()==0){
+			TravelDetail travelDetail  = new TravelDetail();
+			this.checkTravelDetailsNUll = true;
+//			travelDetail.setDate(new Date());
+			Customer customer = new Customer();
+			 		 customer.setName("-");
+			travelDetail.setCustomer(customer);
+			travelDetail.setFrom("-");
+			travelDetail.setTo("-");
+			travelDetail.setRemark(" ");
+			this.travelDetails.add(travelDetail);
+		}
 
 	}
 	
@@ -96,45 +108,45 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 
 			
 				///get data for  Header
-				hCompanyName = this.listLravelHerder.get(0).getComName();
-				noDoc	=  this.listLravelHerder.get(0).getNo();
-				docDate	=  new SimpleDateFormat ("dd/MM/yyyy").format(this.listLravelHerder.get(0).getCreationate());
-				name	=  this.listLravelHerder.get(0).getEmployee().getName();
-				empId	=  this.listLravelHerder.get(0).getEmployee().getEmpId();
-				compName = this.listLravelHerder.get(0).getCompany().getName();
-				department=this.listLravelHerder.get(0).getNameDept();
-				address =  this.listLravelHerder.get(0).getAddress();
-				province=  this.listLravelHerder.get(0).getProvince();
-				phoneNumber= this.listLravelHerder.get(0).getTelephone();
-				email	= this.listLravelHerder.get(0).getEmail();
-				idCard = this.listLravelHerder.get(0).getEmployee().getIdCard();
-				hAddressName=this.listLravelHerder.get(0).getCompany().getAddress();
-				hTellName=this.listLravelHerder.get(0).getCompany().getTelephone();
-				hFaxName=this.listLravelHerder.get(0).getCompany().getFax();
+				TravelHeader travelHeader = this.listLravelHerder.get(0);
+				hCompanyName = travelHeader.getComName();
+				noDoc	=  travelHeader.getNo();
+				docDate	=  new SimpleDateFormat ("dd/MM/yyyy").format(travelHeader.getCreationate());
+				name	=  travelHeader.getEmployee().getName();
+				empId	=  travelHeader.getEmployee().getEmpId();
+				compName = travelHeader.getCompany().getName();
+				department=travelHeader.getNameDept();
+				address =  travelHeader.getAddress();
+				province=  travelHeader.getProvince();
+				phoneNumber= travelHeader.getTelephone();
+				email	= travelHeader.getEmail();
+				idCard = travelHeader.getEmployee().getIdCard();
+				hAddressName=travelHeader.getCompany().getAddress();
+				hTellName=travelHeader.getCompany().getTelephone();
+				hFaxName=travelHeader.getCompany().getFax();
 				
 				//get data for Total Row
-				tSumTravel= this.listLravelHerder.get(0).getTotalExpenses().toString();
-				tSumExpressWay = this.listLravelHerder.get(0).getTotalMotorWay().toString();
-				tSumTotal = this.listLravelHerder.get(0).getTotal().toString();
+				tSumTravel= travelHeader.getTotalExpenses().toString();
+				tSumExpressWay = travelHeader.getTotalMotorWay().toString();
+				tSumTotal = travelHeader.getTotal().toString();
 				
 				
 				//get data For assign to variable For Fill summary				
-				 sumTotalCharector=new BahtText(this.listLravelHerder.get(0).getTotal()).toString();
-				 attachment	=	this.listLravelHerder.get(0).getAttachment().toString();
-				 toPay	= this.listLravelHerder.get(0).getPaymDesc();
+				 sumTotalCharector=new BahtText(travelHeader.getTotal()).toString();
+				 attachment	=	travelHeader.getAttachment().toString();
+				 toPay	= travelHeader.getPaymDesc();
 				 bank 	= this.resultsBank.get(0).getDetail();
-				 branch	= this.listLravelHerder.get(0).getEmployee().getBranch();
-				 accountId = this.listLravelHerder.get(0).getEmployee().getAccountNo();
+				 branch	= travelHeader.getEmployee().getBranch();
+				 accountId = travelHeader.getEmployee().getAccountNo();
 				 accountType = this.resultsBankType.get(0).getDetail();
-				 if(this.listLravelHerder.get(0).getPayType().equals("1")){
-					 checkCash=" ";
+				 if(travelHeader.getPayType().equals("1")){
+					 checkCash="/";
 					 checkCheck=" ";
 				 }else{
 					 checkCash=" ";
-					 checkCheck=" ";
+					 checkCheck="/";
 				 }
-	logger.debug("============travelDetails========= {} ==============size===={}",travelDetails,travelDetails.size());
-				
+					
 		if(this.travelDetails.size()==1){
 			//Fill all  in page field
 			SPV004Pojo 	spv004Pojo = new SPV004Pojo();
@@ -157,20 +169,36 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 		  	spv004Pojo.sethFaxName(hFaxName);
 
 		  	//Value For first Row Table  query form TravelDetail
-		  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(this.travelDetails.get(0).getDate()));
-			spv004Pojo.settCustomer(this.travelDetails.get(0).getCustomer().getName());
-			spv004Pojo.settFrom(this.travelDetails.get(0).getFrom());
-			spv004Pojo.settTo(this.travelDetails.get(0).getTo());
-			spv004Pojo.settTravel(this.travelDetails.get(0).getTravelExpenses().toString());
-			spv004Pojo.settExpressWay(this.travelDetails.get(0).getMotorWay().toString());
-			spv004Pojo.settSum(this.travelDetails.get(0).getTotalDay().toString());
-			spv004Pojo.settNotation(this.travelDetails.get(0).getRemark());
+		  	TravelDetail travelDetail = this.travelDetails.get(0);
+		  	
+		  	if(this.checkTravelDetailsNUll){
+		  		spv004Pojo.settDate("-");
+		  		spv004Pojo.setNoTable("-");
+		  		spv004Pojo.settTravel("-");
+				spv004Pojo.settExpressWay("-");
+				spv004Pojo.settSum("-");
+		  	}else{
+		  		spv004Pojo.setNoTable("1");
+		  		spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(travelDetail.getDate()));
+				spv004Pojo.settTravel(travelDetail.getTravelExpenses().toString());
+				spv004Pojo.settExpressWay(travelDetail.getMotorWay().toString());
+				spv004Pojo.settSum(travelDetail.getTotalDay().toString());
+		  	}
+			spv004Pojo.settCustomer(travelDetail.getCustomer().getName());
+			spv004Pojo.settFrom(travelDetail.getFrom());
+			spv004Pojo.settTo(travelDetail.getTo());
+			spv004Pojo.settNotation(travelDetail.getRemark());
 			
 			//Fill Total Row
-			spv004Pojo.settSumTravel(tSumTravel);
-			spv004Pojo.settSumExpressWay(tSumExpressWay);
-			spv004Pojo.settSumTotal(tSumTotal);
-
+			if(this.checkTravelDetailsNUll){
+				spv004Pojo.settSumTravel("-");
+				spv004Pojo.settSumExpressWay("-");
+				spv004Pojo.settSumTotal("-");
+			}else{
+				spv004Pojo.settSumTravel(tSumTravel);
+				spv004Pojo.settSumExpressWay(tSumExpressWay);
+				spv004Pojo.settSumTotal(tSumTotal);
+			}
 			
 			//Fill summary						
 			spv004Pojo.setSumTotalCharector(sumTotalCharector);
@@ -178,8 +206,13 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 			spv004Pojo.setBranch(branch);
 			spv004Pojo.setAccountId(accountId);
 			spv004Pojo.setAccountType(accountType);
-			spv004Pojo.setCheckCash(checkCash);
-			spv004Pojo.setCheckCheck(checkCheck);		
+			if(this.checkTravelDetailsNUll){
+				spv004Pojo.setCheckCash(" ");
+				spv004Pojo.setCheckCheck(" ");
+			}else{
+				spv004Pojo.setCheckCash(checkCash);
+				spv004Pojo.setCheckCheck(checkCheck);
+			}		
 			listSPV004PojoData.add(spv004Pojo);//Object for save all			
 			
 		}else if(this.travelDetails.size()==2){
@@ -205,26 +238,30 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 			
 
 		  	//Value For first Row Table  query form TravelDetail
-		  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(this.travelDetails.get(0).getDate()));
-			spv004Pojo.settCustomer(this.travelDetails.get(0).getCustomer().getName());
-			spv004Pojo.settFrom(this.travelDetails.get(0).getFrom());
-			spv004Pojo.settTo(this.travelDetails.get(0).getTo());
-			spv004Pojo.settTravel(this.travelDetails.get(0).getTravelExpenses().toString());
-			spv004Pojo.settExpressWay(this.travelDetails.get(0).getMotorWay().toString());
-			spv004Pojo.settSum(this.travelDetails.get(0).getTotalDay().toString());
-			spv004Pojo.settNotation(this.travelDetails.get(0).getRemark());
+		  	TravelDetail travelDetail0 = this.travelDetails.get(0);
+		  	spv004Pojo.setNoTable("1");
+		  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(travelDetail0.getDate()));
+			spv004Pojo.settCustomer(travelDetail0.getCustomer().getName());
+			spv004Pojo.settFrom(travelDetail0.getFrom());
+			spv004Pojo.settTo(travelDetail0.getTo());
+			spv004Pojo.settTravel(travelDetail0.getTravelExpenses().toString());
+			spv004Pojo.settExpressWay(travelDetail0.getMotorWay().toString());
+			spv004Pojo.settSum(travelDetail0.getTotalDay().toString());
+			spv004Pojo.settNotation(travelDetail0.getRemark());
 			listSPV004PojoData.add(spv004Pojo);//Header and First Row  Object
 			
 			//Value For Second Row Table and Summary
+			TravelDetail travelDetail1 = this.travelDetails.get(1);
 			spv004Pojo = new SPV004Pojo();
-		  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(this.travelDetails.get(1).getDate()));
-			spv004Pojo.settCustomer(this.travelDetails.get(1).getCustomer().getName());
-			spv004Pojo.settFrom(this.travelDetails.get(1).getFrom());
-			spv004Pojo.settTo(this.travelDetails.get(1).getTo());
-			spv004Pojo.settTravel(this.travelDetails.get(1).getTravelExpenses().toString());
-			spv004Pojo.settExpressWay(this.travelDetails.get(1).getMotorWay().toString());
-			spv004Pojo.settSum(this.travelDetails.get(1).getTotalDay().toString());
-			spv004Pojo.settNotation(this.travelDetails.get(1).getRemark());
+			spv004Pojo.setNoTable("2");
+		  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(travelDetail1.getDate()));
+			spv004Pojo.settCustomer(travelDetail1.getCustomer().getName());
+			spv004Pojo.settFrom(travelDetail1.getFrom());
+			spv004Pojo.settTo(travelDetail1.getTo());
+			spv004Pojo.settTravel(travelDetail1.getTravelExpenses().toString());
+			spv004Pojo.settExpressWay(travelDetail1.getMotorWay().toString());
+			spv004Pojo.settSum(travelDetail1.getTotalDay().toString());
+			spv004Pojo.settNotation(travelDetail1.getRemark());
 			
 			//Fill Total Row
 			spv004Pojo.settSumTravel(tSumTravel);
@@ -264,21 +301,25 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 		  	spv004Pojo.sethFaxName(hFaxName);
 
 		  	//Value For first Row Table  query form TravelDetail
-		  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(this.travelDetails.get(0).getDate()));
-			spv004Pojo.settCustomer(this.travelDetails.get(0).getCustomer().getName());
-			spv004Pojo.settFrom(this.travelDetails.get(0).getFrom());
-			spv004Pojo.settTo(this.travelDetails.get(0).getTo());
-			spv004Pojo.settTravel(this.travelDetails.get(0).getTravelExpenses().toString());
-			spv004Pojo.settExpressWay(this.travelDetails.get(0).getMotorWay().toString());
-			spv004Pojo.settSum(this.travelDetails.get(0).getTotalDay().toString());
-			spv004Pojo.settNotation(this.travelDetails.get(0).getRemark());
+		  	TravelDetail travelDetail0 = this.travelDetails.get(0);
+		  	spv004Pojo.setNoTable("1");
+		  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(travelDetail0.getDate()));
+			spv004Pojo.settCustomer(travelDetail0.getCustomer().getName());
+			spv004Pojo.settFrom(travelDetail0.getFrom());
+			spv004Pojo.settTo(travelDetail0.getTo());
+			spv004Pojo.settTravel(travelDetail0.getTravelExpenses().toString());
+			spv004Pojo.settExpressWay(travelDetail0.getMotorWay().toString());
+			spv004Pojo.settSum(travelDetail0.getTotalDay().toString());
+			spv004Pojo.settNotation(travelDetail0.getRemark());
 			listSPV004PojoData.add(spv004Pojo);//Header+First Row  Object one
 			
 			//Fill  second Row to n-1 Row
-			int size = this.travelDetails.size();
+			Integer size = this.travelDetails.size();
 			for(int i=1;i<=(size-2);i++){
 				//Value For Second Row Table and Summary
 				spv004Pojo = new SPV004Pojo();
+				Integer j = 1+i;
+				spv004Pojo.setNoTable(j.toString());
 			  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(this.travelDetails.get(i).getDate()));
 				spv004Pojo.settCustomer(this.travelDetails.get(i).getCustomer().getName());
 				spv004Pojo.settFrom(this.travelDetails.get(i).getFrom());
@@ -291,8 +332,9 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 			}
 			
 			//Value For last Row 
-			int lastIndex = size-1;
-			spv004Pojo = new SPV004Pojo();
+			Integer lastIndex = size-1;
+			spv004Pojo = new SPV004Pojo();			 
+			spv004Pojo.setNoTable(size.toString());
 		  	spv004Pojo.settDate(new SimpleDateFormat("dd/MM/yyy").format(this.travelDetails.get(lastIndex).getDate()));
 			spv004Pojo.settCustomer(this.travelDetails.get(lastIndex).getCustomer().getName());
 			spv004Pojo.settFrom(this.travelDetails.get(lastIndex).getFrom());

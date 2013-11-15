@@ -269,11 +269,15 @@ public class SCF003Controller {
 			} catch (Exception e) {
 				
 			}
+			int i = 1;
 			for(TravelDetail td : travelDetails){
 				 jobect = new JSONObject();
-				 jobect.accumulate("no", td.getNo());
-				 SimpleDateFormat simple_date = new SimpleDateFormat("dd/MM/yyyy", new Locale("th", "th"));
-				 jobect.accumulate("gridDate", simple_date.format(td.getDate()));
+				 jobect.accumulate("no", i++);
+				 ///Convert Date For Grid Date
+				 DateFormat formatForGrid = new SimpleDateFormat("E MMM dd yyyy 00:00:00");
+				 String strDateForGrid = formatForGrid.format(td.getDate());
+				 ///End Convert Date For Grid Date
+				 jobect.accumulate("gridDate",strDateForGrid);
 				 jobect.accumulate("customer", td.getCustomer().getName());
 				 jobect.accumulate("region", td.getFrom());
 				 jobect.accumulate("goal", td.getTo());
@@ -285,44 +289,6 @@ public class SCF003Controller {
 			}
 		}
 		/////// End Nong ////
-
-
-		// JSONObject jobect1 = new JSONObject();
-		// jobect1.accumulate("no", "01");
-		// jobect1.accumulate("gridDate", "17/12/2556");
-		// jobect1.accumulate("customer", "ANUCHIT");
-		// jobect1.accumulate("region", "Bangkok");
-		// jobect1.accumulate("goal", "Bangkok");
-		// jobect1.accumulate("paymentTravel", "1000");
-		// jobect1.accumulate("paymentD", "1000");
-		// jobect1.accumulate("payment", "2000");
-		// jobect1.accumulate("remark", "No");
-		//
-		// jsonArray.add(jobect1);
-		//
-		// JSONObject jobect2 = new JSONObject();
-		// jobect2.accumulate("no", "02");
-		// jobect2.accumulate("gridDate", "18/12/2556");
-		// jobect2.accumulate("customer", "ANUCHIT");
-		// jobect2.accumulate("region", "Bangkok");
-		// jobect2.accumulate("goal", "Bangkok");
-		// jobect2.accumulate("paymentTravel", "1000");
-		// jobect2.accumulate("paymentD", "1000");
-		// jobect2.accumulate("payment", "2000");
-		// jobect2.accumulate("remark", "No");
-		// jsonArray.add(jobect2);
-		//
-		// JSONObject jobect3 = new JSONObject();
-		// jobect3.accumulate("no", "03");
-		// jobect3.accumulate("gridDate","19/12/2556");
-		// jobect3.accumulate("customer", "ANUCHIT");
-		// jobect3.accumulate("region", "Bangkok");
-		// jobect3.accumulate("goal", "Bangkok");
-		// jobect3.accumulate("paymentTravel", "1000");
-		// jobect3.accumulate("paymentD", "1000");
-		// jobect3.accumulate("payment", "2000");
-		// jobect3.accumulate("remark", "No");
-		// jsonArray.add(jobect3);
 
 		gridData.setRecords(jsonArray);
 		gridData.setTotal(jsonArray.size());

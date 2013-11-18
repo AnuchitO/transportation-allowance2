@@ -35,6 +35,10 @@ public class AccountAdmin01ServiceImpl implements AccountAdmin01Service{
 	public void deleteByAccountId(AccountAdmin accountAdmin) {
 		this.accountAdmin01Dao.deleteByAccountId(accountAdmin);
 	}
+
+	public void saveOrUpdate(AccountAdmin accountAdmin) {
+		this.accountAdmin01Dao.saveOrUpdate(accountAdmin);		
+	}
 	 
 	////////End Nong//////
    

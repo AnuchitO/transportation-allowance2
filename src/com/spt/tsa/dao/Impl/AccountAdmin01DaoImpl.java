@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 
 
+
 import com.spt.tsa.dao.AccountAdmin01Dao;
 import com.spt.tsa.entity.*;
 
@@ -36,6 +37,10 @@ public class AccountAdmin01DaoImpl extends HibernateDaoSupport implements Accoun
 
 	public void deleteByAccountId(AccountAdmin accountAdmin) {
 		this.getHibernateTemplate().delete(accountAdmin);		
+	}
+
+	public void saveOrUpdate(AccountAdmin accountAdmin) {
+		this.getHibernateTemplate().saveOrUpdate(accountAdmin);		
 	}
    
 }

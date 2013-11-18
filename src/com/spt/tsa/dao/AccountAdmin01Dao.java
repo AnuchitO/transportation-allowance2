@@ -12,4 +12,5 @@ public interface AccountAdmin01Dao {
 	////////
 	public List<AccountAdmin> findByAccountId(String acId);
 	public void deleteByAccountId(AccountAdmin accountAdmin);
+	public void saveOrUpdate(AccountAdmin accountAdmin);
 }	

@@ -112,7 +112,7 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 				hCompanyName = travelHeader.getComName();
 				noDoc	=  travelHeader.getNo();
 				docDate	=  new SimpleDateFormat ("dd/MM/yyyy").format(travelHeader.getCreationate());
-				name	=  travelHeader.getEmployee().getName();
+				name	=  travelHeader.getEmployee().getName()+"  "+travelHeader.getEmployee().getLastname();
 				empId	=  travelHeader.getEmployee().getEmpId();
 				compName = travelHeader.getCompany().getName();
 				department=travelHeader.getNameDept();

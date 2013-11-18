@@ -12,5 +12,6 @@ public interface AccountAdmin01Service {
 	//////////////////////
 	public List<AccountAdmin> findByAccountId(String acId);
 	public void deleteByAccountId(AccountAdmin accountAdmin);
+	public void saveOrUpdate(AccountAdmin accountAdmin);
 	////// End Nong //////
 }

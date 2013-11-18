@@ -94,7 +94,7 @@ public class SHI002Controller {
 //		SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
 		SHI002Domain01 domain = new SHI002Domain01();
 		
-		domain.setEmployeeName(this.employees.getName());
+		domain.setEmployeeName(this.employees.getName()+"  "+this.employees.getLastname());
 		domain.setEmployeeId(this.employees.getEmpId());
 		
 		Map<String, Object> model = new HashMap<String, Object>();
@@ -153,9 +153,7 @@ public class SHI002Controller {
 				 jobect.accumulate("no", i++);
 				 jobect.accumulate("docNo",th.getNo());
 				 jobect.accumulate("docDate",simple_date.format(th.getCreationate()));
-				 
-				 
-				 
+				 		 
 				 String status = " ";
 				 try {
 					 this.listParameterTables = this.parameterTable01Service.findRow("9", th.getStatus());

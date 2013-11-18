@@ -72,11 +72,11 @@ SEI005.seiMountCombobox = new Ext.form.ComboBox({
 
 
 SEI005.seiYearComboboxStore = new Ext.data.JsonStore({
-//	baseParams : {
-//		method : 'selectYear'
-//	},
-//	url : '/TransportationAllowance/SEI005.html',
-//	method : 'POST',
+	baseParams : {
+		method : 'selectYear'
+	},
+	url : '/TransportationAllowance/SEI005.html',
+	method : 'POST',
 	storeId : 'bloodStore',
 	root : 'records',
 	idProperty : 'code',
@@ -219,18 +219,24 @@ SEI005.seiGridColumns = [
 }
 
 ];
+SEI005.selectMount = Ext.getCmp('seiMountCombobox').getValue();
+SEI005.selectYear = Ext.getCmp('seiYearCombobox').getValue();
+SEI005.selectStatus = Ext.getCmp('seiStatusCombobox').getValue();
 
 SEI005.seiGridStrore = new Ext.data.JsonStore({
-	// baseParams : {
-	// method : 'gridData'
-	// },
-	// url : '/TransportationAllowance/SEI005.html',
-	// method : 'POST',
+	 baseParams : {
+	 method : 'gridDataSelect',
+	 selectMount  : SEI005.selectMount,
+	 selectYear   : SEI005.selectYear,
+	 selectStatus : SEI005.selectStatus
+	 },
+	 url : '/TransportationAllowance/SEI005.html',
+	 method : 'POST',
 	pageSize : 10,
 	storeId : 'gridStore',
 	root : 'records',
 	idProperty : 'code',
-	// autoLoad : true,
+	 autoLoad : true,
 
 	fields : [ {
 		name : 'seiNo'
@@ -243,9 +249,9 @@ SEI005.seiGridStrore = new Ext.data.JsonStore({
 	}, {
 		name : 'seiSendDate'
 	}, {
-		name : 'seiAppove'
-	}, {
 		name : 'seiStatus'
+	}, {
+		name : 'seiAppove'
 	},{
 		name : 'seiTotalPayment'
 	}, {
@@ -400,12 +406,27 @@ Ext
 
 	});
 	Ext.get('seiButtonSearch').on('click',function(e) {
-		Ext.MessageBox.confirm('Confirmation','คุณต้องการกลับไปหน้าหลัก',confirmFunction);
+		Ext.MessageBox.confirm('Confirmation','test',confirmFunction);
 		function confirmFunction(btn) {
 			if (btn == 'yes') {
-			
-
-		}
+		
+				SEI005.seiCreateGrid.store.load( //  reload grid store when click search button
+					                {   
+					                   params:{method : 'gridDataSelect',
+					                	   selectMount  : Ext.getCmp('seiMountCombobox').getValue(),
+					                	   selectYear   : Ext.getCmp('seiYearCombobox').getValue(),
+					                	   selectStatus : Ext.getCmp('seiStatusCombobox').getValue()
+					                	   },
+					                  });
+//							Ext.Msg.alert('Information', 'ทำรายการสำเร็จ');
+						}
 		}
 	});
+				
+				
+
+
+
+		
+	
 });

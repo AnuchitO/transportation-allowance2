@@ -138,6 +138,13 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 			return this.getHibernateTemplate().findByCriteria(criteria);
 		}
 	 
+	 public List<TravelHeader> findSelectYearNotSave() {
+			DetachedCriteria criteria =  DetachedCriteria.forClass(TravelHeader.class);
+					criteria.add(Restrictions.ne("status", "001"));
+					criteria.addOrder(Order.asc("creationate"));
+			return this.getHibernateTemplate().findByCriteria(criteria);
+		}
+	 
 	 public List<String> findNameCustomer(String domain){
 		 String name = this.findByCustomer(domain).get(0).getCustomer().getCusId();
 		 Session ses = (Session) this.getSession();
@@ -194,5 +201,61 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 						 				);
     	return this.getHibernateTemplate().findByCriteria(criteria);
 	}
-    
+	
+	public List<TravelHeader> findDataGroupByNo() {
+		DetachedCriteria criteria =  DetachedCriteria.forClass(TravelHeader.class);
+				criteria.addOrder(Order.asc("no"));
+		return this.getHibernateTemplate().findByCriteria(criteria);
+	}
+	
+	public List<TravelHeader> findSelectSearchStatus(String domain) {
+    	DetachedCriteria criteria =  DetachedCriteria.forClass(TravelHeader.class);
+    	criteria.add(Restrictions.eq("status", domain));
+	
+    	return this.getHibernateTemplate().findByCriteria(criteria);
+	}
+	
+	
+		public List<TravelHeader> findYearSelect(String domain) {
+			String hql = "from TravelHeader where to_char(creationate,'YYYY') ="+"'"+domain+"'"+"";
+			 return this.getHibernateTemplate().find(hql);
+			
+		
+	 }
+		
+		public List<TravelHeader> findMonthSelect(String domain) {
+			String hql = "from TravelHeader where to_char(creationate,'MM') ="+"'"+domain+"'"+"";
+			 return this.getHibernateTemplate().find(hql);
+			
+		
+	 }
+		
+		public List<TravelHeader> findYearAndMonthSelect(String domain) {
+			String hql = "from TravelHeader where to_char(creationate,'YYYY/MM') = "+"'"+domain+"'"+"";
+			 return this.getHibernateTemplate().find(hql);
+			
+		
+	 }
+		
+		public List<TravelHeader> findMountAndStatus(String domain,String status){
+			String hql = "from TravelHeader where to_char(creationate,'MM') ="+"'"+domain+"'"+" "+"and status="+"'"+status+"'"+"";
+			 return this.getHibernateTemplate().find(hql);
+			
+		
+	 }
+		
+		public List<TravelHeader> findYearAndStatus(String domain,String status){
+			String hql = "from TravelHeader where to_char(creationate,'YYYY') ="+"'"+domain+"'"+" "+"and status="+"'"+status+"'"+"";
+			 return this.getHibernateTemplate().find(hql);
+			
+		
+	 }
+		
+		public List<TravelHeader> findAllCase(String yearAndMount,String status){
+			String hql = "from TravelHeader where to_char(creationate,'YYYY/MM') ="+"'"+yearAndMount+"'"+" "+"and status="+"'"+status+"'"+"";
+			 return this.getHibernateTemplate().find(hql);
+			
+		
+	 }
+	
 }

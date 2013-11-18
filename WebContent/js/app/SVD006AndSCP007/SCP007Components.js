@@ -36,6 +36,12 @@ SCP007C.scpDate = new Ext.form.DateField({
 	vtype : 'daterange',
 	format : 'd/m/Y',
 	endDateField : 'enddt', // id of the end date field
+	maxValue : new Date(),
+	style:{
+		"color":"blue",
+	    "background-image":"none",
+	    "background-color":"#FFFACD"
+	},
 	listeners : {
 		render : function(datefield) {
 			// / code to convert GMT String to date object
@@ -88,7 +94,14 @@ SCP007C.scpLabel3 = new Ext.form.Label({
 SCP007C.scpForPayGive = new Ext.form.TextField({
 	id : 'scpForPayGive',
 	fieldLabel : "จ่ายให้",
-	width : 400
+	width : 400,
+	readOnly : true,
+	disabled : true,
+	style:{
+		"color":"blue",
+	    "background-image":"none",
+	    "background-color":"#FFFACD"
+	},
 
 });
 
@@ -124,14 +137,28 @@ SCP007C.scpTypeForpay2 = new Ext.form.Checkbox({
 SCP007C.scpBank = new Ext.form.TextField({
 	id : 'scpBank',
 	fieldLabel : "ธนาคาร",
-	width : 200
+	width : 200,
+	readOnly : true,
+	disabled : true,
+	style:{
+		"color":"blue",
+	    "background-image":"none",
+	    "background-color":"#FFFACD"
+	},
 
 });
 
 SCP007C.scpBranch = new Ext.form.TextField({
 	id : 'scpBranch',
 	fieldLabel : "สาขา",
-	width : 200
+	width : 200,
+	readOnly : true,
+	disabled : true,
+	style:{
+		"color":"blue",
+	    "background-image":"none",
+	    "background-color":"#FFFACD"
+	},
 
 });
 
@@ -149,6 +176,12 @@ SCP007C.scpDateCreation = new Ext.form.DateField({
 	vtype : 'daterange',
 	format : 'd/m/Y',
 	endDateField : 'enddt', // id of the end date field
+	maxValue : new Date(),
+	style:{
+		"color":"blue",
+	    "background-image":"none",
+	    "background-color":"#FFFACD"
+	},
 	listeners : {
 		render : function(datefield) {
 			// / code to convert GMT String to date object
@@ -165,29 +198,51 @@ SCP007C.scpLabelDetail = new Ext.form.Label({
 
 	},
 	// labelStyle: 'font-weight:bold;',
-	anchor : '93%'
+	anchor : '93%',
+	
 
 });
 
 SCP007C.scfTextArea = new Ext.ss.form.TextArea({
 	id : 'scfTextArea',
-	width : 670,
+	width : 680,
 	allowBlank : false,
 	bodyPadding : 10,
+	readOnly : true,
+	disabled : true,
+	style:{
+		"color":"blue",
+	    "background-image":"none",
+	    "background-color":"#FFFACD"
+	},
 
 });
 
 SCP007C.scpNumberCharactor = new Ext.form.TextField({
 	id : 'scpNumberCharactor',
 	fieldLabel : "จำนวนตัวอักษร",
-	width : 330
+	width : 330,
+	readOnly : true,
+	disabled : true,
+	style:{
+		"color":"blue",
+	    "background-image":"none",
+	    "background-color":"#FFFACD"
+	},
 
 });
 
 SCP007C.scpTotalMoney = new Ext.ss.form.NumberField({
 	id : 'scpTotalMoney',
 	fieldLabel : "จำนวนเงิน",
-	width : 120
+	width : 120,
+	readOnly : true,
+	disabled : true,
+	style:{
+		"color":"blue",
+	    "background-image":"none",
+	    "background-color":"#FFFACD"
+	},
 
 });
 // ********************************** set value **********************//
@@ -476,7 +531,7 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 	header : 'เดบิต',
 	dataIndex : 'scpDebit',
 	align : 'center',
-	xtype: 'numbercolumn', format:'0.00',
+	xtype: 'numbercolumn', format:'0,000.00',
 	editor : new Ext.ss.form.NumberField({
 		id : 'scpEditDebit',
 		listeners : {
@@ -521,7 +576,7 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 	header : 'เครดิต',
 	dataIndex : 'scpCredit',
 	align : 'center',
-	xtype: 'numbercolumn', format:'0.00',
+	xtype: 'numbercolumn', format:'0,000.00',
 	editor : new Ext.ss.form.NumberField({
 		id : 'scpEditCredit',
 		listeners : {
@@ -660,7 +715,10 @@ SCP007C.scpButtonPrint = new Ext.Button({
 SCP007C.scpButtonBack = new Ext.Button({
 	id : 'scpButtonBack',
 	text : 'Back',
-	width : 100
+	width : 100,
+	handler : function() {
+		SVD006C.tabPanel.setActiveTab(0);
+	}
 });
 
 // ********************** push data to FieldSet *************************//
@@ -734,7 +792,11 @@ SCP007C.scpSetHeader = new Ext.form.FieldSet({
 	}, {
 		columnWidth : 1,
 		items : SCP007C.scpForPayGive,
-		labelAlign : 'right'
+		labelAlign : 'right',
+		style : {
+			"margin-top" : "20px",
+
+		},
 
 	}, {
 		columnWidth : 0.14,

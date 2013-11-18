@@ -65,6 +65,7 @@ public class Travelheader01ServiceImpl implements TravelHeader01Service{
 		 List<String> send = travelHeader01Dao.findDateMinMaxFromTravelHeader(domain);
 		 return send;
 	 }
+	
 	 public List<TravelDetail> findDateMinMax(String domain) {
 		 return this.travelHeader01Dao.findDateMinMax(domain);
 	 }
@@ -83,7 +84,37 @@ public class Travelheader01ServiceImpl implements TravelHeader01Service{
 	public void deleteTravelHeader(TravelHeader travelHeader) {
 		this.travelHeader01Dao.deleteTravelHeader(travelHeader);
 	}
-
+	public List<TravelHeader> findSelectYearNotSave(){
+		return this.travelHeader01Dao.findSelectYearNotSave();
+	}
+	public List<TravelHeader> findDataGroupByNo(){
+		return this.travelHeader01Dao.findDataGroupByNo();
+	}
+	public List<TravelHeader> findSelectSearchStatus(String domain){
+		return this.travelHeader01Dao.findSelectSearchStatus(domain);
+	}
+	
+	public List<TravelHeader> findYearSelect(String domain){
+		return this.travelHeader01Dao.findYearSelect(domain);
+	}
+	
+	public List<TravelHeader> findMonthSelect(String domain){
+		return this.travelHeader01Dao.findMonthSelect(domain);
+	}
+	public List<TravelHeader> findYearAndMonthSelect(String domain){
+		return this.travelHeader01Dao.findYearAndMonthSelect(domain);
+	}
+	
+	public List<TravelHeader> findMountAndStatus(String domain,String status){
+		return this.travelHeader01Dao.findMountAndStatus(domain, status);
+	}
+	public List<TravelHeader> findYearAndStatus(String domain,String status){
+		return this.travelHeader01Dao.findYearAndStatus(domain, status);
+	}
+	
+	public List<TravelHeader> findAllCase(String yearAndMount,String status){
+		return this.travelHeader01Dao.findAllCase(yearAndMount, status);
+	}
 	public List<TravelHeader> findLikeYearAndStatus(Employee employee,String year, String status) { //Required Thai Year
 		List<TravelHeader> listTravelHeaders = null;
 		

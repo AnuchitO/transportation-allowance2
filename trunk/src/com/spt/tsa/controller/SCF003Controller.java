@@ -243,6 +243,29 @@ public class SCF003Controller {
 		response.setContentType("application/json;charset=UTF-8"); 
 		gridData.responseJson(response);
 	}
+	
+	@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=document")
+	public void setDocument(HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		JSONArray jsonArray = new JSONArray();
+		GridData gridData = new GridData();
+
+		JSONObject jobect1 = new JSONObject();
+		for (int i=1; i<=100 ;i++) {
+
+			jobect1.accumulate("code", i);
+			jobect1.accumulate("description", i);
+			jsonArray.add(jobect1);
+			jobect1.clear();
+
+		}
+		gridData.setRecords(jsonArray);
+		gridData.setTotal(jsonArray.size());
+		gridData.setSuccess(true);
+		response.setContentType("application/json;charset=UTF-8"); 
+		gridData.responseJson(response);
+	}
 
 	@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=gridData")
 	public void findGrid(HttpServletRequest request,
@@ -445,7 +468,14 @@ public class SCF003Controller {
 			}
 			travelHeader.setUserCreation(domain.getName());
 			travelHeader.setUserUpdate(domain.getName());
-			travelHeader.setCreationate(new Date());
+			
+			SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+			String[] formatSplitCreateDate = domain.getDate().split("/");
+			Integer yearCreateTravelHeader = Integer.parseInt(formatSplitCreateDate[2]);
+
+			Date dateCreateTravelHeader = formatDate.parse(formatSplitCreateDate[0] + "/"+ formatSplitCreateDate[1] + "/"+ yearCreateTravelHeader);
+			
+			travelHeader.setCreationate(dateCreateTravelHeader);
 			travelHeader.setModifyDate(new Date());// 21
 			travelHeader.setNameDept(domain.getAntecedent());// 22
 			this.travelHeader01Service.saveHeaderCreateFrom(travelHeader);

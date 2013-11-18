@@ -76,8 +76,10 @@ public class PaymentHeader01ServiceImpl implements PaymentHeader01Service{
 		Date datett = formatter.parse(checkDate);
 		//*****************************************************//
 		paymentHeader.setChequedate(datett);
-		paymentHeader.setTotalDebit(new Double(domain.getScfTatolDebit()));
-		paymentHeader.setTotalCredit(new Double(domain.getScfTatolCredit()));
+		String totalDebitReplace = domain.getScfTatolDebit().replace(",", "");
+		paymentHeader.setTotalDebit(new Double(totalDebitReplace));
+		String totalCreditReplace = domain.getScfTatolCredit().replace(",", "");
+		paymentHeader.setTotalCredit(new Double(totalCreditReplace));
 		paymentHeader.setStatus(test.get(0).getStatus());
 		paymentHeader.setRemark("No");
 		paymentHeader.setUserCreation("testUserCreate");

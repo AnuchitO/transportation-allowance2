@@ -11,5 +11,7 @@ public interface ParameterTable01Service {
 	public List<ParameterTable> findByProvince();
 	public List<ParameterTable> findByMount();
 	public List<ParameterTable> findByStatus();
+	public List<ParameterTable> findStatusBySelectInGrid(String domain);
+	public List<ParameterTable> findStatusBySelect(String domain);
 	
 }

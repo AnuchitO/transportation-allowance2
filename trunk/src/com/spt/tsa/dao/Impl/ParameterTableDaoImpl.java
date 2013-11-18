@@ -9,6 +9,7 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -16,7 +17,9 @@ import org.springframework.stereotype.Repository;
 
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.spt.tsa.dao.ParameterTableDao;
+import com.spt.tsa.entity.Employee;
 import com.spt.tsa.entity.ParameterTable;
+import com.spt.tsa.entity.TravelHeader;
 
 @Repository
 public class ParameterTableDaoImpl extends HibernateDaoSupport  implements ParameterTableDao{
@@ -68,6 +71,19 @@ public class ParameterTableDaoImpl extends HibernateDaoSupport  implements Param
 		
 	}
 	
+	public List<ParameterTable> findStatusBySelectInGrid(String domain) {
+		DetachedCriteria criteria =  DetachedCriteria.forClass(ParameterTable.class);
+		 Restrictions.and(
+	                Restrictions.eq("code", "9"),
+	                Restrictions.eq("entry", domain));
+		return this.getHibernateTemplate().findByCriteria(criteria);
+	}
+	
+	public List<ParameterTable> findStatusBySelect(String domain) {
+		String hql = "FROM ParameterTable P where P.code='9' and P.detail="+"'"+domain+"'"+"";
+		 return this.getHibernateTemplate().find(hql);
+		
+	}
 	
 
 	

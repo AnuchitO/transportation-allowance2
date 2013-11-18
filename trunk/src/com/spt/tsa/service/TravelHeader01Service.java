@@ -21,6 +21,14 @@ public interface TravelHeader01Service {
 	 public List<TravelDetail> findDateMinMax(String domain) ;
 	 public List<String> findNameCustomer(String domain);
 	 public List<TravelDetail> findByCustomer(String domain);
+	 public List<TravelHeader> findSelectSearchStatus(String domain);
+	 public List<TravelHeader> findYearSelect(String domain);
+	 public List<TravelHeader> findMonthSelect(String domain);
+	 public List<TravelHeader> findYearAndMonthSelect(String domain);
+	 public List<TravelHeader> findMountAndStatus(String domain,String status);
+	 public List<TravelHeader> findYearAndStatus(String domain,String status);
+	 public List<TravelHeader> findAllCase(String yearAndMount,String status);
+	 
 	///nong
 	 public void saveHeaderCreateFrom(TravelHeader travelHeader);
 	 public List<TravelHeader> findByDocNoForSaveOrUpdate(String docNo);
@@ -28,4 +36,8 @@ public interface TravelHeader01Service {
 	 public List<TravelHeader> findLikeYearAndStatus(Employee employee,String year,String status);
 	 
 	 public void deleteTravelHeader(TravelHeader travelHeader);
+	 public List<TravelHeader> findSelectYearNotSave();
+	 public List<TravelHeader> findDataGroupByNo();
+	 
+	 
 }

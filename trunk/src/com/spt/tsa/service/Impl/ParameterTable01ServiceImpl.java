@@ -41,4 +41,10 @@ public class ParameterTable01ServiceImpl implements ParameterTable01Service {
 	public List<ParameterTable> findByStatus(){
 		return this.parameterTableDao.findByStatus();
 	}
+	public List<ParameterTable> findStatusBySelectInGrid(String domain){
+		return this.parameterTableDao.findStatusBySelectInGrid(domain);
+	}
+	public List<ParameterTable> findStatusBySelect(String domain){
+		return this.parameterTableDao.findStatusBySelect(domain);
+	}
 }

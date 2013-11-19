@@ -34,28 +34,36 @@ SDM009.shiGridColumns = [
 	dataIndex : 'shiIdDept',
 	align : 'center',
 	width : 260,
+	editor:new Ext.form.TextField({
+		id : 'editshiDept',
+		
+	})
 
 }, {
 	header : 'ชื่อแผนก / ฝ่าย',
 	dataIndex : 'shiNameDept',
 	align : 'center',
 	width : 260,
+	editor:new Ext.form.TextField({
+		id : 'editshiNameDept',
+		
+	})
 
 }
 
 ];
 
 SDM009.shiGridStrore = new Ext.data.JsonStore({
-	// baseParams : {
-	// method : 'gridData'
-	// },
-	// url : '/TransportationAllowance/SEI005.html',
-	// method : 'POST',
+	 baseParams : {
+	 method : 'sdmGridData'
+	 },
+	 url : '/TransportationAllowance/SDM009.html',
+	 method : 'POST',
 	pageSize : 10,
 	storeId : 'gridStore',
 	root : 'records',
 	idProperty : 'code',
-	// autoLoad : true,
+	 autoLoad : true,
 
 	fields : [ {
 		name : 'shiNo'
@@ -84,9 +92,9 @@ SDM009.gridAddBtn = new Ext.Toolbar.Button({
 		Ext.getCmp('shiCreateGrid').addRow();
 
 		var i = 1 + sm.length - 1;
-		var uu = SDM009.shiCreateGrid.getStore().getAt(i).data.no;
+		var uu = SDM009.shiCreateGrid.getStore().getAt(i).data.shiNo;
 //		Ext.getCmp('editNo').setValue(i + 1);
-		SDM009.shiCreateGrid.store.getAt(i).set('scpNo',i + 1);
+		SDM009.shiCreateGrid.store.getAt(i).set('shiNo',i + 1);
 		for (var j = 0; j <= sm.length - 1; j++) {
 
 			SDM009.shiCreateGrid.getSelectionModel().deselectRow(j);
@@ -124,11 +132,11 @@ SDM009.gridRemoveBtn = new Ext.Toolbar.Button({
 					var lastIndex = sm.length - 1;
 
 					var getValueLastIndex = SDM009.shiCreateGrid.getStore().getAt(
-							lastIndex).data.scpNo;
+							lastIndex).data.shiNo;
 
 					var u = getValueLastIndex - numberSelect;
 
-					SDM009.shiCreateGrid.store.getAt(lastIndex).set('scpNo', u);
+					SDM009.shiCreateGrid.store.getAt(lastIndex).set('shiNo', u);
 					for (var j = lastIndex; j >= 0; j--) {
 						if (j == lastIndex) {
 
@@ -136,11 +144,11 @@ SDM009.gridRemoveBtn = new Ext.Toolbar.Button({
 						
 						detroyNumber = u - j;
 						if(detroyNumber == 0){
-							SDM009.shiCreateGrid.store.getAt(lastIndex - j).set('scpNo',
+							SDM009.shiCreateGrid.store.getAt(lastIndex - j).set('shiNo',
 									detroyNumber+1);
 						}
 						else{
-							SDM009.shiCreateGrid.store.getAt(lastIndex - j).set('scpNo',
+							SDM009.shiCreateGrid.store.getAt(lastIndex - j).set('shiNo',
 								detroyNumber);
 						}
 					}
@@ -149,7 +157,8 @@ SDM009.gridRemoveBtn = new Ext.Toolbar.Button({
 
 						SDM009.shiCreateGrid.getSelectionModel().deselectRow(j);
 					}
-
+					SDM009.shiCreateGrid.store.getAt(0).set('shiNo',1);
+					
 				}
 			});
 		} else {
@@ -159,6 +168,36 @@ SDM009.gridRemoveBtn = new Ext.Toolbar.Button({
 	}
 	
 });
+var sdmparam = {};
+function sdmSaveOrUpdate(){
+	SDM009.shiCreateGrid.getSelectionModel().selectAll();
+	var sm = SDM009.shiCreateGrid.getSelectionModel().getSelections();
+	sdmparam.sdmpack = "";
+	for (var i = 0; i <= sm.length - 1; i++) {
+	
+		var shiIdDept = SDM009.shiCreateGrid.getStore().getAt(i).data.shiIdDept;
+		var shiNameDept = SDM009.shiCreateGrid.getStore().getAt(i).data.shiNameDept;
+
+		SDM009.shiCreateGrid.getSelectionModel().deselectRow(i);
+		sdmparam.sdmpack += shiIdDept + "," + shiNameDept + "!";
+	}
+	sdmparam.method = "sdmsave";
+	Ext.Ajax.request({
+		url : '/TransportationAllowance/SDM009.html',
+		params : sdmparam,
+		success : function(response, opts) {
+			if (sdmparam != null) {
+				Ext.Msg.alert('Information', 'บันทึกเรียบร้อย');
+
+			} else {
+				Ext.Msg.alert('Information', 'Error');
+			}
+		},
+		failure : function(response, opts) {
+			Ext.Msg.alert('ERROR', 'Error.');
+		}
+	});
+}
 
 SDM009.gridSaveBtn = new Ext.Toolbar.Button(
 		{
@@ -169,10 +208,11 @@ SDM009.gridSaveBtn = new Ext.Toolbar.Button(
 				Ext.MessageBox
 						.confirm(
 								'Confirmation',
-								'ยืนยันข้อมูลถูกต้อง ? <br/>เอกสารของคุณจะอยู่ในสถานะ \"บันทึก\"',
+								'ยืนยันข้อมูลถูกต้อง ?',
 								confirmFunction);
 				function confirmFunction(btn) {
 					if (btn == 'yes') {
+						sdmSaveOrUpdate();
 
 					}
 				}
@@ -187,7 +227,7 @@ SDM009.shiCreateGrid = new Ext.ss.grid.EditorGridPanel({
 	sm : SDM009.shiCheckboxSelection,
 	columns : SDM009.shiGridColumns,
 	columnLines : true,
-	height : 350,
+	height : 200,
 	width : 805,
 
 	lazyRender : true,
@@ -244,7 +284,7 @@ Ext.onReady(function() {
 			labelAlign : 'right',
 			style : {
 				"margin-top" : "50px",
-				"margin-left" : "250px",
+				"text-align":"center",
 
 			},
 		},
@@ -255,8 +295,6 @@ Ext.onReady(function() {
 			labelAlign : 'right',
 			style : {
 				"margin-top" : "50px",
-			// "margin-left" : "320px",
-
 			},
 		}, {
 			columnWidth : 1,
@@ -272,4 +310,11 @@ Ext.onReady(function() {
 		],
 
 	});
+
+	Ext.get('shiButtonSearch').on('click',function(e) {
+		
+		var urlPreviwPage = "/TransportationAllowance/SEI005.html";
+		window.location.assign(urlPreviwPage);	
+	});
+	
 });

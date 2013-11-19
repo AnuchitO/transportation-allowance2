@@ -35,4 +35,5 @@
 <script type="text/javascript" src="${contextPath}/js/resources/FormUtils.js"></script>
 <script type="text/javascript" src="${contextPath}/js/plugin/GroupHeaderPlugin.js"></script>
 <script type="text/javascript" src="${contextPath}/js/plugin/SmartCheckBoxSelectionModel.js"></script>  
+<script type="text/javascript" src="${contextPath}/js/plugin/PagingToolbar.js"></script>  
 

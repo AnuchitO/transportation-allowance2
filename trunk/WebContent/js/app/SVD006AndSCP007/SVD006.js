@@ -72,6 +72,31 @@ Ext.get('idBtnCreatePay').on('click',function(e) {
 	
 });
 
+var checkStatus = SVD006Domain.seiStatus;
+if(checkStatus == "Submitted"){
+	
+}
+else if(checkStatus == "Approved"){
+	Ext.getDom('approve').checked = true;
+	Ext.getDom('approve').disabled = true;
+	Ext.getDom('refused').disabled = true;
+	Ext.getDom('cancel').disabled = true;
+	Ext.getDom('payCash').disabled = true;
+	Ext.getDom('payCheck').disabled = true;
+}
+else if(checkStatus == "Refused"){
+	Ext.getDom('refused').checked = true;
+}
+else if(checkStatus == "Cancel"){
+	Ext.getDom('cancel').checked = true;
+	Ext.getDom('approve').disabled = true;
+	Ext.getDom('refused').disabled = true;
+	Ext.getDom('cancel').disabled = true;
+	Ext.getDom('payCash').disabled = true;
+	Ext.getDom('payCheck').disabled = true;
+}
+
+
 var paramConfirmCheckbox = {};
 function updateStatus() {
 	paramConfirmCheckbox.noDoc = Ext.getCmp('noDoc').getValue();

@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spt.tsa.dao.ParameterTableDao;
+import com.spt.tsa.domain.SDM009Domain01;
 import com.spt.tsa.entity.ParameterTable;
+import com.spt.tsa.entity.PaymentHeader;
 import com.spt.tsa.service.ParameterTable01Service;
 
 @Service
@@ -47,4 +49,29 @@ public class ParameterTable01ServiceImpl implements ParameterTable01Service {
 	public List<ParameterTable> findStatusBySelect(String domain){
 		return this.parameterTableDao.findStatusBySelect(domain);
 	}
+	public List<ParameterTable> findByParametorTableForSaveOrUpdate(String entry){
+		 return this.parameterTableDao.findByParametorTableForSaveOrUpdate(entry);
+	 }
+	public void saveOrUpdateFromParameterTable(SDM009Domain01 domain){
+		ParameterTable parameterTable = new ParameterTable();
+		String[] data = domain.getSdmpack().split("!");
+		for (String dataSplit : data) {
+			String[] dataRow = dataSplit.split(",");
+			List<ParameterTable> parametorDataOld = this.parameterTableDao.findByParametorTableForSaveOrUpdate(dataRow[0]);
+			if(parametorDataOld.size() != 0){
+				parameterTable = parametorDataOld.get(0);
+	    	}else{
+	    		parameterTable = new ParameterTable();
+	    		parameterTable.setId(100);
+	    	}
+			parameterTable.setCode("4");
+			parameterTable.setEntry(dataRow[0]);
+			parameterTable.setDetail(dataRow[1]);
+			this.parameterTableDao.saveOrUpdateFromParameterTable(parameterTable);
+			
+		}
+    	
+    	
+	}
+	 
 }

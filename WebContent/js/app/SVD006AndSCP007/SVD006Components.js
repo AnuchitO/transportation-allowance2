@@ -467,6 +467,7 @@ SVD006C.checkBoxCancel = new Ext.form.Checkbox({
 	fieldLabel : 'text'
 });
 
+
 SVD006C.txtReson = new Ext.ss.form.TextArea({
 	fieldLabel : 'สาเหตุ',
 	id : 'idReson',

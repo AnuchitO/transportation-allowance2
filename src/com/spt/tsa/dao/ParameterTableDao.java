@@ -13,6 +13,8 @@ public interface ParameterTableDao {
 	public List<ParameterTable> findByStatus();
 	public List<ParameterTable> findStatusBySelectInGrid(String domain);
 	public List<ParameterTable> findStatusBySelect(String domain);
+	public void saveOrUpdateFromParameterTable(ParameterTable parameterTable);
+	 public List<ParameterTable> findByParametorTableForSaveOrUpdate(String entry);
 
 	
 

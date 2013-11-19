@@ -14,6 +14,15 @@ public class SVD006Domain01 extends SCF003Domain01 {
 	
 	private String totalPayCharector;
 	
+	String seiStatus;
+	
+	public String getSeiStatus() {
+		return seiStatus;
+	}
+	public void setSeiStatus(String seiStatus) {
+		this.seiStatus = seiStatus;
+	}
+	
 	public SVD006Domain01() {
 		// TODO Auto-generated constructor stub
 	}

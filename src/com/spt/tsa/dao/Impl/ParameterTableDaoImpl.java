@@ -19,6 +19,7 @@ import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.spt.tsa.dao.ParameterTableDao;
 import com.spt.tsa.entity.Employee;
 import com.spt.tsa.entity.ParameterTable;
+import com.spt.tsa.entity.PaymentHeader;
 import com.spt.tsa.entity.TravelHeader;
 
 @Repository
@@ -84,6 +85,14 @@ public class ParameterTableDaoImpl extends HibernateDaoSupport  implements Param
 		 return this.getHibernateTemplate().find(hql);
 		
 	}
+	  public List<ParameterTable> findByParametorTableForSaveOrUpdate(String entry) {
+	 DetachedCriteria criteria =  DetachedCriteria.forClass(ParameterTable.class)
+								.add(Restrictions.eq("entry", entry));
+			return this.getHibernateTemplate().findByCriteria(criteria);
+		}
+	public void saveOrUpdateFromParameterTable(ParameterTable parameterTable){
+    	this.getHibernateTemplate().saveOrUpdate(parameterTable);
+    }
 	
 
 	

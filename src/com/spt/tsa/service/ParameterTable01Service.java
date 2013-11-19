@@ -2,6 +2,7 @@ package com.spt.tsa.service;
 
 import java.util.List;
 
+import com.spt.tsa.domain.SDM009Domain01;
 import com.spt.tsa.entity.ParameterTable;
 
 public interface ParameterTable01Service {
@@ -13,5 +14,7 @@ public interface ParameterTable01Service {
 	public List<ParameterTable> findByStatus();
 	public List<ParameterTable> findStatusBySelectInGrid(String domain);
 	public List<ParameterTable> findStatusBySelect(String domain);
+	public void saveOrUpdateFromParameterTable(SDM009Domain01 domain);
+	 public List<ParameterTable> findByParametorTableForSaveOrUpdate(String entry);
 	
 }

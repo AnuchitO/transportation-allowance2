@@ -115,9 +115,14 @@ public class SVD006Controller{
 //			travelDetails = null;
 //			resultsBank = null;
 //			resultsBankType = null;
-			String noDoc = "560004";
+			String documentNumber =" ";
+			String status = " ";
+			documentNumber = request.getParameter("documentNumber");
+			status = request.getParameter("status");
+			
+			String noDoc = documentNumber;
 			try{ 
-				this.listLravelHerder = this.travelHeader01Service.findByDocNo(noDoc);
+				this.listLravelHerder = this.travelHeader01Service.findByDocNoForSaveOrUpdate(noDoc);
 				this.travelDetails = this.travelDetail01Service.findByTravelHeader(this.listLravelHerder.get(0));
 				this.resultsBank = this.parameterTable01Service.findRow("7",this.listLravelHerder.get(0).getEmployee().getBank().toString());
 				this.resultsBankType = this.parameterTable01Service.findRow("8",this.listLravelHerder.get(0).getEmployee().getAccountType().toString());
@@ -143,7 +148,7 @@ public class SVD006Controller{
 			  Date date = new Date();
 			  SimpleDateFormat ft = new SimpleDateFormat ("yyyy/MM/dd");  
 		
-
+		
 			SVD006Domain01 domain = new SVD006Domain01();
 	  			  
 
@@ -154,7 +159,7 @@ public class SVD006Controller{
 				numberDoc = lastNoDocList.get(0).getNo();
 				logger.debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {}",numberDoc);
 			}
-			
+			domain.setSeiStatus(status);
 			domain.setNo(travelHeader.getNo());
 			domain.setDate(new SimpleDateFormat ("dd/MM/yyyy").format(travelHeader.getCreationate()));
 			domain.setName(travelHeader.getEmployee().getName());

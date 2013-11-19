@@ -6,6 +6,7 @@ public class SEI005Domain01 extends SCF003Domain01 {
 	String selectMount;
 	String selectYear;
 	String selectStatus;
+
 	public String getSelectMount() {
 		return selectMount;
 	}

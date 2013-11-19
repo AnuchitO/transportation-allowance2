@@ -14,7 +14,7 @@ SEI005.seiManageDept = new Ext.Button({
 });
 
 SEI005.seiTheory = new Ext.Button({
-	id : 'seiManageDept',
+	id : 'seiManageReport',
 	text : 'สรุปรายงาน',
 	// disabled:true,
 	width : 100
@@ -172,6 +172,7 @@ SEI005.seiGridColumns = [
 	dataIndex : 'seiNumberDocument',
 	align : 'center',
 	width : 89.44,
+	
 
 }, {
 	header : 'รหัสพนักงาน',
@@ -232,7 +233,7 @@ SEI005.seiGridStrore = new Ext.data.JsonStore({
 	 },
 	 url : '/TransportationAllowance/SEI005.html',
 	 method : 'POST',
-	pageSize : 10,
+	 pageSize: 14,
 	storeId : 'gridStore',
 	root : 'records',
 	idProperty : 'code',
@@ -261,6 +262,9 @@ SEI005.seiGridStrore = new Ext.data.JsonStore({
 	remoteSort : true
 
 });
+
+
+
 SEI005.seiCreateGrid = new Ext.ss.grid.EditorGridPanel({
 	id : 'seiCreateGrid',
 	store : SEI005.seiGridStrore,
@@ -280,8 +284,34 @@ SEI005.seiCreateGrid = new Ext.ss.grid.EditorGridPanel({
 	disableSelection : true,
 	loadMask : true,
 
+
 	
 	clicksToEdit : 1,
+	listeners : {
+    	'cellclick' : function(grid, rowIndex, cellIndex, e){
+		    var store = grid.getStore().getAt(rowIndex);
+		    var columnName = grid.getColumnModel().getDataIndex(cellIndex);
+		    var cellValue = store.get(columnName);
+		    if(columnName == 'seiNumberDocument'){
+		    
+		    	Ext.Msg.confirm('Confirm', 'คุณต้องการดูข้อมูล'+' '+cellValue, 
+		    		    function(btn) {
+		    		        if (btn === 'yes') {
+		    		        	
+						    	
+						    	var documentNumber = cellValue;
+						    	var status = grid.getStore().getAt(rowIndex).data.seiStatus;
+						    	var urlPreviwPage = "/TransportationAllowance/SVD006.html?documentNumber="+documentNumber+"&status="+status;
+								window.location.assign(urlPreviwPage);	
+		    		        }
+		    		    });
+		    	
+		    	
+		    }else{
+		    	
+		    }
+    	}
+    },
 	
 });
 //*************************** On Ready And Form *************************************//
@@ -406,11 +436,9 @@ Ext
 
 	});
 	Ext.get('seiButtonSearch').on('click',function(e) {
-		Ext.MessageBox.confirm('Confirmation','test',confirmFunction);
-		function confirmFunction(btn) {
-			if (btn == 'yes') {
+	
 		
-				SEI005.seiCreateGrid.store.load( //  reload grid store when click search button
+				SEI005.seiCreateGrid.store.load( 
 					                {   
 					                   params:{method : 'gridDataSelect',
 					                	   selectMount  : Ext.getCmp('seiMountCombobox').getValue(),
@@ -418,15 +446,34 @@ Ext
 					                	   selectStatus : Ext.getCmp('seiStatusCombobox').getValue()
 					                	   },
 					                  });
-//							Ext.Msg.alert('Information', 'ทำรายการสำเร็จ');
-						}
-		}
+
+						
+		
 	});
 				
 				
 
 
+	Ext.get('seiManageAccount').on('click',function(e) {
+		
+		var urlPreviwPage = "/TransportationAllowance/SAC008.html";
+		var win = window.open(urlPreviwPage);
+		win.focus();
+});
+	
+Ext.get('seiManageDept').on('click',function(e) {
+		
+		var urlPreviwPage = "/TransportationAllowance/SDM009.html";
+		var win = window.open(urlPreviwPage);
+		win.focus();
+});
 
+Ext.get('seiManageReport').on('click',function(e) {
+	
+	var urlPreviwPage = "/TransportationAllowance/SAC008.html";
+	var win = window.open(urlPreviwPage);
+	win.focus();
+});
 		
 	
 });

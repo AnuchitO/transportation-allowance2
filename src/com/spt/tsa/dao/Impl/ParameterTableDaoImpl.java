@@ -94,6 +94,10 @@ public class ParameterTableDaoImpl extends HibernateDaoSupport  implements Param
     	this.getHibernateTemplate().saveOrUpdate(parameterTable);
     }
 	
+	public void removeFromParametorTable(ParameterTable parameterTable){
+		this.getHibernateTemplate().delete(parameterTable);
+	}
+	
 
 	
 }

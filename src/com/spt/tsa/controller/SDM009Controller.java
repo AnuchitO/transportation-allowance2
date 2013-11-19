@@ -68,9 +68,9 @@ public class SDM009Controller {
 			i++;
 		
 				 jobect = new JSONObject();
-				 jobect.accumulate("shiNo",i);
-				 jobect.accumulate("shiIdDept",c.getEntry());
-				 jobect.accumulate("shiNameDept",c.getDetail());
+				 jobect.accumulate("sdmNo",i);
+				 jobect.accumulate("sdmIdDept",c.getEntry());
+				 jobect.accumulate("sdmNameDept",c.getDetail());
 				 jsonArray.add(jobect);
 				 jobect.clear();
 		}
@@ -86,7 +86,7 @@ public class SDM009Controller {
 	}
 	
 	@RequestMapping(value = "/SDM009.html", method = RequestMethod.POST, params = "method=sdmsave")
-	public void scpSave(HttpServletRequest request, HttpServletResponse response,
+	public void sdmSave(HttpServletRequest request, HttpServletResponse response,
 
 	@ModelAttribute SDM009Domain01 domain,
 			@RequestParam("sdmpack") String sdmpack
@@ -98,6 +98,25 @@ public class SDM009Controller {
 			domain.setSdmpack(sdmpack);
 
 			this.parameterTable01Service.saveOrUpdateFromParameterTable(domain);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+
+	}
+	
+	@RequestMapping(value = "/SDM009.html", method = RequestMethod.POST, params = "method=sdmRemove")
+	public void sdmRemove(HttpServletRequest request, HttpServletResponse response,
+
+	@ModelAttribute SDM009Domain01 domain,
+			@RequestParam("packRemove") String packRemove
+
+	) throws Exception {
+
+		try {
+			domain.setPackRemove(packRemove);
+			this.parameterTable01Service.removeFromParametorTable(domain);
 
 		} catch (Exception e) {
 			e.printStackTrace();

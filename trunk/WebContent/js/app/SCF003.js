@@ -275,6 +275,13 @@ SCF003.gridRemoveBtn = new Ext.Toolbar.Button({
 		if (!Ext.isEmpty(rowSelected)) {
 			Ext.MessageBox.confirm('Confirm', 'Are you sure?', function(btn) {
 				if (btn == 'yes') {
+					SCF003.createGrid.getSelectionModel().selectAll();
+
+					var smfirst = SCF003.createGrid.getSelectionModel().getSelections();
+		
+					var lastIndexfirst = smfirst.length - 1;
+					var getValueLastIndexfirst = SCF003.createGrid.getStore().getAt(lastIndexfirst).data.no;
+					
 
 					for ( var i in rowSelected) {
 
@@ -289,15 +296,15 @@ SCF003.gridRemoveBtn = new Ext.Toolbar.Button({
 					var numberSelect = rowSelected.length;
 					
 					var lastIndex = sm.length - 1;
+					
 					if(lastIndex == -1){
 						SCF003.tatolPaym.setValue(0.00);
 						SCF003.tatolPaymA.setValue(0.00);
 						SCF003.tatolPaymfullCase.setValue(0.00);
 						convertString();
 					}
-					
-					var getValueLastIndex = SCF003.createGrid.getStore().getAt(
-							lastIndex).data.no;
+					SCF003.createGrid.store.getAt(lastIndex).set('no', getValueLastIndexfirst);
+					var getValueLastIndex = SCF003.createGrid.getStore().getAt(lastIndex).data.no;
 					
 					var u = getValueLastIndex - numberSelect;
 					var detroyNumber = 0;

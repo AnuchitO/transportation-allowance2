@@ -9,6 +9,7 @@ import com.spt.tsa.dao.ParameterTableDao;
 import com.spt.tsa.domain.SDM009Domain01;
 import com.spt.tsa.entity.ParameterTable;
 import com.spt.tsa.entity.PaymentHeader;
+import com.spt.tsa.entity.TravelDetail;
 import com.spt.tsa.service.ParameterTable01Service;
 
 @Service
@@ -73,5 +74,21 @@ public class ParameterTable01ServiceImpl implements ParameterTable01Service {
     	
     	
 	}
-	 
+	
+	 public void removeFromParametorTable(SDM009Domain01 domain){
+		 
+		 String packRemove = domain.getPackRemove();
+			String[] deptSplit = packRemove.split("!");
+			for(String dataDept :deptSplit){
+				this.parameterTableDao.findByParametorTableForSaveOrUpdate(dataDept);
+				if(this.parameterTableDao.findByParametorTableForSaveOrUpdate(dataDept).size() !=0){
+				for(ParameterTable param : this.parameterTableDao.findByParametorTableForSaveOrUpdate(dataDept)){
+					 this.parameterTableDao.removeFromParametorTable(param);
+			 	 }
+				}
+				else{
+					
+				}
+	 }
+	 }
 }

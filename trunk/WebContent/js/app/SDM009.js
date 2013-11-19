@@ -1,7 +1,7 @@
 SDM009 = {};
 
-SDM009.shiLabelTitle = new Ext.form.Label({
-	id : "shiLabelTitle",
+SDM009.sdmLabelTitle = new Ext.form.Label({
+	id : "sdmLabelTitle",
 	text : "จัดการข้อมูลฝ่าย / แผนก",
 	style : {
 		"font-size" : "200%",
@@ -13,39 +13,39 @@ SDM009.shiLabelTitle = new Ext.form.Label({
 // ***************************** Create Grid
 // ***********************************************//
 
-SDM009.shiCheckboxSelection = new Ext.grid.CheckboxSelectionModel({
+SDM009.sdmCheckboxSelection = new Ext.grid.CheckboxSelectionModel({
 	singleSelect : false,
 
 // email: true,
 // dataIndex: 'chkFlag'
 });
 
-SDM009.shiGridColumns = [
-    SDM009.shiCheckboxSelection,{
+SDM009.sdmGridColumns = [
+    SDM009.sdmCheckboxSelection,{
 
 	header : 'ลำดับ',
-	dataIndex : 'shiNo',
+	dataIndex : 'sdmNo',
 	align : 'center',
 	width : 260,
 
 }, {
 
 	header : 'รหัสแผนก / ฝ่าย',
-	dataIndex : 'shiIdDept',
+	dataIndex : 'sdmIdDept',
 	align : 'center',
 	width : 260,
 	editor:new Ext.form.TextField({
-		id : 'editshiDept',
+		id : 'editsdmDept',
 		
 	})
 
 }, {
 	header : 'ชื่อแผนก / ฝ่าย',
-	dataIndex : 'shiNameDept',
+	dataIndex : 'sdmNameDept',
 	align : 'center',
 	width : 260,
 	editor:new Ext.form.TextField({
-		id : 'editshiNameDept',
+		id : 'editsdmNameDept',
 		
 	})
 
@@ -53,7 +53,7 @@ SDM009.shiGridColumns = [
 
 ];
 
-SDM009.shiGridStrore = new Ext.data.JsonStore({
+SDM009.sdmGridStrore = new Ext.data.JsonStore({
 	 baseParams : {
 	 method : 'sdmGridData'
 	 },
@@ -66,11 +66,11 @@ SDM009.shiGridStrore = new Ext.data.JsonStore({
 	 autoLoad : true,
 
 	fields : [ {
-		name : 'shiNo'
+		name : 'sdmNo'
 	}, {
-		name : 'shiIdDept'
+		name : 'sdmIdDept'
 	}, {
-		name : 'shiNameDept'
+		name : 'sdmNameDept'
 	} ],
 	model : 'ForumThread',
 	remoteSort : true
@@ -85,58 +85,83 @@ SDM009.gridAddBtn = new Ext.Toolbar.Button({
 	// disabled : false,
 	privilage : "educationAddBtn",
 	handler : function() {
-		SDM009.shiCreateGrid.getSelectionModel().selectAll();
+		SDM009.sdmCreateGrid.getSelectionModel().selectAll();
 
-		var sm = SDM009.shiCreateGrid.getSelectionModel().getSelections();
+		var sm = SDM009.sdmCreateGrid.getSelectionModel().getSelections();
 
-		Ext.getCmp('shiCreateGrid').addRow();
+		Ext.getCmp('sdmCreateGrid').addRow();
 
 		var i = 1 + sm.length - 1;
-		var uu = SDM009.shiCreateGrid.getStore().getAt(i).data.shiNo;
+		var uu = SDM009.sdmCreateGrid.getStore().getAt(i).data.sdmNo;
 //		Ext.getCmp('editNo').setValue(i + 1);
-		SDM009.shiCreateGrid.store.getAt(i).set('shiNo',i + 1);
+		SDM009.sdmCreateGrid.store.getAt(i).set('sdmNo',i + 1);
 		for (var j = 0; j <= sm.length - 1; j++) {
 
-			SDM009.shiCreateGrid.getSelectionModel().deselectRow(j);
+			SDM009.sdmCreateGrid.getSelectionModel().deselectRow(j);
 		}
 	}
 	
 	//////////////////////////////////
 
 });
-
+//function sdmRemovefunction(i){
+//	var remove = Ext.getCmp('sdmCreateGrid').getSelectionModel().getSelections()[i].get('sdmIdDept');
+//	alert(remove);
+//}
 SDM009.gridRemoveBtn = new Ext.Toolbar.Button({
 	
 	tooltip : 'Remove the selected item',
 	iconCls : 'remove',
 	disabled : false,
 	handler : function() {
-		var rowSelected = Ext.getCmp('shiCreateGrid')
-				.getSelectionModel().getSelections();
+		var sdmparamRemove = {};
+		var rowSelected = Ext.getCmp('sdmCreateGrid').getSelectionModel().getSelections();
+		sdmparamRemove.packRemove = ""; 
 		if (!Ext.isEmpty(rowSelected)) {
 			Ext.MessageBox.confirm('Confirm', 'Are you sure?', function(btn) {
 				if (btn == 'yes') {
+					
+					SDM009.sdmCreateGrid.getSelectionModel().selectAll();
 
-					for ( var i in rowSelected) {
+					var smfirst = SDM009.sdmCreateGrid.getSelectionModel().getSelections();
+		
+					var lastIndexfirst = smfirst.length - 1;
+					var getValueLastIndexfirst = SDM009.sdmCreateGrid.getStore().getAt(lastIndexfirst).data.sdmNo;
+					
+							for(var i=0;i<rowSelected.length;i++) {
+								sdmparamRemove.packRemove += rowSelected[i].data.sdmIdDept+"!"; 
+								Ext.getCmp('sdmCreateGrid').store.remove(rowSelected[i]);
+							}
+							sdmparamRemove.method = "sdmRemove";
+							Ext.Ajax.request({
+								url : '/TransportationAllowance/SDM009.html',
+								params : sdmparamRemove,
+								success : function(response, opts) {
+									if (sdmparamRemove != null) {
+										Ext.Msg.alert('Information', 'ลบข้อมูล เรียบร้อยแล้ว');
+									} else {
+										Ext.Msg.alert('Information', 'Error');
+									}
+								},
+								failure : function(response, opts) {
+									Ext.Msg.alert('ERROR', 'Error.');
+								}
+							});
 
-						Ext.getCmp('shiCreateGrid').store
-								.remove(rowSelected[i]);
+					SDM009.sdmCreateGrid.getSelectionModel().selectAll();
 
-					}
-					SDM009.shiCreateGrid.getSelectionModel().selectAll();
-
-					var sm = SDM009.shiCreateGrid.getSelectionModel().getSelections();
+					var sm = SDM009.sdmCreateGrid.getSelectionModel().getSelections();
 					//					
 					var numberSelect = rowSelected.length;
 
 					var lastIndex = sm.length - 1;
-
-					var getValueLastIndex = SDM009.shiCreateGrid.getStore().getAt(
-							lastIndex).data.shiNo;
+					SDM009.sdmCreateGrid.store.getAt(lastIndex).set('sdmNo', getValueLastIndexfirst);
+					var getValueLastIndex = SDM009.sdmCreateGrid.getStore().getAt(
+							lastIndex).data.sdmNo;
 
 					var u = getValueLastIndex - numberSelect;
 
-					SDM009.shiCreateGrid.store.getAt(lastIndex).set('shiNo', u);
+					SDM009.sdmCreateGrid.store.getAt(lastIndex).set('sdmNo', u);
 					for (var j = lastIndex; j >= 0; j--) {
 						if (j == lastIndex) {
 
@@ -144,20 +169,20 @@ SDM009.gridRemoveBtn = new Ext.Toolbar.Button({
 						
 						detroyNumber = u - j;
 						if(detroyNumber == 0){
-							SDM009.shiCreateGrid.store.getAt(lastIndex - j).set('shiNo',
+							SDM009.sdmCreateGrid.store.getAt(lastIndex - j).set('sdmNo',
 									detroyNumber+1);
 						}
 						else{
-							SDM009.shiCreateGrid.store.getAt(lastIndex - j).set('shiNo',
+							SDM009.sdmCreateGrid.store.getAt(lastIndex - j).set('sdmNo',
 								detroyNumber);
 						}
 					}
 
 					for (var j = 0; j <= sm.length - 1; j++) {
 
-						SDM009.shiCreateGrid.getSelectionModel().deselectRow(j);
+						SDM009.sdmCreateGrid.getSelectionModel().deselectRow(j);
 					}
-					SDM009.shiCreateGrid.store.getAt(0).set('shiNo',1);
+					SDM009.sdmCreateGrid.store.getAt(0).set('sdmNo',1);
 					
 				}
 			});
@@ -170,16 +195,16 @@ SDM009.gridRemoveBtn = new Ext.Toolbar.Button({
 });
 var sdmparam = {};
 function sdmSaveOrUpdate(){
-	SDM009.shiCreateGrid.getSelectionModel().selectAll();
-	var sm = SDM009.shiCreateGrid.getSelectionModel().getSelections();
+	SDM009.sdmCreateGrid.getSelectionModel().selectAll();
+	var sm = SDM009.sdmCreateGrid.getSelectionModel().getSelections();
 	sdmparam.sdmpack = "";
 	for (var i = 0; i <= sm.length - 1; i++) {
 	
-		var shiIdDept = SDM009.shiCreateGrid.getStore().getAt(i).data.shiIdDept;
-		var shiNameDept = SDM009.shiCreateGrid.getStore().getAt(i).data.shiNameDept;
+		var sdmIdDept = SDM009.sdmCreateGrid.getStore().getAt(i).data.sdmIdDept;
+		var sdmNameDept = SDM009.sdmCreateGrid.getStore().getAt(i).data.sdmNameDept;
 
-		SDM009.shiCreateGrid.getSelectionModel().deselectRow(i);
-		sdmparam.sdmpack += shiIdDept + "," + shiNameDept + "!";
+		SDM009.sdmCreateGrid.getSelectionModel().deselectRow(i);
+		sdmparam.sdmpack += sdmIdDept + "," + sdmNameDept + "!";
 	}
 	sdmparam.method = "sdmsave";
 	Ext.Ajax.request({
@@ -221,11 +246,11 @@ SDM009.gridSaveBtn = new Ext.Toolbar.Button(
 		});
 /////////////////////////////////////////////////////////////////////////
 
-SDM009.shiCreateGrid = new Ext.ss.grid.EditorGridPanel({
-	id : 'shiCreateGrid',
-	store : SDM009.shiGridStrore,
-	sm : SDM009.shiCheckboxSelection,
-	columns : SDM009.shiGridColumns,
+SDM009.sdmCreateGrid = new Ext.ss.grid.EditorGridPanel({
+	id : 'sdmCreateGrid',
+	store : SDM009.sdmGridStrore,
+	sm : SDM009.sdmCheckboxSelection,
+	columns : SDM009.sdmGridColumns,
 	columnLines : true,
 	height : 200,
 	width : 805,
@@ -248,8 +273,8 @@ SDM009.shiCreateGrid = new Ext.ss.grid.EditorGridPanel({
 });
 // *****************************************************************************************//
 
-SDM009.shiButtonSearch = new Ext.Button({
-	id : 'shiButtonSearch',
+SDM009.sdmButtonSearch = new Ext.Button({
+	id : 'sdmButtonSearch',
 	text : 'กลับสู่หน้าหลัก',
 	// disabled:true,
 	width : 100
@@ -280,7 +305,7 @@ Ext.onReady(function() {
 
 		items : [ {
 			columnWidth : 1,
-			items : SDM009.shiLabelTitle,
+			items : SDM009.sdmLabelTitle,
 			labelAlign : 'right',
 			style : {
 				"margin-top" : "50px",
@@ -291,14 +316,14 @@ Ext.onReady(function() {
 
 		{
 			columnWidth : 1,
-			items : SDM009.shiCreateGrid,
+			items : SDM009.sdmCreateGrid,
 			labelAlign : 'right',
 			style : {
 				"margin-top" : "50px",
 			},
 		}, {
 			columnWidth : 1,
-			items : SDM009.shiButtonSearch,
+			items : SDM009.sdmButtonSearch,
 			labelAlign : 'right',
 			style : {
 				"margin-top" : "50px",
@@ -311,7 +336,7 @@ Ext.onReady(function() {
 
 	});
 
-	Ext.get('shiButtonSearch').on('click',function(e) {
+	Ext.get('sdmButtonSearch').on('click',function(e) {
 		
 		var urlPreviwPage = "/TransportationAllowance/SEI005.html";
 		window.location.assign(urlPreviwPage);	

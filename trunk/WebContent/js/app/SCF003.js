@@ -269,26 +269,48 @@ SCF003.gridRemoveBtn = new Ext.Toolbar.Button({
 	iconCls : 'remove',
 	disabled : false,
 	handler : function() {
-	
+		
+		var scfparamRemove = {};
+		scfparamRemove.scfpackRemove = "";
+		
 		var rowSelected = Ext.getCmp('gridEducationInfomation')
 				.getSelectionModel().getSelections();
 		if (!Ext.isEmpty(rowSelected)) {
 			Ext.MessageBox.confirm('Confirm', 'Are you sure?', function(btn) {
 				if (btn == 'yes') {
+					scfparamRemove.scfForRemoveNo = SCF003.No.getValue(); 
 					SCF003.createGrid.getSelectionModel().selectAll();
 
 					var smfirst = SCF003.createGrid.getSelectionModel().getSelections();
 		
 					var lastIndexfirst = smfirst.length - 1;
 					var getValueLastIndexfirst = SCF003.createGrid.getStore().getAt(lastIndexfirst).data.no;
-					
-
-					for ( var i in rowSelected) {
-
-						Ext.getCmp('gridEducationInfomation').store
-								.remove(rowSelected[i]);
-
+					for(var i=0;i<rowSelected.length;i++) {
+						scfparamRemove.scfpackRemove += rowSelected[i].data.no+"!"; 
+						Ext.getCmp('gridEducationInfomation').store.remove(rowSelected[i]);
 					}
+					scfparamRemove.method = "scfRemove";
+					Ext.Ajax.request({
+						url : '/TransportationAllowance/SCF003.html',
+						params : scfparamRemove,
+						success : function(response, opts) {
+							if (scfparamRemove != null) {
+								Ext.Msg.alert('Information', 'ลบข้อมูล เรียบร้อยแล้ว');
+							} else {
+								Ext.Msg.alert('Information', 'Error');
+							}
+						},
+						failure : function(response, opts) {
+							Ext.Msg.alert('ERROR', 'Error.');
+						}
+					});
+
+//					for ( var i in rowSelected) {
+//
+//						Ext.getCmp('gridEducationInfomation').store
+//								.remove(rowSelected[i]);
+//
+//					}
 					SCF003.createGrid.getSelectionModel().selectAll();
 
 					var sm = SCF003.createGrid.getSelectionModel().getSelections();

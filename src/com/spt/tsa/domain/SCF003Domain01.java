@@ -57,9 +57,27 @@ public class SCF003Domain01 {
 	String charactorNumber;
 	String minMaxDate;
 	
+	String scfpackRemove;
+	String scfForRemoveNo;
 	
 	
 	
+	
+	
+	
+	
+	public String getScfForRemoveNo() {
+		return scfForRemoveNo;
+	}
+	public void setScfForRemoveNo(String scfForRemoveNo) {
+		this.scfForRemoveNo = scfForRemoveNo;
+	}
+	public String getScfpackRemove() {
+		return scfpackRemove;
+	}
+	public void setScfpackRemove(String scfpackRemove) {
+		this.scfpackRemove = scfpackRemove;
+	}
 	public String getNumberDocument() {
 		return numberDocument;
 	}

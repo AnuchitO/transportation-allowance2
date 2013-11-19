@@ -114,6 +114,8 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 				.add(Restrictions.eq("no", docNo));
 		return this.getHibernateTemplate().findByCriteria(criteria);
 	}
+	
+	
 	public List<TravelDetail> findByCustomer(String domain) {
 		DetachedCriteria criteria =  DetachedCriteria.forClass(TravelDetail.class)
 				.add(Restrictions.eq("travelHeader", findByDocNoForSaveOrUpdate(domain).get(0)));

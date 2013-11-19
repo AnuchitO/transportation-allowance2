@@ -33,6 +33,7 @@ import com.fission.web.view.extjs.grid.GridData;
 import com.spt.tsa.controller.datasource.RunNumberDocument;
 import com.spt.tsa.dao.ParameterTableDao;
 import com.spt.tsa.domain.SCF003Domain01;
+import com.spt.tsa.domain.SDM009Domain01;
 import com.spt.tsa.domain.SHI002Domain01;
 import com.spt.tsa.entity.Company;
 import com.spt.tsa.entity.Customer;
@@ -57,6 +58,8 @@ public class SCF003Controller {
 	private TravelHeader01Service travelHeader01Service;
 	private TravelDetail01Service travelDetail01Service;
 	private Customer01Service customer01Service;
+	private List<TravelHeader> listTravelHeader; 
+	private List<TravelDetail> listTravelDetail;
 
 	@Autowired
 	public void setParameterTable01Service(
@@ -607,6 +610,51 @@ public class SCF003Controller {
 			this.travelHeader01Service.updateStatusSubmit(domain);
 
 		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+
+	}
+	
+	@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=scfRemove")
+	public void sdmRemove(HttpServletRequest request, HttpServletResponse response,
+
+	@ModelAttribute SCF003Domain01 domain,
+			@RequestParam("scfpackRemove") String scfpackRemove,
+			@RequestParam("scfForRemoveNo") String scfForRemoveNo
+
+	) throws Exception {
+
+		try {
+			if(scfpackRemove.equals("AUTO")){
+				
+			}
+			else{
+			domain.setScfpackRemove(scfpackRemove);
+			domain.setScfForRemoveNo(scfForRemoveNo);
+			logger.debug("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^{}",domain.getScfForRemoveNo());
+			logger.debug("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^{}",domain.getScfpackRemove());
+			this.listTravelHeader = this.travelHeader01Service.findByDocNoForSaveOrUpdate(domain.getScfForRemoveNo()); 
+			try {
+				 String packRemove = domain.getScfpackRemove();
+					String[] deptSplit = packRemove.split("!");
+					for(String dataNoInGrid :deptSplit){
+				 this.listTravelDetail = this.travelDetail01Service.findRowOfGridForUpdateRow(this.listTravelHeader.get(0), dataNoInGrid);
+				 for(TravelDetail td : this.listTravelDetail){ 
+					 this.travelDetail01Service.deleteTravelDetail(td);
+			 	 }
+			
+			}
+			}catch (Exception e) {
+				logger.debug("{}",e);
+			}
+			}
+					}
+				 
+
+			
+
+		 catch (Exception e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 		}

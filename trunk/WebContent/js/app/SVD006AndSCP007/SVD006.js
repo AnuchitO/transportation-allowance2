@@ -179,7 +179,8 @@ Ext.get('idBtnConfirm').on('click',function(e) {
 ///////End Operater Function
 //************************ set value By SCP007C **************************************/
 SCP007C.scpLabelCompany.setText(SVD006Domain.company);
-SCP007C.scpForPayGive.setValue(SVD006Domain.name);
+var fullName = SVD006Domain.name + " " + " " + SVD006Domain.scpLastName;
+SCP007C.scpForPayGive.setValue(fullName);
 SCP007C.scpBank.setValue(SVD006Domain.bank);
 SCP007C.scpBranch.setValue(SVD006Domain.branch);
 SCP007C.scpTotalMoney.setValue(SVD006Domain.totalPayment);

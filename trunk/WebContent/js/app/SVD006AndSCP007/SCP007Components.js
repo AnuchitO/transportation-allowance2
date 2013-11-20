@@ -286,7 +286,13 @@ SCP007C.gridRemoveBtn = new Ext.Toolbar.Button({
 		if (!Ext.isEmpty(rowSelected)) {
 			Ext.MessageBox.confirm('Confirm', 'Are you sure?', function(btn) {
 				if (btn == 'yes') {
+					
+					SCP007C.createGrid.getSelectionModel().selectAll();
 
+					var smfirst = SCP007C.createGrid.getSelectionModel().getSelections();
+		
+					var lastIndexfirst = smfirst.length - 1;
+					var getValueLastIndexfirst = SCP007C.createGrid.getStore().getAt(lastIndexfirst).data.scpNo;
 					for ( var i in rowSelected) {
 
 						Ext.getCmp('scpgridEducationInfomation').store
@@ -304,6 +310,7 @@ SCP007C.gridRemoveBtn = new Ext.Toolbar.Button({
 						SCP007C.scfTatolDebit.setValue(0.00);
 						SCP007C.scfTatolCredit.setValue(0.00);
 					}
+					SCP007C.createGrid.store.getAt(lastIndex).set('scpNo', getValueLastIndexfirst);
 
 					var getValueLastIndex = SCP007C.createGrid.getStore().getAt(
 							lastIndex).data.scpNo;
@@ -495,6 +502,83 @@ SCP007C.checkboxselection = new Ext.grid.CheckboxSelectionModel({
 // dataIndex: 'chkFlag'
 });
 
+function changeNumberPrecisionscpDebit(){
+	SCP007C.createGrid.getSelectionModel().selectAll();
+
+	var sm = SCP007C.createGrid.getSelectionModel().getSelections();
+
+
+	var valueSet = 0;
+	var lastIndex = sm.length - 1;
+	var check = SCP007C.createGrid.getStore().getAt(lastIndex).data.scpDebit.toFixed(2);
+	check = check.split(".");
+	
+	if(check[1] < 25 ){
+		check[1]= 00;
+		valueSet= check[0]+ "." + check[1];
+		SCP007C.createGrid.store.getAt(lastIndex).set('scpDebit', valueSet);
+		}
+	else if(check[1] >= 25 && check[1] < 50){
+		check[1]= 25;
+		valueSet= check[0]+ "." + check[1];
+		SCP007C.createGrid.store.getAt(lastIndex).set('scpDebit', valueSet);
+		}
+	else if(check[1] >=50 && check[1] < 75 ){
+		check[1]= 50;
+		valueSet= check[0]+ "." + check[1];
+		SCP007C.createGrid.store.getAt(lastIndex).set('scpDebit', valueSet);
+		}
+	else if(check[1] >=75 && check[1] < 100 ){
+		check[1]= 75;
+		valueSet= check[0]+ "." + check[1];
+		SCP007C.createGrid.store.getAt(lastIndex).set('scpDebit', valueSet);
+		}
+	else{
+		check[1]= 00;
+		valueSet= check[0]+ "." + check[1];
+		SCP007C.createGrid.store.getAt(lastIndex).set('scpDebit', valueSet);
+		}
+}
+
+
+function changeNumberPrecisionscpCredit(){
+	SCP007C.createGrid.getSelectionModel().selectAll();
+
+	var sm = SCP007C.createGrid.getSelectionModel().getSelections();
+
+
+	var valueSet = 0;
+	var lastIndex = sm.length - 1;
+	var check = SCP007C.createGrid.getStore().getAt(lastIndex).data.scpCredit.toFixed(2);
+	check = check.split(".");
+	
+	if(check[1] < 25 ){
+		check[1]= 00;
+		valueSet= check[0]+ "." + check[1];
+		SCP007C.createGrid.store.getAt(lastIndex).set('scpCredit', valueSet);
+		}
+	else if(check[1] >= 25 && check[1] < 50){
+		check[1]= 25;
+		valueSet= check[0]+ "." + check[1];
+		SCP007C.createGrid.store.getAt(lastIndex).set('scpCredit', valueSet);
+		}
+	else if(check[1] >=50 && check[1] < 75 ){
+		check[1]= 50;
+		valueSet= check[0]+ "." + check[1];
+		SCP007C.createGrid.store.getAt(lastIndex).set('scpCredit', valueSet);
+		}
+	else if(check[1] >=75 && check[1] < 100 ){
+		check[1]= 75;
+		valueSet= check[0]+ "." + check[1];
+		SCP007C.createGrid.store.getAt(lastIndex).set('scpCredit', valueSet);
+		}
+	else{
+		check[1]= 00;
+		valueSet= check[0]+ "." + check[1];
+		SCP007C.createGrid.store.getAt(lastIndex).set('scpCredit', valueSet);
+		}
+}
+
 SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 
 	header : 'ลำดับ',
@@ -540,7 +624,7 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 				var totalLength = SCP007C.createGrid.getSelectionModel().getSelections();
 				var totalDebit = 0;
 				var totalCredit = 0;
-				
+				changeNumberPrecisionscpDebit();
 			
 				for (var i = 0; i <= totalLength.length - 1; i++) {
 					var test = SCP007C.createGrid.getStore().getAt(i).data.scpDebit;
@@ -585,7 +669,7 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 				var totalLength = SCP007C.createGrid.getSelectionModel().getSelections();
 				var totalCredit = 0;
 				var totalDebit = 0;
-			
+				changeNumberPrecisionscpCredit();
 				for (var i = 0; i <= totalLength.length - 1; i++) {
 					var test = SCP007C.createGrid.getStore().getAt(i).data.scpCredit;
 				

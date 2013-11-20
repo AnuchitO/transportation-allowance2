@@ -14,8 +14,17 @@ public class SVD006Domain01 extends SCF003Domain01 {
 	
 	private String totalPayCharector;
 	
+	String scpLastName;
+	
 	String seiStatus;
 	
+	
+	public String getScpLastName() {
+		return scpLastName;
+	}
+	public void setScpLastName(String scpLastName) {
+		this.scpLastName = scpLastName;
+	}
 	public String getSeiStatus() {
 		return seiStatus;
 	}

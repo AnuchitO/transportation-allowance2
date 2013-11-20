@@ -583,24 +583,9 @@ function saveOrUpdate() {
 		var dataGridCustomer = SCF003.createGrid.getStore().getAt(i).data.customer;
 		var dataGridRegion = SCF003.createGrid.getStore().getAt(i).data.region;
 		var dataGridGoal = SCF003.createGrid.getStore().getAt(i).data.goal;
-		var dataGridPaymentTravelDouble = " ";
 		var dataGridPaymentTravel = SCF003.createGrid.getStore().getAt(i).data.paymentTravel;
-		if(dataGridPaymentTravel == "0.00"){
-			 dataGridPaymentTravelDouble = dataGridPaymentTravel;
-		}else{
-			dataGridPaymentTravelDouble = dataGridPaymentTravel.toFixed(2);
-		}
-		var dataGridPaymentDdouble = " ";
 		var dataGridPaymentD = SCF003.createGrid.getStore().getAt(i).data.paymentD;
-		if(dataGridPaymentD == "0.00"){
-			 dataGridPaymentDdouble = dataGridPaymentD;
-		}
-		else{
-			 dataGridPaymentDdouble = dataGridPaymentD.toFixed(2);
-		}
 		var dataGridPayment = SCF003.createGrid.getStore().getAt(i).data.payment;
-	
-		
 		var dataRemark = SCF003.createGrid.getStore().getAt(i).data.remark;
 			if(dataRemark == "" || dataRemark == null || dataRemark == "undefined"){
 				dataRemark = "  ";
@@ -608,7 +593,7 @@ function saveOrUpdate() {
 		SCF003.createGrid.getSelectionModel().deselectRow(i);
 		param2.pack += dataGridNo + "," + dataGridData + "," + dataGridCustomer
 				+ "," + dataGridRegion + "," + dataGridGoal + ","
-				+ dataGridPaymentTravelDouble + "," + dataGridPaymentDdouble + ","
+				+ dataGridPaymentTravel + "," + dataGridPaymentD + ","
 				+ dataGridPayment + "," + dataRemark + "!";
 	}
 	param2.method = "save1";
@@ -803,79 +788,75 @@ SCF003.checkboxselection = new Ext.grid.CheckboxSelectionModel({
 
 function changeNumberPrecisionPaymentTravel(){
 	SCF003.createGrid.getSelectionModel().selectAll();
-
 	var sm = SCF003.createGrid.getSelectionModel().getSelections();
-
-
 	var valueSet = 0;
-	var lastIndex = sm.length - 1;
-	var check = SCF003.createGrid.getStore().getAt(lastIndex).data.paymentTravel.toFixed(2);
-	check = check.split(".");
-	
+	for (var i = 0; i <= sm.length - 1; i++) {
+	var check = parseFloat(SCF003.createGrid.getStore().getAt(i).data.paymentTravel).toFixed(2).split(".");
 	if(check[1] < 25 ){
-		check[1]= 00;
+		check[1]= 0;
 		valueSet= check[0]+ "." + check[1];
-		SCF003.createGrid.store.getAt(lastIndex).set('paymentTravel', valueSet);
+		SCF003.createGrid.store.getAt(i).set('paymentTravel', valueSet);
+	
 		}
 	else if(check[1] >= 25 && check[1] < 50){
 		check[1]= 25;
 		valueSet= check[0]+ "." + check[1];
-		SCF003.createGrid.store.getAt(lastIndex).set('paymentTravel', valueSet);
+		SCF003.createGrid.store.getAt(i).set('paymentTravel', valueSet);
 		}
 	else if(check[1] >=50 && check[1] < 75 ){
 		check[1]= 50;
 		valueSet= check[0]+ "." + check[1];
-		SCF003.createGrid.store.getAt(lastIndex).set('paymentTravel', valueSet);
+		SCF003.createGrid.store.getAt(i).set('paymentTravel', valueSet);
 		}
 	else if(check[1] >=75 && check[1] < 100 ){
 		check[1]= 75;
 		valueSet= check[0]+ "." + check[1];
-		SCF003.createGrid.store.getAt(lastIndex).set('paymentTravel', valueSet);
+		SCF003.createGrid.store.getAt(i).set('paymentTravel', valueSet);
 		}
 	else{
-		check[1]= 00;
+		check[1]= 0;
 		valueSet= check[0]+ "." + check[1];
-		SCF003.createGrid.store.getAt(lastIndex).set('paymentTravel', valueSet);
+		SCF003.createGrid.store.getAt(i).set('paymentTravel', valueSet);
 		}
+	}
 }
+
 
 function changeNumberPrecisionPaymentD(){
 	SCF003.createGrid.getSelectionModel().selectAll();
-
 	var sm = SCF003.createGrid.getSelectionModel().getSelections();
-
-
 	var valueSet = 0;
-	var lastIndex = sm.length - 1;
-	var check = SCF003.createGrid.getStore().getAt(lastIndex).data.paymentD.toFixed(2);
-	check = check.split(".");
-	
+	for (var i = 0; i <= sm.length - 1; i++) {
+	var check = parseFloat(SCF003.createGrid.getStore().getAt(i).data.paymentD).toFixed(2).split(".");
 	if(check[1] < 25 ){
-		check[1]= 00;
+		check[1]= 0;
 		valueSet= check[0]+ "." + check[1];
-		SCF003.createGrid.store.getAt(lastIndex).set('paymentD', valueSet);
+		SCF003.createGrid.store.getAt(i).set('paymentD', valueSet);
+	
 		}
 	else if(check[1] >= 25 && check[1] < 50){
 		check[1]= 25;
 		valueSet= check[0]+ "." + check[1];
-		SCF003.createGrid.store.getAt(lastIndex).set('paymentD', valueSet);
+		SCF003.createGrid.store.getAt(i).set('paymentD', valueSet);
 		}
 	else if(check[1] >=50 && check[1] < 75 ){
 		check[1]= 50;
 		valueSet= check[0]+ "." + check[1];
-		SCF003.createGrid.store.getAt(lastIndex).set('paymentD', valueSet);
+		SCF003.createGrid.store.getAt(i).set('paymentD', valueSet);
 		}
 	else if(check[1] >=75 && check[1] < 100 ){
 		check[1]= 75;
 		valueSet= check[0]+ "." + check[1];
-		SCF003.createGrid.store.getAt(lastIndex).set('paymentD', valueSet);
+		SCF003.createGrid.store.getAt(i).set('paymentD', valueSet);
 		}
 	else{
-		check[1]= 00;
+		check[1]= 0;
 		valueSet= check[0]+ "." + check[1];
-		SCF003.createGrid.store.getAt(lastIndex).set('paymentD', valueSet);
+		SCF003.createGrid.store.getAt(i).set('paymentD', valueSet);
 		}
+	}
 }
+
 SCF003.gridColumns = [
 		SCF003.checkboxselection,
 

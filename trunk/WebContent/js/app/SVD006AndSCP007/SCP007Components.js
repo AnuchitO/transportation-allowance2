@@ -38,9 +38,9 @@ SCP007C.scpDate = new Ext.form.DateField({
 	endDateField : 'enddt', // id of the end date field
 	maxValue : new Date(),
 	style:{
-		"color":"blue",
+		"color":"black",
 	    "background-image":"none",
-	    "background-color":"#FFFACD"
+	    "background-color":"#BEBEBE"
 	},
 	listeners : {
 		render : function(datefield) {
@@ -98,9 +98,9 @@ SCP007C.scpForPayGive = new Ext.form.TextField({
 	readOnly : true,
 	disabled : true,
 	style:{
-		"color":"blue",
+		"color":"black",
 	    "background-image":"none",
-	    "background-color":"#FFFACD"
+	    "background-color":"#BEBEBE"
 	},
 
 });
@@ -141,9 +141,9 @@ SCP007C.scpBank = new Ext.form.TextField({
 	readOnly : true,
 	disabled : true,
 	style:{
-		"color":"blue",
+		"color":"black",
 	    "background-image":"none",
-	    "background-color":"#FFFACD"
+	    "background-color":"#BEBEBE"
 	},
 
 });
@@ -155,9 +155,9 @@ SCP007C.scpBranch = new Ext.form.TextField({
 	readOnly : true,
 	disabled : true,
 	style:{
-		"color":"blue",
+		"color":"black",
 	    "background-image":"none",
-	    "background-color":"#FFFACD"
+	    "background-color":"#BEBEBE"
 	},
 
 });
@@ -178,9 +178,9 @@ SCP007C.scpDateCreation = new Ext.form.DateField({
 	endDateField : 'enddt', // id of the end date field
 	maxValue : new Date(),
 	style:{
-		"color":"blue",
+		"color":"black",
 	    "background-image":"none",
-	    "background-color":"#FFFACD"
+	    "background-color":"#BEBEBE"
 	},
 	listeners : {
 		render : function(datefield) {
@@ -211,9 +211,9 @@ SCP007C.scfTextArea = new Ext.ss.form.TextArea({
 	readOnly : true,
 	disabled : true,
 	style:{
-		"color":"blue",
+		"color":"black",
 	    "background-image":"none",
-	    "background-color":"#FFFACD"
+	    "background-color":"#BEBEBE"
 	},
 
 });
@@ -225,9 +225,9 @@ SCP007C.scpNumberCharactor = new Ext.form.TextField({
 	readOnly : true,
 	disabled : true,
 	style:{
-		"color":"blue",
+		"color":"black",
 	    "background-image":"none",
-	    "background-color":"#FFFACD"
+	    "background-color":"#BEBEBE"
 	},
 
 });
@@ -239,9 +239,9 @@ SCP007C.scpTotalMoney = new Ext.ss.form.NumberField({
 	readOnly : true,
 	disabled : true,
 	style:{
-		"color":"blue",
+		"color":"black",
 	    "background-image":"none",
-	    "background-color":"#FFFACD"
+	    "background-color":"#BEBEBE"
 	},
 
 });
@@ -374,14 +374,13 @@ function scpSaveOrUpdate() {
 		var scpDataGridNameAccount = SCP007C.createGrid.getStore().getAt(i).data.scpNameAccount;
 		var scpDataGridIdDept = SCP007C.createGrid.getStore().getAt(i).data.scpIdDept;
 		var scpDataGridDebit = SCP007C.createGrid.getStore().getAt(i).data.scpDebit;
-		var scpDataGridDebitDouble = scpDataGridDebit.toFixed(2);
 		var scpDateGridCredit = SCP007C.createGrid.getStore().getAt(i).data.scpCredit;
-		var scpDateGridCreditDouble = scpDateGridCredit.toFixed(2);
+		
 		
 		SCP007C.createGrid.getSelectionModel().deselectRow(i);
 		scpParam.scpPack += scpDataGridNo + "," + scpDataGridIdAccount + "," + scpDataGridNameAccount
-				+ "," + scpDataGridIdDept + "," + scpDataGridDebitDouble + ","
-				+ scpDateGridCreditDouble + "!";
+				+ "," + scpDataGridIdDept + "," + scpDataGridDebit + ","
+				+ scpDateGridCredit + "!";
 	}
 	
 	//*****************************************************************************//
@@ -504,79 +503,73 @@ SCP007C.checkboxselection = new Ext.grid.CheckboxSelectionModel({
 
 function changeNumberPrecisionscpDebit(){
 	SCP007C.createGrid.getSelectionModel().selectAll();
-
 	var sm = SCP007C.createGrid.getSelectionModel().getSelections();
-
-
 	var valueSet = 0;
-	var lastIndex = sm.length - 1;
-	var check = SCP007C.createGrid.getStore().getAt(lastIndex).data.scpDebit.toFixed(2);
-	check = check.split(".");
-	
+	for (var i = 0; i <= sm.length - 1; i++) {
+	var check = parseFloat(SCP007C.createGrid.getStore().getAt(i).data.scpDebit).toFixed(2).split(".");
 	if(check[1] < 25 ){
-		check[1]= 00;
+		check[1]= 0;
 		valueSet= check[0]+ "." + check[1];
-		SCP007C.createGrid.store.getAt(lastIndex).set('scpDebit', valueSet);
+		SCP007C.createGrid.store.getAt(i).set('scpDebit', valueSet);
+	
 		}
 	else if(check[1] >= 25 && check[1] < 50){
 		check[1]= 25;
 		valueSet= check[0]+ "." + check[1];
-		SCP007C.createGrid.store.getAt(lastIndex).set('scpDebit', valueSet);
+		SCP007C.createGrid.store.getAt(i).set('scpDebit', valueSet);
 		}
 	else if(check[1] >=50 && check[1] < 75 ){
 		check[1]= 50;
 		valueSet= check[0]+ "." + check[1];
-		SCP007C.createGrid.store.getAt(lastIndex).set('scpDebit', valueSet);
+		SCP007C.createGrid.store.getAt(i).set('scpDebit', valueSet);
 		}
 	else if(check[1] >=75 && check[1] < 100 ){
 		check[1]= 75;
 		valueSet= check[0]+ "." + check[1];
-		SCP007C.createGrid.store.getAt(lastIndex).set('scpDebit', valueSet);
+		SCP007C.createGrid.store.getAt(i).set('scpDebit', valueSet);
 		}
 	else{
-		check[1]= 00;
+		check[1]= 0;
 		valueSet= check[0]+ "." + check[1];
-		SCP007C.createGrid.store.getAt(lastIndex).set('scpDebit', valueSet);
+		SCP007C.createGrid.store.getAt(i).set('scpDebit', valueSet);
 		}
+	}
 }
 
 
 function changeNumberPrecisionscpCredit(){
 	SCP007C.createGrid.getSelectionModel().selectAll();
-
 	var sm = SCP007C.createGrid.getSelectionModel().getSelections();
-
-
 	var valueSet = 0;
-	var lastIndex = sm.length - 1;
-	var check = SCP007C.createGrid.getStore().getAt(lastIndex).data.scpCredit.toFixed(2);
-	check = check.split(".");
-	
+	for (var i = 0; i <= sm.length - 1; i++) {
+	var check = parseFloat(SCP007C.createGrid.getStore().getAt(i).data.scpCredit).toFixed(2).split(".");
 	if(check[1] < 25 ){
-		check[1]= 00;
+		check[1]= 0;
 		valueSet= check[0]+ "." + check[1];
-		SCP007C.createGrid.store.getAt(lastIndex).set('scpCredit', valueSet);
+		SCP007C.createGrid.store.getAt(i).set('scpCredit', valueSet);
+	
 		}
 	else if(check[1] >= 25 && check[1] < 50){
 		check[1]= 25;
 		valueSet= check[0]+ "." + check[1];
-		SCP007C.createGrid.store.getAt(lastIndex).set('scpCredit', valueSet);
+		SCP007C.createGrid.store.getAt(i).set('scpCredit', valueSet);
 		}
 	else if(check[1] >=50 && check[1] < 75 ){
 		check[1]= 50;
 		valueSet= check[0]+ "." + check[1];
-		SCP007C.createGrid.store.getAt(lastIndex).set('scpCredit', valueSet);
+		SCP007C.createGrid.store.getAt(i).set('scpCredit', valueSet);
 		}
 	else if(check[1] >=75 && check[1] < 100 ){
 		check[1]= 75;
 		valueSet= check[0]+ "." + check[1];
-		SCP007C.createGrid.store.getAt(lastIndex).set('scpCredit', valueSet);
+		SCP007C.createGrid.store.getAt(i).set('scpCredit', valueSet);
 		}
 	else{
-		check[1]= 00;
+		check[1]= 0;
 		valueSet= check[0]+ "." + check[1];
-		SCP007C.createGrid.store.getAt(lastIndex).set('scpCredit', valueSet);
+		SCP007C.createGrid.store.getAt(i).set('scpCredit', valueSet);
 		}
+	}
 }
 
 SCP007C.gridColumns = [ SCP007C.checkboxselection, {

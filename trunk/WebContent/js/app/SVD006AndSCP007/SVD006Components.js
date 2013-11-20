@@ -214,7 +214,7 @@ SVD006C.gridColumns = [
 			header : 'No',
 			dataIndex : 'no',
 			align : 'center',
-			width : 87.08,
+			width : 89.44,
 
 		},
 		{
@@ -222,14 +222,14 @@ SVD006C.gridColumns = [
 			header : 'วันที่',
 			dataIndex : 'gridDate',
 			align : 'center',
-			width : 87.08,
+			width : 89.44,
 
 		},
 		{
 			header : 'ลูกค้า',
 			dataIndex : 'customer',
 			align : 'center',
-			width : 87.08,
+			width : 89.44,
 
 		},
 		{
@@ -238,14 +238,14 @@ SVD006C.gridColumns = [
 			dataIndex : 'region',
 			align : 'center',
 			id : 'region',
-			width : 87.08,
+			width : 89.44,
 
 		},
 		{
 			header : 'ถึง',
 			dataIndex : 'goal',
 			align : 'center',
-			width : 87.08,
+			width : 89.44,
 
 		}
 
@@ -256,7 +256,7 @@ SVD006C.gridColumns = [
 			align : 'right',
 			xtype: 'numbercolumn', format:'0.00',
 			flex: 0,
-			width : 87.08,
+			width : 89.44,
 
 		},
 		{
@@ -265,20 +265,20 @@ SVD006C.gridColumns = [
 			align : 'right',
 			xtype: 'numbercolumn', format:'0.00',
 			flex: 0,
-			width : 87.08
+			width : 89.44
 		}, {
 			header : 'รวมเป็นเงิน',
 			dataIndex : 'payment',
 			align : 'right',
 			xtype: 'numbercolumn', format:'0.00',
 			flex: 0,
-			width : 87.08,
+			width : 89.44,
 
 		}, {
 			header : 'หมายเหตุ',
 			dataIndex : 'remark',
 			align : 'center',
-			width : 87.00,
+			width : 89.44,
 
 		}
 

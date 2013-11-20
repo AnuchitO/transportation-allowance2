@@ -577,7 +577,7 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 	header : 'ลำดับ',
 	dataIndex : 'scpNo',
 	align : 'center',
-	width : 125,
+	width : 50,
 
 }, {
 
@@ -591,7 +591,7 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 	header : 'ชื่อบัญชี',
 	dataIndex : 'scpNameAccount',
 	align : 'center',
-	width : 125,
+	width : 275,
 
 }, {
 
@@ -602,7 +602,7 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 	editor : new Ext.form.TextField({
 		id : 'scpEditIdDept',
 	}),
-	width : 125,
+	width : 100,
 
 }, {
 	header : 'เดบิต',
@@ -647,7 +647,7 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 	}),
 	
 
-	width : 125,
+	width : 100,
 
 }, {
 	header : 'เครดิต',
@@ -690,7 +690,7 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 		}
 	}),
 
-	width : 125,
+	width : 100,
 
 }
 

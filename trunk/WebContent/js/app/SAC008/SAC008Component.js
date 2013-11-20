@@ -352,7 +352,7 @@ SAC008C.gridColumns = [
 			header : 'No',
 			dataIndex : 'no',
 			align : 'center',
-			width : 87.08,
+			width : 50,
 		},{
 			header : 'รหัสบัญชี',
 			dataIndex : 'accountId',
@@ -363,7 +363,7 @@ SAC008C.gridColumns = [
 				maxLength: 20,
                 allowBlank: false
 			}),		
-			width : 87.08,
+			width : 132,
 		},{
 			header : 'ชื่อบัญชี',
 			dataIndex : 'accountName',
@@ -372,20 +372,27 @@ SAC008C.gridColumns = [
 				id : 'accountNameId',
 				maxLength: 150
 			}),		
-			width : 287.08
+			width : 500
 		},{
 //			xtype: 'checkcolumn',
 			header : 'เดบิต',
 			dataIndex : 'debit',
 			align : 'center',
 			id : 'region',
-			width : 87.08
+			width : 50,
+			 renderer: function (value, meta, record) {
+	                return '<center><input type="checkbox" name="checkbox1"' + (value ? 'checked' : '') + ' onclick="var s = Ext.getCmp(\'button-grid\').store; s.getAt(s.findExact(\'id\',\'' + record.get('id') + '\')).set(\'isFull\', this.value)"'
+	            },
+		
 		},{
 //			xtype: 'checkcolumn',
 			header : 'เครดิต',
 			dataIndex : 'credit',
 			align : 'center',
-			width : 87.08,
+			width : 50,
+			renderer: function (value, meta, record) {
+                return '<center><input type="checkbox" name="checkbox2"' + (value ? 'checked' : '') + ' onclick="var s = Ext.getCmp(\'button-grid\').store; s.getAt(s.findExact(\'id\',\'' + record.get('id') + '\')).set(\'isFull\', this.value)"'
+            },
 		}
 ];
 

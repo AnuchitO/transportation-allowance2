@@ -148,6 +148,7 @@ public class SCF003Controller {
 		domain.setNo(noDoc);
 		domain.setDate(ft.format(date));
 		domain.setName(resultsEmp.getName());
+		domain.setScfLastName(resultsEmp.getLastname());
 		domain.setId(resultsEmp.getEmpId());
 		new BahtText(11).toString();
 
@@ -165,6 +166,7 @@ public class SCF003Controller {
 		domain.setBranch(resultsEmp.getBranch());
 		domain.setAccountNumber(resultsEmp.getAccountNo());
 		domain.setTypeAccount(resultsBranch.get(0));
+	
 		
 		model.put("scf003", JSONObject.fromObject(BeanUtils.beanToMap(domain)).toString());
 

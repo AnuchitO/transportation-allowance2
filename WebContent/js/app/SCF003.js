@@ -177,7 +177,8 @@ SCF003.email = new Ext.form.TextField({
 
 //SCF003.No.setValue(SCF01Domain.numberDocument);
 SCF003.date.setValue(SCF01Domain.date);
-SCF003.name.setValue(SCF01Domain.name);
+var fullName = SCF01Domain.name + " " +" "+ SCF01Domain.scfLastName;
+SCF003.name.setValue(fullName);
 SCF003.id.setValue(SCF01Domain.id);
 SCF003.company.setValue(SCF01Domain.company);
 SCF003.textArea.setValue(SCF01Domain.address);
@@ -800,6 +801,81 @@ SCF003.checkboxselection = new Ext.grid.CheckboxSelectionModel({
 // dataIndex: 'chkFlag'
 });
 
+function changeNumberPrecisionPaymentTravel(){
+	SCF003.createGrid.getSelectionModel().selectAll();
+
+	var sm = SCF003.createGrid.getSelectionModel().getSelections();
+
+
+	var valueSet = 0;
+	var lastIndex = sm.length - 1;
+	var check = SCF003.createGrid.getStore().getAt(lastIndex).data.paymentTravel.toFixed(2);
+	check = check.split(".");
+	
+	if(check[1] < 25 ){
+		check[1]= 00;
+		valueSet= check[0]+ "." + check[1];
+		SCF003.createGrid.store.getAt(lastIndex).set('paymentTravel', valueSet);
+		}
+	else if(check[1] >= 25 && check[1] < 50){
+		check[1]= 25;
+		valueSet= check[0]+ "." + check[1];
+		SCF003.createGrid.store.getAt(lastIndex).set('paymentTravel', valueSet);
+		}
+	else if(check[1] >=50 && check[1] < 75 ){
+		check[1]= 50;
+		valueSet= check[0]+ "." + check[1];
+		SCF003.createGrid.store.getAt(lastIndex).set('paymentTravel', valueSet);
+		}
+	else if(check[1] >=75 && check[1] < 100 ){
+		check[1]= 75;
+		valueSet= check[0]+ "." + check[1];
+		SCF003.createGrid.store.getAt(lastIndex).set('paymentTravel', valueSet);
+		}
+	else{
+		check[1]= 00;
+		valueSet= check[0]+ "." + check[1];
+		SCF003.createGrid.store.getAt(lastIndex).set('paymentTravel', valueSet);
+		}
+}
+
+function changeNumberPrecisionPaymentD(){
+	SCF003.createGrid.getSelectionModel().selectAll();
+
+	var sm = SCF003.createGrid.getSelectionModel().getSelections();
+
+
+	var valueSet = 0;
+	var lastIndex = sm.length - 1;
+	var check = SCF003.createGrid.getStore().getAt(lastIndex).data.paymentD.toFixed(2);
+	check = check.split(".");
+	
+	if(check[1] < 25 ){
+		check[1]= 00;
+		valueSet= check[0]+ "." + check[1];
+		SCF003.createGrid.store.getAt(lastIndex).set('paymentD', valueSet);
+		}
+	else if(check[1] >= 25 && check[1] < 50){
+		check[1]= 25;
+		valueSet= check[0]+ "." + check[1];
+		SCF003.createGrid.store.getAt(lastIndex).set('paymentD', valueSet);
+		}
+	else if(check[1] >=50 && check[1] < 75 ){
+		check[1]= 50;
+		valueSet= check[0]+ "." + check[1];
+		SCF003.createGrid.store.getAt(lastIndex).set('paymentD', valueSet);
+		}
+	else if(check[1] >=75 && check[1] < 100 ){
+		check[1]= 75;
+		valueSet= check[0]+ "." + check[1];
+		SCF003.createGrid.store.getAt(lastIndex).set('paymentD', valueSet);
+		}
+	else{
+		check[1]= 00;
+		valueSet= check[0]+ "." + check[1];
+		SCF003.createGrid.store.getAt(lastIndex).set('paymentD', valueSet);
+		}
+}
 SCF003.gridColumns = [
 		SCF003.checkboxselection,
 
@@ -888,7 +964,7 @@ SCF003.gridColumns = [
 								var b = 0;
 								var totalPaymentTravel = 0;
 								var c = 0;
-								
+								changeNumberPrecisionPaymentTravel();
 								for (var i = 0; i <= totalLength.length - 1; i++) {
 									if(Ext.isEmpty(SCF003.createGrid.getStore().getAt(i).data.paymentTravel)){
 										SCF003.createGrid.store.getAt(i).set('paymentTravel', 0.00);
@@ -942,20 +1018,9 @@ SCF003.gridColumns = [
 										SCF003.createGrid.getSelectionModel()
 												.deselectRow(i);
 									}
-//									var set = SCF003.createGrid.getStore().getAt(i).data.paymentTravel;
-//									set = set.toLocaleString().split(".");
-//									var setValue = "";
-//									if(parseInt(set[1]) < 25){
-//										set[1]= 00;
-//										setValue = set[0]+"."+set[1];
-//										
-////									SCF003.createGrid.store.getAt(i).set('paymentTravel', setValue);
-//										alert(setValue);
-//									
-//										
-//									
-//									}
+									
 								}
+								
 								convertString();
 								
 
@@ -984,6 +1049,7 @@ SCF003.gridColumns = [
 								var b = 0;
 								var totalPayment = 0;
 								var c = 0;
+								changeNumberPrecisionPaymentD();
 								for (var i = 0; i <= totalLength.length - 1; i++) {
 									if(Ext.isEmpty(SCF003.createGrid.getStore().getAt(i).data.paymentD)){
 										SCF003.createGrid.store.getAt(i).set('paymentD', 0.00);

@@ -59,6 +59,7 @@ public class SCF003Domain01 {
 	
 	String scfpackRemove;
 	String scfForRemoveNo;
+	String scfLastName;
 	
 	
 	
@@ -66,6 +67,12 @@ public class SCF003Domain01 {
 	
 	
 	
+	public String getScfLastName() {
+		return scfLastName;
+	}
+	public void setScfLastName(String scfLastName) {
+		this.scfLastName = scfLastName;
+	}
 	public String getScfForRemoveNo() {
 		return scfForRemoveNo;
 	}

@@ -163,6 +163,7 @@ public class SVD006Controller{
 			domain.setNo(travelHeader.getNo());
 			domain.setDate(new SimpleDateFormat ("dd/MM/yyyy").format(travelHeader.getCreationate()));
 			domain.setName(travelHeader.getEmployee().getName());
+			domain.setScpLastName(travelHeader.getEmployee().getLastname());
 			domain.setId(travelHeader.getEmployee().getEmpId());
 
 		

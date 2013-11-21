@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="searchRepot" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="deb01d0b-91d9-4210-9cd8-ef35d0b1a0fe">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 5">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 6">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 7">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 8">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="ec5fa7ec-91d7-470b-b6af-83f3586c0676"/>
+	<subDataset name="Table Dataset 2" uuid="f9bc4f1b-faae-4c75-aba7-1196aaa93e6a"/>
+	<subDataset name="Table Dataset 3" uuid="695ccce4-b1a0-42c9-975c-d217d75a85ee"/>
+	<subDataset name="Table Dataset 4" uuid="45d86ce4-b2a5-401e-ad27-b8f8a77e5728"/>
+	<subDataset name="Table Dataset 5" uuid="19c2d3d8-4c6a-4649-b19f-4091c0a2d7a6"/>
+	<subDataset name="Table Dataset 6" uuid="b4910d31-8ddb-4577-9629-1068d6058bfc"/>
+	<subDataset name="Table Dataset 7" uuid="6d47184f-d3fd-4c89-a15c-8218e3158f24"/>
+	<subDataset name="Table Dataset 8" uuid="177f61b0-9265-4c4f-9a39-e62ff876b6d3"/>
+	<subDataset name="New Dataset 1" uuid="461a42e5-0847-4ed8-96c2-3b554dc56a03"/>
+	<subDataset name="Table Dataset 9" uuid="ae8dd047-8bbb-4cd9-80a8-76b6dcef8964"/>
+	<subDataset name="New Dataset 2" uuid="23adcda7-fa8b-41a5-b584-5810af81c6e1"/>
+	<subDataset name="Table Dataset 10" uuid="f8864f95-ba41-49af-8a78-2745dca319f5"/>
+	<field name="no" class="java.lang.String"/>
+	<field name="idEmp" class="java.lang.String"/>
+	<field name="nameEmp" class="java.lang.String"/>
+	<field name="idDept" class="java.lang.String"/>
+	<field name="totalMoney" class="java.lang.String"/>
+	<field name="date" class="java.lang.String"/>
+	<field name="time" class="java.lang.String"/>
+	<field name="month" class="java.lang.String"/>
+	<field name="customer" class="java.lang.String"/>
+	<field name="dateYear" class="java.lang.String"/>
+	<field name="totalMoneyFull" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="123" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="a5c3ea1c-fb8b-4afd-a62c-c9d5676fa57a" x="16" y="48" width="197" height="57"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="36" isBold="true" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[รายการการเบิกเงิน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="78d7bb94-2377-4dd0-8830-81273ffde411" x="16" y="0" width="23" height="20"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isItalic="true" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[พิมพ์]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="59e97d38-f724-4541-a9f9-bcbbba616491" x="89" y="0" width="24" height="20"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isItalic="true" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[เวลา]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="cad1d441-6467-443b-86a0-2ff42be343a3" x="39" y="0" width="50" height="20"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isItalic="true" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="aa98fa64-3b29-401e-ad7f-f783ebe060d5" x="113" y="0" width="100" height="20"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isItalic="true" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{time}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="6" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="2deeae03-5103-4e18-9f74-f8acb8d207cc" x="29" y="0" width="32" height="35"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[ลูกค้า]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="5c306ec9-52fb-4f47-97e3-df682e226650" x="63" y="0" width="99" height="35"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customer}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4dd0acc8-083f-4428-b1d8-a779a17ed42c" x="162" y="0" width="38" height="35"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[เดือน]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c63ce62c-a1a3-44ad-b7b3-f6dbfcd49012" x="200" y="0" width="77" height="35"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{month}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="09ebaa7f-d991-4d73-b0d8-7aac6760871d" x="277" y="0" width="26" height="35"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[พ.ศ.]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="a2ba066e-eb4c-4912-9918-bdccd031f48c" x="303" y="0" width="88" height="35"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dateYear}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement uuid="272e1930-020b-46b5-a69d-95de7fa55b3c" x="32" y="50" width="42" height="29"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="63e366c7-6f4f-406d-ae17-0d9cac32cc05" x="74" y="50" width="88" height="29"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="95a379b6-6762-470e-8b99-a534f100e5c9" x="162" y="50" width="189" height="29"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="e9e9fa8f-06cc-4143-a821-b1a1cbe6198f" x="351" y="50" width="85" height="29"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="1fa91e48-6c5b-4cf8-9fa3-fb538c525a50" x="436" y="50" width="100" height="29"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="0abcc89b-e0d1-405f-8e25-a14f0640a640" x="32" y="50" width="42" height="29"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[ลำดับ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6977fbc6-f856-4b8e-94d1-820bb424647d" x="74" y="50" width="88" height="29"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[รหัสพนักงาน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e2916420-86b6-48bc-958c-fb19716f7061" x="162" y="50" width="189" height="29"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[พนักงาน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="145237c5-e1a1-4104-8699-2cfe0af9db1e" x="351" y="50" width="85" height="29"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[ฝ่าย]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="67cf72eb-02fe-448f-be70-74b15cea18c9" x="436" y="50" width="100" height="29"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[ยอดเงิน (บาท)]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="e18d740c-0eba-4ab3-8521-992e6ce577b3" x="32" y="0" width="42" height="27"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="99512309-dded-4c88-9ad3-43365981cb64" x="162" y="0" width="189" height="27"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="4bac837b-c4ca-4ffe-921d-8a53789315cd" x="74" y="0" width="88" height="27"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="c30aaba3-689b-46f2-911a-fd94bcf2360f" x="436" y="0" width="100" height="27"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="192f6017-ebfc-4a4b-b419-ee1056f2c183" x="351" y="0" width="85" height="27"/>
+			</rectangle>
+			<textField>
+				<reportElement uuid="92871832-8375-46b8-b351-af759dfd4f37" x="32" y="0" width="42" height="27"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="975e0d9b-3eb1-4f9e-bb35-0a6181338881" x="74" y="0" width="88" height="27"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idEmp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ea1fd49a-389e-486b-9185-d4b48a8f9bb7" x="162" y="0" width="189" height="27"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nameEmp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8b2b5e72-f18d-4fff-952f-0bcfbb82ae9a" x="351" y="0" width="85" height="27"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idDept}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fbb86a78-4d5b-4a09-9c46-c24652d56187" x="436" y="0" width="100" height="27"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalMoney}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="e7b5f0a8-b071-4174-9191-127ed9c7cf35" x="32" y="-1" width="404" height="27"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="e02f9e1f-cbb0-405d-92a5-417458003e45" x="32" y="-1" width="404" height="27"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[ยอดรวมเงิน]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="e113e9dc-c8e5-4ce1-8d47-f01e37b0112e" x="436" y="-1" width="100" height="27"/>
+			</rectangle>
+			<textField>
+				<reportElement uuid="d58ed039-31ae-468b-a7af-46b1c6c769b3" x="436" y="-1" width="100" height="27"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalMoneyFull}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -9,4 +9,9 @@
 	   <property name="url" value="/WEB-INF/jasperReport/PreviewReport.jasper"/>
 	  	<!--property name="reportDataKey" value="jrDatasource"/-->
 	</bean>
+	
+	<bean id="reportForSearchSPS010"   class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
+	   <property name="url" value="/WEB-INF/jasperReport/searchReport.jasper"/>
+	  	<!--property name="reportDataKey" value="jrDatasource"/-->
+	</bean>
 </beans>

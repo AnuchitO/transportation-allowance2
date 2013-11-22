@@ -10,7 +10,7 @@ public interface AccountAdmin01Dao {
 	/////////
 	//Nong
 	////////
-	public List<AccountAdmin> findByAccountId(String acId);
+	public List<AccountAdmin> findByCode(String code);
 	public void deleteByAccountId(AccountAdmin accountAdmin);
 	public void saveOrUpdate(AccountAdmin accountAdmin);
 }	

@@ -93,85 +93,94 @@ public class SCF003Controller {
 	@RequestMapping(value = "/SCF003.html", method = RequestMethod.GET)
 	public ModelAndView view(HttpServletRequest request,
 			HttpServletResponse response) {
-		
-		String empId = " ";
-		if(request.getParameter("empId")==null){
-			
+		Object sessionPrivilege = request.getSession().getAttribute("sessionPrivilege");
+		String privilege = (String)sessionPrivilege;
+		if((!(privilege.equals("user")))){ 
+			try {
+				request.getSession().removeAttribute("sessionPrivilege");
+				response.sendRedirect((String)request.getSession().getAttribute("sessionIndexPage"));	
+			} catch (Exception e) {
+			}
 		}else{
-			empId = request.getParameter("empId").toString();
-		}
-		////////////////////////////////////////////////////////
-		//Nong getParameter From SHI002 page
-		///////////////////////////////////////////////////////
-		String noDoc = "AUTO";
-		if(request.getParameter("noDoc") == null){
-			noDoc = "AUTO";
-		}else{
-			noDoc = request.getParameter("noDoc");
-		}
-		String status = "-";
-		if(request.getParameter("status") == null){
-
-		}else{
-			status = request.getParameter("status");
-		}
-		
-		/////// End Nong getParameter From SHI002 page ///////
-		
-		
-		
-		Map<String, Object> model = new HashMap<String, Object>();
-		Employee resultsEmp = this.employee01Service.findEmployeeWhereId(empId);
-		System.out.println("view 2");
-		List<String> resu = this.employee01Service.findBankWhereEmp(empId);
-		List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp(empId);
-		List<String> resultsDept = this.employee01Service.findDeptWhereEmp(empId);
-		List<String> resultsProvince = this.employee01Service.findProvinceEmp(empId);
-		Date date = new Date();
-		SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
-		SCF003Domain01 domain = new SCF003Domain01();
-		
-		try {
-			List<TravelHeader> lastNoDocList = this.travelHeader01Service.findByDocNoForSaveOrUpdate(noDoc);
-			TravelHeader travelHeader = lastNoDocList.get(0);
-			domain.setStatus(status);
-			domain.setTatolPaym(travelHeader.getTotalExpenses().toString());
-			domain.setTatolPaymA(travelHeader.getTotalMotorWay().toString());
-			domain.setTatolPaymfullCase(travelHeader.getTotal().toString());
-			domain.setDocument(travelHeader.getAttachment());
-			domain.setForPay(travelHeader.getPaymDesc());
-			domain.setCharactorNumber(new BahtText(travelHeader.getTotal().toString()).toString());
-		} catch (Exception e) {
-
-		}
-		
-		domain.setNo(noDoc);
-		domain.setDate(ft.format(date));
-		domain.setName(resultsEmp.getName());
-		domain.setScfLastName(resultsEmp.getLastname());
-		domain.setId(resultsEmp.getEmpId());
-		new BahtText(11).toString();
-
-		domain.setCompany(resultsEmp.getCompany().getName());
-		domain.setIdCard(resultsEmp.getIdCard());
-		domain.setAddress(resultsEmp.getAddress());
-		domain.setPhone(resultsEmp.getTelephone());
-		domain.setEmail(resultsEmp.getEmail());
-		domain.setAntecedent(resultsDept.get(0));
-		domain.setAntercedentA(resultsProvince.get(0));
-		// ************* set value Button *****************//
-			
-		
-		domain.setBank(resu.get(0));
-		domain.setBranch(resultsEmp.getBranch());
-		domain.setAccountNumber(resultsEmp.getAccountNo());
-		domain.setTypeAccount(resultsBranch.get(0));
+			String empId = " ";
+			if(request.getParameter("empId")==null){
+				
+			}else{
+				empId = request.getParameter("empId").toString();
+			}
+			////////////////////////////////////////////////////////
+			//Nong getParameter From SHI002 page
+			///////////////////////////////////////////////////////
+			String noDoc = "AUTO";
+			if(request.getParameter("noDoc") == null){
+				noDoc = "AUTO";
+			}else{
+				noDoc = request.getParameter("noDoc");
+			}
+			String status = "-";
+			if(request.getParameter("status") == null){
 	
+			}else{
+				status = request.getParameter("status");
+			}
+			
+			/////// End Nong getParameter From SHI002 page ///////
+			
+			
+			
+			Map<String, Object> model = new HashMap<String, Object>();
+			Employee resultsEmp = this.employee01Service.findEmployeeWhereId(empId);
+			System.out.println("view 2");
+			List<String> resu = this.employee01Service.findBankWhereEmp(empId);
+			List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp(empId);
+			List<String> resultsDept = this.employee01Service.findDeptWhereEmp(empId);
+			List<String> resultsProvince = this.employee01Service.findProvinceEmp(empId);
+			Date date = new Date();
+			SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
+			SCF003Domain01 domain = new SCF003Domain01();
+			
+			try {
+				List<TravelHeader> lastNoDocList = this.travelHeader01Service.findByDocNoForSaveOrUpdate(noDoc);
+				TravelHeader travelHeader = lastNoDocList.get(0);
+				domain.setStatus(status);
+				domain.setTatolPaym(travelHeader.getTotalExpenses().toString());
+				domain.setTatolPaymA(travelHeader.getTotalMotorWay().toString());
+				domain.setTatolPaymfullCase(travelHeader.getTotal().toString());
+				domain.setDocument(travelHeader.getAttachment());
+				domain.setForPay(travelHeader.getPaymDesc());
+				domain.setCharactorNumber(new BahtText(travelHeader.getTotal().toString()).toString());
+			} catch (Exception e) {
+	
+			}
+			
+			domain.setNo(noDoc);
+			domain.setDate(ft.format(date));
+			domain.setName(resultsEmp.getName());
+			domain.setScfLastName(resultsEmp.getLastname());
+			domain.setId(resultsEmp.getEmpId());
+			new BahtText(11).toString();
+	
+			domain.setCompany(resultsEmp.getCompany().getName());
+			domain.setIdCard(resultsEmp.getIdCard());
+			domain.setAddress(resultsEmp.getAddress());
+			domain.setPhone(resultsEmp.getTelephone());
+			domain.setEmail(resultsEmp.getEmail());
+			domain.setAntecedent(resultsDept.get(0));
+			domain.setAntercedentA(resultsProvince.get(0));
+			// ************* set value Button *****************//
+				
+			
+			domain.setBank(resu.get(0));
+			domain.setBranch(resultsEmp.getBranch());
+			domain.setAccountNumber(resultsEmp.getAccountNo());
+			domain.setTypeAccount(resultsBranch.get(0));
 		
-		model.put("scf003", JSONObject.fromObject(BeanUtils.beanToMap(domain)).toString());
-
-		return new ModelAndView("SCF003", model);
-
+			
+			model.put("scf003", JSONObject.fromObject(BeanUtils.beanToMap(domain)).toString());
+	
+			return new ModelAndView("SCF003", model);
+		}
+		return new ModelAndView((String)request.getSession().getAttribute("sessionIndexPage"));
 	}
 
 	@RequestMapping(value = "/SCF003.html", method = RequestMethod.POST, params = "method=antecedent")

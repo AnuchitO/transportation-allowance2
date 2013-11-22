@@ -198,6 +198,7 @@ SAC008C.gridAddBtn = new Ext.Toolbar.Button({
 		var i = 1 + sm.length - 1;
 		var uu = SAC008C.grid.getStore().getAt(i).data.no;
 		SAC008C.grid.store.getAt(i).set('no',i + 1);
+		SAC008C.grid.store.getAt(i).set('code','auto');
 		for (var j = 0; j <= sm.length - 1; j++) {
 			SAC008C.grid.getSelectionModel().deselectRow(j);
 		}
@@ -216,12 +217,11 @@ SAC008C.gridRemoveBtn = new Ext.Toolbar.Button({
 	handler : function() {	
 		var rowSelected = Ext.getCmp('idGridSAC008C').getSelectionModel().getSelections();
 		var param = {}; 
-		param.accountId = ""; 
-//		if (!Ext.isEmpty(rowSelected)) {
+		param.code = ""; 
 			Ext.MessageBox.confirm('ยืนยันการทำรายการ', '\"ลบ\" ข้อมูลที่เลือก', function(btn) {
-				if (btn == 'yes') {		
+				if (btn == 'yes') {	
 					for (var i=0;i<rowSelected.length;i++) {
-						param.accountId += rowSelected[i].data.accountId+","; // concat accountId //
+						param.code += rowSelected[i].data.code+","; // concat accountId //
 						Ext.getCmp('idGridSAC008C').store.remove(rowSelected[i]);
 					}
 					////////////////////////////////////
@@ -242,39 +242,18 @@ SAC008C.gridRemoveBtn = new Ext.Toolbar.Button({
 							Ext.Msg.alert('ERROR', 'Error.');
 						}
 					});
+					
 					SAC008C.grid.getSelectionModel().selectAll();
-					var sm = SAC008C.grid.getSelectionModel().getSelections();			
-					var numberSelect = rowSelected.length;
-					var lastIndex = sm.length - 1;
-					var getValueLastIndex = SAC008C.grid.getStore().getAt(lastIndex).data.no;
-					var u = getValueLastIndex - numberSelect;
-					var detroyNumber = 0;
-					SAC008C.grid.store.getAt(lastIndex).set('no', u);
-					for (var j = lastIndex; j >= 0; j--) {
-						if (j == lastIndex) {	}			
-						detroyNumber = u - j;
-						if(detroyNumber == 0){
-							SAC008C.grid.store.getAt(lastIndex - j).set('no',detroyNumber+1);
-						}						
-						else{
-							SAC008C.grid.store.getAt(lastIndex - j).set('no',detroyNumber);
-						}
+					var sm = Ext.getCmp('idGridSAC008C').getSelectionModel().getSelections();			
+					for (var i =0 ; i < sm.length; i++) {
+						SAC008C.grid.store.getAt(i).set('no',i+1);
+						SAC008C.grid.getSelectionModel().deselectRow(i);
 					}
-					SAC008C.grid.store.getAt(0).set('no',1);
-					SAC008C.grid.getSelectionModel().selectAll();
-			var totalLength = SAC008C.grid.getSelectionModel().getSelections();
-			for (var i = 0; i <= totalLength.length - 1; i++) {		
-				SAC008C.grid.getSelectionModel().deselectRow(i);
-			}
-			for (var j = 0; j <= sm.length - 1; j++) {
-				SAC008C.grid.getSelectionModel().deselectRow(j);
-			}
+					
+					
 				}
 			});
-//		} else {
-//			Ext.Msg.alert('Warning', 'กรุณาเลือกข้อมูลที่จะลบ');
-//		}
-		
+	
 	}
 });
 
@@ -289,41 +268,62 @@ SAC008C.gridSaveBtn = new Ext.Toolbar.Button(
 	        iconCls:'save',
 			disabled : false,
 			handler : function() {				
-				Ext.MessageBox.confirm('ยืนยันการทำรายการ','\"บันทึก\" การทำรายการ ',confirmFunction);
-				
+				Ext.MessageBox.confirm('ยืนยันการทำรายการ','\"บันทึก\" การทำรายการ ',confirmFunction);				
 				function confirmFunction(btn) {
 					if (btn == 'yes') {
 						var paramConfirmSave = {};
 						paramConfirmSave.accountId ="";
 						SAC008C.grid.getSelectionModel().selectAll();
 						var rowSelected = Ext.getCmp('idGridSAC008C').getSelectionModel().getSelections();
+						var sendStatus = true;
 						for (var i=0;i<rowSelected.length;i++) {
-							paramConfirmSave.accountId +=   rowSelected[i].data.no+","+
-															rowSelected[i].data.accountId+","+
-															rowSelected[i].data.accountName+","+
-															rowSelected[i].data.debit+","+
-															rowSelected[i].data.credit+"!"; // concat accountId //
+							var accountId = rowSelected[i].data.accountId;
+							var accountName = rowSelected[i].data.accountName;
+							var debit = Ext.getDom('checkDebit'+(i+1)).checked;
+							var credit = Ext.getDom('checkCredit'+(i+1)).checked;
+							if( accountId == "undefined" || accountId == null || accountId == "" ||
+								accountName == "undefined" || accountName == null || accountName == "" ||
+								(!(debit || credit))){
+								/////////////////// operation ////////
+									Ext.Msg.alert('สถานะ', 'กรอกข้อมูลไม่ถูกต้อง ');
+									sendStatus = false;// set No request
+									break;
+								
+								}else{
+									paramConfirmSave.accountId +=   rowSelected[i].data.code+","+
+																	rowSelected[i].data.accountId+","+
+																	rowSelected[i].data.accountName+","+
+																	Ext.getDom('checkDebit'+(i+1)).checked+","+
+																	Ext.getDom('checkCredit'+(i+1)).checked+"!"; // concat accountId //
+								}							
 						}	
-						paramConfirmSave.method = "gridSaveData";					
-						Ext.Ajax.request({
-							url : '/TransportationAllowance/SAC008.html',
-							params : paramConfirmSave,
-							success : function(response, opts) {
-								if (paramConfirmSave != null) {
-									Ext.Msg.alert('สถานะ', 'ทำรายการสำเร็จ');
-								} else {
-									Ext.Msg.alert('Information', 'Error ติดต่อผู้ดูแลระบบ');
+						
+						if(sendStatus){// check for request
+							paramConfirmSave.method = "gridSaveData";
+							Ext.Ajax.request({
+								url : '/TransportationAllowance/SAC008.html',
+								params : paramConfirmSave,
+								success : function(response, opts) {
+									if (paramConfirmSave != null) {
+										Ext.Msg.alert('สถานะ', 'ทำรายการสำเร็จ');
+										/////  load Grid store  //////
+										SAC008C.grid.store.reload({ //  reload grid store when click save button				                  
+								                   params:{method : 'gridDataStore'}});
+										
+									} else {
+										Ext.Msg.alert('Information', 'Error ติดต่อผู้ดูแลระบบ');
+									}
+								},
+								failure : function(response, opts) {
+									Ext.Msg.alert('ERROR', 'Error.');
 								}
-							},
-							failure : function(response, opts) {
-								Ext.Msg.alert('ERROR', 'Error.');
-							}
-						});
+							});
+						}			
 						var sm = SAC008C.grid.getSelectionModel().getSelections();
 						for (var j = 0; j <= sm.length - 1; j++) {
 							SAC008C.grid.getSelectionModel().deselectRow(j);
 						}
-						
+
 					}
 				}
 			}
@@ -354,16 +354,32 @@ SAC008C.gridColumns = [
 			align : 'center',
 			width : 50,
 		},{
+			header : 'Code',
+			dataIndex : 'code',
+			align : 'center',
+			width : 50,
+		},{
 			header : 'รหัสบัญชี',
 			dataIndex : 'accountId',
 			align : 'center',
-			type : 'date',
-			editor : new Ext.form.TextField({
-				id : 'accout',
-				maxLength: 20,
-                allowBlank: false
-			}),		
-			width : 132,
+//			editor : new Ext.form.TextField({
+//				id : 'accout',
+//				format:'00-00-000',
+//				maxLength: 20,
+//                allowBlank: false
+//			}),
+			xtype: 'numbercolumn', 
+			decimalPrecision: 0,
+		    format:'0',			
+////		flex: 0,
+			editor : new Ext.ss.form.NumberField(
+					{
+						id : 'accountNumberFormat',
+						decimalPrecision: 0,
+						format:'0',
+						maxValue:9999999999999
+					}),
+			width : 132
 		},{
 			header : 'ชื่อบัญชี',
 			dataIndex : 'accountName',
@@ -374,24 +390,25 @@ SAC008C.gridColumns = [
 			}),		
 			width : 500
 		},{
-//			xtype: 'checkcolumn',
 			header : 'เดบิต',
 			dataIndex : 'debit',
 			align : 'center',
 			id : 'region',
 			width : 50,
 			 renderer: function (value, meta, record) {
-	                return '<center><input type="checkbox" name="checkbox1"' + (value ? 'checked' : '') + ' onclick="var s = Ext.getCmp(\'button-grid\').store; s.getAt(s.findExact(\'id\',\'' + record.get('id') + '\')).set(\'isFull\', this.value)"'
+				 	var idNameDebit = "checkDebit"+record.data.no;
+	                return '<center><input type="checkbox" id="'+idNameDebit+'" name="checkbox1"' + (value ? 'checked' : '') + ' onclick=" "';
 	            },
 		
 		},{
-//			xtype: 'checkcolumn',
 			header : 'เครดิต',
 			dataIndex : 'credit',
 			align : 'center',
 			width : 50,
 			renderer: function (value, meta, record) {
-                return '<center><input type="checkbox" name="checkbox2"' + (value ? 'checked' : '') + ' onclick="var s = Ext.getCmp(\'button-grid\').store; s.getAt(s.findExact(\'id\',\'' + record.get('id') + '\')).set(\'isFull\', this.value)"'
+//                return '<center><input type="checkbox" name="checkbox2"' + (value ? 'checked' : '') + ' onclick="var s = Ext.getCmp(\'button-grid\').store; s.getAt(s.findExact(\'id\',\'' + record.get('id') + '\')).set(\'isFull\', this.value)"'//old
+				var idNameCredit = "checkCredit"+record.data.no;
+				return '<center><input type="checkbox" id="'+idNameCredit+'" name="checkbox2"' + (value ? 'checked' : '') + ' onclick=" "';
             },
 		}
 ];
@@ -423,6 +440,8 @@ SAC008C.gridStrore = new Ext.data.JsonStore({
 	autoLoad : true,
 	fields : [ {
 		name : 'no'
+	},{ 
+		name : 'code'
 	}, {
 		name : 'accountId'
 	}, {
@@ -430,11 +449,56 @@ SAC008C.gridStrore = new Ext.data.JsonStore({
 	}, {
 		name : 'debit'
 	}, {
-		name : 'credit', type: 'bool'
+		name : 'credit'
 	}],
 	model : 'ForumThread',
 	remoteSort : true
 });
+
+/////////////////////////////////
+//Event OnClick validateCheckBox
+////////////////////////////////
+SAC008C.validateCheckbox = function(grid, rowIndex, cellIndex, e){
+							    var store = grid.getStore().getAt(rowIndex);
+							    var columnName = grid.getColumnModel().getDataIndex(cellIndex);
+							    var cellValue = store.get(columnName);
+							    var i = rowIndex+1;
+//							    Ext.MessageBox.confirm('ยืนยันการทำรายการ', 'เปลียนประเภทบัญชี', function(btn) {
+//						    		if (btn == 'yes') {
+									    if(columnName == 'debit'){    	
+									    	//Change When click Checkbox
+											Ext.get('checkDebit'+i).on('click',function(e) {
+												Ext.getDom('checkDebit'+i).checked = true;
+												Ext.getDom('checkCredit'+i).checked = false;
+											});
+											//Change When click debit column
+											var cellValueCredit = store.get('credit');
+									    	var initialValueCredit = cellValueCredit;
+									    	Ext.getDom('checkCredit'+i).checked = true;	
+										    Ext.getDom('checkCredit'+i).checked = false;
+										    
+										    Ext.getDom('checkDebit'+i).checked = true;
+											Ext.getDom('checkCredit'+i).checked = false;
+									    }else if(columnName == 'credit'){
+									    	//Change When click Checkbox
+											Ext.get('checkCredit'+i).on('click',function(e) {						
+												Ext.getDom('checkDebit'+i).checked = false;
+												Ext.getDom('checkCredit'+i).checked = true;	
+											});
+											//Change When click Debit Column
+										    var cellValueDebit = store.get('debit');
+									    	var initialValueDebit = cellValueDebit;
+									    	cellValue=false;
+									    	Ext.getDom('checkDebit'+i).checked = true;	
+									    	Ext.getDom('checkDebit'+i).checked = false;
+									    	Ext.getDom('checkDebit'+i).checked = false;
+											Ext.getDom('checkCredit'+i).checked = true;
+									    }else{
+									    	
+									    }
+//							    	}
+//						    	});
+							};
 
 SAC008C.grid = new Ext.ss.grid.EditorGridPanel({
 	id : 'idGridSAC008C',
@@ -442,7 +506,7 @@ SAC008C.grid = new Ext.ss.grid.EditorGridPanel({
 	sm : SAC008C.checkboxselection,
 	columns : SAC008C.gridColumns,
 	columnLines : true,
-	width:805,
+	width:858,
 	height:300,
 	lazyRender : true,
 	autoSelect : true,
@@ -456,6 +520,9 @@ SAC008C.grid = new Ext.ss.grid.EditorGridPanel({
 	loadMask : true,
 //	plugins : [ SAC008C.groupHeaderPlugins ],
 	clicksToEdit : 1,
-	tbar : [ SAC008C.gridAddBtn, '-', SAC008C.gridRemoveBtn,'-',SAC008C.gridSaveBtn ]
+	tbar : [ SAC008C.gridAddBtn, '-', SAC008C.gridRemoveBtn,'-',SAC008C.gridSaveBtn ],
+	listeners : {
+	 	'cellclick' : SAC008C.validateCheckbox
+	}
 });
 

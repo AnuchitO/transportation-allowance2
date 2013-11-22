@@ -23,7 +23,7 @@ public class AccountAdmin implements Serializable {
 	private static final long serialVersionUID = -4122310234428712362L;
 	@Id
 	@Column (name = "ACCAD_ACID")
-	private String acId;
+	private String code;
 	
 	@Column (name = "ACCAD_ACNAME")
 	private String name;
@@ -42,13 +42,27 @@ public class AccountAdmin implements Serializable {
 	
 	@Column (name = "ACCAD_ACMODIFYDATE")
 	private Date modifyDate;
+	
+	@Column (name = "ACCAD_ACNO")
+	private String accountNo;
 
-	public String getAcId() {
-		return acId;
+	
+	
+	public String getAccountNo() {
+		return accountNo;
 	}
 
-	public void setAcId(String acId) {
-		this.acId = acId;
+	public void setAccountNo(String accountNo) {
+		this.accountNo = accountNo;
+	}
+
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getName() {

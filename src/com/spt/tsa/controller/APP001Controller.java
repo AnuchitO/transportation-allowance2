@@ -30,13 +30,19 @@ public class APP001Controller{
 	private TravelDetail01Service travelDetail01Service;
 	private TravelHeader01Service travelHeader01Service;
 	private ParameterTable01Service parameterTable01Service;
+	private AccountProfile01Service accountProfile01Service;
 	
 	
+	@Autowired
+	public void setAccountProfile01Service(	AccountProfile01Service accountProfile01Service) {
+		this.accountProfile01Service = accountProfile01Service;
+	}
+
+
 	@Autowired
     public void setCompany01Service(Company01Service company01Service) {
    	 this.company01Service = company01Service;
     }
-	
 	
 	
 	@Autowired
@@ -146,15 +152,20 @@ public class APP001Controller{
 		Date startDate = (Date) format.parse(from);
 		Employee employees = this.employee01Service.findEmployeeByIdName("EMp001");
 		List<TravelHeader> resultsTravelH  =null;
-//		resultsTravelH = this.travelHeader01Service.findLikeYearAndStatus(employees,"2554", "%");
-//		resultsTravelH = this.travelHeader01Service.findLikeYearAndStatus(employees,"%", "005");// work
-//		resultsTravelH = this.travelHeader01Service.findLikeYearAndStatus(employees,"%", "001");//work
-//		resultsTravelH = this.travelHeader01Service.findLikeYearAndStatus(employees,"%", "002");//work
-//		resultsTravelH = this.travelHeader01Service.findLikeYearAndStatus(employees,"%", "003");//work
-//		resultsTravelH = this.travelHeader01Service.findLikeYearAndStatus(employees,"%", "004");//work
-		for(TravelHeader c:resultsTravelH){				
-			logger.debug("++++++@@@@@@@@@@@@@@@@@+++++gridRowList++++++{}-------------{}",c.getCreationate(),c.getStatus());
-		}
+		resultsTravelH = this.travelHeader01Service.findLikeYearAndStatus(employees,"2554", "%");
+////		resultsTravelH = this.travelHeader01Service.findLikeYearAndStatus(employees,"%", "005");// work
+////		resultsTravelH = this.travelHeader01Service.findLikeYearAndStatus(employees,"%", "001");//work
+////		resultsTravelH = this.travelHeader01Service.findLikeYearAndStatus(employees,"%", "002");//work
+////		resultsTravelH = this.travelHeader01Service.findLikeYearAndStatus(employees,"%", "003");//work
+////		resultsTravelH = this.travelHeader01Service.findLikeYearAndStatus(employees,"%", "004");//work
+//		for(TravelHeader c:resultsTravelH){				
+//			logger.debug("++++++@@@@@@@@@@@@@@@@@+++++gridRowList++++++{}-------------{}",c.getCreationate(),c.getStatus());
+//		}
+//		List<AccountProfile> resultsTravelH = this.accountProfile01Service.findAll();
+//		for(AccountProfile c:resultsTravelH){				
+//			logger.debug("++++++@@@@@@@@@@@@@@@@@+++++gridRowList++++++{}-------------{}",c.getUserName(),c.getPassword());
+//			logger.debug("++++++@@@@@@@@@@@@@@@@@+++++gridRowList++++++{}-------------{}",c.getPrivilege(),c.getEmployeeId());
+//		}
 		Map model = new HashMap();
 		
 		
@@ -170,15 +181,4 @@ public class APP001Controller{
 		
 		return new ModelAndView("app001",model);
     }
-
-
-
-
-
-
-
-
-
-	
-
 }

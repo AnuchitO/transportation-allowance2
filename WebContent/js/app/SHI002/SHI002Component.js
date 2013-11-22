@@ -2,6 +2,12 @@ var SHI002C = {};
 /////////////////////////////////////
 //define element for Header
 ////////////////////////////////////
+SHI002C.btnLogout = new Ext.Button({
+	id : 'btnLogout',
+	text : 'ออกจากระบบ',
+	width : 100
+});
+
 SHI002C.style = {
 		"color":"black",
 	    "background-image":"none",
@@ -187,6 +193,7 @@ SHI002C.PanelHead = new Ext.Panel({
 		anchor : '100%',
 	},
 	items: [{
+				columnWidth : 0.5,
 		        xtype: 'label',
 		        style: 'font-weight:bold;font-size:18px;',
 		        text: 'ข้อมูลประวัติการเบิกเงิน',
@@ -273,14 +280,16 @@ SHI002C.numberDocumentOnClick = function(grid, rowIndex, cellIndex, e){
 							    var columnName = grid.getColumnModel().getDataIndex(cellIndex);
 							    var cellValue = store.get(columnName);
 							    if(columnName == 'docNo'){
-							    	if(confirm("ดูข้อมูลของเอกสาร "+cellValue)){		    	
-							    	var empId = Ext.getCmp('employeeId').getValue();
-							    	var noDoc = cellValue;
-							    	var status = store.get('status');
+							    	Ext.MessageBox.confirm('ยืนยันการทำรายการ', 'ดูข้อมูลของเอกสาร '+cellValue, function(btn) {
+							    		if (btn == 'yes') {
+									    	var empId = Ext.getCmp('employeeId').getValue();
+									    	var noDoc = cellValue;
+									    	var status = store.get('status');
 
-									var urlPreviwPage = "/TransportationAllowance/SCF003.html?empId="+empId+"&noDoc="+noDoc+"&status="+status;
-									window.location.assign(urlPreviwPage);	    	
-							    	}
+											var urlPreviwPage = "/TransportationAllowance/SCF003.html?empId="+empId+"&noDoc="+noDoc+"&status="+status;
+											window.location.assign(urlPreviwPage);	    	
+							    		}
+							    	});
 							    }else{
 							    	
 							    }
@@ -291,6 +300,18 @@ SHI002C.numberDocumentOnClick = function(grid, rowIndex, cellIndex, e){
 SHI002C.grid4 = new Ext.grid.GridPanel({
         id:'idGrid',
     	store:SHI002C.gridStore,
+    	columnLines : true,
+    	lazyRender : true,
+    	autoSelect : true,
+    	criterionField : true,
+    	selectOnFocus : true,
+    	typeAhead : true,
+    	forceSelection : true,
+    	triggerAction : 'all',
+    	trackMouseOver : false,
+    	disableSelection : true,
+    	loadMask : true,
+    	clicksToEdit : 1,
         cm: new Ext.grid.ColumnModel([
             SHI002C.sm2,
             {id:'no',header: "ลำดับ", width: 10, sortable: true, dataIndex: 'no'},
@@ -298,19 +319,17 @@ SHI002C.grid4 = new Ext.grid.GridPanel({
                 metadata.style = 'cursor: pointer;'; 
                 return val;
             }},
-            {header: "วันที่เอกสาร", width: 20, sortable: true, dataIndex: 'docDate'},
-            {header: "วันที่ส่งเอกสาร", width: 20, sortable: true, dataIndex: 'sendDate'},
-            {header: "วันที่อนุมัติ", width: 20, sortable: true,  dataIndex: 'approve'},
-            {header: "สถานะ", width: 20, sortable: true, dataIndex: 'status'},
-            {header: "จำนวนเงิน (บาท)", width: 20, sortable: true, dataIndex: 'amount',xtype: 'numbercolumn', format:'0.00', flex:0},
-            {header: "หมายเหตุ", width: 20, sortable: true, dataIndex: 'remark'}            
+            {header: "วันที่เอกสาร", width: 20, sortable: false, dataIndex: 'docDate'},
+            {header: "วันที่ส่งเอกสาร", width: 20, sortable: false, dataIndex: 'sendDate'},
+            {header: "วันที่อนุมัติ", width: 20, sortable: false,  dataIndex: 'approve'},
+            {header: "สถานะ", width: 20, sortable: false, dataIndex: 'status'},
+            {header: "จำนวนเงิน (บาท)", width: 20, sortable: false, dataIndex: 'amount',xtype: 'numbercolumn', format:'0.00', flex:0},
+            {header: "หมายเหตุ", width: 20, sortable: false, dataIndex: 'remark'}            
         ]),
         sm: SHI002C.sm2,
         viewConfig: {
             forceFit:true
         },
-        columnLines: true,
-
         // inline toolbars
         tbar:[{
             text:'Remove',
@@ -374,13 +393,14 @@ SHI002C.btnCreateBin = new Ext.Button({
 	width : 100
 });
 
+
 //////////////////////
 //FieldSet For grid
 /////////////////////
 SHI002C.fieldSetBody = new Ext.form.FieldSet({
 	collapsible : false,
 	title : 'รายละเอียดการเดินทาง',
-	border : true,
+	border : false,
 	layout : 'column',
 	width : 827,
 	defaults : {

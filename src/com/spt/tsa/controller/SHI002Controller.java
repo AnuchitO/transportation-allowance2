@@ -83,23 +83,34 @@ public class SHI002Controller {
 		////////////////////////////
 		///EmpId pass by Login Page
 		///////////////////////////
-		String EmpId = "EMp001";
-		try{ 
-			this.employees = this.employee01Service.findEmployeeByIdName(EmpId);
-		}catch (Exception e){
-			
+		Object sessionEmpId = request.getSession().getAttribute("sessionEmpId");
+		Object sessionPrivilege = request.getSession().getAttribute("sessionPrivilege");
+		String EmpId =(String)sessionEmpId;
+		String privilege = (String)sessionPrivilege;
+		Map<String, Object> model = null;
+		try {
+			if((!(privilege.equals("user")))){
+				try {
+					request.getSession().removeAttribute("sessionPrivilege");
+					response.sendRedirect((String)request.getSession().getAttribute("sessionIndexPage"));	
+				} catch (Exception e) {
+				}
+			}else{
+
+				this.employees = this.employee01Service.findEmployeeByIdName(EmpId);	
+				model = new HashMap<String, Object>();
+				SHI002Domain01 domain = new SHI002Domain01();				
+				domain.setEmployeeName(this.employees.getName()+"  "+this.employees.getLastname());
+				domain.setEmployeeId(this.employees.getEmpId());				
+				
+				model.put("SHI01", JSONObject.fromObject(BeanUtils.beanToMap(domain)).toString());
+				return new ModelAndView("SHI002", model);
+			}
+				
+		} catch (Exception e) {
 		}
-		
-//		Date date = new Date();
-//		SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
-		SHI002Domain01 domain = new SHI002Domain01();
-		
-		domain.setEmployeeName(this.employees.getName()+"  "+this.employees.getLastname());
-		domain.setEmployeeId(this.employees.getEmpId());
-		
-		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("SHI01", JSONObject.fromObject(BeanUtils.beanToMap(domain)).toString());
-		return new ModelAndView("SHI002", model);
+			
+		return new ModelAndView("");	
 
 	}
 	

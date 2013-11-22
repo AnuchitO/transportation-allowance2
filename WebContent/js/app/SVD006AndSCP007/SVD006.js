@@ -30,7 +30,6 @@ Ext.onReady(function() {
 
 //////// Operator Function
 
-
 SVD006C.autoCheck = Ext.getCmp('totalPayAll').getValue();
 if(SVD006C.autoCheck >= 1500){
 	Ext.getDom('payCash').checked = false;
@@ -68,9 +67,9 @@ Ext.get('payCheck').on('click',function(e) {
 
 Ext.get('idBtnCreatePay').on('click',function(e) {
 	Ext.getCmp('svdtabPanel').items.get(1).setDisabled(false);
-	SVD006C.tabPanel.setActiveTab(1);
-	
+	SVD006C.tabPanel.setActiveTab(1);	
 });
+//SVD006C.btnCreatePay.disable();
 
 var checkStatus = SVD006Domain.seiStatus;
 if(checkStatus == "Submitted"){
@@ -174,7 +173,15 @@ Ext.get('idBtnConfirm').on('click',function(e) {
 			}
 });
 
+SVD006C.btnBackHome.on('click',function(e) {
+	Ext.MessageBox.confirm('ยืนยันการทำรายการ', 'กลับหน้าหลัก ', function(btn) {
+		if (btn == 'yes') {
+	    	var urlPreviwPage = "/TransportationAllowance/SEI005.html";
+	    	window.location.assign(urlPreviwPage);    	
+		}
+	});
 
+});
 
 ///////End Operater Function
 //************************ set value By SCP007C **************************************/

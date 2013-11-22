@@ -1,6 +1,7 @@
 package com.spt.tsa.controller;
 
 import java.util.*;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -55,15 +56,19 @@ public class SAC008Controller {
 			for(AccountAdmin ad : this.listAccountAdmins){
 				 jobect = new JSONObject(); 
 				 jobect.accumulate("no",i++);
-				 jobect.accumulate("accountId",ad.getAcId());
+				 jobect.accumulate("code",ad.getCode());
+				 jobect.accumulate("accountId",ad.getAccountNo());
 				 jobect.accumulate("accountName", ad.getName());
 				 
-				 if(ad.getType().equals("1")){
+				 if(ad.getType().equals("debit")){
 					 jobect.accumulate("debit",true);
 					 jobect.accumulate("credit",false);
-				 }else{
+				 }else if(ad.getType().equals("credit")){
 					 jobect.accumulate("debit",false);
 					 jobect.accumulate("credit",true);
+				 }else{
+					 jobect.accumulate("debit",false);
+					 jobect.accumulate("credit",false);
 				 }			 
 				 jsonArray.add(jobect);
 			}
@@ -84,20 +89,20 @@ public class SAC008Controller {
 	@RequestMapping(value = "/SAC008.html", method = RequestMethod.POST, params = "method=gridRemoveData")
 	public void gridRemoveData(HttpServletRequest request, HttpServletResponse response,
 	@ModelAttribute SAC008Domain01 domainSAC008,
-	@RequestParam("accountId") String accountId){
-		domainSAC008.setAccountId(accountId);
-		String packAccountId = domainSAC008.getAccountId();
+	@RequestParam("code") String code){
+		domainSAC008.setCode(code);
+		String packAccountId = domainSAC008.getCode();
 		String[] accountIdSplit = packAccountId.split(",");
 
-		for(String eachAccountId : accountIdSplit){
+		for(String eachCodeId : accountIdSplit){
 		
 			try {
-				this.listAccountAdmins = this.accountAdmin01Service.findByAccountId(eachAccountId);//find accountAdmin by Account Id 
+				this.listAccountAdmins = this.accountAdmin01Service.findByCode(eachCodeId);//find accountAdmin by Account Id 
 				 for(AccountAdmin ad : this.listAccountAdmins){ //loop For delete AccountAdmin
-						 this.accountAdmin01Service.deleteByAccountId(ad);// delete AccountAdmin
+						 this.accountAdmin01Service.deleteByAccountCode(ad);// delete AccountAdmin
 				 }
 			} catch (Exception e) {
-				logger.debug("{}",e);
+				logger.debug("----------------------- {}  ---------------------",e);
 			}
 		}
 	}
@@ -112,28 +117,42 @@ public class SAC008Controller {
 
 		for(String eachRow : rowSplit){
 			String[] columnSplit = eachRow.split(",");							
-				String no = columnSplit[0];
+				String code = columnSplit[0];
 				String accountId = columnSplit[1];
 				String accountName = columnSplit[2];
 				String debit = columnSplit[3];
 				String credit = columnSplit[4];
 			try {
-				this.listAccountAdmins = this.accountAdmin01Service.findByAccountId(accountId);
+				this.listAccountAdmins = this.accountAdmin01Service.findByCode(accountId);
 				 AccountAdmin accountAdmin = this.listAccountAdmins.get(0);
-					 accountAdmin.setAcId(accountId);
+				 	 accountAdmin.setCode(code);
+					 accountAdmin.setAccountNo(accountId);
 					 accountAdmin.setName(accountName);
 					 accountAdmin.setModifyDate(new Date());
-					 accountAdmin.setType("1"); ///////////////////  test save freeze logic
+					 if(debit.equals("true")){
+						  accountAdmin.setType("debit"); 
+					 }else if(credit.equals("true")){
+						  accountAdmin.setType("credit"); 
+					 }else{
+						  accountAdmin.setType("not"); 
+					 }
 				 this.accountAdmin01Service.saveOrUpdate(accountAdmin);
 			} catch (Exception e) {
 				 AccountAdmin accountAdmin = new AccountAdmin();
-					 accountAdmin.setAcId(accountId);
+				 	 accountAdmin.setCode(code);
+					 accountAdmin.setAccountNo(accountId);
 					 accountAdmin.setName(accountName);
 					 accountAdmin.setUserCreation("FromSessionLogin"); //Freeze Waiting get FromSession Login
 					 accountAdmin.setCreationDate(new Date());
 					 accountAdmin.setUserUpdate("FromSessionLogin"); //Freeze Waiting  get FromSession Login
 					 accountAdmin.setModifyDate(new Date());
-					 accountAdmin.setType("2"); ///////////////////  test save freeze logic
+					 if(debit.equals("true")){
+						  accountAdmin.setType("debit"); 
+					 }else if(credit.equals("true")){
+						  accountAdmin.setType("credit"); 
+					 }else{
+						  accountAdmin.setType("not"); 
+					 }
 				 this.accountAdmin01Service.saveOrUpdate(accountAdmin);
 			}
 			

@@ -22,14 +22,22 @@ Ext.onReady(function() {SHI002.resumeForm = new Ext.form.FormPanel({
 				         {
 				        	 items : SHI002C.PanelHead
 				         },{
+				    		columnWidth : 0.5,
+				    		items : SHI002C.btnLogout,
+					    	style : {
+					    			"position" : "relative",
+					    			"left" : "727px",
+					    			"top" : "-160px"
+					    	}			
+				    	},{
 				        	 items : SHI002C.fieldSetBody
 				         },{
 							 items : SHI002C.btnCreateBin,
-					    		style : {
-					    			"position" : "relative",
-					    			"left" : "700px",
-					    			"top" : "-10px"
-					    		}
+							    	 style : {
+							    			"position" : "relative",
+							    			"left" : "700px",
+							    			"top" : "-10px"
+							    	 }
 						}]
 			});
 /////////////////////////////////////////
@@ -81,6 +89,15 @@ Ext.onReady(function() {SHI002.resumeForm = new Ext.form.FormPanel({
 		}
 	});
 	
+	Ext.get('btnLogout').on('click',function(e) {
+		Ext.MessageBox.confirm('ยืนยันการทำรายการ','คุณต้องการ \"ออกจากระบบ\"',confirmFunction);
+		function confirmFunction(btn) {
+			if (btn == 'yes') {
+				var urlPreviwPage = "/TransportationAllowance/index.html";
+				window.location.assign(urlPreviwPage);
+			}
+		}
+	});
 	
 	
 

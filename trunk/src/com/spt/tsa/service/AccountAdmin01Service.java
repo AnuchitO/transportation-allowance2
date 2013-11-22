@@ -10,8 +10,8 @@ public interface AccountAdmin01Service {
 	//////////////////////
 	//Nong
 	//////////////////////
-	public List<AccountAdmin> findByAccountId(String acId);
-	public void deleteByAccountId(AccountAdmin accountAdmin);
+	public List<AccountAdmin> findByCode(String code);
+	public void deleteByAccountCode(AccountAdmin accountAdmin);
 	public void saveOrUpdate(AccountAdmin accountAdmin);
 	////// End Nong //////
 }

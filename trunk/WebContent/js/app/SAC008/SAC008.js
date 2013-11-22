@@ -96,7 +96,7 @@ Ext.onReady(function() {SAC008.resumeForm = new Ext.form.FormPanel({
 				applyTo : "content",
 				layout : 'column',
 				border : false,
-				width : '60%',
+				width : '65%',
 				style : {
 					"margin-left" : "auto",
 					"margin-right" : "auto",
@@ -106,14 +106,14 @@ Ext.onReady(function() {SAC008.resumeForm = new Ext.form.FormPanel({
 					xtype : 'container',
 					layout : 'form',
 					columnWidth : 1,
-					anchor : '100%',
+					anchor : '120%',
 				},
 				items : [{
 							items : SAC008C.labHeader,
 							style : {					
 								"padding-left" : "10px",
 								"position" : "relative",
-								"left" : "280px",
+								"left" : "300px",
 								"top" : "0px"
 							}
 						},{
@@ -124,8 +124,24 @@ Ext.onReady(function() {SAC008.resumeForm = new Ext.form.FormPanel({
 							style : {					
 								"padding-left" : "10px",
 								"position" : "relative",
-								"left" : "290px",
-								"top" : "0px"
+								"left" : "330px",
+								"top" : "10px"
+							}
+						},{
+							items : new Ext.form.Label({
+								id : "labA",
+								text : "a",
+								style : {
+									"font-size" : "150%",
+									"font-align" : "center"
+								},
+								anchor : '93%'
+							}),
+							style : {					
+								"padding-left" : "10px",
+								"position" : "relative",
+								"left" : "-310px",
+								"top" : "30px"
 							}
 						}]
 			});
@@ -137,9 +153,8 @@ Ext.get('back').on('click',function(e) {
 	Ext.MessageBox.confirm('Confirmation','คุณต้องการกลับไปหน้าหลัก',confirmFunction);
 	function confirmFunction(btn) {
 		if (btn == 'yes') {								
-//			var urlPreviwPage = "/TransportationAllowance/SHI002.html";
-//			window.location.assign(urlPreviwPage);
-			alert("OK");
+			var urlPreviwPage = "/TransportationAllowance/SEI005.html";
+			window.location.assign(urlPreviwPage);
 		}
 	}
 });

@@ -64,31 +64,41 @@ public class SPV004JasperController {
     }
 	
 	@RequestMapping(value = "/jasperReport.pdf", method = RequestMethod.GET)
-	public String printWelcome(ModelMap model,HttpServletRequest request) throws JRException{
-		String docNo= request.getParameter("docNo").toString();
-		List<TravelHeader> travelHeader = null;
-		List<TravelDetail> travelDetails = null;
-		try{ 
-		travelHeader = this.travelHeader01Service.findByDocNo(docNo);
-		try {
-			travelDetails = this.travelDetail01Service.findByTravelHeader(travelHeader.get(0));
-		} catch (Exception e) {
+	public String printWelcome(ModelMap model,HttpServletRequest request,HttpServletResponse response) throws JRException{
+		Object sessionPrivilege = request.getSession().getAttribute("sessionPrivilege");
+		String privilege = (String)sessionPrivilege;
+		if((!(privilege.equals("user")))){ 
+			try {
+				request.getSession().removeAttribute("sessionPrivilege");
+				response.sendRedirect((String)request.getSession().getAttribute("sessionIndexPage"));	
+			} catch (Exception e) {
+			}
+		}else{
 			
-		}		
-		List<ParameterTable> resultsBank = this.parameterTable01Service.findRow("7",travelHeader.get(0).getEmployee().getBank().toString());
-		List<ParameterTable> resultsBankType = this.parameterTable01Service.findRow("8",travelHeader.get(0).getEmployee().getAccountType().toString());
-
-		SPV004JasperDataSource dsStudent=null;
-		dsStudent =  new SPV004JasperDataSource(travelHeader,resultsBank,resultsBankType,travelDetails);
-		jrDatasource = dsStudent.create(null);
-		}catch (Exception e){
-			
-		}
-		model.addAttribute("datasource", jrDatasource);
-		model.addAttribute("format", "pdf");
-		return "multiViewReport";
-	}
-
+			String docNo= request.getParameter("docNo").toString();
+			List<TravelHeader> travelHeader = null;
+			List<TravelDetail> travelDetails = null;
+			try{ 
+			travelHeader = this.travelHeader01Service.findByDocNo(docNo);
+			try {
+				travelDetails = this.travelDetail01Service.findByTravelHeader(travelHeader.get(0));
+			} catch (Exception e) {
+				
+			}		
+			List<ParameterTable> resultsBank = this.parameterTable01Service.findRow("7",travelHeader.get(0).getEmployee().getBank().toString());
+			List<ParameterTable> resultsBankType = this.parameterTable01Service.findRow("8",travelHeader.get(0).getEmployee().getAccountType().toString());
 	
+			SPV004JasperDataSource dsStudent=null;
+			dsStudent =  new SPV004JasperDataSource(travelHeader,resultsBank,resultsBankType,travelDetails);
+			jrDatasource = dsStudent.create(null);
+			}catch (Exception e){
+				
+			}
+			model.addAttribute("datasource", jrDatasource);
+			model.addAttribute("format", "pdf");
+			return "multiViewReport";
+		}
+		return "";
+	}
 	
 }

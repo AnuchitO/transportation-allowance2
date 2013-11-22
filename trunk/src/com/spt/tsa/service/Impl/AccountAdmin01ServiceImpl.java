@@ -28,11 +28,11 @@ public class AccountAdmin01ServiceImpl implements AccountAdmin01Service{
     //Nong
     ///////////////////////
        
-	public List<AccountAdmin> findByAccountId(String acId) {
-		 return this.accountAdmin01Dao.findByAccountId(acId);
+	public List<AccountAdmin> findByCode(String code) {
+		 return this.accountAdmin01Dao.findByCode(code);
 	}
 
-	public void deleteByAccountId(AccountAdmin accountAdmin) {
+	public void deleteByAccountCode(AccountAdmin accountAdmin) {
 		this.accountAdmin01Dao.deleteByAccountId(accountAdmin);
 	}
 

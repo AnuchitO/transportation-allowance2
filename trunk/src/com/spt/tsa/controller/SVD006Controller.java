@@ -200,39 +200,15 @@ public class SVD006Controller{
 			domain.setHeaderCompTell(company.getTelephone());
 			domain.setHeaderCompFax(company.getFax());
 			//// End Nong Set Address Company ////
-			Employee teeeeeee = this.travelHeader01Service.findEmployeeWhereId(domain.getId());
-//			Company commmmm = this.travelHeader01Service.findCompanyWhereId(resultsEmp.getCompany().getComId());
-//			
-//				logger.debug("+++++++------------+{}------",teeeeeee.getAddress());
-//				logger.debug("+++++++------------+{}------",commmmm.getComId());
-//			
-//			logger.debug("+++++++++++++++++++++{}--------------------",resu.get(0));
-			logger.debug("+++++++++++++++++++++{}--------------------",domain.getName());
-//			List<String> tttdate = this.travelHeader01Service.findDateMinMaxFromTravelHeader("560004");
-//
-//				logger.debug("########################################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",tttdate.get(0));
-			
 			
 			//********************************* Push parametor here ******************************************//
 			List<TravelDetail> re = this.travelHeader01Service.findDateMinMax(noDoc);
 			List<String> cus = this.travelHeader01Service.findNameCustomer(noDoc);
-			logger.debug("########################################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",cus.get(0));
 			SimpleDateFormat sim = new SimpleDateFormat("dd MMMM yyyy",new Locale("th","th"));
 			String dateMin = re.get(0).getDate().toString();
 			String [] dayMin = dateMin.split("-");
 			String [] dayMinday = dayMin[2].split(" ");
 			String dayTotalMinMax = " "+"-"+" "+cus.get(0)+" "+dayMinday[0]+" , " + sim.format(re.get(re.size()-1).getDate())+" "+"เดินทางพบลูกค้า";
-			
-			
-			
-			
-			logger.debug("########################################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",dayTotalMinMax);
-				logger.debug("########################################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",re.get(0).getDate());
-				logger.debug("########################################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",re.get(re.size()-1).getDate());
-				
-			
-			AccountAdmin test = this.paymentHeader01Service.findIdAccount("11-02-304");
-			logger.debug("########################################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}-------",test.getAcId());
 			
 			domain.setMinMaxDate(dayTotalMinMax);
 			model.put("data", JSONObject.fromObject(BeanUtils.beanToMap(domain)).toString());
@@ -331,7 +307,7 @@ public class SVD006Controller{
 			JSONObject jobect1 = new JSONObject();
 			for (AccountAdmin c : resultsAcc) {
 
-				jobect1.accumulate("code", c.getAcId());
+				jobect1.accumulate("code", c.getAccountNo());
 				jobect1.accumulate("description",c.getName());
 				jsonArray.add(jobect1);
 				jobect1.clear();

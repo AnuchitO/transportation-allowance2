@@ -29,9 +29,9 @@ public class AccountAdmin01DaoImpl extends HibernateDaoSupport implements Accoun
    	 return this.getHibernateTemplate().find("FROM AccountAdmin");
     }
 
-	public List<AccountAdmin> findByAccountId(String acId) {
+	public List<AccountAdmin> findByCode(String code) {
 		DetachedCriteria criteria =  DetachedCriteria.forClass(AccountAdmin.class);
-		 				 criteria.add(Restrictions.eq("acId", acId));
+		 				 criteria.add(Restrictions.eq("code", code));
     	return this.getHibernateTemplate().findByCriteria(criteria);
 	}
 

@@ -431,6 +431,7 @@ SVD006C.btnConfirm = new Ext.Button({
 SVD006C.btnCreatePay = new Ext.Button({
 	id : 'idBtnCreatePay',
 	text : 'สร้างใบสำคัญจ่าย',
+	diasabled: true,
 	width : 110
 });
 SVD006C.btnBackHome =  new Ext.Button({
@@ -438,7 +439,7 @@ SVD006C.btnBackHome =  new Ext.Button({
 	text : 'กลับสู่หน้าหลัก',
 	width : 110
 });
-//SVD006C.btnBackHome 
+
 // ////// Group Approve Check box
 SVD006C.checkBoxApprove = new Ext.form.Checkbox({
 	id : 'approve',

@@ -9,10 +9,12 @@ SLI001.Login = new Ext.FormPanel({
 	monitorValid:true,
 	items:[{
 			fieldLabel:'Username',
+			id : 'userName',
 			name:'username',
 			allowBlank:false
 		 },{
 			fieldLabel:'Password',
+			id : 'password',
 			name:'password',
 			inputType:'password',
 			allowBlank:false
@@ -27,23 +29,23 @@ SLI001.Login = new Ext.FormPanel({
 			SLI001.Login.getForm().submit({
 			method:'POST',
 			success:function(response,jsonResponse){
-			Ext.Msg.alert('Status', 'Login Successful!', function(btn, text){
-				if (btn == 'ok'){
-					window.location = "/TransportationAllowance/"+jsonResponse.result.message;
+				Ext.Msg.alert('Status', 'Login Successful!', function(btn, text){
+					if (btn == 'ok'){
+						window.location = "/TransportationAllowance/"+jsonResponse.result.message;
+					}
+				});
+
+			},
+			failure:function(form, action){
+				if(action.result.failure){
+					Ext.Msg.alert('Login', "Login Failed!");
+					SLI001.Login.getForm().reset();
+				}else{
+					alert("Failure Else");
 				}
-			});
-
-		},
-		failure:function(form, action){
-			if(action.result.failure){
-				Ext.Msg.alert('Login', "Login Failed!");
-				SLI001.Login.getForm().reset();
-			}else{
-				alert("Failure Else");
 			}
-		}
-
-		});
+	
+			});
 	}
 	}]
 });
@@ -75,6 +77,31 @@ Ext.onReady(function() {SLI001.resumeForm = new Ext.form.FormPanel({
 				    		}
 				         }]
 			});
+
+Ext.get('password').on('keypress',function (e){
+    if(e.getKey() == 13) {
+		SLI001.Login.getForm().submit({
+			method:'POST',
+			success:function(response,jsonResponse){
+				Ext.Msg.alert('Status', 'Login Successful!', function(btn, text){
+					if (btn == 'ok'){
+						window.location = "/TransportationAllowance/"+jsonResponse.result.message;
+					}
+				});
+
+			},
+			failure:function(form, action){
+				if(action.result.failure){
+					Ext.Msg.alert('Login', "Login Failed!");
+					SLI001.Login.getForm().reset();
+				}else{
+					alert("Failure Else");
+				}
+			}
+	
+			});
+    }
+  });
 });
 
 	

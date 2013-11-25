@@ -41,6 +41,15 @@ if(SVD006C.autoCheck >= 1500){
 Ext.get('approve').on('click',function(e) {
 	Ext.getDom('refused').checked = false;
 	Ext.getDom('cancel').checked = false;
+	if(Ext.getDom('approve').checked){
+		if(SVD006C.autoCheck >= 1500){
+			Ext.getDom('payCash').checked = false;
+			Ext.getDom('payCheck').checked = true;
+		}else{
+			Ext.getDom('payCash').checked = true;
+			Ext.getDom('payCheck').checked = false;
+		}
+	}
 });
 Ext.get('refused').on('click',function(e) {
 	Ext.getDom('approve').checked = false;
@@ -64,15 +73,19 @@ Ext.get('payCash').on('click',function(e) {
 Ext.get('payCheck').on('click',function(e) {
 	Ext.getDom('payCash').checked = false;
 });
-
-Ext.get('idBtnCreatePay').on('click',function(e) {
-	Ext.getCmp('svdtabPanel').items.get(1).setDisabled(false);
-	SVD006C.tabPanel.setActiveTab(1);	
+var statusCheckForCreatePayment = false;
+Ext.get('idBtnCreatePay').on('click',function(e) {	
+	if(statusCheckForCreatePayment){
+		Ext.getCmp('svdtabPanel').items.get(1).setDisabled(false);
+		SVD006C.tabPanel.setActiveTab(1);			
+	}
 });
-//SVD006C.btnCreatePay.disable();
+Ext.getCmp('idBtnCreatePay').disable();
+//Ext.getCmp('idBtnCreatePay').enable();
 
 var checkStatus = SVD006Domain.seiStatus;
 if(checkStatus == "Submitted"){
+	
 	
 }
 else if(checkStatus == "Approved"){
@@ -82,9 +95,14 @@ else if(checkStatus == "Approved"){
 	Ext.getDom('cancel').disabled = true;
 	Ext.getDom('payCash').disabled = true;
 	Ext.getDom('payCheck').disabled = true;
+	statusCheckForCreatePayment = false;
+	Ext.getCmp('idBtnCreatePay').disable();
+
 }
 else if(checkStatus == "Refused"){
 	Ext.getDom('refused').checked = true;
+	statusCheckForCreatePayment = false;
+	Ext.getCmp('idBtnCreatePay').disable();
 }
 else if(checkStatus == "Cancel"){
 	Ext.getDom('cancel').checked = true;
@@ -93,6 +111,8 @@ else if(checkStatus == "Cancel"){
 	Ext.getDom('cancel').disabled = true;
 	Ext.getDom('payCash').disabled = true;
 	Ext.getDom('payCheck').disabled = true;
+	statusCheckForCreatePayment = false;
+	Ext.getCmp('idBtnCreatePay').disable();
 }
 
 
@@ -169,6 +189,14 @@ Ext.get('idBtnConfirm').on('click',function(e) {
 			function updateStatusFunction(btn) {
 				if (btn == 'yes') {
 					updateStatus();
+					if(!(Ext.getDom('refused').checked || Ext.getDom('cancel').checked)){
+						statusCheckForCreatePayment = true;
+						Ext.getCmp('idBtnCreatePay').enable();
+					}else{
+						statusCheckForCreatePayment = false;
+						Ext.getCmp('idBtnCreatePay').disable();
+					}
+					
 				}
 			}
 });

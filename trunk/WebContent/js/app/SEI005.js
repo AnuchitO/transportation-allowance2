@@ -30,7 +30,11 @@ SEI005.seiLabelTitle = new Ext.form.Label({
 	anchor : '93%'
 
 });
-
+SEI005.btnLogout = new Ext.Button({
+	id : 'btnLogout',
+	text : 'ออกจากระบบ',
+	width : 100
+});
 SEI005.seiMountComboboxStore = new Ext.data.JsonStore({
 	baseParams : {
 		method : 'selectMount'
@@ -430,9 +434,15 @@ Ext
 
 			},
 		
-		}
-
-		 ],
+		},{
+    		columnWidth : 1,
+    		items : SEI005.btnLogout,
+	    	style : {
+	    			"position" : "relative",
+	    			"left" : "705px",
+	    			"top" : "-401px"
+	    	}			
+    	}],
 
 	});
 	Ext.get('seiButtonSearch').on('click',function(e) {
@@ -474,6 +484,15 @@ Ext.get('seiManageReport').on('click',function(e) {
 	var win = window.open(urlPreviwPage);
 	win.focus();
 });
-		
+
+Ext.get('btnLogout').on('click',function(e) {
+	Ext.MessageBox.confirm('ยืนยันการทำรายการ','คุณต้องการ \"ออกจากระบบ\"',confirmFunction);
+	function confirmFunction(btn) {
+		if (btn == 'yes') {
+			var urlPreviwPage = "/TransportationAllowance/index.html";
+			window.location.assign(urlPreviwPage);
+		}
+	}
+});	
 	
 });

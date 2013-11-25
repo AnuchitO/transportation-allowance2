@@ -57,6 +57,11 @@ public class Travelheader01ServiceImpl implements TravelHeader01Service{
 		return this.travelHeader01Dao.findByDocNoForSaveOrUpdate(docNo);
 	}
 	
+	 public List<TravelHeader> findNameDeptSelect(Employee employee,String param){
+		 return this.travelHeader01Dao.findNameDeptSelect(employee, param);
+	 }
+	
+	
 	public List<BigDecimal> findTravelTotal(String domain){
 		 List<BigDecimal> send = travelHeader01Dao.findTravelTotal(domain);
 	    	return send;
@@ -114,6 +119,9 @@ public class Travelheader01ServiceImpl implements TravelHeader01Service{
 	
 	public List<TravelHeader> findAllCase(String yearAndMount,String status){
 		return this.travelHeader01Dao.findAllCase(yearAndMount, status);
+	}
+	public List<TravelHeader> findTravelHeaderWhereIdtravelDetail(String travelDetail){
+		return this.travelHeader01Dao.findTravelHeaderWhereIdtravelDetail(travelDetail);
 	}
 	public List<TravelHeader> findLikeYearAndStatus(Employee employee,String year, String status) { //Required Thai Year
 		List<TravelHeader> listTravelHeaders = null;

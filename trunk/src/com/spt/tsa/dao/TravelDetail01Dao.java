@@ -13,6 +13,7 @@ public interface TravelDetail01Dao {
 	public List<TravelHeader> findTravelHeaderWhereId(String domain);
 	public List<Customer> findCustomerWhereId(String domain);
 	public Customer findCustomer(String domain);
+	public List<TravelDetail> findDetailWhereCustomer(Customer customer);
 	
 	
 	public void saveTravelDetailCreateForm(TravelDetail travelDetail);

@@ -53,6 +53,9 @@ public class ParameterTable01ServiceImpl implements ParameterTable01Service {
 	public List<ParameterTable> findByParametorTableForSaveOrUpdate(String entry){
 		 return this.parameterTableDao.findByParametorTableForSaveOrUpdate(entry);
 	 }
+	public List<ParameterTable> findDeptSelect(String domain){
+		return this.parameterTableDao.findDeptSelect(domain);
+	}
 	public void saveOrUpdateFromParameterTable(SDM009Domain01 domain){
 		ParameterTable parameterTable = new ParameterTable();
 		String[] data = domain.getSdmpack().split("!");

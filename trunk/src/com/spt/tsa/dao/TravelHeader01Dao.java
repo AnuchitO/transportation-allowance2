@@ -28,6 +28,9 @@ public interface TravelHeader01Dao {
 	 public List<TravelHeader> findMountAndStatus(String domain,String status);
 	 public List<TravelHeader> findYearAndStatus(String domain,String status);
 	 public List<TravelHeader> findAllCase(String yearAndMount,String status);
+	 public List<TravelHeader> findNameDeptSelect(Employee employee,String param);
+	 public List<TravelHeader> findTravelHeaderWhereIdtravelDetail(String travelDetail);
+
 	 
 	 
 	 ///nong

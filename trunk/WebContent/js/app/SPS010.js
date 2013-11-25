@@ -1,7 +1,7 @@
 SPS010 = {};
 SPS010.spsIframe = new Ext.fission.IFrameComponent({
   
-	frameSrc : '/TransportationAllowance/SPS010Report.pdf',
+//	frameSrc : '/TransportationAllowance/SPS010Report.pdf',
 		frameBorder : '0',
 		height : '600',
 		width : '805',
@@ -13,20 +13,13 @@ SPS010.spsIframe = new Ext.fission.IFrameComponent({
 SPS010.spsEmpId = new Ext.form.TextField({
 	id : 'spsEmpId',
 	fieldLabel : "รหัสพนักงาน",
-	readOnly : true,
-	disabled : true,
-//	style:{
-//		"color":"black",
-//	    "background-image":"none",
-//	    "background-color":"#BEBEBE"
-//	}
+
 
 });
 SPS010.spsNameEmp = new Ext.form.TextField({
 	id : 'spsNameEmp',
 	fieldLabel : "ชื่อพนักงาน",
-	readOnly : true,
-	disabled : true,
+	
 });
 
 
@@ -94,7 +87,7 @@ SPS010.spsComboboxCustomerStore = new Ext.data.JsonStore({
 
 SPS010.spsComboboxCustomer = new Ext.form.ComboBox({
 	id : 'spsComboboxCustomer',
-	fieldLabel : 'สถานะ',
+	fieldLabel : 'ลูกค้า',
 	mode : 'local',
 	store : SPS010.spsComboboxCustomerStore,
 	valueField : 'code',
@@ -224,11 +217,69 @@ Ext.onReady(function() {
 
 	});
 
-	SPS010.spsIframe.hide();
+//	SPS010.spsIframe.hide();
 	
+	//***************************** set Cookies *********************************//
+/*	function setCookie(name, value, expires, path, domain, secure) {
+		document.cookie= name + "=" + escape(value) +
+		((expires) ? "; expires=" + expires.toGMTString() : "") +
+		((path) ? "; path=" + path : "") +((domain) ? "; domain=" + domain : "") +((secure) ? "; secure" : "");
+	}
+		function getCookie(name) {
+			var dc = document.cookie;
+			var prefix = name + "=";
+	var begin = dc.indexOf("; " + prefix);
+		if (begin == -1) {
+		begin = dc.indexOf(prefix);
+		if (begin != 0) return null;
+		} else {
+		begin += 2;
+	}
+	var end = document.cookie.indexOf(";", begin);
+		if (end == -1) {
+		end = dc.length;
+	}
+		return unescape(dc.substring(begin + prefix.length, end));
+	}
+	function deleteCookie(name, path, domain) {
+	if (getCookie(name)) {
+	document.cookie = name + "=" +((path) ? "; path=" + path : "") +((domain) ? "; domain=" + domain : "") +"; expires=Thu, 01-Jan-70 00:00:01 GMT";
+		}
+	}*/
+	// use 
+//	var test = SPS010.spsEmpId.getValue();
+//	setCookie("myCookie",test);
+//	alert(getCookie("myCookie"));
+//	deleteCookie("myCookie");
+	spsparamSession = {};
 Ext.get('spsButtonSearch').on('click',function(e) {
-		
-	SPS010.spsIframe.show();
+	
+	spsparamSession.spsEmpId = SPS010.spsEmpId.getValue();
+	spsparamSession.spsNameEmp = SPS010.spsNameEmp.getValue();
+	spsparamSession.spsCreateComboboxDept = SPS010.spscreateComboboxDept.getValue();
+	spsparamSession.spsComboboxCustomer = SPS010.spsComboboxCustomer.getValue();
+	spsparamSession.spsStartDate = SPS010.spsStartDate.getValue();
+	spsparamSession.spsEndDate = SPS010.spsEndDate.getValue();
+	spsparamSession.method = "spsparamSession";
+	
+	Ext.Ajax.request({
+		url : '/TransportationAllowance/SPS010.html',
+		params : spsparamSession,
+		success : function(response, opts) {
+			if (spsparamSession != null) {
+//				Ext.Msg.alert('Information', 'ค้นหา');
+				SPS010.spsIframe.setFrameSrc("about:blank");
+				SPS010.spsIframe.setFrameSrc("/TransportationAllowance/SPS010Report.pdf");
+			} else {
+				Ext.Msg.alert('Information', 'Error');
+			}
+		},
+		failure : function(response, opts) {
+			Ext.Msg.alert('ERROR', 'Error.');
+		}
+	});
+	
+//	SPS010.spsIframe.show();
 });
 	
 });

@@ -114,5 +114,14 @@ public class TravelDetail01DaoImpl extends HibernateDaoSupport implements Travel
 	}
 	
 	
+	
+	public List<TravelDetail> findDetailWhereCustomer(Customer customer) {
+		DetachedCriteria criteria =  DetachedCriteria.forClass(TravelDetail.class);
+				criteria.add(Restrictions.eq("customer", customer));
+			
+		return this.getHibernateTemplate().findByCriteria(criteria);
+	}
+
+	
     
 }

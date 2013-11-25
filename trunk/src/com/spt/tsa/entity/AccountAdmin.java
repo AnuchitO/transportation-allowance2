@@ -46,6 +46,7 @@ public class AccountAdmin implements Serializable {
 	@Column (name = "ACCAD_ACNO")
 	private String accountNo;
 
+
 	
 	
 	public String getAccountNo() {
@@ -55,6 +56,8 @@ public class AccountAdmin implements Serializable {
 	public void setAccountNo(String accountNo) {
 		this.accountNo = accountNo;
 	}
+
+	
 
 
 	public String getCode() {

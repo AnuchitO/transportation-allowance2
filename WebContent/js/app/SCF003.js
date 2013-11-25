@@ -1720,6 +1720,10 @@ Ext
 					Ext.getCmp('forPay').setReadOnly(true);
 					Ext.getCmp('forPay').setDisabled(true);
 					Ext.get('forPay').setStyle('background', '#FFFACD');
+					
+					Ext.getDom('type1').disabled = true;
+					Ext.getDom('type2').disabled = true;
+					
 					Ext.getCmp('submit').disable();
 					Ext.getCmp('print').enable();
 				}

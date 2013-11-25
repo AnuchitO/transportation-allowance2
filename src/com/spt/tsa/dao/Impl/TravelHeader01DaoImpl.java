@@ -180,6 +180,7 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 
 	 
 	 
+	 
 	
 	//Nong
 	public List<TravelHeader> findByEmpIdInTravelHeader(Employee employee) {
@@ -199,7 +200,7 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 		DetachedCriteria criteria =  DetachedCriteria.forClass(TravelHeader.class);
 						 criteria.add(Restrictions.and(
 								 		Restrictions.eq("employee", employee),
-								 		Restrictions.and(Restrictions.like("status", status),// before is .like
+								 		Restrictions.and(Restrictions.like("status", status),
 								 						 Restrictions.between("creationate", yearStart,yearEnd))
 								 						 )
 								 		);

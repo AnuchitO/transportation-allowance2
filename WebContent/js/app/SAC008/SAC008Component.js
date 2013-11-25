@@ -1,175 +1,3 @@
-//var SAC008C = {};
-//
-//SAC008C.gridStore = new Ext.data.JsonStore({
-//	baseParams : {
-//		method : 'gridDataStore'
-//	},
-//	url : '/TransportationAllowance/SAC008.html',
-//	method : 'POST',
-//	pageSize : 10,
-//	storeId : 'gridStore',
-//	root : 'records',
-//	idProperty : 'no',
-//	autoLoad : true,
-//	fields : [ {
-//		name : 'no'
-//	}, {
-//		name : 'accountId'
-//	}, {
-//		name : 'accountName'
-//	}, {
-//		name : 'debit'
-//	}, {
-//		name : 'credit'
-//	}],
-//	model : 'ForumThread',
-//	remoteSort : true
-//
-//});
-//
-//SAC008C.gridAddBtn = new Ext.Toolbar.Button({
-//	// text:RMP001AButton.Add,
-//	tooltip : 'Add a new item',
-//	iconCls : 'add',
-//	// disabled : false,
-//	privilage : "educationAddBtn",
-//	handler : function() {
-//		SAC008C.grid.getSelectionModel().selectAll();
-//
-//		var sm = SAC008C.grid.getSelectionModel().getSelections();
-//
-//		SAC008C.grid.addRow();
-//
-//		var i = 1 + sm.length - 1;
-////		var uu = SAC008C.grid.getStore().getAt(i).data.no;
-//
-////		SAC008C.grid.store.getAt(i).set('no',i + 1);
-//		for (var j = 0; j <= sm.length - 1; j++) {
-//
-//			SAC008C.grid.getSelectionModel().deselectRow(j);
-//		}
-//	}
-//
-//});
-//
-//SAC008C.sm2 = new Ext.grid.CheckboxSelectionModel({
-//    listeners: {
-//        // On selection change, set enabled state of the removeButton
-//        // which was placed into the GridPanel using the ref config
-//        selectionchange: function(sm) {
-//            if (sm.getCount()) {
-//            	SAC008C.grid.SAC008CRemoveButton.enable();                    
-//            } else {
-//            	SAC008C.grid.SAC008CRemoveButton.disable();
-//            }
-//        }
-//    }
-//}); 
-//
-//SAC008C.groupHeaderPlugins = new Ext.ux.plugins.GroupHeaderGrid({
-//	rows : [[ {},{}, {}, {}, {
-//		header : "การเดินทาง",
-//		colspan : 2,
-//		align : 'center'
-//	}] ],
-//	hierarchicalColMenu: true
-//}); 
-//
-/////////////////////////////////////////
-////DumyData
-/////////////////////////////////////////
-////// Array data for the grids
-//SAC008C.reader = new Ext.data.ArrayReader({}, [
-//	{name: 'no'},
-//	{name: 'docNo', type: 'float'},
-//	{name: 'docDate', type: 'float'},
-//	{name: 'sendDate', type: 'float'},
-//	{name: 'approve', type: 'date', dateFormat: 'n/j h:ia'},
-//	{name: 'industry'},
-//	{name: 'desc'}
-//]);
-//
-//SAC008C.grid = new Ext.grid.GridPanel({
-//    id:'idGridSAC008C',
-//    columnLines : true,
-//	lazyRender : true,
-//	autoSelect : true,
-//	criterionField : true,
-//	selectOnFocus : true,
-//	typeAhead : true,
-//	forceSelection : true,
-//	triggerAction : 'all',
-//	trackMouseOver : false,
-//	disableSelection : true,
-//	loadMask : true,
-////	plugins : [ SAC008C.groupHeaderPlugins ],
-//	store:SAC008C.gridStore,//Ok
-//    cm: new Ext.grid.ColumnModel([
-//        SAC008C.sm2,
-//        {id:'no',header: "ลำดับ", width: 10, sortable: true,align : 'center',
-//        	editor: {
-//        		allowBlank: false
-//        	}, 
-//        	dataIndex: 'no'},
-//        {header: "รหัสบัญชี", width: 20, sortable: true, dataIndex: 'accountId',editor : new Ext.form.TextField({
-//			id : 'accout'
-//		})},
-//        {header: "ชื่อบัญชี", width: 20, sortable: true, dataIndex: 'accountName'},
-//        {header: "เดบิต", width: 20, sortable: true, dataIndex: 'debit'},
-//        {header: "เครดิต", width: 20, sortable: true,  dataIndex: 'credit'}        
-//    ]),
-//    sm: SAC008C.sm2,
-//
-//    viewConfig: {
-//        forceFit:true
-//    },
-//    columnLines: true,
-//
-//    // inline toolbars
-//    tbar:[SAC008C.gridAddBtn,{
-//	        text:'Remove',
-//	        tooltip:'Remove',
-//	        iconCls:'remove',
-//	        // Place a reference in the GridPanel
-//	        ref: '../SAC008CRemoveButton',
-//	        disabled: true
-//	    },{
-//	        text:'Save',
-//	        tooltip:'Save',
-//	        iconCls:'save',
-//	        // Place a reference in the GridPanel
-//	        ref: '../SAC008CSaveButton',
-//	        disabled: false
-//	    }],
-//
-//	    
-//    width:805,
-//    height:300,
-//    frame:false,
-//    border:true,	
-//    iconCls:'icon-grid',
-////    renderTo: document.body
-//});
-//
-//////////////////////////////////////////////////////////
-////Field Set for Body SAC008C
-/////////////////////////////////////////////////////////
-//SAC008C.fieldSetBody = new Ext.form.FieldSet({
-//	collapsible : false,
-//	title : 'จัดการข้อมูลบัญชี',
-//	border : true,
-//	layout : 'column',
-//	width : 827,
-//	defaults : {
-//		xtype : 'container',
-//		layout : 'form',
-//		columnWidth : 1
-//	},
-//
-//	items : [{
-//				items : SAC008C.grid
-//			}]
-//});
 var SAC008C = {};
 SAC008C.labHeader = new Ext.form.Label({
 	id : "labHeader",
@@ -185,7 +13,9 @@ SAC008C.createButtonBack = new Ext.Button({
 	text : 'Back',
 	width : 100
 });
-
+////////////////////////////////////
+//Event Button Add Row Grid
+///////////////////////////////////
 SAC008C.gridAddBtn = new Ext.Toolbar.Button({
 	text:'Add',
 	tooltip : 'Add item',
@@ -386,8 +216,8 @@ SAC008C.gridColumns = [
 			align : 'left',
 			editor : new Ext.form.TextField({
 				id : 'accountNameId',
-				maxLength: 150
-			}),		
+				maxLength: 150				
+			}),
 			width : 500
 		},{
 			header : 'เดบิต',
@@ -472,13 +302,17 @@ SAC008C.validateCheckbox = function(grid, rowIndex, cellIndex, e){
 												Ext.getDom('checkCredit'+i).checked = false;
 											});
 											//Change When click debit column
-											var cellValueCredit = store.get('credit');
-									    	var initialValueCredit = cellValueCredit;
-									    	Ext.getDom('checkCredit'+i).checked = true;	
-										    Ext.getDom('checkCredit'+i).checked = false;
-										    
-										    Ext.getDom('checkDebit'+i).checked = true;
-											Ext.getDom('checkCredit'+i).checked = false;
+////											var cellValueCredit = store.get('credit');
+//											var cellValueCredit = Ext.getDom('checkDebit'+i).checked;
+//									    	var initialValueCredit = cellValueCredit;
+//									    	Ext.getDom('checkCredit'+i).checked = true;	
+//										    Ext.getDom('checkCredit'+i).checked = false;
+//										    Ext.getDom('checkDebit'+i).checked = initialValueCredit;
+//										    
+//										    
+//										    Ext.getDom('checkDebit'+i).checked = true;
+//											Ext.getDom('checkCredit'+i).checked = false;
+											
 									    }else if(columnName == 'credit'){
 									    	//Change When click Checkbox
 											Ext.get('checkCredit'+i).on('click',function(e) {						
@@ -486,13 +320,15 @@ SAC008C.validateCheckbox = function(grid, rowIndex, cellIndex, e){
 												Ext.getDom('checkCredit'+i).checked = true;	
 											});
 											//Change When click Debit Column
-										    var cellValueDebit = store.get('debit');
-									    	var initialValueDebit = cellValueDebit;
-									    	cellValue=false;
-									    	Ext.getDom('checkDebit'+i).checked = true;	
-									    	Ext.getDom('checkDebit'+i).checked = false;
-									    	Ext.getDom('checkDebit'+i).checked = false;
-											Ext.getDom('checkCredit'+i).checked = true;
+////										    var cellValueDebit = store.get('debit');
+//											var cellValueDebit = Ext.getDom('checkDebit'+i).checked;
+//									    	var initialValueDebit = cellValueDebit;
+//									    	
+//									    	cellValue=false;
+//									    	Ext.getDom('checkDebit'+i).check'ed = true;	
+//									    	Ext.getDom('checkDebit'+i).checked = false;
+//									    	Ext.getDom('checkDebit'+i).checked = false;
+//											Ext.getDom('checkCredit'+i).checked = true;
 									    }else{
 									    	
 									    }
@@ -522,7 +358,16 @@ SAC008C.grid = new Ext.ss.grid.EditorGridPanel({
 	clicksToEdit : 1,
 	tbar : [ SAC008C.gridAddBtn, '-', SAC008C.gridRemoveBtn,'-',SAC008C.gridSaveBtn ],
 	listeners : {
-	 	'cellclick' : SAC008C.validateCheckbox
+	 	'cellclick' : SAC008C.validateCheckbox,
+//	 	'keypress' : function(e) {
+////            if (e.getKey()) {
+//                alert("AAAAAA Keypress");
+//            }
+       		
 	}
 });
+SAC008C.grid.on('keypress', function(e){
+	alert(e.getKey()+"  dfsdASASASAASASf");
+	 alert("AAAAAA Keypress");
+	});
 

@@ -15,8 +15,10 @@ public interface Employee01Dao {
 	public List<String> findBranchBankWhereEmp(String domain);
 	public List<String> findDeptWhereEmp(String domain);
 	public List<String> findProvinceEmp(String domain);
-	
+	public List<Employee> findNameEmployee(String name);
+	public List<Employee> findDeptSelectEmp(String dept);
 	
 	public Employee findEmployeeByIdName(String domainId);
+	public List<Employee> findEmpWhereEmpId(String emp);
 
 }

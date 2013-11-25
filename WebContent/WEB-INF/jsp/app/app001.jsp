@@ -93,8 +93,8 @@ app001  page
 		<h1>travelHeader</h1>
 	<table border="1">
 		<c:forEach var="traH" items="${travelHeader}">
-  		<tr><td> Code: <c:out value="${traH.tHeadId}"/>  -------------
-   		Description: <c:out value="${traH.no}"/></td></tr>
+  		<tr><td> Code: <c:out value="${traH.no}"/>  -------------
+   		Description: <c:out value="${traH.status}"/></td></tr>
 		</c:forEach>
 		
 	

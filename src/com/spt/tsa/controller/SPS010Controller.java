@@ -25,6 +25,7 @@ import com.fission.web.view.extjs.grid.GridData;
 import com.spt.tsa.domain.SCF003Domain01;
 import com.spt.tsa.domain.SCP007Domain01;
 import com.spt.tsa.domain.SDM009Domain01;
+import com.spt.tsa.domain.SPS010Domain01;
 import com.spt.tsa.entity.Customer;
 import com.spt.tsa.entity.ParameterTable;
 import com.spt.tsa.entity.TravelDetail;
@@ -72,7 +73,7 @@ public class SPS010Controller {
 			JSONObject jobect1 = new JSONObject();
 			for (ParameterTable c : resultsParam) {
 
-				jobect1.accumulate("code", c.getDetail());
+				jobect1.accumulate("code", c.getEntry());
 				jobect1.accumulate("description", c.getDetail());
 				jsonArray.add(jobect1);
 				jobect1.clear();
@@ -95,7 +96,7 @@ public class SPS010Controller {
 			JSONObject jobect1 = new JSONObject();
 			for (Customer c : resultsCus) {
 
-				jobect1.accumulate("code", c.getName());
+				jobect1.accumulate("code", c.getCusId());
 				jobect1.accumulate("description", c.getName());
 				jsonArray.add(jobect1);
 				jobect1.clear();
@@ -106,6 +107,49 @@ public class SPS010Controller {
 			gridData.setSuccess(true);
 			response.setContentType("application/json;charset=UTF-8"); 
 			gridData.responseJson(response);
+		}
+		
+		@RequestMapping(value = "/SPS010.html", method = RequestMethod.POST, params = "method=spsparamSession")
+		public void spsSession(HttpServletRequest request, HttpServletResponse response,
+
+		@ModelAttribute SPS010Domain01 domain,
+				@RequestParam("spsEmpId") String spsEmpId,
+				@RequestParam("spsNameEmp") String spsNameEmp,
+				@RequestParam("spsCreateComboboxDept") String spsCreateComboboxDept,
+				@RequestParam("spsComboboxCustomer") String spsComboboxCustomer,
+				@RequestParam("spsStartDate") String spsStartDate,
+				@RequestParam("spsEndDate") String spsEndDate
+
+		) throws Exception {
+
+			try {
+				
+				domain.setSpsEmpId(spsEmpId);
+				domain.setSpsNameEmp(spsNameEmp);
+				domain.setSpsCreateComboboxDept(spsCreateComboboxDept);
+				domain.setSpsComboboxCustomer(spsComboboxCustomer);
+				domain.setSpsStartDate(spsStartDate);
+				domain.setSpsEndDate(spsEndDate);
+//				String [] spsvalueStartdatesplit = domain.getSpsStartDate().split("-");
+//				String spavalueStartDate = spsvalueStartdatesplit[0]+"/"+spsvalueStartdatesplit[1]+"/"+spsvalueStartdatesplit[2].substring(0, 2);
+//				String [] spsvalueEndDateSplit = domain.getSpsEndDate().split("-");
+//				String spsvalueEndDate = spsvalueEndDateSplit[0]+"/"+spsvalueEndDateSplit[1]+"/"+spsvalueEndDateSplit[2].substring(0, 2);
+				request.getSession().setAttribute("spsEmpId", domain.getSpsEmpId());
+				request.getSession().setAttribute("spsNameEmp", domain.getSpsNameEmp());
+				request.getSession().setAttribute("spsCreateComboboxDept", domain.getSpsCreateComboboxDept());
+				request.getSession().setAttribute("spsComboboxCustomer", domain.getSpsComboboxCustomer());
+				request.getSession().setAttribute("spsStartDate", domain.getSpsStartDate());
+				request.getSession().setAttribute("spsEndDate", domain.getSpsEndDate());
+				
+
+		
+				
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				logger.error(e.getMessage());
+			}
+
 		}
 
 }

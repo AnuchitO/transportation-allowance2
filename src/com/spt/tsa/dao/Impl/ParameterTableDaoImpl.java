@@ -55,7 +55,7 @@ public class ParameterTableDaoImpl extends HibernateDaoSupport  implements Param
 		 return this.getHibernateTemplate().find(hql);
 	}
 	public List<ParameterTable> findByProvince(){
-		String hql = "select detail FROM ParameterTable where CODE='2'";
+		String hql = "FROM ParameterTable where CODE='2'";
 		 return this.getHibernateTemplate().find(hql);
 		
 	}
@@ -85,6 +85,13 @@ public class ParameterTableDaoImpl extends HibernateDaoSupport  implements Param
 		 return this.getHibernateTemplate().find(hql);
 		
 	}
+	
+	public List<ParameterTable> findDeptSelect(String domain) {
+		String hql = "FROM ParameterTable P where P.code='4' and P.detail="+"'"+domain+"'"+"";
+		 return this.getHibernateTemplate().find(hql);
+		
+	}
+	
 	  public List<ParameterTable> findByParametorTableForSaveOrUpdate(String entry) {
 	 DetachedCriteria criteria =  DetachedCriteria.forClass(ParameterTable.class)
 								.add(Restrictions.eq("entry", entry));

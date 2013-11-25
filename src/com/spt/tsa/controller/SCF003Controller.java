@@ -194,7 +194,7 @@ public class SCF003Controller {
 		JSONObject jobect1 = new JSONObject();
 		for (ParameterTable c : resultsParam) {
 
-			jobect1.accumulate("code", c.getDetail());
+			jobect1.accumulate("code", c.getEntry());
 			jobect1.accumulate("description", c.getDetail());
 			jsonArray.add(jobect1);
 			jobect1.clear();
@@ -218,11 +218,11 @@ public class SCF003Controller {
 
 		JSONObject jobect1 = new JSONObject();
 		
-		for (int i = 0; i < resultsParam.size(); i++) {
-			logger.debug("-*-{}-*-", resultsParam.get(i));
+		for (ParameterTable p:resultsParam) {
+		
 
-			jobect1.accumulate("code", resultsParam.get(i));
-			jobect1.accumulate("description", resultsParam.get(i));
+			jobect1.accumulate("code", p.getEntry());
+			jobect1.accumulate("description", p.getDetail());
 			jsonArray.add(jobect1);
 			jobect1.clear();
 

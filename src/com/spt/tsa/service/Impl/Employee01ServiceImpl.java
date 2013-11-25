@@ -51,4 +51,13 @@ public class Employee01ServiceImpl implements Employee01Service{
 		
 		return this.employee01Dao.findEmployeeByIdName(domainId);
 	}
+	public List<Employee> findEmpWhereEmpId(String emp){
+		return this.employee01Dao.findEmpWhereEmpId(emp);
+	}
+	public List<Employee> findNameEmployee(String name){
+		return this.employee01Dao.findNameEmployee(name);
+	}
+	public List<Employee> findDeptSelectEmp(String dept){
+		return this.employee01Dao.findDeptSelectEmp(dept);
+	}
 }

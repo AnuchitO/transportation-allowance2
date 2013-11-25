@@ -170,6 +170,15 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 		 
 	 }
 	 
+	 public List<TravelHeader> findNameDeptSelect(Employee employee,String param) {
+			DetachedCriteria criteria =  DetachedCriteria.forClass(TravelHeader.class);
+					criteria.add(Restrictions.eq("employee", employee));
+					criteria.add(Restrictions.eq("nameDept", param));
+					criteria.addOrder(Order.asc("no"));
+			return this.getHibernateTemplate().findByCriteria(criteria);
+		}
+
+	 
 	 
 	
 	//Nong
@@ -179,6 +188,8 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 				criteria.addOrder(Order.asc("no"));
 		return this.getHibernateTemplate().findByCriteria(criteria);
 	}
+	
+	
 
 	public void deleteTravelHeader(TravelHeader travelHeader) {
 		this.getHibernateTemplate().delete(travelHeader);
@@ -259,5 +270,15 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 			
 		
 	 }
+		
+		public List<TravelHeader> findTravelHeaderWhereIdtravelDetail(String travelDetail) {
+			DetachedCriteria criteria =  DetachedCriteria.forClass(TravelHeader.class);
+					criteria.add(Restrictions.eq("tHeadId", travelDetail));
+				
+			return this.getHibernateTemplate().findByCriteria(criteria);
+		}
+
+		
+		
 	
 }

@@ -16,6 +16,7 @@ public interface ParameterTableDao {
 	public void saveOrUpdateFromParameterTable(ParameterTable parameterTable);
 	 public List<ParameterTable> findByParametorTableForSaveOrUpdate(String entry);
 	public void removeFromParametorTable(ParameterTable parameterTable);
+	public List<ParameterTable> findDeptSelect(String domain);
 
 	
 

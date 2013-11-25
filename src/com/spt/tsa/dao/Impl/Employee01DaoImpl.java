@@ -5,6 +5,8 @@ import java.util.List;
 import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -73,9 +75,24 @@ public class Employee01DaoImpl extends HibernateDaoSupport implements Employee01
 	   
    }
    
-   
-   
    public Employee findEmployeeByIdName(String domainId){
 	   return this.getHibernateTemplate().get(Employee.class,domainId);
    }
+   
+   public List<Employee> findNameEmployee(String name){
+		String hql = "from Employee where name like"+" "+"'"+"%"+name+"%"+"'"+"";
+		 return this.getHibernateTemplate().find(hql);
+		}
+   
+   public List<Employee> findDeptSelectEmp(String dept){
+		String hql = "from Employee where depId ="+" "+"'"+dept+"'"+"";
+		 return this.getHibernateTemplate().find(hql);
+		}
+   
+   public List<Employee> findEmpWhereEmpId(String emp) {
+		DetachedCriteria criteria =  DetachedCriteria.forClass(Employee.class);
+				criteria.add(Restrictions.eq("empId", emp));
+			
+		return this.getHibernateTemplate().findByCriteria(criteria);
+	}
 }

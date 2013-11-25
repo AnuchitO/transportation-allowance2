@@ -56,8 +56,11 @@ public class SAC008Controller {
 			for(AccountAdmin ad : this.listAccountAdmins){
 				 jobect = new JSONObject(); 
 				 jobect.accumulate("no",i++);
+
+				 jobect.accumulate("accountId",ad.getAccountNo());
 				 jobect.accumulate("code",ad.getCode());
 				 jobect.accumulate("accountId",ad.getAccountNo());
+
 				 jobect.accumulate("accountName", ad.getName());
 				 
 				 if(ad.getType().equals("debit")){

@@ -9,7 +9,7 @@ public interface TravelDetail01Service {
 	 public void saveTravelDetail(SCF003Domain01 domain);
 	 public List<TravelHeader> findTravelHeaderWhereId(String domain);
 	 public List<Customer> findCustomerWhereId(String domain);
-	 
+	 public List<TravelDetail> findDetailWhereCustomer(Customer customer);
 	 public void saveTravelDetailCreateForm(TravelDetail travelDetail);
 	 public List<TravelDetail> findRowOfGridForUpdateRow(TravelHeader travelHeader, String no);
 	 public void deleteTravelDetail(TravelDetail travelDetail);

@@ -53,4 +53,8 @@ public class TravelDetail01ServiceImpl implements TravelDetail01Service{
 	public List<TravelDetail> findDetailWhereCustomer(Customer customer){
 		return this.travelDetail01Dao.findDetailWhereCustomer(customer);
 	}
+
+	public List queryForReportPageSPS10(String status,String empId,String deptCode,String cuId,String startDate,String endDate) {
+		return this.travelDetail01Dao.queryForReportPageSPS10(status, empId, deptCode, cuId, startDate, endDate);
+	}
 }

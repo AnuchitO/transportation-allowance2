@@ -1,12 +1,22 @@
 package com.spt.tsa.dao.Impl;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
+import org.hibernate.FetchMode;
+import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
+import org.hibernate.classic.Session;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -115,11 +125,78 @@ public class TravelDetail01DaoImpl extends HibernateDaoSupport implements Travel
 	
 	
 	
-	public List<TravelDetail> findDetailWhereCustomer(Customer customer) {
+	public List findDetailWhereCustomer(Customer customer) {
 		DetachedCriteria criteria =  DetachedCriteria.forClass(TravelDetail.class);
 				criteria.add(Restrictions.eq("customer", customer));
-			
+				
 		return this.getHibernateTemplate().findByCriteria(criteria);
+	}
+
+	public List queryForReportPageSPS10(String status,String empId,String deptCode,String cuId,String startDate,String endDate) {
+////		DetachedCriteria criteria =  DetachedCriteria.forClass(TravelDetail.class);		
+//						 
+//						 
+////						 criteria.createAlias("travelHeader", "tHeader");
+////						 criteria.add(Restrictions.like("tHeader.userCreation", "%anuchit%"));
+////						 .add(Projections.groupProperty("s.e.name"))
+////						 criteria.setProjection(Projections.groupProperty("travelHeader"));
+////						 criteria.setProjection(Projections.rowCount());
+////						 criteria.setProjection( Projections.projectionList()
+////							        .add( Projections.rowCount() )
+//////							        .add( Projections.groupProperty("travelHeader"))
+////							        );
+////						    ProjectionList projList = Projections.projectionList();
+////						    projList.add(Projections.property("tDetailId"));
+////						    projList.add(Projections.groupProperty("tDetailId"));						    
+////						    criteria.setProjection(projList);
+////		////////////////////////////////////////////////////////////////////////////////////////////////////
+//						    DetachedCriteria criteria = DetachedCriteria.forClass(TravelDetail.class);
+////						    metrics.add(Expression.between("dateTime", dateFrom, dateTo));
+//						    criteria.setFetchMode("travelHeader", FetchMode.JOIN);	
+//						    criteria.createAlias("travelHeader", "tHeader");
+////						    criteria.add(Restrictions.and(  //////// Freeze
+////								    		Restrictions.eq("tHeader.status", "004"),
+////								    		Restrictions.and(lhs, rhs)
+////								    		Restrictions.like("tHeader.employee", "%")
+////						    		));
+//						    
+//						    criteria.add(Restrictions.eq("tHeader.status", "004"));
+////				    		criteria.add(Restrictions.like("tHeader.employee", "%"));//Object Employee
+////						    criteria.add(Restrictions.eq("tHeader.company", "004")); //Object Company
+//						    criteria.add(Restrictions.like("tHeader.nameDept", "1000%")); 
+////						    metrics.add(Expression.eq("navPage", navPage));
+//						    
+//						    ProjectionList projectList = Projections.projectionList();
+//						    projectList.add(Projections.property("tHeader.status"));
+////						 // group by
+//						 	projectList.add(Projections.groupProperty("travelHeader"));						    
+////						 // alias of the column head
+//						 	projectList.add(Projections.alias(Projections.rowCount(), "count"));
+//						    criteria.setProjection(projectList);
+////
+////						 // order by, sorting
+////						    metrics.addOrder(Order.desc("count"));
+////						 List results = getHibernateTemplate().findByCriteria(metrics);
+		
+////////////////////////////////////  Native SQL  //////////////////////////////////////////
+
+	   Session session = (Session) this.getSession();
+	   StringBuffer sql = new StringBuffer();
+	   sql.append("SELECT h.trah_thid FROM TRAVEL_DETAIL d left join travel_header h "+
+			   	  "ON d.trad_thid = h.trah_thid "+
+			   	  "where h.trah_thstatus = '"+status+"' "+
+			   	  "and h.trah_emid like '"+empId+"' "+
+			   	  "and h.name_dept like '"+deptCode+"' "+
+			   	  "and d.trad_cuid like '"+cuId+"' "+
+			   	  "and  to_char(d.trad_tdmodifydate, 'dd/MM/YYYY') between '"+startDate+"' and '"+endDate+"' "+ 
+			   	  "group by h.trah_thid"+
+			   	  "");
+	   SQLQuery query = session.createSQLQuery(sql.toString());
+	   List results = query.list();
+	   session.close();
+	   return results;		
+		
+//		return this.getHibernateTemplate().findByCriteria(criteria);
 	}
 
 	

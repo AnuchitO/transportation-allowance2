@@ -8,15 +8,10 @@ import java.util.Properties;
 
 import org.hibernate.FetchMode;
 import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.classic.Session;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projection;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -125,12 +120,16 @@ public class TravelDetail01DaoImpl extends HibernateDaoSupport implements Travel
 	
 	
 	
-	public List findDetailWhereCustomer(Customer customer) {
+	public List<TravelDetail> findDetailWhereCustomer(Customer customer) {
 		DetachedCriteria criteria =  DetachedCriteria.forClass(TravelDetail.class);
 				criteria.add(Restrictions.eq("customer", customer));
-				
+			
 		return this.getHibernateTemplate().findByCriteria(criteria);
 	}
+	
+	
+	
+
 
 	public List queryForReportPageSPS10(String status,String empId,String deptCode,String cuId,String startDate,String endDate) {
 ////		DetachedCriteria criteria =  DetachedCriteria.forClass(TravelDetail.class);		

@@ -108,14 +108,8 @@ public class SPS010ReportController {
 		String sessionSpsComboboxCustomerSession = (String)spsComboboxCustomerSession;
 		String sessionSpsStartDate = (String)spsStartDateSession;
 		String sessionSpsEndDate = (String)spsEndDateSession;
-//	SPS010DataReport data = new SPS010DataReport();
-//	JRDataSource dataSource = data.getDataSource();
-	logger.debug("Successs{}",sessionSpsEmpId);
-	logger.debug("Successs{}",sessionSpsEmp);
-	logger.debug("Successs{}",sessionSpsCreateComboboxDeptSession);
-	logger.debug("Successs{}",sessionSpsComboboxCustomerSession);
-	logger.debug("Successs{}",sessionSpsStartDate);
-	logger.debug("Successs{}",sessionSpsEndDate);
+	
+
 	
 	if(!sessionSpsEmpId.isEmpty() && sessionSpsEmp.isEmpty() && sessionSpsCreateComboboxDeptSession.isEmpty() && sessionSpsComboboxCustomerSession.isEmpty() && sessionSpsStartDate.isEmpty() && sessionSpsEndDate.isEmpty()){
 		Employee emp = this.employee01Service.findEmployeeWhereId(sessionSpsEmpId);

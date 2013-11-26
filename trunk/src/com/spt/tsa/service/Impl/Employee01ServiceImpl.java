@@ -60,4 +60,7 @@ public class Employee01ServiceImpl implements Employee01Service{
 	public List<Employee> findDeptSelectEmp(String dept){
 		return this.employee01Dao.findDeptSelectEmp(dept);
 	}
+	 public List<Employee> findLikeIdEmpAndNameEmp(String empId,String name){
+		 return this.employee01Dao.findLikeIdEmpAndNameEmp(empId, name);
+	 }
 }

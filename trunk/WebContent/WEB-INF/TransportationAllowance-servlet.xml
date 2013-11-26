@@ -17,8 +17,8 @@
 	   	 ">
 
 	<context:annotation-config />
-    <context:component-scan base-package="com.spt.tsa.controller"/>   
-     
+    <context:component-scan base-package="com.spt.tsa.controller"/>  
+ 
      
     <bean  class="org.springframework.web.servlet.view.XmlViewResolver">
 		<property name="location" value="/WEB-INF/jasper-views.xml"/>

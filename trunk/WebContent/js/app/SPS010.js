@@ -253,13 +253,36 @@ Ext.onReady(function() {
 //	deleteCookie("myCookie");
 	spsparamSession = {};
 Ext.get('spsButtonSearch').on('click',function(e) {
-	
+	if(Ext.isEmpty(SPS010.spsEmpId.getValue())){
+		spsparamSession.spsEmpId = "%";
+	}else{
 	spsparamSession.spsEmpId = SPS010.spsEmpId.getValue();
+	}
+	if(Ext.isEmpty(SPS010.spsNameEmp.getValue())){
+		spsparamSession.spsNameEmp = "%";
+	}else{
 	spsparamSession.spsNameEmp = SPS010.spsNameEmp.getValue();
+	}
+	if(Ext.isEmpty(SPS010.spscreateComboboxDept.getValue())){
+		spsparamSession.spsCreateComboboxDept = "%";
+	}else{
 	spsparamSession.spsCreateComboboxDept = SPS010.spscreateComboboxDept.getValue();
+	}
+	if(Ext.isEmpty(SPS010.spsComboboxCustomer.getValue())){
+		spsparamSession.spsComboboxCustomer = "%";
+	}else{
 	spsparamSession.spsComboboxCustomer = SPS010.spsComboboxCustomer.getValue();
+	}
+	if(Ext.isEmpty(SPS010.spsStartDate.getValue())){
+		spsparamSession.spsStartDate = "%";
+	}else{
 	spsparamSession.spsStartDate = SPS010.spsStartDate.getValue();
+	}
+	if(Ext.isEmpty(SPS010.spsEndDate.getValue())){
+		spsparamSession.spsEndDate ="%";
+	}else{
 	spsparamSession.spsEndDate = SPS010.spsEndDate.getValue();
+	}
 	spsparamSession.method = "spsparamSession";
 	
 	Ext.Ajax.request({

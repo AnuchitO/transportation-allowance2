@@ -10,12 +10,15 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.tags.Param;
 import org.tuxilla.BahtText;
 
 import com.spt.tsa.entity.Customer;
 import com.spt.tsa.entity.ParameterTable;
 import com.spt.tsa.entity.TravelDetail;
 import com.spt.tsa.entity.TravelHeader;
+import com.spt.tsa.service.ParameterTable01Service;
 import com.spt.tsa.service.TravelHeader01Service;
 
 import net.sf.jasperreports.engine.JRDataSource;
@@ -31,14 +34,23 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 	private List<ParameterTable> resultsBank;
 	private List<ParameterTable> resultsBankType;
 	private List<TravelDetail> travelDetails;
+	private List<ParameterTable> paramDept;
+	private List<ParameterTable> paramProvince;
+
+
 	private Boolean checkTravelDetailsNUll = false;
-	
-	public SPV004JasperDataSource(List<TravelHeader> resutl, List<ParameterTable> resultsBank,List<ParameterTable>  resultsBankType,List<TravelDetail> travelDetails) {
+
+
+
+
+	public SPV004JasperDataSource(List<TravelHeader> resutl, List<ParameterTable> resultsBank,List<ParameterTable>  resultsBankType,List<TravelDetail> travelDetails,List<ParameterTable> paramDept,List<ParameterTable> paramProvince) {
 		super(SPV004Pojo.class);
 		this.listLravelHerder = resutl;
 		this.resultsBank = resultsBank;
 		this.resultsBankType = resultsBankType;
 		this.travelDetails = travelDetails;
+		this.paramDept = paramDept;
+		this.paramProvince = paramProvince;
 		// catch if travelDeatils null
 		if(this.travelDetails.size()==0){
 			TravelDetail travelDetail  = new TravelDetail();
@@ -57,6 +69,10 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 	
 	
 	
+	
+
+
+
 	public JRDataSource create(JasperReport jrReport) throws JRException {
 				
 		listSPV004PojoData = new ArrayList<SPV004Pojo>();
@@ -109,15 +125,17 @@ public class SPV004JasperDataSource extends JRAbstractBeanDataSourceProvider {
 			
 				///get data for  Header
 				TravelHeader travelHeader = this.listLravelHerder.get(0);
+		
 				hCompanyName = travelHeader.getComName();
 				noDoc	=  travelHeader.getNo();
 				docDate	=  new SimpleDateFormat ("dd/MM/yyyy").format(travelHeader.getCreationate());
 				name	=  travelHeader.getEmployee().getName()+"  "+travelHeader.getEmployee().getLastname();
 				empId	=  travelHeader.getEmployee().getEmpId();
 				compName = travelHeader.getCompany().getName();
-				department=travelHeader.getNameDept();
+			
+				department=this.paramDept.get(0).getDetail();
 				address =  travelHeader.getAddress();
-				province=  travelHeader.getProvince();
+				province=  this.paramProvince.get(0).getDetail();
 				phoneNumber= travelHeader.getTelephone();
 				email	= travelHeader.getEmail();
 				idCard = travelHeader.getEmployee().getIdCard();

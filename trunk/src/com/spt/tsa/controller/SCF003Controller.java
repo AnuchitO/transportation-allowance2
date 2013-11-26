@@ -1,6 +1,7 @@
 package com.spt.tsa.controller;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jxl.write.Number;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -194,7 +196,7 @@ public class SCF003Controller {
 		JSONObject jobect1 = new JSONObject();
 		for (ParameterTable c : resultsParam) {
 
-			jobect1.accumulate("code", c.getEntry());
+			jobect1.accumulate("code", c.getDetail());
 			jobect1.accumulate("description", c.getDetail());
 			jsonArray.add(jobect1);
 			jobect1.clear();
@@ -221,7 +223,7 @@ public class SCF003Controller {
 		for (ParameterTable p:resultsParam) {
 		
 
-			jobect1.accumulate("code", p.getEntry());
+			jobect1.accumulate("code", p.getDetail());
 			jobect1.accumulate("description", p.getDetail());
 			jsonArray.add(jobect1);
 			jobect1.clear();
@@ -311,10 +313,34 @@ public class SCF003Controller {
 				 jobect = new JSONObject();
 				 jobect.accumulate("no", i++);
 				 ///Convert Date For Grid Date
-				 DateFormat formatForGrid = new SimpleDateFormat("E MMM dd yyyy 00:00:00");
-				 String strDateForGrid = formatForGrid.format(td.getDate());
+				 DateFormat formatForGrid = new SimpleDateFormat("E MMM dd yyyy 00:00:00",new Locale("th", "th"));
+				
+				 
+				 String startDateString = td.getDate().toString();
+				 String [] date = startDateString.split(" ");
+				 String [] formateDate = date[0].split("-");
+				 int value = Integer.parseInt(formateDate[0]);
+				 String fulldate = formateDate[2]+"/"+formateDate[1]+"/"+value;
+			
+				    DateFormat df = new SimpleDateFormat("dd/mm/yyyy",Locale.US); 
+				    Date startDate;
+				    try {
+						startDate = df.parse(fulldate);
+						  String newDateString = df.format(startDate);
+						  System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$"+newDateString);
+						  jobect.accumulate("gridDate",newDateString);
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				  
+						
+				       
+				       
+				    
+				
 				 ///End Convert Date For Grid Date
-				 jobect.accumulate("gridDate",strDateForGrid);
+				 
 				 jobect.accumulate("customer", td.getCustomer().getName());
 				 jobect.accumulate("region", td.getFrom());
 				 jobect.accumulate("goal", td.getTo());
@@ -323,6 +349,7 @@ public class SCF003Controller {
 				 jobect.accumulate("payment", td.getTotalDay());
 				 jobect.accumulate("remark", td.getRemark());
 				 jsonArray.add(jobect);
+				 
 			}
 		}
 		/////// End Nong ////
@@ -330,7 +357,8 @@ public class SCF003Controller {
 		gridData.setRecords(jsonArray);
 		gridData.setTotal(jsonArray.size());
 		gridData.setSuccess(true);
-
+		response.setContentType("application/json;charset=UTF-8"); 
+		
 		gridData.responseJson(response);
 
 	}
@@ -458,7 +486,8 @@ public class SCF003Controller {
 			travelHeader.setTotal(new Double(totalPaymentDay));
 			travelHeader.setComName(domain.getCompany());
 			travelHeader.setAddress(domain.getAddress());
-			travelHeader.setProvince(domain.getAntercedentA());
+			List<ParameterTable> paramP = this.parameterTable01Service.findProvinceSelect(domain.getAntercedentA());
+			travelHeader.setProvince(paramP.get(0).getEntry());
 			travelHeader.setEmail(domain.getEmail());
 			travelHeader.setTelephone(domain.getPhone());
 			if (domain.getStatus().equals("001")) {
@@ -491,7 +520,8 @@ public class SCF003Controller {
 			
 			travelHeader.setCreationate(dateCreateTravelHeader);
 			travelHeader.setModifyDate(new Date());// 21
-			travelHeader.setNameDept(domain.getAntecedent());// 22
+			List<ParameterTable> param = this.parameterTable01Service.findDeptSelect(domain.getAntecedent());
+			travelHeader.setNameDept(param.get(0).getEntry());// 22
 			this.travelHeader01Service.saveHeaderCreateFrom(travelHeader);
 
 			// ************************* Save Grid

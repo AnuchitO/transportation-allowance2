@@ -17,6 +17,7 @@ public interface ParameterTable01Service {
 	public void saveOrUpdateFromParameterTable(SDM009Domain01 domain);
 	 public List<ParameterTable> findByParametorTableForSaveOrUpdate(String entry);
 	 public List<ParameterTable> findDeptSelect(String domain);
+	 public List<ParameterTable> findProvinceSelect(String domain);
 	 
 	 public void removeFromParametorTable(SDM009Domain01 domain);
 	

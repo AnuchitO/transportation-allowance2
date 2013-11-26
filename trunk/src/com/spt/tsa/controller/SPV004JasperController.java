@@ -85,11 +85,14 @@ public class SPV004JasperController {
 			} catch (Exception e) {
 				
 			}		
+			logger.debug("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%{}",travelHeader.get(0).getNameDept());
+			List<ParameterTable> paramDept = this.parameterTable01Service.findRow("4", travelHeader.get(0).getNameDept().toString());
+			List<ParameterTable> paramProvince = this.parameterTable01Service.findRow("2", travelHeader.get(0).getProvince().toString());
 			List<ParameterTable> resultsBank = this.parameterTable01Service.findRow("7",travelHeader.get(0).getEmployee().getBank().toString());
 			List<ParameterTable> resultsBankType = this.parameterTable01Service.findRow("8",travelHeader.get(0).getEmployee().getAccountType().toString());
 	
 			SPV004JasperDataSource dsStudent=null;
-			dsStudent =  new SPV004JasperDataSource(travelHeader,resultsBank,resultsBankType,travelDetails);
+			dsStudent =  new SPV004JasperDataSource(travelHeader,resultsBank,resultsBankType,travelDetails,paramDept,paramProvince);
 			jrDatasource = dsStudent.create(null);
 			}catch (Exception e){
 				

@@ -353,6 +353,17 @@ SCP007C.gridRemoveBtn = new Ext.Toolbar.Button({
 //******************** save function ***********************************//
 var scpParam = {};
 function scpSaveOrUpdate() {
+	var scpNumber = SCP007C.scpNumber.getValue();
+	var scpNumberCheck = SCP007C.scpNumberCheck.getValue();
+
+	if (Ext.isEmpty(scpNumber)) {
+		Ext.Msg.alert('Information',
+				'กรุณากรอกเลขที่เอกสาร');
+	}
+	else if (Ext.isEmpty(scpNumberCheck)) {
+		Ext.Msg.alert('Information',
+				'กรุณากรอกเลขที่เช็ค');
+	}else {
 	scpParam.scpNoDoc = Ext.getCmp('noDoc').getValue();
 	scpParam.scpDate = Ext.getCmp('scpDate').getValue();
 	scpParam.scpNumber = Ext.getCmp('scpNumber').getValue();
@@ -402,6 +413,7 @@ function scpSaveOrUpdate() {
 		}
 	});
 }
+	}
 
 //**********************************************************************//
 
@@ -758,36 +770,44 @@ SCP007C.createGrid = new Ext.ss.grid.EditorGridPanel({
 	trackMouseOver : false,
 	disableSelection : true,
 	loadMask : true,
+	 listeners: {
+         render: function() {
+             this.getEl().on('keypress',function(e) {
+     		    if (e.keyCode === 9) {
+     		    	SCP007C.createGrid.getSelectionModel().selectAll();
 
+     				var sm = SCP007C.createGrid.getSelectionModel().getSelections();
+
+     				Ext.getCmp('scpgridEducationInfomation').addRow();
+
+     				var i = 1 + sm.length - 1;
+     				var uu = SCP007C.createGrid.getStore().getAt(i).data.no;
+
+     				SCP007C.createGrid.store.getAt(i).set('scpNo',i + 1);
+     				for (var j = 0; j <= sm.length - 1; j++) {
+
+     					SCP007C.createGrid.getSelectionModel().deselectRow(j);
+     				}
+     		    }
+    	    }); // Does not work!
+         }
+	 },
+   
 	clicksToEdit : 1,
 	tbar : [ SCP007C.gridAddBtn, '-', SCP007C.gridRemoveBtn, '-',
 			SCP007C.gridSaveBtn ],
-	bbar : new Ext.PagingToolbar({
-		pageSize : 25,
-		store : SCP007C.gridStrore,
-		displayInfo : true,
-		displayMsg : ' {0} - {1} of {2}',
-		// emptyMsg : "Report of Travel",
-		items : [ '-', {
-			pressed : true,
-			enableToggle : true,
-			text : 'Show Preview',
-			cls : 'x-btn-text-icon details',
-			toggleHandler : function(btn, pressed) {
-				var view = SCP007C.createGrid.getView();
-				view.showPreview = pressed;
-				view.refresh();
-
-			}
-		}, '-', "รวมยอดเงินทั้งสิ้น", '-', '-', '-', '-', '-', '-', '-', '-',
+	bbar : [ '-', '-', '-', '-', '-', '-', '-', '-','-', '-', '-', '-', '-', '-', '-', '-', '-', '-','-', '-', '-', '-', '-', '-', '-', '-', '-', '-','-', '-', '-', '-', '-', '-', '-', '-','-', '-', '-', '-', '-', '-', '-', '-', '-','-', "รวมยอดเงินทั้งสิ้น", '-', '-', '-', '-', '-', '-', '-', '-',
 				'-', '-', '-', '-', '-', '-', '-', '-', SCP007C.scfTatolDebit,
 				'-', '-', '-', SCP007C.scfTatolCredit, '-','-', '-', '-', '-', '-', '-', '-', '-', ]
-	})
+	
 });
 SCP007C.scpButtonPrint = new Ext.Button({
 	id : 'scpButtonSubmit',
 	text : 'Print',
-	width : 100
+	width : 100,
+	handler : function() {
+		window.print();
+	}
 });
 SCP007C.scpButtonBack = new Ext.Button({
 	id : 'scpButtonBack',

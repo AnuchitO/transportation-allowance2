@@ -26,6 +26,10 @@ public class Customer01ServiceImpl implements Customer01Service{
 	public List<Customer> findByName(String name) {
 		return this.customer01Dao.findByName(name);
 	}
+	
+	public List<Customer> findLikeNameCustomer(String name){
+		return this.customer01Dao.findLikeNameCustomer(name);
+	}
 
 
     

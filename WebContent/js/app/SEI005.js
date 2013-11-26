@@ -176,6 +176,12 @@ SEI005.seiGridColumns = [
 	dataIndex : 'seiNumberDocument',
 	align : 'center',
 	width : 89.44,
+	renderer: function (val, metadata, record) {
+		metadata.style = 'background-color: #FFFFCC !important;cursor: pointer;';
+        return val;
+    }
+
+
 	
 
 }, {
@@ -495,4 +501,5 @@ Ext.get('btnLogout').on('click',function(e) {
 	}
 });	
 	
+
 });

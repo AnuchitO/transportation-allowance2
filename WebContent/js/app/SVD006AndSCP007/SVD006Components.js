@@ -533,27 +533,10 @@ SVD006C.createGrid = new Ext.ss.grid.EditorGridPanel({
 
 	plugins : [ SVD006C.groupHeaderPlugins ],
 	clicksToEdit : 1,
-	bbar : new Ext.PagingToolbar({
-		pageSize : 25,
-		store : SVD006C.gridStrore,
-		displayInfo : true,
-		displayMsg : ' {0} - {1} of {2}',
-		emptyMsg : "Report of Travel",
-		items : [ '-', {
-			pressed : true,
-			enableToggle : true,
-			text : 'Show Preview',
-			cls : 'x-btn-text-icon details',
-			toggleHandler : function(btn, pressed) {
-				var view = SVD006C.createGrid.getView();
-				view.showPreview = pressed;
-				view.refresh();
-
-			}
-		}, '-', "รวม", '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-',
+	bbar : [ '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-','-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-','-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-','-', "รวม", '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-',
 				'-', SVD006C.totalPayExpresses, '-', SVD006C.totalPayMotorWay,
 				'-', SVD006C.totalPayAll ]
-	})
+	
 });
 
 SVD006C.totalPayExpresses.setValue(SVD006Domain.totalPayExpresses);

@@ -240,29 +240,32 @@ SCF003.setCenter = new Ext.form.FieldSet({
 
 	]
 });
+
+function addRecord() {
+	SCF003.createGrid.getSelectionModel().selectAll();
+
+	var sm = SCF003.createGrid.getSelectionModel().getSelections();
+
+	Ext.getCmp('gridEducationInfomation').addRow();
+
+	var i = 1 + sm.length - 1;
+	var uu = SCF003.createGrid.getStore().getAt(i).data.no;
+
+	SCF003.createGrid.store.getAt(i).set('no',i + 1);
+	for (var j = 0; j <= sm.length - 1; j++) {
+
+		SCF003.createGrid.getSelectionModel().deselectRow(j);
+	}
+}
 var inti = 1;
 SCF003.gridAddBtn = new Ext.Toolbar.Button({
 	// text:RMP001AButton.Add,
+	id:'scfgridAddBtn',
 	tooltip : 'Add a new item',
 	iconCls : 'add',
 	// disabled : false,
 	privilage : "educationAddBtn",
-	handler : function() {
-		SCF003.createGrid.getSelectionModel().selectAll();
 
-		var sm = SCF003.createGrid.getSelectionModel().getSelections();
-
-		Ext.getCmp('gridEducationInfomation').addRow();
-
-		var i = 1 + sm.length - 1;
-		var uu = SCF003.createGrid.getStore().getAt(i).data.no;
-
-		SCF003.createGrid.store.getAt(i).set('no',i + 1);
-		for (var j = 0; j <= sm.length - 1; j++) {
-
-			SCF003.createGrid.getSelectionModel().deselectRow(j);
-		}
-	}
 
 });
 SCF003.gridRemoveBtn = new Ext.Toolbar.Button({
@@ -782,8 +785,6 @@ SCF003.comboCustomerGrid = new Ext.form.ComboBox({
 SCF003.checkboxselection = new Ext.grid.CheckboxSelectionModel({
 	singleSelect : false,
 
-// email: true,
-// dataIndex: 'chkFlag'
 });
 
 function changeNumberPrecisionPaymentTravel(){
@@ -885,8 +886,8 @@ SCF003.gridColumns = [
 
 			}),
 			menuDisabled : true,
-			renderer : Ext.util.Format.dateRenderer('d/m/Y'),
 			
+			renderer : Ext.util.Format.dateRenderer('d/m/Y'),			
 			width : 87.08,
 
 		},
@@ -1739,7 +1740,19 @@ Ext
 				SCF003.tatolPaymA.setValue(0.00);
 				SCF003.tatolPaymfullCase.setValue(0.00);
 			}
-
 			
+			Ext.get('scfgridAddBtn').on('click',function(e) {
+				addRecord();
+			});
+			
+			SCF003.createGrid.on('keypress', function(e) {
+			    if (e.keyCode === 9) {
+			    	addRecord();
+			       
+			    }
+			
+		    });
+			
+		
 
 });

@@ -84,6 +84,8 @@ public class Employee01DaoImpl extends HibernateDaoSupport implements Employee01
 		 return this.getHibernateTemplate().find(hql);
 		}
    
+   
+   
    public List<Employee> findDeptSelectEmp(String dept){
 		String hql = "from Employee where depId ="+" "+"'"+dept+"'"+"";
 		 return this.getHibernateTemplate().find(hql);
@@ -94,5 +96,11 @@ public class Employee01DaoImpl extends HibernateDaoSupport implements Employee01
 				criteria.add(Restrictions.eq("empId", emp));
 			
 		return this.getHibernateTemplate().findByCriteria(criteria);
+	}
+   
+   public List<Employee> findLikeIdEmpAndNameEmp(String empId,String name){
+		String hql = "from Employee where empId like"+" "+"'"+"%"+empId+"%"+"'"+" "+"and name like"+" "+"'"+"%"+name+"%"+"'"+ "";
+		 return this.getHibernateTemplate().find(hql);
+		
 	}
 }

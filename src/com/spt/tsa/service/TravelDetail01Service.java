@@ -13,6 +13,7 @@ public interface TravelDetail01Service {
 	 public void saveTravelDetailCreateForm(TravelDetail travelDetail);
 	 public List<TravelDetail> findRowOfGridForUpdateRow(TravelHeader travelHeader, String no);
 	 public void deleteTravelDetail(TravelDetail travelDetail);
+	
 	 
 	 public List queryForReportPageSPS10(String status,String empId,String deptCode,String cuId,String startDate,String endDate);
 }

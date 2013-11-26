@@ -16,5 +16,6 @@ public interface Employee01Service {
 	 
 	 public Employee findEmployeeByIdName(String domainId);
 	 public List<Employee> findEmpWhereEmpId(String emp);
+	 public List<Employee> findLikeIdEmpAndNameEmp(String empId,String name);
 
 }

@@ -20,5 +20,6 @@ public interface Employee01Dao {
 	
 	public Employee findEmployeeByIdName(String domainId);
 	public List<Employee> findEmpWhereEmpId(String emp);
+	 public List<Employee> findLikeIdEmpAndNameEmp(String empId,String name);
 
 }

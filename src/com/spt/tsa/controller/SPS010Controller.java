@@ -1,8 +1,10 @@
 package com.spt.tsa.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,18 +29,34 @@ import com.spt.tsa.domain.SCP007Domain01;
 import com.spt.tsa.domain.SDM009Domain01;
 import com.spt.tsa.domain.SPS010Domain01;
 import com.spt.tsa.entity.Customer;
+import com.spt.tsa.entity.Employee;
 import com.spt.tsa.entity.ParameterTable;
 import com.spt.tsa.entity.TravelDetail;
 import com.spt.tsa.entity.TravelHeader;
 import com.spt.tsa.service.Customer01Service;
+import com.spt.tsa.service.Employee01Service;
 import com.spt.tsa.service.ParameterTable01Service;
+import com.spt.tsa.service.TravelDetail01Service;
 @Controller
 public class SPS010Controller {
 	private static final Logger logger = LoggerFactory.getLogger(SPS010Controller.class);
 	private ParameterTable01Service parameterTable01Service;
 	private Customer01Service customer01Service;
+	private Employee01Service employee01Service;
+	private TravelDetail01Service travelDetail01Service;
 	
 	
+	@Autowired
+	public void setTravelDetail01Service(TravelDetail01Service travelDetail01Service) {
+		this.travelDetail01Service = travelDetail01Service;
+	}
+
+
+	@Autowired
+	public void setEmployee01Service(Employee01Service employee01Service) {
+		this.employee01Service = employee01Service;
+	}
+
 
 	@Autowired
 	public void setCustomer01Service(Customer01Service customer01Service) {
@@ -96,7 +114,7 @@ public class SPS010Controller {
 			JSONObject jobect1 = new JSONObject();
 			for (Customer c : resultsCus) {
 
-				jobect1.accumulate("code", c.getCusId());
+				jobect1.accumulate("code", c.getName());
 				jobect1.accumulate("description", c.getName());
 				jsonArray.add(jobect1);
 				jobect1.clear();
@@ -130,6 +148,38 @@ public class SPS010Controller {
 				domain.setSpsComboboxCustomer(spsComboboxCustomer);
 				domain.setSpsStartDate(spsStartDate);
 				domain.setSpsEndDate(spsEndDate);
+				//***************************** parametor for search ****************************//
+				List<Employee> emp = this.employee01Service.findLikeIdEmpAndNameEmp(domain.getSpsEmpId(), domain.getSpsNameEmp());
+				for(Employee e:emp){
+					logger.debug("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%{}",e.getAddress());
+				}
+				List<Customer> cus = this.customer01Service.findLikeNameCustomer(domain.getSpsComboboxCustomer());
+				List<TravelDetail> traD = this.travelDetail01Service.findDetailWhereCustomer(cus.get(0));
+				
+				for(TravelDetail td:traD){
+					logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@{}",td.gettDetailId());
+				}
+				String [] splitDate = domain.getSpsStartDate().split("-");
+				String dateFormate = splitDate[2].substring(0, 2)+"/"+splitDate[1]+"/"+splitDate[0];
+				
+				
+				String startDateString = dateFormate;
+			    DateFormat df = new SimpleDateFormat("dd/MM/yyyy"); 
+			    Date startDate;
+			    startDate = df.parse(startDateString);
+			    String newDateString = df.format(startDate);
+			    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$"+newDateString);
+			  
+			    String [] splitEndDate = domain.getSpsEndDate().split("-");
+				String endDateFormate = splitEndDate[2].substring(0, 2)+"/"+splitEndDate[1]+"/"+splitEndDate[0];
+				
+			    String endDate = endDateFormate;
+			    Date endDateformat;
+			    endDateformat = df.parse(endDate);
+			    String newEndDateString = df.format(endDateformat);
+			    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$"+newEndDateString);
+				//*******************************************************************************************//
+				
 //				String [] spsvalueStartdatesplit = domain.getSpsStartDate().split("-");
 //				String spavalueStartDate = spsvalueStartdatesplit[0]+"/"+spsvalueStartdatesplit[1]+"/"+spsvalueStartdatesplit[2].substring(0, 2);
 //				String [] spsvalueEndDateSplit = domain.getSpsEndDate().split("-");

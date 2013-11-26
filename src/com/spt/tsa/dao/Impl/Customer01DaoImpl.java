@@ -34,5 +34,9 @@ public class Customer01DaoImpl extends HibernateDaoSupport implements Customer01
     	return this.getHibernateTemplate().findByCriteria(criteria);
 
 	}
+	 public List<Customer> findLikeNameCustomer(String name){
+			String hql = "from Customer where name like"+" "+"'"+"%"+name+"%"+"'"+"";
+			 return this.getHibernateTemplate().find(hql);
+			}
    
 }

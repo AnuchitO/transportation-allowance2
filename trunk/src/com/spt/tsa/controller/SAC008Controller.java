@@ -102,7 +102,7 @@ public class SAC008Controller {
 						 this.accountAdmin01Service.deleteByAccountCode(ad);// delete AccountAdmin
 				 }
 			} catch (Exception e) {
-				logger.debug("----------------------- {}  ---------------------",e);
+				
 			}
 		}
 	}

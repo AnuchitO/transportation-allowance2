@@ -21,6 +21,6 @@ public interface TravelDetail01Dao {
 	public void deleteTravelDetail(TravelDetail travelDetail);
 	
 	
-	
-	
+	public List queryForReportPageSPS10(String status,String empId,String deptCode,String cuId,String startDate,String endDate);
+	  
 }

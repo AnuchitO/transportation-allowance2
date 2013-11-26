@@ -44,6 +44,9 @@ public interface TravelHeader01Dao {
 	 
 	 public List<TravelHeader> findSelectYearNotSave();
 	 public List<TravelHeader> findDataGroupByNo();
+	 //// query for page  SPS10d
+	 public TravelHeader findByTHeadId(String tHeadId);
+	 
 	 
 	 
 	 

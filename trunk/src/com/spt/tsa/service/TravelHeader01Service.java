@@ -43,5 +43,6 @@ public interface TravelHeader01Service {
 	 public List<TravelHeader> findSelectYearNotSave();
 	 public List<TravelHeader> findDataGroupByNo();
 	 
+	 public TravelHeader findByTHeadId(String tHeadId);
 	 
 }

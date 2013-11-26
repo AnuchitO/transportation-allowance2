@@ -279,6 +279,10 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
 			return this.getHibernateTemplate().findByCriteria(criteria);
 		}
 
+		public TravelHeader findByTHeadId(String tHeadId) {
+			return this.getHibernateTemplate().get(TravelHeader.class,tHeadId);
+		}
+
 		
 		
 	

@@ -41,8 +41,11 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
     	DetachedCriteria criteria =  DetachedCriteria.forClass(TravelHeader.class).add(
 		        Restrictions.and(
 		                Restrictions.eq("no", docNo),
-		                Restrictions.eq("status", "002")));
-//    	logger.debug("{}",this.getHibernateTemplate().findByCriteria(criteria));
+		                Restrictions.or(
+		                				Restrictions.eq("status", "002"),
+		                				Restrictions.eq("status", "004")
+		                				)
+		                ));
     	return this.getHibernateTemplate().findByCriteria(criteria);
     }
     public Employee findEmployeeWhereId(String domain){

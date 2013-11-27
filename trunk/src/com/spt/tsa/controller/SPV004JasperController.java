@@ -85,7 +85,6 @@ public class SPV004JasperController {
 			} catch (Exception e) {
 				
 			}		
-			logger.debug("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%{}",travelHeader.get(0).getNameDept());
 			List<ParameterTable> paramDept = this.parameterTable01Service.findRow("4", travelHeader.get(0).getNameDept().toString());
 			List<ParameterTable> paramProvince = this.parameterTable01Service.findRow("2", travelHeader.get(0).getProvince().toString());
 			List<ParameterTable> resultsBank = this.parameterTable01Service.findRow("7",travelHeader.get(0).getEmployee().getBank().toString());

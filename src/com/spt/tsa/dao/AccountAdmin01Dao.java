@@ -13,4 +13,5 @@ public interface AccountAdmin01Dao {
 	public List<AccountAdmin> findByCode(String code);
 	public void deleteByAccountId(AccountAdmin accountAdmin);
 	public void saveOrUpdate(AccountAdmin accountAdmin);
+	public List<AccountAdmin> queryOrderById();
 }	

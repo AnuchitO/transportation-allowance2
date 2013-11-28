@@ -115,105 +115,120 @@ public class SVD006Controller{
 //			travelDetails = null;
 //			resultsBank = null;
 //			resultsBankType = null;
-			String documentNumber =" ";
-			String status = " ";
-			documentNumber = request.getParameter("documentNumber");
-			status = request.getParameter("status");
-			
-			String noDoc = documentNumber;
-			try{ 
-				this.listLravelHerder = this.travelHeader01Service.findByDocNoForSaveOrUpdate(noDoc);
-				this.travelDetails = this.travelDetail01Service.findByTravelHeader(this.listLravelHerder.get(0));
-				this.resultsBank = this.parameterTable01Service.findRow("7",this.listLravelHerder.get(0).getEmployee().getBank().toString());
-				this.resultsBankType = this.parameterTable01Service.findRow("8",this.listLravelHerder.get(0).getEmployee().getAccountType().toString());
-			}catch (Exception e){
+			Object sessionPrivilege = request.getSession().getAttribute("sessionPrivilege");
+			String privilege = (String)sessionPrivilege;
+			try {
+				if((!(privilege.equals("admin")))){ 			
+					request.getSession().removeAttribute("sessionPrivilege");
+					response.sendRedirect((String)request.getSession().getAttribute("sessionIndexPage"));				
+				}else{
+					String documentNumber =" ";
+					String status = " ";
+					documentNumber = request.getParameter("documentNumber");
+					status = request.getParameter("status");
+					
+					String noDoc = documentNumber;
+					try{ 
+						this.listLravelHerder = this.travelHeader01Service.findByDocNoForSaveOrUpdate(noDoc);
+						this.travelDetails = this.travelDetail01Service.findByTravelHeader(this.listLravelHerder.get(0));
+						this.resultsBank = this.parameterTable01Service.findRow("7",this.listLravelHerder.get(0).getEmployee().getBank().toString());
+						this.resultsBankType = this.parameterTable01Service.findRow("8",this.listLravelHerder.get(0).getEmployee().getAccountType().toString());
+					}catch (Exception e){
+						
+					}
+					TravelHeader travelHeader = this.listLravelHerder.get(0);
+					ParameterTable parameterTableBank = this.resultsBank.get(0);
+					ParameterTable parameterTableBankType = this.resultsBankType.get(0);
+					Company company = this.listLravelHerder.get(0).getCompany();
+					
+					/////////////////////// old
+					Map<String,Object> model = new HashMap<String,Object>();
+
+//					Employee resultsEmp = this.employee01Service.findEmployeeWhereId();
+//					System.out.println("view 2");
+//					List<String> resu = this.employee01Service.findBankWhereEmp();
+//					List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp();
+//					List<String> resultsDept = this.employee01Service.findDeptWhereEmp();
+//					List<String> resultsProvince = this.employee01Service.findProvinceEmp();
+					
+					
+					  Date date = new Date();
+					  SimpleDateFormat ft = new SimpleDateFormat ("yyyy/MM/dd");  
 				
+				
+					SVD006Domain01 domain = new SVD006Domain01();
+			  			  
+
+					List<TravelHeader> lastNoDocList = this.travelHeader01Service.findTravelHanderGetLastNoDoc();
+					String numberDoc = " ";
+					if(lastNoDocList.size()!=0){
+						logger.debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {}",lastNoDocList.get(0).getNo());
+						numberDoc = lastNoDocList.get(0).getNo();
+						logger.debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {}",numberDoc);
+					}
+					domain.setSeiStatus(status);
+					domain.setNo(travelHeader.getNo());
+					domain.setDate(new SimpleDateFormat ("dd/MM/yyyy").format(travelHeader.getCreationate()));
+					domain.setName(travelHeader.getEmployee().getName());
+					domain.setScpLastName(travelHeader.getEmployee().getLastname());
+					domain.setId(travelHeader.getEmployee().getEmpId());
+
+				
+					domain.setCompany(travelHeader.getComName());
+					domain.setIdCard(travelHeader.getEmployee().getIdCard());
+					domain.setAddress(travelHeader.getAddress());
+					domain.setPhone(travelHeader.getTelephone());
+					domain.setEmail(travelHeader.getEmail());
+					domain.setAntecedent(travelHeader.getNameDept());
+					domain.setAntercedentA(travelHeader.getProvince());
+					domain.setForPay(travelHeader.getPaymDesc());
+					domain.setDocument(travelHeader.getAttachment());
+					//// Total
+					domain.setTotalPayExpresses(new Double(travelHeader.getTotalExpenses()));
+					domain.setTotalPayMotorWay(travelHeader.getTotalMotorWay());
+					domain.setTotalPayAll(travelHeader.getTotal());
+					domain.setTotalPayCharector(new BahtText(travelHeader.getTotal()).toString());
+					
+					//************* set value Button *****************/
+					domain.setBank(parameterTableBank.getDetail());
+					domain.setBranch(travelHeader.getEmployee().getBranch());
+					domain.setAccountNumber(travelHeader.getEmployee().getAccountNo());
+					domain.setTypeAccount(parameterTableBankType.getDetail());
+
+					List<BigDecimal> tra = this.travelHeader01Service.findTravelTotal(noDoc);
+					domain.setTotalPayment(tra.get(0));
+					domain.setCharactorNumber(new BahtText(tra.get(0)).toString());
+					
+					//////////////////////////////////////
+					//Nong Set Address Company
+					//////////////////////////////////////
+					domain.setHeaderCompName(company.getName());
+					domain.setHeaderCompAddress(company.getAddress());
+					domain.setHeaderCompTell(company.getTelephone());
+					domain.setHeaderCompFax(company.getFax());
+					//// End Nong Set Address Company ////
+					
+					//********************************* Push parametor here ******************************************//
+					List<TravelDetail> re = this.travelHeader01Service.findDateMinMax(noDoc);
+					List<String> cus = this.travelHeader01Service.findNameCustomer(noDoc);
+					SimpleDateFormat sim = new SimpleDateFormat("dd MMMM yyyy",new Locale("th","th"));
+					String dateMin = re.get(0).getDate().toString();
+					String [] dayMin = dateMin.split("-");
+					String [] dayMinday = dayMin[2].split(" ");
+					String dayTotalMinMax = " "+"-"+" "+cus.get(0)+" "+dayMinday[0]+" , " + sim.format(re.get(re.size()-1).getDate())+" "+"เดินทางพบลูกค้า";
+					
+					domain.setMinMaxDate(dayTotalMinMax);
+					model.put("data", JSONObject.fromObject(BeanUtils.beanToMap(domain)).toString());
+					
+					return new ModelAndView("SVD006",model);
+				}		
+			} catch (Exception e) {
+
 			}
-			TravelHeader travelHeader = this.listLravelHerder.get(0);
-			ParameterTable parameterTableBank = this.resultsBank.get(0);
-			ParameterTable parameterTableBankType = this.resultsBankType.get(0);
-			Company company = this.listLravelHerder.get(0).getCompany();
-			
-			/////////////////////// old
-			Map<String,Object> model = new HashMap<String,Object>();
 
-//			Employee resultsEmp = this.employee01Service.findEmployeeWhereId();
-//			System.out.println("view 2");
-//			List<String> resu = this.employee01Service.findBankWhereEmp();
-//			List<String> resultsBranch = this.employee01Service.findBranchBankWhereEmp();
-//			List<String> resultsDept = this.employee01Service.findDeptWhereEmp();
-//			List<String> resultsProvince = this.employee01Service.findProvinceEmp();
+			return new ModelAndView("");
 			
 			
-			  Date date = new Date();
-			  SimpleDateFormat ft = new SimpleDateFormat ("yyyy/MM/dd");  
-		
-		
-			SVD006Domain01 domain = new SVD006Domain01();
-	  			  
-
-			List<TravelHeader> lastNoDocList = this.travelHeader01Service.findTravelHanderGetLastNoDoc();
-			String numberDoc = " ";
-			if(lastNoDocList.size()!=0){
-				logger.debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {}",lastNoDocList.get(0).getNo());
-				numberDoc = lastNoDocList.get(0).getNo();
-				logger.debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {}",numberDoc);
-			}
-			domain.setSeiStatus(status);
-			domain.setNo(travelHeader.getNo());
-			domain.setDate(new SimpleDateFormat ("dd/MM/yyyy").format(travelHeader.getCreationate()));
-			domain.setName(travelHeader.getEmployee().getName());
-			domain.setScpLastName(travelHeader.getEmployee().getLastname());
-			domain.setId(travelHeader.getEmployee().getEmpId());
-
-		
-			domain.setCompany(travelHeader.getComName());
-			domain.setIdCard(travelHeader.getEmployee().getIdCard());
-			domain.setAddress(travelHeader.getAddress());
-			domain.setPhone(travelHeader.getTelephone());
-			domain.setEmail(travelHeader.getEmail());
-			domain.setAntecedent(travelHeader.getNameDept());
-			domain.setAntercedentA(travelHeader.getProvince());
-			domain.setForPay(travelHeader.getPaymDesc());
-			domain.setDocument(travelHeader.getAttachment());
-			//// Total
-			domain.setTotalPayExpresses(new Double(travelHeader.getTotalExpenses()));
-			domain.setTotalPayMotorWay(travelHeader.getTotalMotorWay());
-			domain.setTotalPayAll(travelHeader.getTotal());
-			domain.setTotalPayCharector(new BahtText(travelHeader.getTotal()).toString());
-			
-			//************* set value Button *****************/
-			domain.setBank(parameterTableBank.getDetail());
-			domain.setBranch(travelHeader.getEmployee().getBranch());
-			domain.setAccountNumber(travelHeader.getEmployee().getAccountNo());
-			domain.setTypeAccount(parameterTableBankType.getDetail());
-
-			List<BigDecimal> tra = this.travelHeader01Service.findTravelTotal(noDoc);
-			domain.setTotalPayment(tra.get(0));
-			domain.setCharactorNumber(new BahtText(tra.get(0)).toString());
-			
-			//////////////////////////////////////
-			//Nong Set Address Company
-			//////////////////////////////////////
-			domain.setHeaderCompName(company.getName());
-			domain.setHeaderCompAddress(company.getAddress());
-			domain.setHeaderCompTell(company.getTelephone());
-			domain.setHeaderCompFax(company.getFax());
-			//// End Nong Set Address Company ////
-			
-			//********************************* Push parametor here ******************************************//
-			List<TravelDetail> re = this.travelHeader01Service.findDateMinMax(noDoc);
-			List<String> cus = this.travelHeader01Service.findNameCustomer(noDoc);
-			SimpleDateFormat sim = new SimpleDateFormat("dd MMMM yyyy",new Locale("th","th"));
-			String dateMin = re.get(0).getDate().toString();
-			String [] dayMin = dateMin.split("-");
-			String [] dayMinday = dayMin[2].split(" ");
-			String dayTotalMinMax = " "+"-"+" "+cus.get(0)+" "+dayMinday[0]+" , " + sim.format(re.get(re.size()-1).getDate())+" "+"เดินทางพบลูกค้า";
-			
-			domain.setMinMaxDate(dayTotalMinMax);
-			model.put("data", JSONObject.fromObject(BeanUtils.beanToMap(domain)).toString());
-			
-			return new ModelAndView("SVD006",model);
 
 		}
 		
@@ -288,6 +303,10 @@ public class SVD006Controller{
 					travelHeader.setStatus(domain.getStatus());
 					travelHeader.setPayType(domain.getPayType());
 					travelHeader.setRemark(domain.getReson());
+					travelHeader.setModifyDate(new Date());
+					Object sessionUserObject = request.getSession().getAttribute("sessionUser");
+					String sessionUser =(String)sessionUserObject;
+					travelHeader.setUserUpdate(sessionUser);
 				this.travelHeader01Service.saveHeaderCreateFrom(travelHeader);
 
 			} catch (Exception e) {

@@ -302,17 +302,13 @@ SAC008C.validateCheckbox = function(grid, rowIndex, cellIndex, e){
 												Ext.getDom('checkCredit'+i).checked = false;
 											});
 											//Change When click debit column
-////											var cellValueCredit = store.get('credit');
-//											var cellValueCredit = Ext.getDom('checkDebit'+i).checked;
-//									    	var initialValueCredit = cellValueCredit;
-//									    	Ext.getDom('checkCredit'+i).checked = true;	
-//										    Ext.getDom('checkCredit'+i).checked = false;
-//										    Ext.getDom('checkDebit'+i).checked = initialValueCredit;
-//										    
-//										    
-//										    Ext.getDom('checkDebit'+i).checked = true;
-//											Ext.getDom('checkCredit'+i).checked = false;
-											
+											var cellValueCredit = store.get('credit');
+									    	var initialValueCredit = cellValueCredit;
+									    	Ext.getDom('checkCredit'+i).checked = true;	
+										    Ext.getDom('checkCredit'+i).checked = false;
+										    
+										    Ext.getDom('checkDebit'+i).checked = true;
+											Ext.getDom('checkCredit'+i).checked = false;
 									    }else if(columnName == 'credit'){
 									    	//Change When click Checkbox
 											Ext.get('checkCredit'+i).on('click',function(e) {						
@@ -320,15 +316,13 @@ SAC008C.validateCheckbox = function(grid, rowIndex, cellIndex, e){
 												Ext.getDom('checkCredit'+i).checked = true;	
 											});
 											//Change When click Debit Column
-////										    var cellValueDebit = store.get('debit');
-//											var cellValueDebit = Ext.getDom('checkDebit'+i).checked;
-//									    	var initialValueDebit = cellValueDebit;
-//									    	
-//									    	cellValue=false;
-//									    	Ext.getDom('checkDebit'+i).check'ed = true;	
-//									    	Ext.getDom('checkDebit'+i).checked = false;
-//									    	Ext.getDom('checkDebit'+i).checked = false;
-//											Ext.getDom('checkCredit'+i).checked = true;
+										    var cellValueDebit = store.get('debit');
+									    	var initialValueDebit = cellValueDebit;
+									    	cellValue=false;
+									    	Ext.getDom('checkDebit'+i).checked = true;	
+									    	Ext.getDom('checkDebit'+i).checked = false;
+									    	Ext.getDom('checkDebit'+i).checked = false;
+											Ext.getDom('checkCredit'+i).checked = true;
 									    }else{
 									    	
 									    }

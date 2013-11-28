@@ -8,4 +8,5 @@ public interface Customer01Dao {
 	
 	public List<Customer> findByName(String name);
 	public List<Customer> findLikeNameCustomer(String name);
+	 public List<Customer> findCustomerWhereId(String id);
 }

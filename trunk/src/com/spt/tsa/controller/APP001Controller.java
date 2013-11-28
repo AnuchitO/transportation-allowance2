@@ -91,6 +91,7 @@ public class APP001Controller{
 	@RequestMapping(value="/app001.html",method=RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest arg0,
    		 HttpServletResponse arg1) throws Exception {
+		
 //		List<AccountAdmin> results = this.accountAdmin01Service.findAccountAdmin();
 //		List<Company> resultsCom = this.company01Service.findCompany();
 //		List<Customer> resultsCus = this.customer01Service.findCustomer();

@@ -37,7 +37,7 @@
     </definition>
     
     <definition name="/SPS010.tiles" extends=".emptytemplate">
-      	<put-attribute name="title" value="SCF003"/>
+      	<put-attribute name="title" value="SPS010"/>
       	<put-attribute name="content" value="/WEB-INF/jsp/app/SPS010.jsp"/>
      	<put-attribute name="pageJsIncluded" value="/js/app/SPS010.js"/>  
     </definition>

@@ -3,7 +3,9 @@ package com.spt.tsa.controller;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -313,32 +315,15 @@ public class SCF003Controller {
 				 jobect = new JSONObject();
 				 jobect.accumulate("no", i++);
 				 ///Convert Date For Grid Date
-				 DateFormat formatForGrid = new SimpleDateFormat("E MMM dd yyyy 00:00:00",new Locale("th", "th"));
-				
-				 
-				 String startDateString = td.getDate().toString();
-				 String [] date = startDateString.split(" ");
-				 String [] formateDate = date[0].split("-");
-				 int value = Integer.parseInt(formateDate[0]);
-				 String fulldate = formateDate[2]+"/"+formateDate[1]+"/"+value;
+				 String[] datesplit = td.getDate().toString().split("-");
+				  String dateStrformat = datesplit[2].substring(0, 2)+"/"+datesplit[1]+"/"+datesplit[0];
+				 String dateStr = dateStrformat;
+					Calendar today = new GregorianCalendar(Integer.parseInt(datesplit[0]),Integer.parseInt(datesplit[1])-1,Integer.parseInt(datesplit[2].substring(0, 2)));
+					SimpleDateFormat fmtDate = new SimpleDateFormat("dd/MM/yyyy",Locale.US);
+					System.out.println(fmtDate.format(new Date(today.getTimeInMillis())));
 			
-				    DateFormat df = new SimpleDateFormat("dd/mm/yyyy",Locale.US); 
-				    Date startDate;
-				    try {
-						startDate = df.parse(fulldate);
-						  String newDateString = df.format(startDate);
-						  System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$"+newDateString);
-						  jobect.accumulate("gridDate",newDateString);
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				  
-						
-				       
-				       
-				    
-				
+				 jobect.accumulate("gridDate",fmtDate.format(new Date(today.getTimeInMillis())));
+				 logger.debug("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^{}",fmtDate.format(new Date(today.getTimeInMillis())));
 				 ///End Convert Date For Grid Date
 				 
 				 jobect.accumulate("customer", td.getCustomer().getName());

@@ -858,6 +858,13 @@ function changeNumberPrecisionPaymentD(){
 	}
 }
 
+//window.onload = function() {
+//	  setTimeout(function() {
+////	    document.getElementById('gridDate').click();
+//	
+//	  }, 1000);
+//	};
+
 SCF003.gridColumns = [
 		SCF003.checkboxselection,
 
@@ -875,7 +882,9 @@ SCF003.gridColumns = [
 			header : 'วันที่',
 			dataIndex : 'gridDate',
 			align : 'center',
-			type : 'date',
+//			type : 'date',
+			sortable: true, renderer: Ext.util.Format.dateRenderer('d/m/Y'),
+//			renderer:Ext.util.Format.dateRenderer('d/m/Y'),
 			editor : new Ext.form.DateField({
 				
 				id : 'editGridDate',
@@ -885,9 +894,13 @@ SCF003.gridColumns = [
 				
 
 			}),
-			menuDisabled : true,
+//			menuDisabled : true,
+//			
+//			renderer :function(a,b,c){
+//			Ext.getCmp('editGridDate').setValue(a);
+//			return a;	
+//			},	
 			
-			renderer : Ext.util.Format.dateRenderer('d/m/Y'),			
 			width : 87.08,
 
 		},
@@ -1148,7 +1161,8 @@ SCF003.gridStrore = new Ext.data.JsonStore({
 	}, {
 		name : 'no'
 	}, {
-		name : 'gridDate'
+		name : 'gridDate',
+		type: 'date', dateFormat: 'd/m/Y'
 	}, {
 		name : 'customer'
 	}, {

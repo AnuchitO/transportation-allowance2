@@ -39,7 +39,11 @@ public class AccountAdmin01ServiceImpl implements AccountAdmin01Service{
 	public void saveOrUpdate(AccountAdmin accountAdmin) {
 		this.accountAdmin01Dao.saveOrUpdate(accountAdmin);		
 	}
-	 
+
+	public List<AccountAdmin> queryOrderById() {
+		return this.accountAdmin01Dao.queryOrderById();
+	}	 
+	
 	////////End Nong//////
    
 }

@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
 import net.sf.json.JSONObject;
 
 import org.slf4j.Logger;
@@ -41,11 +43,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
+
+
 import com.spt.tsa.domain.SLI001Domain01;
 import com.spt.tsa.entity.AccountProfile;
+import com.spt.tsa.entity.Employee;
 import com.spt.tsa.service.AccountProfile01Service;
 //import com.fission.web.view.extjs.grid.GridData;
 import com.spt.tsa.service.Company01Service;
+import com.spt.tsa.service.Employee01Service;
  
 
 @Controller
@@ -54,12 +60,21 @@ public class SLI001Controller {
 	
 	@Autowired
 	private AccountProfile01Service accountProfile01Service;
+	@Autowired
+	private Employee01Service employee01Service;
 	 
 	public void setExt001Service(AccountProfile01Service accountProfile01Service) {
 		this.accountProfile01Service = accountProfile01Service;
 	}
 	 
 	
+	
+	public void setEmployee01Service(Employee01Service employee01Service) {
+		this.employee01Service = employee01Service;
+	}
+
+
+
 	@RequestMapping(value = "/index.html", method = RequestMethod.GET)
 	public ModelAndView view(HttpServletRequest request, HttpServletResponse response) {
 
@@ -81,10 +96,13 @@ public class SLI001Controller {
 			
 			String indexPage = "index.html";
 			List<AccountProfile> lisAccountProfiles = null;
+			List<Employee>  listEmployees = null;
+			String user=" ";
 			JSONObject myObj = null;
 			PrintWriter out = response.getWriter();
 			try {
 				lisAccountProfiles = this.accountProfile01Service.findByUserName(userName, password);
+				
 			} catch (Exception e) {
 //				myObj = new JSONObject();
 //				myObj.accumulate("failure", true);
@@ -97,11 +115,18 @@ public class SLI001Controller {
 				AccountProfile accountProfiles = lisAccountProfiles.get(0);
 				String privilege = accountProfiles.getPrivilege().toString();
 				String empId = accountProfiles.getEmployeeId();
+				try {
+					listEmployees = this.employee01Service.findEmpWhereEmpId(empId);
+					user = listEmployees.get(0).getName()+" "+listEmployees.get(0).getLastname();
+				} catch (Exception e) {
+					
+				}
 				
 				if(accountProfiles.getPrivilege().equals("user")){
 					request.getSession().setAttribute("sessionPrivilege",privilege);
 					request.getSession().setAttribute("sessionEmpId",empId);
 					request.getSession().setAttribute("sessionIndexPage",indexPage);
+					request.getSession().setAttribute("sessionUser",user);
 					myObj = new JSONObject();
 					myObj.accumulate("failure", false);
 					myObj.accumulate("success", true);
@@ -109,7 +134,8 @@ public class SLI001Controller {
 				}else if(accountProfiles.getPrivilege().equals("admin")){
 					request.getSession().setAttribute("sessionPrivilege",privilege);
 					request.getSession().setAttribute("sessionEmpId",empId);
-					request.getSession().setAttribute("sessionIndexPage",indexPage);			 		
+					request.getSession().setAttribute("sessionIndexPage",indexPage);
+					request.getSession().setAttribute("sessionUser",user);
 					myObj = new JSONObject();
 					myObj.accumulate("failure", false);
 					myObj.accumulate("success", true);

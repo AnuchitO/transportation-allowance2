@@ -2,12 +2,16 @@ package com.spt.tsa.dao.Impl;
 
 import java.util.List;
 
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
+
+
 
 
 
@@ -41,6 +45,17 @@ public class AccountAdmin01DaoImpl extends HibernateDaoSupport implements Accoun
 
 	public void saveOrUpdate(AccountAdmin accountAdmin) {
 		this.getHibernateTemplate().saveOrUpdate(accountAdmin);		
+	}
+
+	public List<AccountAdmin> queryOrderById() {
+		Session session = (Session) this.getSession();
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT * FROM account_admin order by TO_NUMBER(accad_acid) desc");
+		SQLQuery query = session.createSQLQuery(sql.toString());
+		List<AccountAdmin> results = query.list();
+		session.close();
+		return results;		
+		
 	}
    
 }

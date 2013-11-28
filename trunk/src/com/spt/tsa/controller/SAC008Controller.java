@@ -114,7 +114,8 @@ public class SAC008Controller {
 		domainSAC008.setDateGrid(dateGrid);
 		String packDataGrid = domainSAC008.getDateGrid();		
 		String[] rowSplit = packDataGrid.split("!");
-
+		 Object sessionUserObject = request.getSession().getAttribute("sessionUser");
+		 String sessionUser =(String)sessionUserObject;
 		for(String eachRow : rowSplit){
 			String[] columnSplit = eachRow.split(",");							
 				String code = columnSplit[0];
@@ -129,6 +130,7 @@ public class SAC008Controller {
 					 accountAdmin.setAccountNo(accountId);
 					 accountAdmin.setName(accountName);
 					 accountAdmin.setModifyDate(new Date());
+					 accountAdmin.setUserUpdate(sessionUser);
 					 if(debit.equals("true")){
 						  accountAdmin.setType("debit"); 
 					 }else if(credit.equals("true")){
@@ -142,9 +144,9 @@ public class SAC008Controller {
 				 	 accountAdmin.setCode(code);
 					 accountAdmin.setAccountNo(accountId);
 					 accountAdmin.setName(accountName);
-					 accountAdmin.setUserCreation("FromSessionLogin"); //Freeze Waiting get FromSession Login
+					 accountAdmin.setUserCreation(sessionUser); 
 					 accountAdmin.setCreationDate(new Date());
-					 accountAdmin.setUserUpdate("FromSessionLogin"); //Freeze Waiting  get FromSession Login
+					 accountAdmin.setUserUpdate(sessionUser); 
 					 accountAdmin.setModifyDate(new Date());
 					 if(debit.equals("true")){
 						  accountAdmin.setType("debit"); 

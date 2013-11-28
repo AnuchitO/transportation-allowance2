@@ -73,10 +73,20 @@ public class SPS010Controller {
 
 		@RequestMapping(value = "/SPS010.html", method = RequestMethod.GET)
 		public ModelAndView view(HttpServletRequest request, HttpServletResponse response) {
+			Object sessionPrivilege = request.getSession().getAttribute("sessionPrivilege");
+			String privilege = (String)sessionPrivilege;
+			try {
+				if((!(privilege.equals("admin")))){ 			
+					request.getSession().removeAttribute("sessionPrivilege");
+					response.sendRedirect((String)request.getSession().getAttribute("sessionIndexPage"));				
+				}else{
+					Map<String,Object> model = new HashMap<String,Object>();					
+					return new ModelAndView("SPS010", model);
+				}		
+			} catch (Exception e) {
 
-			Map<String,Object> model = new HashMap<String,Object>();
-			
-			return new ModelAndView("SPS010", model);
+			}
+			return new ModelAndView("");
 
 		}
 		

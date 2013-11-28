@@ -27,7 +27,7 @@ item1.setDate("18/02/2552");
 item1.setTime("13:52");
 item1.setMonth("January");
 item1.setCustomer("customer01");
-item1.setDateYear("2556");
+
 item1.setTotalMoneyFull("500000");
 
 SPS010Report item2 = new SPS010Report();
@@ -40,7 +40,7 @@ item2.setDate("18/02/2552");
 item2.setTime("13:52");
 item2.setMonth("January");
 item2.setCustomer("customer01");
-item2.setDateYear("2556");
+
 item2.setTotalMoneyFull("500000");
 
 items.add(item1);

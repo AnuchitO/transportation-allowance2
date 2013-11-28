@@ -486,7 +486,7 @@ Ext.get('seiManageDept').on('click',function(e) {
 
 Ext.get('seiManageReport').on('click',function(e) {
 	
-	var urlPreviwPage = "/TransportationAllowance/SAC008.html";
+	var urlPreviwPage = "/TransportationAllowance/SPS010.html";
 	var win = window.open(urlPreviwPage);
 	win.focus();
 });

@@ -30,6 +30,10 @@ public class Customer01ServiceImpl implements Customer01Service{
 	public List<Customer> findLikeNameCustomer(String name){
 		return this.customer01Dao.findLikeNameCustomer(name);
 	}
+	
+	 public List<Customer> findCustomerWhereId(String id){
+		 return this.customer01Dao.findCustomerWhereId(id);
+	 }
 
 
     

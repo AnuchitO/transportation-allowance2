@@ -224,7 +224,6 @@
 	<field name="time" class="java.lang.String"/>
 	<field name="month" class="java.lang.String"/>
 	<field name="customer" class="java.lang.String"/>
-	<field name="dateYear" class="java.lang.String"/>
 	<field name="totalMoneyFull" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -287,33 +286,12 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{customer}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement uuid="4dd0acc8-083f-4428-b1d8-a779a17ed42c" x="162" y="0" width="38" height="35"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[เดือน]]></text>
-			</staticText>
 			<textField>
-				<reportElement uuid="c63ce62c-a1a3-44ad-b7b3-f6dbfcd49012" x="200" y="0" width="77" height="35"/>
+				<reportElement uuid="c63ce62c-a1a3-44ad-b7b3-f6dbfcd49012" x="162" y="0" width="374" height="35"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{month}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement uuid="09ebaa7f-d991-4d73-b0d8-7aac6760871d" x="277" y="0" width="26" height="35"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[พ.ศ.]]></text>
-			</staticText>
-			<textField>
-				<reportElement uuid="a2ba066e-eb4c-4912-9918-bdccd031f48c" x="303" y="0" width="88" height="35"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="20" pdfFontName="/fonts/THSarabun.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{dateYear}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement uuid="272e1930-020b-46b5-a69d-95de7fa55b3c" mode="Opaque" x="32" y="50" width="42" height="29"/>

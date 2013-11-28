@@ -11,7 +11,7 @@ public class SPS010Report {
 	String time;
 	String month;
 	String customer;
-	String dateYear;
+
 	String totalMoneyFull;
 	
 	public String getNo() {
@@ -69,12 +69,7 @@ public class SPS010Report {
 	public void setCustomer(String customer) {
 		this.customer = customer;
 	}
-	public String getDateYear() {
-		return dateYear;
-	}
-	public void setDateYear(String dateYear) {
-		this.dateYear = dateYear;
-	}
+	
 	public String getTotalMoneyFull() {
 		return totalMoneyFull;
 	}

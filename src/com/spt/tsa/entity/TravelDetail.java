@@ -18,6 +18,7 @@ public class TravelDetail implements Serializable {
 	@Column(name="Trad_tdid")
 	private String tDetailId;
 	
+//	@ManyToOne(fetch =  FetchType.LAZY)
 	@ManyToOne
 	@JoinColumn(name="Trad_thid")
 	private TravelHeader travelHeader;

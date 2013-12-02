@@ -2,14 +2,27 @@ package com.spt.tsa.dao.Impl;
 
 import java.util.List;
 
+import javassist.expr.Cast;
+
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.CriteriaQuery;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
+
+
+
+
+
+
 
 
 
@@ -30,7 +43,9 @@ public class AccountAdmin01DaoImpl extends HibernateDaoSupport implements Accoun
     }
     
     public List<AccountAdmin> findAccountAdmin() {
-   	 return this.getHibernateTemplate().find("FROM AccountAdmin");
+    	DetachedCriteria criteria =  DetachedCriteria.forClass(AccountAdmin.class);  
+    	criteria.addOrder(Order.desc("codeLong"));
+    	return this.getHibernateTemplate().findByCriteria(criteria);
     }
 
 	public List<AccountAdmin> findByCode(String code) {

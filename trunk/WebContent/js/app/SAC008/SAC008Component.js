@@ -109,8 +109,8 @@ SAC008C.gridSaveBtn = new Ext.Toolbar.Button(
 						for (var i=0;i<rowSelected.length;i++) {
 							var accountId = rowSelected[i].data.accountId;
 							var accountName = rowSelected[i].data.accountName;
-							var debit = Ext.getDom('checkDebit'+(i+1)).checked;
-							var credit = Ext.getDom('checkCredit'+(i+1)).checked;
+							var debit = SAC008C.grid.getStore().getAt(i).data.debit;
+							var credit = SAC008C.grid.getStore().getAt(i).data.credit;
 							if( accountId == "undefined" || accountId == null || accountId == "" ||
 								accountName == "undefined" || accountName == null || accountName == "" ||
 								(!(debit || credit))){
@@ -123,8 +123,8 @@ SAC008C.gridSaveBtn = new Ext.Toolbar.Button(
 									paramConfirmSave.accountId +=   rowSelected[i].data.code+","+
 																	rowSelected[i].data.accountId+","+
 																	rowSelected[i].data.accountName+","+
-																	Ext.getDom('checkDebit'+(i+1)).checked+","+
-																	Ext.getDom('checkCredit'+(i+1)).checked+"!"; // concat accountId //
+																	SAC008C.grid.getStore().getAt(i).data.debit+","+
+																	SAC008C.grid.getStore().getAt(i).data.credit+"!"; // concat accountId //
 								}							
 						}	
 						
@@ -135,7 +135,13 @@ SAC008C.gridSaveBtn = new Ext.Toolbar.Button(
 								params : paramConfirmSave,
 								success : function(response, opts) {
 									if (paramConfirmSave != null) {
-										Ext.Msg.alert('สถานะ', 'ทำรายการสำเร็จ');
+										Ext.MessageBox.show({
+											title : 'สถานะ',
+											msg : '<center>ทำรายการสำเร็จ</center>',
+											buttons : Ext.MessageBox.OK,
+											width : 170,
+											height: 80
+										});
 										/////  load Grid store  //////
 										SAC008C.grid.store.reload({ //  reload grid store when click save button				                  
 								                   params:{method : 'gridDataStore'}});
@@ -235,11 +241,14 @@ SAC008C.gridColumns = [
 			dataIndex : 'credit',
 			align : 'center',
 			width : 50,
+//		    formatter: 'checkbox',
+//		    editoptions: {value: '1:0'},
+//            formatoptions: {disabled: false},
 			renderer: function (value, meta, record) {
 //                return '<center><input type="checkbox" name="checkbox2"' + (value ? 'checked' : '') + ' onclick="var s = Ext.getCmp(\'button-grid\').store; s.getAt(s.findExact(\'id\',\'' + record.get('id') + '\')).set(\'isFull\', this.value)"'//old
 				var idNameCredit = "checkCredit"+record.data.no;
 				return '<center><input type="checkbox" id="'+idNameCredit+'" name="checkbox2"' + (value ? 'checked' : '') + ' onclick=" "';
-            },
+            }
 		}
 ];
 
@@ -300,20 +309,26 @@ SAC008C.validateCheckbox = function(grid, rowIndex, cellIndex, e){
 											Ext.get('checkDebit'+i).on('click',function(e) {
 												Ext.getDom('checkDebit'+i).checked = true;
 												Ext.getDom('checkCredit'+i).checked = false;
+												SAC008C.grid.store.getAt(rowIndex).set('debit',true);
+												SAC008C.grid.store.getAt(rowIndex).set('credit',false);
 											});
 											//Change When click debit column
 											var cellValueCredit = store.get('credit');
-									    	var initialValueCredit = cellValueCredit;
 									    	Ext.getDom('checkCredit'+i).checked = true;	
 										    Ext.getDom('checkCredit'+i).checked = false;
 										    
 										    Ext.getDom('checkDebit'+i).checked = true;
 											Ext.getDom('checkCredit'+i).checked = false;
+											
+											SAC008C.grid.store.getAt(rowIndex).set('debit',true);
+											SAC008C.grid.store.getAt(rowIndex).set('credit',false);
 									    }else if(columnName == 'credit'){
 									    	//Change When click Checkbox
 											Ext.get('checkCredit'+i).on('click',function(e) {						
 												Ext.getDom('checkDebit'+i).checked = false;
 												Ext.getDom('checkCredit'+i).checked = true;	
+												SAC008C.grid.store.getAt(rowIndex).set('debit',false);
+												SAC008C.grid.store.getAt(rowIndex).set('credit',true);
 											});
 											//Change When click Debit Column
 										    var cellValueDebit = store.get('debit');
@@ -323,6 +338,8 @@ SAC008C.validateCheckbox = function(grid, rowIndex, cellIndex, e){
 									    	Ext.getDom('checkDebit'+i).checked = false;
 									    	Ext.getDom('checkDebit'+i).checked = false;
 											Ext.getDom('checkCredit'+i).checked = true;
+											SAC008C.grid.store.getAt(rowIndex).set('debit',false);
+											SAC008C.grid.store.getAt(rowIndex).set('credit',true);
 									    }else{
 									    	
 									    }

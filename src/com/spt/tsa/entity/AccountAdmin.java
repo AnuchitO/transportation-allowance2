@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Formula;
+
 @Entity
 @Table( name = "ACCOUNT_ADMIN" )
 public class AccountAdmin implements Serializable {
@@ -24,6 +26,10 @@ public class AccountAdmin implements Serializable {
 	@Id
 	@Column (name = "ACCAD_ACID")
 	private String code;
+	
+	
+	@Formula(value="to_number(ACCAD_ACID)")
+	private Integer codeLong;
 	
 	@Column (name = "ACCAD_ACNAME")
 	private String name;
@@ -55,10 +61,16 @@ public class AccountAdmin implements Serializable {
 
 	public void setAccountNo(String accountNo) {
 		this.accountNo = accountNo;
+	}	
+
+
+	public Integer getCodeLong() {
+		return codeLong;
 	}
 
-	
-
+	public void setCodeLong(Integer codeLong) {
+		this.codeLong = codeLong;
+	}
 
 	public String getCode() {
 		return code;

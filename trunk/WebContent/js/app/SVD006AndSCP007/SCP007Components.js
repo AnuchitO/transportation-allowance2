@@ -284,7 +284,7 @@ SCP007C.gridRemoveBtn = new Ext.Toolbar.Button({
 		var rowSelected = Ext.getCmp('scpgridEducationInfomation')
 				.getSelectionModel().getSelections();
 		if (!Ext.isEmpty(rowSelected)) {
-			Ext.MessageBox.confirm('Confirm', 'Are you sure?', function(btn) {
+			Ext.MessageBox.confirm('Confirm', 'คุณต้องการจะลบข้อมูลนี้ ?', function(btn) {
 				if (btn == 'yes') {
 					
 					SCP007C.createGrid.getSelectionModel().selectAll();

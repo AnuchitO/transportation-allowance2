@@ -495,7 +495,10 @@ public class SCF003Controller {
 				travelHeader.setPayType("2");
 			}
 			travelHeader.setUserCreation(domain.getName());
-			travelHeader.setUserUpdate(domain.getName());
+			
+			Object scpSessionUserUpdateforTravelHeader = request.getSession().getAttribute("sessionUser");
+			String scpgetSessionUserUpdateforTravelHeader = (String)scpSessionUserUpdateforTravelHeader;
+			travelHeader.setUserUpdate(scpgetSessionUserUpdateforTravelHeader);
 			
 			SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
 			String[] formatSplitCreateDate = domain.getDate().split("/");
@@ -596,7 +599,9 @@ public class SCF003Controller {
 				travelDetail.setTotalDay(new Double(gridRowContent[7]));
 				travelDetail.setRemark(gridRowContent[8]);
 				travelDetail.setUserCreation(domain.getName());
-				travelDetail.setUserUpdate(domain.getName());
+				Object scpSessionUserUpdateforTravelDetail = request.getSession().getAttribute("sessionUser");
+				String scpgetSessionUserUpdateforTravelDetail = (String)scpSessionUserUpdateforTravelDetail;
+				travelDetail.setUserUpdate(scpgetSessionUserUpdateforTravelDetail);
 
 			
 				SimpleDateFormat sdfCreate = new SimpleDateFormat("dd/MM/yyyy");

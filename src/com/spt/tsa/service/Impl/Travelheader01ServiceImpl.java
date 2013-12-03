@@ -158,6 +158,10 @@ public class Travelheader01ServiceImpl implements TravelHeader01Service{
 		return this.travelHeader01Dao.findByTHeadId(tHeadId);
 	}
 	
+	 public List<TravelHeader> findTravelHeaderOrderbyModifyDate(){
+		 return this.travelHeader01Dao.findTravelHeaderOrderbyModifyDate();
+	 }
+	
 
 }
 	

@@ -37,6 +37,10 @@ public class TravelHeader01DaoImpl extends HibernateDaoSupport implements Travel
     public List<TravelHeader> findTravelHeader() {
    	 return this.getHibernateTemplate().find("FROM TravelHeader");
     }
+    
+    public List<TravelHeader> findTravelHeaderOrderbyModifyDate() {
+      	 return this.getHibernateTemplate().find("FROM TravelHeader Order by modifyDate");
+       }
     public List<TravelHeader> findByDocNo(String docNo){
     	DetachedCriteria criteria =  DetachedCriteria.forClass(TravelHeader.class).add(
 		        Restrictions.and(

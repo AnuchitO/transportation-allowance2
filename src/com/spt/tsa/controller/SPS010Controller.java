@@ -107,6 +107,10 @@ public class SPS010Controller {
 				jobect1.clear();
 
 			}
+				jobect1.accumulate("code", "All");
+				jobect1.accumulate("description", "All");
+				jsonArray.add(jobect1);
+				jobect1.clear();
 			gridData.setRecords(jsonArray);
 			gridData.setTotal(jsonArray.size());
 			gridData.setSuccess(true);

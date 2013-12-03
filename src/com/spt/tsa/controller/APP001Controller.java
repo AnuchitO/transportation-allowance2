@@ -169,6 +169,11 @@ public class APP001Controller{
 //			logger.debug("++++++@@@@@@@@@@@@@@@@@+++++gridRowList++++++{}-------------{}",c.getUserName(),c.getPassword());
 //			logger.debug("++++++@@@@@@@@@@@@@@@@@+++++gridRowList++++++{}-------------{}",c.getPrivilege(),c.getEmployeeId());
 //		}
+		
+		List<TravelHeader> traH = this.travelHeader01Service.findTravelHeaderOrderbyModifyDate();
+		for(TravelHeader t:traH){
+			logger.debug("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^{}",t.getModifyDate());
+		}
 		Map model = new HashMap();
 		
 		

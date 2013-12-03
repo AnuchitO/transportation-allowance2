@@ -280,7 +280,7 @@ SCF003.gridRemoveBtn = new Ext.Toolbar.Button({
 		var rowSelected = Ext.getCmp('gridEducationInfomation')
 				.getSelectionModel().getSelections();
 		if (!Ext.isEmpty(rowSelected)) {
-			Ext.MessageBox.confirm('Confirm', 'Are you sure?', function(btn) {
+			Ext.MessageBox.confirm('Confirm', 'คุณต้องการจะลบข้อมูลนี้ ?', function(btn) {
 				if (btn == 'yes') {
 					scfparamRemove.scfForRemoveNo = SCF003.No.getValue(); 
 					SCF003.createGrid.getSelectionModel().selectAll();
@@ -329,6 +329,10 @@ SCF003.gridRemoveBtn = new Ext.Toolbar.Button({
 						SCF003.tatolPaymfullCase.setValue(0.00);
 						convertString();
 					}
+					if(sm.length == 0){
+						
+					}
+					else{
 					SCF003.createGrid.store.getAt(lastIndex).set('no', getValueLastIndexfirst);
 					var getValueLastIndex = SCF003.createGrid.getStore().getAt(lastIndex).data.no;
 					
@@ -387,13 +391,18 @@ SCF003.tatolPaymA.setValue(b);
 			}
 			SCF003.createGrid.getSelectionModel().deselectRow(i);
 			}
+			if(SCF003.createGrid.getSelectionModel().getSelections().length == 0){
+				
+			}
+			else{
 			convertString();
-
+			}
 					for (var j = 0; j <= sm.length - 1; j++) {
 
 						SCF003.createGrid.getSelectionModel().deselectRow(j);
 					}
 
+				}
 				}
 			});
 		} else {
@@ -784,6 +793,7 @@ SCF003.comboCustomerGrid = new Ext.form.ComboBox({
 });
 SCF003.checkboxselection = new Ext.grid.CheckboxSelectionModel({
 	singleSelect : false,
+	
 
 });
 
@@ -1128,12 +1138,12 @@ SCF003.gridColumns = [
 ];
 
 SCF003.groupHeaderPlugins = new Ext.ux.plugins.GroupHeaderGrid({
-	rows : [ [ {
-
-	}, {}, {}, {}, {
+	rows : [ [ {header:'<input type="text" style="display:none;">' 
+		}, {}, {}, {}, {
 		header : "การเดินทาง",
 		colspan : 2,
-		align : 'center'
+		align : 'center',
+		
 	}, {
 		header : "ค่าใช้จ่าย",
 		colspan : 2,
@@ -1664,7 +1674,7 @@ Ext
 		Ext.get('print').on('click',function(e) {
 										var noDoc = Ext.getCmp('no').getValue();
 										var urlPreviwPage = "/TransportationAllowance/jasperReport.pdf?docNo="+noDoc;
-										var win = window.open(urlPreviwPage, '_blank');
+										var win = window.open(urlPreviwPage);
 										win.focus();
 							});
 			Ext

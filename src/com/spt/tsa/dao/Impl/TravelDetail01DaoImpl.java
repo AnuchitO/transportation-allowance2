@@ -187,7 +187,8 @@ public class TravelDetail01DaoImpl extends HibernateDaoSupport implements Travel
 			   	  "and h.trah_emid like '"+empId+"' "+
 			   	  "and h.name_dept like '"+deptCode+"' "+
 			   	  "and d.trad_cuid like '"+cuId+"' "+
-			   	  "and  to_char(d.trad_tdmodifydate, 'dd/MM/YYYY') between '"+startDate+"' and '"+endDate+"' "+ 
+			   	  "and (h.TRAH_THMODIFYDATE between to_date ('"+startDate+"', 'dd/mm/yyyy')"+
+			      "AND to_date ('"+endDate+"', 'dd/mm/yyyy') or to_char(h.TRAH_THMODIFYDATE,'dd/MM/yyyy')  like'%"+startDate+"%')"+
 			   	  "group by h.trah_thid"+
 			   	  "");
 	   SQLQuery query = session.createSQLQuery(sql.toString());

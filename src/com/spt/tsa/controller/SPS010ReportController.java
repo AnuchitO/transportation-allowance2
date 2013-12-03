@@ -2,6 +2,7 @@ package com.spt.tsa.controller;
 import java.util.*;
 import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,6 +47,8 @@ import com.spt.tsa.service.Employee01Service;
 import com.spt.tsa.service.ParameterTable01Service;
 import com.spt.tsa.service.TravelDetail01Service;
 import com.spt.tsa.service.TravelHeader01Service;
+
+
 
 
 
@@ -118,72 +121,69 @@ public class SPS010ReportController {
 		String sessionSpsComboboxCustomerSession = (String)spsComboboxCustomerSession;
 		String sessionSpsStartDate = (String)spsStartDateSession;
 		String sessionSpsEndDate = (String)spsEndDateSession;
+		
+		
 	
 		//***************************** parametor for search ****************************//
+		
 		List  resultsQuery = null;
+		SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy",Locale.US);
+		SimpleDateFormat sfThai = new SimpleDateFormat("dd MMMM yyyy",new Locale("th", "th"));
+		List<TravelHeader> dateForStartDate = this.travelHeader01Service.findTravelHeaderOrderbyModifyDate();
+		String status= "004";
+		String empId="";
+		try{
+		/**************************** set empId for Query ****************************************/
+		if(sessionSpsEmpId.equals("%") && sessionSpsEmpName.equals("%")){
+			empId = "%";
+		}
+		else if(sessionSpsEmpId.equals("%") && !(sessionSpsEmpName.equals("%"))){
+			String empSearch = this.employee01Service.findLikeIdEmpAndNameEmp(sessionSpsEmpId, sessionSpsEmpName).get(0).getEmpId();
+			empId = empSearch;
+		}
+		else if(!(sessionSpsEmpId.equals("%")) && (sessionSpsEmpName.equals("%"))){
+			empId = sessionSpsEmpId+"%";
+		}
+		else if(!(sessionSpsEmpId.equals("%")) && !(sessionSpsEmpName.equals("%"))){
+			String empSearch = this.employee01Service.findLikeIdEmpAndNameEmp(sessionSpsEmpId, sessionSpsEmpName).get(0).getEmpId();
+			empId = empSearch;
+		}
+		String deptCode="";
+		if(sessionSpsCreateComboboxDeptSession.equals("All")){
+			deptCode="%";
+		}else{
+			deptCode=sessionSpsCreateComboboxDeptSession;
+		}
+		
+		String cuId=sessionSpsComboboxCustomerSession;
+		/**************************** End set empId for Query *************************************/
+		/**************************** convert Date for query *************************************/
+		if(sessionSpsStartDate.equals("%")){
+			String[] splitdate = dateForStartDate.get(0).getModifyDate().toString().split("-");
+			String date = splitdate[2].substring(0, 2)+"/"+splitdate[1]+"/"+splitdate[0];
+			sessionSpsStartDate = date;
+		}
+		else{
+			String[] splitDate = sessionSpsStartDate.split("-");
+			String date = splitDate[2].substring(0, 2)+"/"+splitDate[1]+"/"+splitDate[0];
+			sessionSpsStartDate = date;
+		}
+		String startDateForQuery=sessionSpsStartDate;
+		if(sessionSpsEndDate.equals("%")){
+			sessionSpsEndDate= sf.format(new Date());
+		}
+		else{
+			String[] splitDate = sessionSpsEndDate.split("-");
+			String date = splitDate[2].substring(0, 2)+"/"+splitDate[1]+"/"+splitDate[0];
+			sessionSpsEndDate = date;
+		}
+		String endDateForQuery=sessionSpsEndDate;
+		/********************************** End convertDate ***********************************************/
+		
 		List<Object> items = new ArrayList<Object>();
-		try {
-			String startDateString ="";
-			String newStartDate = "";
-			String newEndDate = "";
-			String endDate = "";
-			DateFormat df = new SimpleDateFormat("dd/MM/yyyy"); 
-			
-			if(sessionSpsStartDate.equals("%")){
-				newStartDate = "%";
-			}else{
-				String [] splitDate = sessionSpsStartDate.split("-");
-				String dateFormate = splitDate[2].substring(0, 2)+"/"+splitDate[1]+"/"+splitDate[0];
-				startDateString = dateFormate;
-			    Date startDate;
-			    startDate = df.parse(startDateString);
-			    newStartDate = df.format(startDate);
-			}
-			
-			if(sessionSpsEndDate.equals("%")){				
-				newEndDate = df.format(new Date())+"%";
-			}else{
-			    String [] splitEndDate = sessionSpsEndDate.split("-");
-				String endDateFormate = splitEndDate[2].substring(0, 2)+"/"+splitEndDate[1]+"/"+splitEndDate[0];
-				
-			    endDate = endDateFormate;
-			    Date endDateformat;
-			    endDateformat = df.parse(endDate);
-			    newEndDate = df.format(endDateformat);
-			}
-			
-		  	String status = "004";
-		  	List<Employee> emp = null;
-		  	String empId = "";
-			if((sessionSpsEmpId.equals("%"))&&(sessionSpsEmpName.equals("%"))){
-				empId = "%";
-			}else if((sessionSpsEmpId.equals("%"))&&!(sessionSpsEmpName.equals("%"))){
-				try {
-					emp = this.employee01Service.findLikeIdEmpAndNameEmp(sessionSpsEmpId, sessionSpsEmpName);
-					empId = emp.get(0).getEmpId();
-				} catch (Exception e) {
-					empId = "-";
-				}
-
-			}else if(!(sessionSpsEmpId.equals("%"))&&(sessionSpsEmpName.equals("%"))){
-				empId = sessionSpsEmpId;
-			}else if(!(sessionSpsEmpId.equals("%"))&&!(sessionSpsEmpName.equals("%"))){
-				try {
-					emp = this.employee01Service.findLikeIdEmpAndNameEmp(sessionSpsEmpId, sessionSpsEmpName);
-					empId = emp.get(0).getEmpId();
-				} catch (Exception e) {
-					empId = "-";
-				}
-
-			}else{
-				empId = "-";
-			}					
-		  	String deptCode = sessionSpsCreateComboboxDeptSession;
-		  	String cuId = sessionSpsComboboxCustomerSession;
-		  	String startDateForQuery = newStartDate;
-		  	String endDateForQuery = newEndDate; 
-		  	resultsQuery = this.travelDetail01Service.queryForReportPageSPS10(status, empId, deptCode, cuId, startDateForQuery, endDateForQuery);
-		  	String tHeadId="";
+	  	resultsQuery = this.travelDetail01Service.queryForReportPageSPS10(status, empId, deptCode, cuId, startDateForQuery, endDateForQuery);
+		 
+		  			  	String tHeadId="";
 		  	Map<String,TravelHeader> mapEmp = new HashMap<String,TravelHeader>();
 			Map<String,Double> mapAmount = new HashMap<String,Double>();
 			Map<String,TravelHeader> dateTH = new HashMap<String, TravelHeader>();
@@ -205,10 +205,8 @@ public class SPS010ReportController {
 		  	}
 		  	Map<String, TravelHeader> treeMap = new TreeMap<String, TravelHeader>(mapEmp);
 		  	Map<String, TravelHeader> treeMapDate = new TreeMap<String, TravelHeader>(dateTH);
-		  
-		  
-			if(resultsQuery.isEmpty()){
-				item1 = new SPS010Report();
+		  if(resultsQuery.isEmpty()){
+			  item1 = new SPS010Report();
 				item1.setNo("-");
 				item1.setIdEmp("-");
 				item1.setNameEmp("-");
@@ -218,49 +216,40 @@ public class SPS010ReportController {
 			    String[] dateCreate = dateCreatePrintpreview.split(" ");
 				item1.setDate(dateCreate[0]);
 				item1.setTime(dateCreate[1].substring(0, 5));
+				
 				if(sessionSpsComboboxCustomerSession.equals("%")){
 					item1.setCustomer("ทุกลูกค้า");
 				}else{
 					item1.setCustomer(this.customer01Service.findCustomerWhereId(sessionSpsComboboxCustomerSession).get(0).getName());
 				}
-				SimpleDateFormat sim = new SimpleDateFormat("dd MMMM yyyy",new Locale("th","th"));
-				SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy",Locale.US);
 				
-				
-				if(sessionSpsStartDate.equals("%") && sessionSpsEndDate.equals("%")){
-					item1.setMonth("ทุกวัน");
-				}else if(!sessionSpsStartDate.equals("%") && sessionSpsEndDate.equals("%")){
-					String StartdatetoString = startDateString;
-					Date startDate = sf.parse(StartdatetoString);
-					item1.setMonth("ตั้งแต่"+ " " +sim.format(startDate) +" "+"ถึง"+" "+sim.format(new Date()));
-				}
-				else if(sessionSpsStartDate.equals("%") && !sessionSpsEndDate.equals("%")){
-					 List keys = new ArrayList(treeMapDate.keySet());
-					  String [] startdate = keys.get(0).toString().split("-");
-					  String startDateformat = startdate[2].substring(0, 2)+"/"+startdate[1]+"/"+startdate[0];
-					  Date startDateForSet = sf.parse(startDateformat);
-				String EnddatetoString = endDate;
-				Date endDateformat = sf.parse(EnddatetoString);
-					item1.setMonth("ตั้งแต่"+ " " +sim.format(startDateForSet) +" "+"ถึง"+" "+sim.format(endDateformat));
-				}
-				else if(!sessionSpsStartDate.equals("%") && !sessionSpsEndDate.equals("%")){
-					String StartdatetoString = startDateString;
-					Date startDate = sf.parse(StartdatetoString);
-				String EnddatetoString = endDate;
-				Date endDateformat = sf.parse(EnddatetoString);
-				if(StartdatetoString.equals(EnddatetoString)){
-					item1.setMonth(sim.format(startDate));
+				if(startDateForQuery.equals(endDateForQuery)){
+					Date date;
+					date = sf.parse(startDateForQuery);
+					String dateformat = sfThai.format(date);
+					item1.setMonth(dateformat);
 				}else{
-					item1.setMonth("ตั้งแต่"+ " " +sim.format(startDate) +" "+"ถึง"+" "+sim.format(endDateformat));
-					}
-					
+					Date startdate;
+					startdate = sf.parse(startDateForQuery);
+					String startdateformat = sfThai.format(startdate);
+					Date enddate;
+					enddate = sf.parse(endDateForQuery);
+					String enddateformat = sfThai.format(enddate);
+				item1.setMonth("ตั้งแต่ "+startdateformat + " "+" "+"ถึง "+enddateformat);
 				}
 				item1.setTotalMoney("-");
 				item1.setTotalMoneyFull("-");				
 				items.add(item1);
 				
+				JRDataSource dataSource = new JRBeanCollectionDataSource(items); 
 				
-			}else{
+				model.addAttribute("datasource", dataSource);
+				model.addAttribute("format", "pdf");	
+
+
+				
+			
+		  }
 		  	Integer i = 1;
 			Iterator<String> itr = treeMap.keySet().iterator();
 			while(itr.hasNext()){
@@ -285,60 +274,44 @@ public class SPS010ReportController {
 				}else{
 					item1.setCustomer(this.customer01Service.findCustomerWhereId(sessionSpsComboboxCustomerSession).get(0).getName());
 				}
-				SimpleDateFormat sim = new SimpleDateFormat("dd MMMM yyyy",new Locale("th","th"));
-				SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy",Locale.US);
 				
-				
-				if(sessionSpsStartDate.equals("%") && sessionSpsEndDate.equals("%")){
-					item1.setMonth("ทุกวัน");
-				}else if(!sessionSpsStartDate.equals("%") && sessionSpsEndDate.equals("%")){
-					String StartdatetoString = startDateString;
-					Date startDate = sf.parse(StartdatetoString);
-					item1.setMonth("ตั้งแต่"+ " " +sim.format(startDate) +" "+"ถึง"+" "+sim.format(new Date()));
-				}
-				else if(sessionSpsStartDate.equals("%") && !sessionSpsEndDate.equals("%")){
-					 List keys = new ArrayList(treeMapDate.keySet());
-					  String [] startdate = keys.get(0).toString().split("-");
-					  String startDateformat = startdate[2].substring(0, 2)+"/"+startdate[1]+"/"+startdate[0];
-					  Date startDateForSet = sf.parse(startDateformat);
-				String EnddatetoString = endDate;
-				Date endDateformat = sf.parse(EnddatetoString);
-					item1.setMonth("ตั้งแต่"+ " " +sim.format(startDateForSet) +" "+"ถึง"+" "+sim.format(endDateformat));
-				}
-				else if(!sessionSpsStartDate.equals("%") && !sessionSpsEndDate.equals("%")){
-					String StartdatetoString = startDateString;
-					Date startDate = sf.parse(StartdatetoString);
-				String EnddatetoString = endDate;
-				Date endDateformat = sf.parse(EnddatetoString);
-				if(StartdatetoString.equals(EnddatetoString)){
-					item1.setMonth(sim.format(startDate));
+				if(startDateForQuery.equals(endDateForQuery)){
+					Date date;
+					date = sf.parse(startDateForQuery);
+					String dateformat = sfThai.format(date);
+					item1.setMonth(dateformat);
 				}else{
-					item1.setMonth("ตั้งแต่"+ " " +sim.format(startDate) +" "+"ถึง"+" "+sim.format(endDateformat));
-					}
+					Date startdate;
+					startdate = sf.parse(startDateForQuery);
+					String startdateformat = sfThai.format(startdate);
+					Date enddate;
+					enddate = sf.parse(endDateForQuery);
+					String enddateformat = sfThai.format(enddate);
+				item1.setMonth("ตั้งแต่ "+startdateformat + " "+" "+"ถึง "+enddateformat);
 				}
-
 				item1.setTotalMoney(mapAmount.get(empIdKey).toString());
 				item1.setTotalMoneyFull(total.toString());				
 				items.add(item1);
 				
-			}
-			}
-		
+				JRDataSource dataSource = new JRBeanCollectionDataSource(items); 
 				
-	  	
-		  	
-		} catch (Exception e) {
-			// TODO: handle exception
+				model.addAttribute("datasource", dataSource);
+				model.addAttribute("format", "pdf");	
+
+
+				
+			}
 		}
-		JRDataSource dataSource = new JRBeanCollectionDataSource(items); 
-		
-		model.addAttribute("datasource", dataSource);
-		model.addAttribute("format", "pdf");	
-
-
-		return "reportForSearchSPS010";
+			catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return "reportForSearchSPS010";
 	}
 }
+			
+
+
 
 
 

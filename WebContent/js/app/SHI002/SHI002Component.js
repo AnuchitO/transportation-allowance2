@@ -221,7 +221,9 @@ SHI002C.slipAjenda = {
 // Grid 
 ////////////////////////////////////////////////////////////////////////////////////////
 SHI002C.sm2 = new Ext.grid.CheckboxSelectionModel({
+	
     listeners: {
+    	
         // On selection change, set enabled state of the removeButton
         // which was placed into the GridPanel using the ref config
         selectionchange: function(sm) {
@@ -356,6 +358,15 @@ SHI002C.grid4 = new Ext.grid.GridPanel({
 //Event RemoveButton of grid
 ////////////////////////////////
 SHI002C.grid4.removeButton.on('click',function(e) {
+	var rowSelected = Ext.getCmp('idGrid').getSelectionModel().getSelections();
+	var selectedColumn2 = Ext.getCmp('idGrid').getSelectionModel().getSelections()[0].get('status');
+	if(selectedColumn2 == "Approved" || selectedColumn2 == "Submitted" || selectedColumn2 == "Refused"){
+		Ext.Msg.show({
+			   title:'Warning!!',
+			   msg: 'ไม่สามารถลบข้อมูลสถานะ'+" "+ selectedColumn2 + " " + "ได้",
+			   buttons: Ext.Msg.OK,
+			});
+	}else{
 	var param2 = {}; 
 	var rowSelected = Ext.getCmp('idGrid').getSelectionModel().getSelections();
 		param2.noDoc = ""; 
@@ -382,6 +393,7 @@ SHI002C.grid4.removeButton.on('click',function(e) {
 			});
 		}
 	});
+	}
 });
   
 ////////////////////////////

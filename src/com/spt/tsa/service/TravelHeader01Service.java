@@ -30,6 +30,7 @@ public interface TravelHeader01Service {
 	 public List<TravelHeader> findAllCase(String yearAndMount,String status);
 	 public List<TravelHeader> findNameDeptSelect(Employee employee,String param);
 	 public List<TravelHeader> findTravelHeaderWhereIdtravelDetail(String travelDetail);
+	 public List<TravelHeader> findTravelHeaderOrderbyModifyDate();
 
 	
 	 

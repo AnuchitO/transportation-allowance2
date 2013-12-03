@@ -274,9 +274,9 @@ SHI002C.gridStore = new Ext.data.JsonStore({
 });
 
 
-/////////////////////////////////
+//////////////////////////////////
 //Event OnClick number Document
-////////////////////////////////
+/////////////////////////////////
 SHI002C.numberDocumentOnClick = function(grid, rowIndex, cellIndex, e){
 							    var store = grid.getStore().getAt(rowIndex);
 							    var columnName = grid.getColumnModel().getDataIndex(cellIndex);

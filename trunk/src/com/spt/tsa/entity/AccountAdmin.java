@@ -26,8 +26,7 @@ public class AccountAdmin implements Serializable {
 	@Id
 	@Column (name = "ACCAD_ACID")
 	private String code;
-	
-	
+		
 	@Formula(value="to_number(ACCAD_ACID)")
 	private Integer codeLong;
 	

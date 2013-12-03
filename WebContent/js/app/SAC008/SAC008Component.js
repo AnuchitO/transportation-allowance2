@@ -115,7 +115,7 @@ SAC008C.gridSaveBtn = new Ext.Toolbar.Button(
 								accountName == "undefined" || accountName == null || accountName == "" ||
 								(!(debit || credit))){
 								/////////////////// operation ////////
-									Ext.Msg.alert('สถานะ', 'กรอกข้อมูลไม่ถูกต้อง ');
+									Ext.Msg.alert('สถานะ', 'กรอกข้อมูลไม่ครบ');
 									sendStatus = false;// set No request
 									break;
 								
@@ -233,7 +233,7 @@ SAC008C.gridColumns = [
 			width : 50,
 			 renderer: function (value, meta, record) {
 				 	var idNameDebit = "checkDebit"+record.data.no;
-	                return '<center><input type="checkbox" id="'+idNameDebit+'" name="checkbox1"' + (value ? 'checked' : '') + ' onclick=" "';
+	                return '<center><input type="checkbox" id="'+idNameDebit+'" name="checkbox1"' + (value ? 'checked' : '') + ' onclick=" "></center>';
 	            },
 		
 		},{
@@ -241,13 +241,9 @@ SAC008C.gridColumns = [
 			dataIndex : 'credit',
 			align : 'center',
 			width : 50,
-//		    formatter: 'checkbox',
-//		    editoptions: {value: '1:0'},
-//            formatoptions: {disabled: false},
 			renderer: function (value, meta, record) {
-//                return '<center><input type="checkbox" name="checkbox2"' + (value ? 'checked' : '') + ' onclick="var s = Ext.getCmp(\'button-grid\').store; s.getAt(s.findExact(\'id\',\'' + record.get('id') + '\')).set(\'isFull\', this.value)"'//old
 				var idNameCredit = "checkCredit"+record.data.no;
-				return '<center><input type="checkbox" id="'+idNameCredit+'" name="checkbox2"' + (value ? 'checked' : '') + ' onclick=" "';
+				return '<center><input type="checkbox" id="'+idNameCredit+'" name="checkbox2"' + (value ? 'checked' : '') + ' onclick=" "></center>';
             }
 		}
 ];
@@ -369,16 +365,20 @@ SAC008C.grid = new Ext.ss.grid.EditorGridPanel({
 	clicksToEdit : 1,
 	tbar : [ SAC008C.gridAddBtn, '-', SAC008C.gridRemoveBtn,'-',SAC008C.gridSaveBtn ],
 	listeners : {
-	 	'cellclick' : SAC008C.validateCheckbox,
-//	 	'keypress' : function(e) {
-////            if (e.getKey()) {
-//                alert("AAAAAA Keypress");
-//            }
-       		
+	 	'cellclick' : SAC008C.validateCheckbox,     		
 	}
 });
 SAC008C.grid.on('keypress', function(e){
-	alert(e.getKey()+"  dfsdASASASAASASf");
-	 alert("AAAAAA Keypress");
-	});
+	if(e.getKey()==9){
+		SAC008C.grid.getSelectionModel().selectAll();
+		var sm = SAC008C.grid.getSelectionModel().getSelections();
+		Ext.getCmp('idGridSAC008C').addRow();
+		var i = 1 + sm.length - 1;
+		SAC008C.grid.store.getAt(i).set('no',i + 1);
+		SAC008C.grid.store.getAt(i).set('code','auto');
+		for (var j = 0; j <= sm.length - 1; j++) {
+			SAC008C.grid.getSelectionModel().deselectRow(j);
+		}
+	}
+});
 

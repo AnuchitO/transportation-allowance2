@@ -37,7 +37,6 @@ public class ParameterTableDaoImpl extends HibernateDaoSupport  implements Param
 	}
 
 	public List<ParameterTable>  findRow(String code, String entry) {
-		//not work
 		DetachedCriteria criteria =  DetachedCriteria.forClass(ParameterTable.class).add(
 		        Restrictions.and(
 		                Restrictions.eq("code", code),

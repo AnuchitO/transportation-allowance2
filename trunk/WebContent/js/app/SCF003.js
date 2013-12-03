@@ -1693,16 +1693,23 @@ Ext
 					});
 			
 			Ext.get('back').on('click',function(e) {
-						Ext.MessageBox.confirm('Confirmation','คุณต้องการกลับไปหน้าหลัก',confirmFunction);
-						function confirmFunction(btn) {
-							if (btn == 'yes') {
-								
+//						Ext.MessageBox.confirm('ยืนยันการทำรายการ','คุณต้องการกลับไปหน้าหลัก',confirmFunction);
+//						function confirmFunction(btn) {
+//							if (btn == 'yes') {
+				Ext.MessageBox.show({
+					title : 'ยืนยันการทำรายการ',
+					msg : '<center>คุณต้องการกลับไปหน้าหลัก</center>',
+					width : 200,
+					buttons : Ext.MessageBox.OKCANCEL,
+					animEl : 'submit',
+					fn :function(btn) {
+						if (btn == 'ok') {								
 								var urlPreviwPage = "/TransportationAllowance/SHI002.html";
 								window.location.assign(urlPreviwPage);
-
 						}
-						}
-					});
+					}
+				});
+			});
 			
 			SCF003.No.setValue(SCF01Domain.no);
 			var statusPass = SCF01Domain.status;

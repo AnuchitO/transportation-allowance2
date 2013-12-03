@@ -57,16 +57,24 @@ Ext.onReady(function() {SHI002.resumeForm = new Ext.form.FormPanel({
 			confirmMessage += "ที่สถานะเป็น "+statusLastValue+" ทั้งหมด" ;
 		}else if(yearQuery != "" && statusQuery == ""){
 			statusQuery = "%";
-			confirmMessage += "ทั้งหมด ของปี "+yearQuery;
+			confirmMessage += "ทั้งหมด<br/>ของปี "+yearQuery;
 		}else{
 			yearQuery = "%";
 			statusQuery = "%";
 			confirmMessage = "ค้นหาเอกสารทั้งหมด";
 		}
 				
-		Ext.MessageBox.confirm('ค้นหาข้อมูล',confirmMessage,confirmFunction);
-		function confirmFunction(btn) {
-			if (btn == 'yes') {
+//		Ext.MessageBox.confirm('ค้นหาข้อมูล',confirmMessage,confirmFunction);
+//		function confirmFunction(btn) {
+//			if (btn == 'yes') {
+		Ext.MessageBox.show({
+			title : 'ค้นหาข้อมูล',
+			msg : '<center>'+confirmMessage+' </center>',
+			width : 200,
+			buttons : Ext.MessageBox.OKCANCEL,
+			animEl : 'submit',
+			fn :function(btn) {
+				if (btn == 'ok') {
 				SHI002C.grid4.store.reload( //  reload grid store when click search button
 		                {   
 		                   params:{method : 'gridStore',
@@ -76,10 +84,11 @@ Ext.onReady(function() {SHI002.resumeForm = new Ext.form.FormPanel({
 		                  });
 //				Ext.Msg.alert('Information', 'ทำรายการสำเร็จ');
 			}}		
+		});
 	});
 	
 	Ext.get('btnCreateBin').on('click',function(e) {
-		Ext.MessageBox.confirm('Confirmation','คุณต้องการ \"สร้างใบเบิกเงิน\"',confirmFunction);
+		Ext.MessageBox.confirm('ยืนยันการทำรายการ','คุณต้องการ \"สร้างใบเบิกเงิน\"',confirmFunction);
 		function confirmFunction(btn) {
 			if (btn == 'yes') {
 				var empId = Ext.getCmp('employeeId').getValue();

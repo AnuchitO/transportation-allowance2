@@ -282,16 +282,27 @@ SHI002C.numberDocumentOnClick = function(grid, rowIndex, cellIndex, e){
 							    var columnName = grid.getColumnModel().getDataIndex(cellIndex);
 							    var cellValue = store.get(columnName);
 							    if(columnName == 'docNo'){
-							    	Ext.MessageBox.confirm('ยืนยันการทำรายการ', 'ดูข้อมูลของเอกสาร '+cellValue, function(btn) {
-							    		if (btn == 'yes') {
-									    	var empId = Ext.getCmp('employeeId').getValue();
-									    	var noDoc = cellValue;
-									    	var status = store.get('status');
-
-											var urlPreviwPage = "/TransportationAllowance/SCF003.html?empId="+empId+"&noDoc="+noDoc+"&status="+status;
-											window.location.assign(urlPreviwPage);	    	
-							    		}
-							    	});
+							    	if(cellValue != '-'){
+//								    	Ext.MessageBox.confirm('ยืนยันการทำรายการ', 'ดูข้อมูลของเอกสาร '+cellValue, function(btn) {
+//								    		if (btn == 'yes') {
+										Ext.MessageBox.show({
+											title : 'ยืนยันการทำรายการ',
+											msg : '<center>ดูข้อมูลของเอกสาร '+cellValue+' </center>',
+											width : 200,
+											buttons : Ext.MessageBox.OKCANCEL,
+											animEl : 'submit',
+											fn :function(btn) {
+												if (btn == 'ok') {
+											    	var empId = Ext.getCmp('employeeId').getValue();
+											    	var noDoc = cellValue;
+											    	var status = store.get('status');
+		
+													var urlPreviwPage = "/TransportationAllowance/SCF003.html?empId="+empId+"&noDoc="+noDoc+"&status="+status;
+													window.location.assign(urlPreviwPage);	    
+												}
+								    		}
+								    	});
+							    	}
 							    }else{
 							    	
 							    }
@@ -425,4 +436,3 @@ SHI002C.fieldSetBody = new Ext.form.FieldSet({
 				items : SHI002C.grid4 
 			}]
 });
-

@@ -493,13 +493,22 @@ Ext.get('seiManageReport').on('click',function(e) {
 });
 
 Ext.get('btnLogout').on('click',function(e) {
-	Ext.MessageBox.confirm('ยืนยันการทำรายการ','คุณต้องการ \"ออกจากระบบ\"',confirmFunction);
-	function confirmFunction(btn) {
-		if (btn == 'yes') {
-			var urlPreviwPage = "/TransportationAllowance/index.html";
-			window.location.assign(urlPreviwPage);
+//	Ext.MessageBox.confirm('ยืนยันการทำรายการ','คุณต้องการ \"ออกจากระบบ\"',confirmFunction);
+//	function confirmFunction(btn) {
+//		if (btn == 'yes') {
+	Ext.MessageBox.show({
+		title : 'ยืนยันการทำรายการ',
+		msg : '<center>คุณต้องการ \"ออกจากระบบ\"</center>',
+		width : 200,
+		buttons : Ext.MessageBox.OKCANCEL,
+		animEl : 'submit',
+		fn :function(btn) {
+			if (btn == 'ok') {
+				var urlPreviwPage = "/TransportationAllowance/index.html";
+				window.location.assign(urlPreviwPage);
+			}
 		}
-	}
+	});
 });	
 	
 

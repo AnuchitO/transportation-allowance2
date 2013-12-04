@@ -63,7 +63,19 @@ SAC008C.gridRemoveBtn = new Ext.Toolbar.Button({
 						params : param,
 						success : function(response, opts) {
 							if (param != null) {
-								Ext.Msg.alert('สถานะ', 'ลบข้อมูล เรียบร้อยแล้ว');
+//								Ext.Msg.alert('สถานะ', 'ลบข้อมูล เรียบร้อยแล้ว');
+								Ext.MessageBox.show({
+									title : 'สถานะ',
+									msg : '<center>ลบข้อมูล เรียบร้อยแล้ว</center>',
+									width : 200,
+									buttons : Ext.MessageBox.OK,
+									animEl : 'submit',
+									fn :function(btn) {
+											if (btn == 'ok') {
+												
+											}
+										}
+									});								
 							} else {
 								Ext.Msg.alert('สถานะ', 'Error');
 							}

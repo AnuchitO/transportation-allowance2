@@ -57,13 +57,22 @@ Ext.onReady(function() {SAC008.resumeForm = new Ext.form.FormPanel({
 //Event Function
 ////////////////////////////////
 Ext.get('back').on('click',function(e) {
-	Ext.MessageBox.confirm('Confirmation','คุณต้องการกลับไปหน้าหลัก',confirmFunction);
-	function confirmFunction(btn) {
-		if (btn == 'yes') {								
-			var urlPreviwPage = "/TransportationAllowance/SEI005.html";
-			window.location.assign(urlPreviwPage);
+//	Ext.MessageBox.confirm('Confirmation','คุณต้องการกลับไปหน้าหลัก',confirmFunction);
+//	function confirmFunction(btn) {
+//		if (btn == 'yes') {
+	Ext.MessageBox.show({
+		title : 'ยืนยันการทำรายการ',
+		msg : '<center>คุณต้องการกลับไปหน้าหลัก</center>',
+		width : 200,
+		buttons : Ext.MessageBox.OKCANCEL,
+		animEl : 'submit',
+		fn :function(btn) {
+			if (btn == 'ok') {
+				var urlPreviwPage = "/TransportationAllowance/SEI005.html";
+				window.location.assign(urlPreviwPage);
+			}
 		}
-	}
+	});
 });
 
 });

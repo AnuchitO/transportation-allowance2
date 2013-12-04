@@ -165,7 +165,8 @@ SCP007C.scpBranch = new Ext.form.TextField({
 SCP007C.scpNumberCheck = new Ext.form.TextField({
 	id : 'scpNumberCheck',
 	fieldLabel : "เลขที่ใบเช็ค",
-	width : 200
+	width : 200,
+	maxLength: 9
 
 });
 
@@ -281,10 +282,13 @@ SCP007C.gridRemoveBtn = new Ext.Toolbar.Button({
 	iconCls : 'remove',
 	disabled : false,
 	handler : function() {
+		var scpparamRemove = {};
 		var rowSelected = Ext.getCmp('scpgridEducationInfomation')
 				.getSelectionModel().getSelections();
+		scpparamRemove.scppackRemove = ""; 
 		if (!Ext.isEmpty(rowSelected)) {
 			Ext.MessageBox.confirm('Confirm', 'คุณต้องการจะลบข้อมูลนี้ ?', function(btn) {
+				scpparamRemove.scpForRemoveNo = SCP007C.scpNumber.getValue(); 
 				if (btn == 'yes') {
 					
 					SCP007C.createGrid.getSelectionModel().selectAll();
@@ -293,12 +297,28 @@ SCP007C.gridRemoveBtn = new Ext.Toolbar.Button({
 		
 					var lastIndexfirst = smfirst.length - 1;
 					var getValueLastIndexfirst = SCP007C.createGrid.getStore().getAt(lastIndexfirst).data.scpNo;
-					for ( var i in rowSelected) {
-
-						Ext.getCmp('scpgridEducationInfomation').store
-								.remove(rowSelected[i]);
-
+					
+					for(var i=0;i<rowSelected.length;i++) {
+						scpparamRemove.scppackRemove += rowSelected[i].data.scpNo+"!"; 
+						Ext.getCmp('scpgridEducationInfomation').store.remove(rowSelected[i]);
 					}
+					
+					scpparamRemove.method = "scpRemove";
+					Ext.Ajax.request({
+						url : '/TransportationAllowance/SVD006.html',
+						params : scpparamRemove,
+						success : function(response, opts) {
+							if (scpparamRemove != null) {
+								Ext.Msg.alert('Information', 'ลบข้อมูล เรียบร้อยแล้ว');
+							} else {
+								Ext.Msg.alert('Information', 'Error');
+							}
+						},
+						failure : function(response, opts) {
+							Ext.Msg.alert('ERROR', 'Error.');
+						}
+					});
+					
 					SCP007C.createGrid.getSelectionModel().selectAll();
 
 					var sm = SCP007C.createGrid.getSelectionModel().getSelections();
@@ -367,6 +387,7 @@ function scpSaveOrUpdate() {
 	scpParam.scpNoDoc = Ext.getCmp('noDoc').getValue();
 	scpParam.scpDate = Ext.getCmp('scpDate').getValue();
 	scpParam.scpNumber = Ext.getCmp('scpNumber').getValue();
+	scpParam.scpNumberCheck = Ext.getCmp('scpNumberCheck').getValue();
 	scpParam.scpLabel3 = Ext.getCmp('scpLabel3').text;
 	scpParam.scpDateCreation = Ext.getCmp('scpDateCreation').getValue();
 	scpParam.scfTatolDebit = Ext.getCmp('scfTatolDebit').value;
@@ -709,16 +730,16 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 ];
 
 SCP007C.gridStrore = new Ext.data.JsonStore({
-	// baseParams : {
-	// method : 'gridData'
-	// },
-	// url : '/TransportationAllowance/SCF003.html',
-	// method : 'POST',
+	 baseParams : {
+	 method : 'scpgridData'
+	 },
+	 url : '/TransportationAllowance/SVD006.html',
+	 method : 'POST',
 	pageSize : 10,
 	storeId : 'gridStore',
 	root : 'records',
 	idProperty : 'code',
-	// autoLoad : true,
+	 autoLoad : true,
 
 	fields : [ {
 		name : 'scpNo'

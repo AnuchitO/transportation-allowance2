@@ -5,6 +5,7 @@ import com.spt.tsa.entity.*;
 
 public interface AccountAdmin01Service {
 	public List<AccountAdmin> findAccountAdmin();
+	public AccountAdmin findAccountAdminWhereId(String domain);
 
 	
 	//////////////////////
@@ -15,4 +16,6 @@ public interface AccountAdmin01Service {
 	public void saveOrUpdate(AccountAdmin accountAdmin);
 	public List<AccountAdmin> queryOrderById();
 	////// End Nong //////
+	
+	
 }

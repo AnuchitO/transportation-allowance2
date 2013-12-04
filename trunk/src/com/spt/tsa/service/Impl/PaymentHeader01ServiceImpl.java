@@ -84,6 +84,7 @@ public class PaymentHeader01ServiceImpl implements PaymentHeader01Service{
 		paymentHeader.setRemark("No");
 		paymentHeader.setUserCreation("testUserCreate");
 		paymentHeader.setUserUpdate("testUsetUpdate");
+		paymentHeader.setNumcheck(domain.getScpNumberCheck());
 		//******************** convert date Creation ****************************//
 		String dateCreate = domain.getScpDateCreation();
     	String [] datetCreate = date.split("-");

@@ -220,6 +220,7 @@ SEI005.seiGridColumns = [
 	dataIndex : 'seiTotalPayment',
 	align : 'center',
 	width : 89.44,
+	renderer:  Ext.util.Format.numberRenderer('฿0,000.00'),
 
 }, {
 	header : 'หมายเหตุ',

@@ -57,6 +57,10 @@ import com.spt.tsa.service.TravelHeader01Service;
 
 
 
+
+
+
+
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -132,6 +136,7 @@ public class SPS010ReportController {
 		List<TravelHeader> dateForStartDate = this.travelHeader01Service.findTravelHeaderOrderbyModifyDate();
 		String status= "004";
 		String empId="";
+		String dateToPrintPreview="";
 		try{
 		/**************************** set empId for Query ****************************************/
 		if(sessionSpsEmpId.equals("%") && sessionSpsEmpName.equals("%")){
@@ -160,7 +165,8 @@ public class SPS010ReportController {
 		/**************************** convert Date for query *************************************/
 		if(sessionSpsStartDate.equals("%")){
 			String[] splitdate = dateForStartDate.get(0).getModifyDate().toString().split("-");
-			String date = splitdate[2].substring(0, 2)+"/"+splitdate[1]+"/"+splitdate[0];
+			String date = splitdate[2].substring(0, 2) +"/"+splitdate[1]+"/"+splitdate[0];
+			
 			sessionSpsStartDate = date;
 		}
 		else{
@@ -170,11 +176,32 @@ public class SPS010ReportController {
 		}
 		String startDateForQuery=sessionSpsStartDate;
 		if(sessionSpsEndDate.equals("%")){
-			sessionSpsEndDate= sf.format(new Date());
+			String [] splitDate = sf.format(new Date()).toString().split("/");
+			Integer check = Integer.parseInt(splitDate[0].substring(0, 2))+1;
+			String dateDay ="";
+			if(check.toString().length() == 1){
+				dateDay = "0"+check.toString();
+			}
+			else{
+				dateDay = check.toString();
+			}
+		String date = dateDay+"/"+splitDate[1]+"/"+splitDate[2];
+		dateToPrintPreview = splitDate[0].substring(0, 2)+"/"+splitDate[1]+"/"+splitDate[2];
+			sessionSpsEndDate= date;
 		}
 		else{
 			String[] splitDate = sessionSpsEndDate.split("-");
-			String date = splitDate[2].substring(0, 2)+"/"+splitDate[1]+"/"+splitDate[0];
+			Integer check = Integer.parseInt(splitDate[2].substring(0, 2))+1;
+			String dateDay ="";
+			if(check.toString().length() == 1){
+				dateDay = "0"+check.toString();
+			}
+			else{
+				dateDay = check.toString();
+			}
+			String date = dateDay+"/"+splitDate[1]+"/"+splitDate[0];
+			dateToPrintPreview = splitDate[2].substring(0, 2)+"/"+splitDate[1]+"/"+splitDate[0];
+			
 			sessionSpsEndDate = date;
 		}
 		String endDateForQuery=sessionSpsEndDate;
@@ -223,7 +250,7 @@ public class SPS010ReportController {
 					item1.setCustomer(this.customer01Service.findCustomerWhereId(sessionSpsComboboxCustomerSession).get(0).getName());
 				}
 				
-				if(startDateForQuery.equals(endDateForQuery)){
+				if(startDateForQuery.equals(dateToPrintPreview)){
 					Date date;
 					date = sf.parse(startDateForQuery);
 					String dateformat = sfThai.format(date);
@@ -232,8 +259,7 @@ public class SPS010ReportController {
 					Date startdate;
 					startdate = sf.parse(startDateForQuery);
 					String startdateformat = sfThai.format(startdate);
-					Date enddate;
-					enddate = sf.parse(endDateForQuery);
+					Date enddate = sf.parse(dateToPrintPreview);
 					String enddateformat = sfThai.format(enddate);
 				item1.setMonth("ตั้งแต่ "+startdateformat + " "+" "+"ถึง "+enddateformat);
 				}
@@ -275,7 +301,7 @@ public class SPS010ReportController {
 					item1.setCustomer(this.customer01Service.findCustomerWhereId(sessionSpsComboboxCustomerSession).get(0).getName());
 				}
 				
-				if(startDateForQuery.equals(endDateForQuery)){
+				if(startDateForQuery.equals(dateToPrintPreview)){
 					Date date;
 					date = sf.parse(startDateForQuery);
 					String dateformat = sfThai.format(date);
@@ -284,9 +310,10 @@ public class SPS010ReportController {
 					Date startdate;
 					startdate = sf.parse(startDateForQuery);
 					String startdateformat = sfThai.format(startdate);
-					Date enddate;
-					enddate = sf.parse(endDateForQuery);
+					
+					Date enddate = sf.parse(dateToPrintPreview);
 					String enddateformat = sfThai.format(enddate);
+				
 				item1.setMonth("ตั้งแต่ "+startdateformat + " "+" "+"ถึง "+enddateformat);
 				}
 				item1.setTotalMoney(mapAmount.get(empIdKey).toString());

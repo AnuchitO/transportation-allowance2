@@ -32,6 +32,7 @@ import org.springframework.stereotype.Repository;
 
 
 
+
 import com.spt.tsa.dao.AccountAdmin01Dao;
 import com.spt.tsa.entity.*;
 
@@ -72,5 +73,9 @@ public class AccountAdmin01DaoImpl extends HibernateDaoSupport implements Accoun
 		return results;		
 		
 	}
+	
+	public AccountAdmin findAccountAdminWhereId(String domain){
+		   return this.getHibernateTemplate().get(AccountAdmin.class,domain);
+	   }
    
 }

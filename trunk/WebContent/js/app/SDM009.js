@@ -77,37 +77,34 @@ SDM009.sdmGridStrore = new Ext.data.JsonStore({
 
 });
 
-//////////////////////////////////////////////////////////////////////////
+ function sdmAddRecord() {
+	SDM009.sdmCreateGrid.getSelectionModel().selectAll();
+
+	var sm = SDM009.sdmCreateGrid.getSelectionModel().getSelections();
+
+	Ext.getCmp('sdmCreateGrid').addRow();
+
+	var i = 1 + sm.length - 1;
+	var uu = SDM009.sdmCreateGrid.getStore().getAt(i).data.sdmNo;
+//	Ext.getCmp('editNo').setValue(i + 1);
+	SDM009.sdmCreateGrid.store.getAt(i).set('sdmNo',i + 1);
+	for (var j = 0; j <= sm.length - 1; j++) {
+
+		SDM009.sdmCreateGrid.getSelectionModel().deselectRow(j);
+	}
+}
 SDM009.gridAddBtn = new Ext.Toolbar.Button({
 	// text:RMP001AButton.Add,
+	id:'sdmAdd',
 	tooltip : 'Add a new item',
 	iconCls : 'add',
 	// disabled : false,
 	privilage : "educationAddBtn",
-	handler : function() {
-		SDM009.sdmCreateGrid.getSelectionModel().selectAll();
-
-		var sm = SDM009.sdmCreateGrid.getSelectionModel().getSelections();
-
-		Ext.getCmp('sdmCreateGrid').addRow();
-
-		var i = 1 + sm.length - 1;
-		var uu = SDM009.sdmCreateGrid.getStore().getAt(i).data.sdmNo;
-//		Ext.getCmp('editNo').setValue(i + 1);
-		SDM009.sdmCreateGrid.store.getAt(i).set('sdmNo',i + 1);
-		for (var j = 0; j <= sm.length - 1; j++) {
-
-			SDM009.sdmCreateGrid.getSelectionModel().deselectRow(j);
-		}
-	}
 	
-	//////////////////////////////////
+	
 
 });
-//function sdmRemovefunction(i){
-//	var remove = Ext.getCmp('sdmCreateGrid').getSelectionModel().getSelections()[i].get('sdmIdDept');
-//	alert(remove);
-//}
+
 SDM009.gridRemoveBtn = new Ext.Toolbar.Button({
 	
 	tooltip : 'Remove the selected item',
@@ -341,5 +338,18 @@ Ext.onReady(function() {
 		var urlPreviwPage = "/TransportationAllowance/SEI005.html";
 		window.location.assign(urlPreviwPage);	
 	});
+
+	Ext.get('sdmAdd').on('click',function(e) {
+		sdmAddRecord();
+	});
+	
+	SDM009.sdmCreateGrid.on('keypress', function(e) {
+	    if (e.keyCode === 9) {
+	    	sdmAddRecord();
+	       
+	    }
+	
+    });
+	
 	
 });

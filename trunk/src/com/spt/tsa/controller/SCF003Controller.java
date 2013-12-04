@@ -393,6 +393,10 @@ public class SCF003Controller {
 				numberDoc = new RunNumberDocument(lastNoDocList.get(0).getNo()).generatNumberDocumentV2();
 				logger.debug("!!!!!!!!!!!!!  {}",numberDoc);
 			}else{
+				SimpleDateFormat sf = new SimpleDateFormat("yy",new Locale("th", "th"));
+				
+				String dateformat = sf.format(new Date()).toString();
+				numberDoc = dateformat.concat("0001");
 			}
 			
 			if(numberDocument.equals("AUTO")){

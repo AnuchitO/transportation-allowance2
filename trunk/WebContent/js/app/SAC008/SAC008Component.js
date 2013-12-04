@@ -206,6 +206,7 @@ SAC008C.gridColumns = [
 			dataIndex : 'code',
 			align : 'center',
 			width : 50,
+			hidden : true
 		},{
 			header : 'รหัสบัญชี',
 			dataIndex : 'accountId',
@@ -361,7 +362,7 @@ SAC008C.grid = new Ext.ss.grid.EditorGridPanel({
 	sm : SAC008C.checkboxselection,
 	columns : SAC008C.gridColumns,
 	columnLines : true,
-	width:858,
+	width:808,
 	height:300,
 	lazyRender : true,
 	autoSelect : true,

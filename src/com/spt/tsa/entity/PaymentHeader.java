@@ -65,7 +65,19 @@ public class PaymentHeader implements Serializable {
 	@Column (name = "PAYH_PHMODIFYDATE")
 	private Date modifyDate;
 
+	@Column (name = "PAYM_NUMCHECK")
+	private String numcheck;
+
 	
+	
+	public String getNumcheck() {
+		return numcheck;
+	}
+
+	public void setNumcheck(String numcheck) {
+		this.numcheck = numcheck;
+	}
+
 	public String getNo() {
 		return no;
 	}

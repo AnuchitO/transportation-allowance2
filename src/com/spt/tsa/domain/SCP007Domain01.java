@@ -11,8 +11,43 @@ public class SCP007Domain01 extends SCF003Domain01 {
 	String scfTatolDebit;
 	String scfTatolCredit;
 	String scpPack;
+	String scpNumberCheck;
+	String scpnumberPaymentH;
+	
+	String scpForRemoveNo;
+	String scppackRemove;
 	
 	
+	
+	
+	
+	
+	
+	
+	public String getScpForRemoveNo() {
+		return scpForRemoveNo;
+	}
+	public void setScpForRemoveNo(String scpForRemoveNo) {
+		this.scpForRemoveNo = scpForRemoveNo;
+	}
+	public String getScppackRemove() {
+		return scppackRemove;
+	}
+	public void setScppackRemove(String scppackRemove) {
+		this.scppackRemove = scppackRemove;
+	}
+	public String getScpnumberPaymentH() {
+		return scpnumberPaymentH;
+	}
+	public void setScpnumberPaymentH(String scpnumberPaymentH) {
+		this.scpnumberPaymentH = scpnumberPaymentH;
+	}
+	public String getScpNumberCheck() {
+		return scpNumberCheck;
+	}
+	public void setScpNumberCheck(String scpNumberCheck) {
+		this.scpNumberCheck = scpNumberCheck;
+	}
 	
 	public String getScpPack() {
 		return scpPack;

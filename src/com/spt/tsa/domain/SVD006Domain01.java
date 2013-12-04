@@ -18,7 +18,40 @@ public class SVD006Domain01 extends SCF003Domain01 {
 	
 	String seiStatus;
 	
+	String scpNumberCheckForSet;
+	String scpnumberPaymentHForSet;
 	
+	String scpTotalCreditForSet;
+	String scpTotalDebitForSet;
+	
+	
+	
+	
+	
+	public String getScpTotalCreditForSet() {
+		return scpTotalCreditForSet;
+	}
+	public void setScpTotalCreditForSet(String scpTotalCreditForSet) {
+		this.scpTotalCreditForSet = scpTotalCreditForSet;
+	}
+	public String getScpTotalDebitForSet() {
+		return scpTotalDebitForSet;
+	}
+	public void setScpTotalDebitForSet(String scpTotalDebitForSet) {
+		this.scpTotalDebitForSet = scpTotalDebitForSet;
+	}
+	public String getScpNumberCheckForSet() {
+		return scpNumberCheckForSet;
+	}
+	public void setScpNumberCheckForSet(String scpNumberCheckForSet) {
+		this.scpNumberCheckForSet = scpNumberCheckForSet;
+	}
+	public String getScpnumberPaymentHForSet() {
+		return scpnumberPaymentHForSet;
+	}
+	public void setScpnumberPaymentHForSet(String scpnumberPaymentHForSet) {
+		this.scpnumberPaymentHForSet = scpnumberPaymentHForSet;
+	}
 	public String getScpLastName() {
 		return scpLastName;
 	}

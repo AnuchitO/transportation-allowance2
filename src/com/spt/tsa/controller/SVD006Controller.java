@@ -46,6 +46,7 @@ import com.spt.tsa.entity.Company;
 import com.spt.tsa.entity.Customer;
 import com.spt.tsa.entity.Employee;
 import com.spt.tsa.entity.ParameterTable;
+import com.spt.tsa.entity.PaymentDetail;
 import com.spt.tsa.entity.PaymentHeader;
 import com.spt.tsa.entity.TravelDetail;
 import com.spt.tsa.entity.TravelHeader;
@@ -53,6 +54,7 @@ import com.spt.tsa.service.AccountAdmin01Service;
 import com.spt.tsa.service.Customer01Service;
 import com.spt.tsa.service.Employee01Service;
 import com.spt.tsa.service.ParameterTable01Service;
+import com.spt.tsa.service.PaymentDetail01Service;
 import com.spt.tsa.service.PaymentHeader01Service;
 import com.spt.tsa.service.TravelDetail01Service;
 import com.spt.tsa.service.TravelHeader01Service;
@@ -74,7 +76,12 @@ public class SVD006Controller{
 	private List<ParameterTable> resultsBankType;
 	private List<TravelDetail> travelDetails;
 	private PaymentHeader01Service paymentHeader01Service;
+	private PaymentDetail01Service paymentDetail01Service;
 	
+	@Autowired
+	public void setPaymentDatail01Service(PaymentDetail01Service paymentDetail01Service){
+		this.paymentDetail01Service = paymentDetail01Service;
+	}
 	@Autowired
 	public void setPaymentHeader01Service(
 			PaymentHeader01Service paymentHeader01Service) {
@@ -168,6 +175,19 @@ public class SVD006Controller{
 					}
 					domain.setSeiStatus(status);
 					domain.setNo(travelHeader.getNo());
+					 List<TravelHeader> traH = this.travelHeader01Service.findByDocNoForSaveOrUpdate(travelHeader.getNo());
+					 List<PaymentHeader> payH = this.paymentHeader01Service.findByTravelHeader(traH.get(0));
+					 if(payH.size() !=0 ){
+						
+						 domain.setScpNumberCheckForSet(payH.get(0).getNumcheck());
+						 domain.setScpnumberPaymentHForSet(payH.get(0).getNo());
+						 domain.setScpTotalCreditForSet(payH.get(0).getTotalCredit().toString());
+						 domain.setScpTotalDebitForSet(payH.get(0).getTotalDebit().toString());
+						 
+					 }else{
+						 
+					 }
+					request.getSession().setAttribute("spcNoGridData", travelHeader.getNo());
 					domain.setDate(new SimpleDateFormat ("dd/MM/yyyy").format(travelHeader.getCreationate()));
 					domain.setName(travelHeader.getEmployee().getName());
 					domain.setScpLastName(travelHeader.getEmployee().getLastname());
@@ -346,6 +366,7 @@ public class SVD006Controller{
 				@RequestParam("scpNoDoc") String scpNoDoc,
 				@RequestParam("scpDate") String scpDate,
 				@RequestParam("scpNumber") String scpNumber,
+				@RequestParam("scpNumberCheck") String scpNumberCheck,
 				@RequestParam("scpLabel3") String scpLabel3,
 				@RequestParam("scpDateCreation") String scpDateCreation, 
 				@RequestParam("scfTatolDebit") String scfTatolDebit,
@@ -361,6 +382,7 @@ public class SVD006Controller{
 				domain.setScpNoDoc(scpNoDoc);
 				domain.setScpDate(scpDate);
 				domain.setScpNumber(scpNumber);
+				domain.setScpNumberCheck(scpNumberCheck);
 				domain.setScpLabel3(scpLabel3);
 				domain.setScpDateCreation(scpDateCreation);
 				domain.setScfTatolDebit(scfTatolDebit);
@@ -375,5 +397,93 @@ public class SVD006Controller{
 			}
 
 		}
+		
+		@RequestMapping(value = "/SVD006.html", method = RequestMethod.POST, params = "method=scpgridData")
+		public void findscpGrid(HttpServletRequest request,HttpServletResponse response) {
+			
+
+			
+			JSONArray jsonArray = new JSONArray();
+			GridData gridData = new GridData();
+			JSONObject jobect = null;
+		
+				 jobect = new JSONObject();
+			
+				 Object spcNoGridData = request.getSession().getAttribute("spcNoGridData");
+					
+					String spcNoGridDataString = (String)spcNoGridData;
+				 List<TravelHeader> traH = this.travelHeader01Service.findByDocNoForSaveOrUpdate(spcNoGridDataString);
+				 
+				 
+				 List<PaymentHeader> payH = this.paymentHeader01Service.findByTravelHeader(traH.get(0));
+				 	if(payH.isEmpty()){
+					 
+				 }else{
+				 List<PaymentDetail> payD = this.paymentDetail01Service.findByPaymentHeader(payH.get(0));
+				 
+				 for(PaymentDetail pd:payD){
+				 jobect.accumulate("scpNo",pd.getNo());
+				 jobect.accumulate("scpIdAccount", pd.getAccountAdmin().getAccountNo());
+				 
+				 jobect.accumulate("scpNameAccount", pd.getAccountAdmin().getName());
+				 jobect.accumulate("scpIdDept",pd.getDepartment());
+				 jobect.accumulate("scpDebit", pd.getDebit());
+				 jobect.accumulate("scpCredit", pd.getCredit());
+				
+				 jsonArray.add(jobect);
+				 jobect.clear();
+				 }
+				 }
+			gridData.setRecords(jsonArray);
+			gridData.setTotal(jsonArray.size());
+			gridData.setSuccess(true);
+			response.setContentType("application/json;charset=UTF-8"); 
+			gridData.responseJson(response);
+				 
+		}
+		
+		@RequestMapping(value = "/SVD006.html", method = RequestMethod.POST, params = "method=scpRemove")
+		public void sdmRemove(HttpServletRequest request, HttpServletResponse response,
+
+		@ModelAttribute SCP007Domain01 domain,
+				@RequestParam("scpForRemoveNo") String scpForRemoveNo,
+				@RequestParam("scppackRemove") String scppackRemove
+
+		) throws Exception {
+
+			try {
+
+				domain.setScpForRemoveNo(scpForRemoveNo);
+				domain.setScppackRemove(scppackRemove);
+
+				List<PaymentHeader> payH = this.paymentHeader01Service.findPaymentNo(domain.getScpForRemoveNo());
+				try {
+					
+					 String packRemove = domain.getScppackRemove();
+						String[] deptSplit = packRemove.split("!");
+						for(String dataNoInGrid :deptSplit){
+					 List<PaymentDetail> payD = this.paymentDetail01Service.findPaymentDetailForSaveOrUpdate(payH.get(0), dataNoInGrid);
+					 for(PaymentDetail pd : payD){ 
+						 this.paymentDetail01Service.deletePaymentDetail(pd);
+				 	 }
+							
+				
+				}
+				}catch (Exception e) {
+					logger.debug("{}",e);
+				}
+				
+						}
+					 
+
+				
+
+			 catch (Exception e) {
+				e.printStackTrace();
+				logger.error(e.getMessage());
+			}
+
+		}
+	
 
 }

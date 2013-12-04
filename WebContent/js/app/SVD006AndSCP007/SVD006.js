@@ -77,7 +77,8 @@ var statusCheckForCreatePayment = false;
 Ext.get('idBtnCreatePay').on('click',function(e) {	
 	if(statusCheckForCreatePayment){
 		Ext.getCmp('svdtabPanel').items.get(1).setDisabled(false);
-		SVD006C.tabPanel.setActiveTab(1);			
+		SVD006C.tabPanel.setActiveTab(1);
+		
 	}
 });
 Ext.getCmp('idBtnCreatePay').disable();
@@ -221,6 +222,10 @@ SCP007C.scpBranch.setValue(SVD006Domain.branch);
 SCP007C.scpTotalMoney.setValue(SVD006Domain.totalPayment);
 SCP007C.scpNumberCharactor.setValue(SVD006Domain.charactorNumber);
 SCP007C.scfTextArea.setValue(SVD006Domain.minMaxDate);
+SCP007C.scpNumber.setValue(SVD006Domain.scpnumberPaymentHForSet);
+SCP007C.scpNumberCheck.setValue(SVD006Domain.scpNumberCheckForSet);
+SCP007C.scfTatolDebit.setValue(SVD006Domain.scpTotalDebitForSet);
+SCP007C.scfTatolCredit.setValue(SVD006Domain.scpTotalCreditForSet);
 var totalPayment = Ext.getCmp('scpTotalMoney').getValue();
 
 var a = parseInt(totalPayment);

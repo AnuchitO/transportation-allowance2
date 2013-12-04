@@ -253,6 +253,13 @@ Ext.onReady(function() {
 //	deleteCookie("myCookie");
 	spsparamSession = {};
 Ext.get('spsButtonSearch').on('click',function(e) {
+	var checkStartDate = SPS010.spsStartDate.getValue();
+	var checkEndDate = SPS010.spsEndDate.getValue();
+	if(checkEndDate < checkStartDate){
+		Ext.Msg.alert('Information',
+		'กรุณาตวรจสอบความถูกต้องวันที่');
+	}else{
+	
 	if(Ext.isEmpty(SPS010.spsEmpId.getValue())){
 		spsparamSession.spsEmpId = "%";
 	}else{
@@ -301,7 +308,7 @@ Ext.get('spsButtonSearch').on('click',function(e) {
 			Ext.Msg.alert('ERROR', 'Error.');
 		}
 	});
-	
+	}
 //	SPS010.spsIframe.show();
 });
 	

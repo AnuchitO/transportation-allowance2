@@ -19,9 +19,13 @@ public class AccountAdmin01ServiceImpl implements AccountAdmin01Service{
    	 this.accountAdmin01Dao = accountAdmin01Dao;
     }
     
+    
     public List<AccountAdmin> findAccountAdmin() {
    	 // TODO Auto-generated method stub
    	 return accountAdmin01Dao.findAccountAdmin();
+    }
+    public AccountAdmin findAccountAdminWhereId(String domain){
+    	return this.accountAdmin01Dao.findAccountAdminWhereId(domain);
     }
 
     ////////////////////////

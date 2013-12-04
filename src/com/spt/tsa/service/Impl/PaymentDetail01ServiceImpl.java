@@ -24,5 +24,13 @@ public class PaymentDetail01ServiceImpl implements PaymentDetail01Service{
    	 // TODO Auto-generated method stub
    	 return paymentDetail01Dao.findPaymentDetail();
     }
-    
+    public List<PaymentDetail> findByPaymentHeader(PaymentHeader paymentHeader){
+    	return this.paymentDetail01Dao.findByPaymentHeader(paymentHeader);
+    }
+    public List<PaymentDetail> findPaymentDetailForSaveOrUpdate(PaymentHeader paymentHeader, String domain){
+    	return this.paymentDetail01Dao.findPaymentDetailForSaveOrUpdate(paymentHeader, domain);
+    }
+    public void deletePaymentDetail(PaymentDetail paymentDetail){
+    	this.paymentDetail01Dao.deletePaymentDetail(paymentDetail);
+    }
 }

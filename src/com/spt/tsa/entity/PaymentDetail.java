@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Formula;
+
 @Entity
 @Table( name = "PAYM_DETAIL" )
 public class PaymentDetail implements Serializable {
@@ -60,7 +62,19 @@ public class PaymentDetail implements Serializable {
 	@Column (name = "PAYD_NO")
 	private String no;
 	
+	@Formula(value="to_number(PAYD_NO)")
+	private Long sortNo;
 	
+	
+	
+	public Long getSortNo() {
+		return sortNo;
+	}
+
+	public void setSortNo(Long sortNo) {
+		this.sortNo = sortNo;
+	}
+
 	public PaymentHeader getPaymentHeader() {
 		return paymentHeader;
 	}

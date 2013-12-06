@@ -175,6 +175,7 @@ public class SVD006Controller{
 					}
 					domain.setSeiStatus(status);
 					domain.setNo(travelHeader.getNo());
+					domain.setReson(travelHeader.getRemark());
 					 List<TravelHeader> traH = this.travelHeader01Service.findByDocNoForSaveOrUpdate(travelHeader.getNo());
 					 List<PaymentHeader> payH = this.paymentHeader01Service.findByTravelHeader(traH.get(0));
 					 if(payH.size() !=0 ){
@@ -227,7 +228,7 @@ public class SVD006Controller{
 					domain.setHeaderCompTell(company.getTelephone());
 					domain.setHeaderCompFax(company.getFax());
 					//// End Nong Set Address Company ////
-					
+															
 					//********************************* Push parametor here ******************************************//
 					List<TravelDetail> re = this.travelHeader01Service.findDateMinMax(noDoc);
 					List<String> cus = this.travelHeader01Service.findNameCustomer(noDoc);

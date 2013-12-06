@@ -484,7 +484,7 @@ public class SCF003Controller {
 			} else if (domain.getStatus().equals("002")) {
 				travelHeader.setStatus("002");
 			}
-			travelHeader.setRemark("no");
+			travelHeader.setRemark(" ");
 			String totalPaymExpenses = domain.getTatolPaym().replace(",", "");
 			travelHeader.setTotalExpenses(new Double(totalPaymExpenses));
 			String totalPaymentMotorWay = domain.getTatolPaymA().replace(",", "");

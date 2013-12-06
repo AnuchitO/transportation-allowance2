@@ -72,16 +72,34 @@ SAC008C.gridRemoveBtn = new Ext.Toolbar.Button({
 									animEl : 'submit',
 									fn :function(btn) {
 											if (btn == 'ok') {
-												
+												/////  load Grid store  //////
+												SAC008C.grid.store.reload({ //  reload grid store when click save button				                  
+										                   params:{method : 'gridDataStore'}});
 											}
 										}
 									});								
 							} else {
-								Ext.Msg.alert('สถานะ', 'Error');
+//								Ext.Msg.alert('สถานะ', 'Error');
+								
 							}
 						},
 						failure : function(response, opts) {
-							Ext.Msg.alert('ERROR', 'Error.');
+//							Ext.Msg.alert('ERROR', 'Error.');
+							Ext.MessageBox.show({
+								title : 'สถานะ',
+								msg : '<center>ไม่สามารถ ลบข้อมูลได้<br/>เนื่องจากข้อมูลนี้อาจถูกใช้งานอยู่</center>',
+								width : 210,
+								buttons : Ext.MessageBox.OK,
+								animEl : 'submit',
+								fn :function(btn) {
+										if (btn == 'ok') {
+
+										}
+									}
+								});	
+							/////  load Grid store  //////
+							SAC008C.grid.store.reload({ //  reload grid store when click save button				                  
+					                   params:{method : 'gridDataStore'}});
 						}
 					});
 					

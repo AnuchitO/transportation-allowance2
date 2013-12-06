@@ -106,14 +106,14 @@ public class SAC008Controller {
 
 		for(String eachCodeId : accountIdSplit){
 		
-			try {
+//			try {
 				this.listAccountAdmins = this.accountAdmin01Service.findByCode(eachCodeId);//find accountAdmin by Account Id 
 				 for(AccountAdmin ad : this.listAccountAdmins){ //loop For delete AccountAdmin
 						 this.accountAdmin01Service.deleteByAccountCode(ad);// delete AccountAdmin
 				 }
-			} catch (Exception e) {
-				
-			}
+//			} catch (Exception e) {
+//				
+//			}
 		}
 	}
 	

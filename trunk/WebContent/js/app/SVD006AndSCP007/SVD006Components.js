@@ -1,4 +1,5 @@
 var SVD006C = {};
+
 SVD006C.style = {
 		"color":"black",
 	    "background-image":"none",
@@ -206,6 +207,7 @@ SVD006C.email.setValue(SVD006Domain.email);
 SVD006C.txtDepartment.setValue(SVD006Domain.antecedent);
 SVD006C.comboProvince.setValue(SVD006Domain.antercedentA);// /Province
 SVD006C.idCardEmp.setValue(SVD006Domain.idCard);
+
 
 
 SVD006C.gridColumns = [
@@ -486,6 +488,7 @@ SVD006C.bank.setValue(SVD006Domain.bank);
 SVD006C.branch.setValue(SVD006Domain.branch);
 SVD006C.accountNumber.setValue(SVD006Domain.accountNumber);
 SVD006C.typeAccount.setValue(SVD006Domain.typeAccount);
+
 
 SVD006C.totalPayExpresses = new Ext.ss.form.NumberField({
 	id : 'totalPayExpresses',
@@ -852,4 +855,5 @@ SVD006C.tabPanel = new Ext.TabPanel({
 	} ]
 });
 
-
+//SVD006C.Reson = SVD006Domain.reson; // Reson for use Set in SVD006.js 
+SVD006C.txtReson.setValue(SVD006Domain.reson);

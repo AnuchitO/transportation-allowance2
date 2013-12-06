@@ -1593,14 +1593,15 @@ Ext
 				} ],
 
 			});
-
+var statusClickPrintPreview = false;
+var statusClickSubmit = true;
 			Ext
 					.get('submit')
 					.on(
 							'click',
 
 							function(e) {
-								 
+								if(statusClickSubmit){
 								var name = Ext.getCmp('name').getValue();
 								var document = Ext.getCmp('document')
 										.getValue();
@@ -1616,7 +1617,7 @@ Ext
 														+ ' '
 														+ 'แน่ใจว่าจะส่งเอกสารนี้ไปยังผู้ดูแล  ?',
 												confirmFunction);
-
+								}
 								function confirmFunction(btn) {
 									if (btn == 'yes') {
 										if (Ext.isEmpty(forPay)) {
@@ -1664,7 +1665,9 @@ Ext
 											Ext.getDom('type2').disabled = true;
 
 											Ext.getCmp('submit').disable();
+											statusClickSubmit = false;
 											Ext.getCmp('print').enable();
+											statusClickPrintPreview = true;
 										}
 									}
 								}
@@ -1672,10 +1675,12 @@ Ext
 							);
 
 		Ext.get('print').on('click',function(e) {
+								if(statusClickPrintPreview){
 										var noDoc = Ext.getCmp('no').getValue();
 										var urlPreviwPage = "/TransportationAllowance/jasperReport.pdf?docNo="+noDoc;
 										var win = window.open(urlPreviwPage);
 										win.focus();
+								}
 							});
 			Ext
 			.get('type1')
@@ -1729,7 +1734,7 @@ Ext
 					Ext.getDom('type2').checked = true;
 					Ext.getDom('type1').checked = false;
 				}
-				if(statusPass == "Submitted" || statusPass == "Approved"){
+				if(	statusPass == "Cancel" || statusPass == "Submitted" || statusPass == "Approved" ){
 					Ext.getCmp('company').setReadOnly(true);
 					Ext.getCmp('company').setDisabled(true);
 					Ext.get('company').setStyle('background', '#FFFACD');
@@ -1761,7 +1766,15 @@ Ext
 					Ext.getDom('type2').disabled = true;
 					
 					Ext.getCmp('submit').disable();
-					Ext.getCmp('print').enable();
+					statusClickSubmit = false;
+					if(statusPass == "Cancel"){
+						statusClickPrintPreview = false;
+						Ext.getCmp('print').disable();
+					}else{
+						statusClickPrintPreview = true;
+						Ext.getCmp('print').enable();
+					}
+					
 				}
 				
 				SCF003.createGrid.store.reload( //  reload grid store when click search button

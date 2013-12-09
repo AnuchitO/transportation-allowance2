@@ -147,15 +147,14 @@ SAC008C.gridSaveBtn = new Ext.Toolbar.Button(
 								/////////////////// operation ////////
 									Ext.Msg.alert('สถานะ', 'กรอกข้อมูลไม่ครบ');
 									sendStatus = false;// set No request
-									break;
-								
-								}else{
-									paramConfirmSave.accountId +=   rowSelected[i].data.code+","+
-																	rowSelected[i].data.accountId+","+
-																	rowSelected[i].data.accountName+","+
-																	SAC008C.grid.getStore().getAt(i).data.debit+","+
-																	SAC008C.grid.getStore().getAt(i).data.credit+"!"; // concat accountId //
-								}							
+									break;								
+							}else{
+								paramConfirmSave.accountId +=   rowSelected[i].data.code+","+
+																rowSelected[i].data.accountId+","+
+																rowSelected[i].data.accountName+","+
+																SAC008C.grid.getStore().getAt(i).data.debit+","+
+																SAC008C.grid.getStore().getAt(i).data.credit+"!"; // concat accountId //
+							}							
 						}	
 						
 						if(sendStatus){// check for request

@@ -370,40 +370,53 @@ SHI002C.grid4 = new Ext.grid.GridPanel({
 ////////////////////////////////
 SHI002C.grid4.removeButton.on('click',function(e) {
 	var rowSelected = Ext.getCmp('idGrid').getSelectionModel().getSelections();
-	var selectedColumn2 = Ext.getCmp('idGrid').getSelectionModel().getSelections()[0].get('status');
-	if(selectedColumn2 == "Approved" || selectedColumn2 == "Submitted" || selectedColumn2 == "Refused"){
+	var statusCanRemove = false;
+	for (var i=0;i<rowSelected.length;i++) {
+		var statusCheck = rowSelected[i].data.status;
+		if(statusCheck == "Approved" || statusCheck == "Submitted" || statusCheck == "Refused"){
+			statusCanRemove = true;
+			break;
+		}
+	}
+	if(statusCanRemove){
 		Ext.Msg.show({
 			   title:'Warning!!',
-			   msg: 'ไม่สามารถลบข้อมูลสถานะ'+" "+ selectedColumn2 + " " + "ได้",
+			   msg: '<center>ไม่สามารถลบข้อมูลได้<br/>คุณจะลบได้ในสถานะที่เป็น Save หรือ Cancel เท่านั้น </center>',
 			   buttons: Ext.Msg.OK,
+			   width:200
 			});
 	}else{
-	var param2 = {}; 
-	var rowSelected = Ext.getCmp('idGrid').getSelectionModel().getSelections();
-		param2.noDoc = ""; 
-	Ext.MessageBox.confirm('ยืนยันการทำรายการ', ' \"ลบ\" ข้อมูลที่เลือก', function(btn) {
-		if (btn == 'yes') {
-			for(var i=0;i<rowSelected.length;i++) {
-				param2.noDoc += rowSelected[i].data.docNo+","; // concat No Document //
-				Ext.getCmp('idGrid').store.remove(rowSelected[i]);
-			}
-			param2.method = "gridRemoveData";
-			Ext.Ajax.request({
-				url : '/TransportationAllowance/SHI002.html',
-				params : param2,
-				success : function(response, opts) {
-					if (param2 != null) {
-						Ext.Msg.alert('Information', 'ลบข้อมูล เรียบร้อยแล้ว');
-					} else {
-						Ext.Msg.alert('Information', 'Error');
-					}
-				},
-				failure : function(response, opts) {
-					Ext.Msg.alert('ERROR', 'Error.');
+		var param2 = {}; 
+		var rowSelected = Ext.getCmp('idGrid').getSelectionModel().getSelections();
+			param2.noDoc = ""; 
+		Ext.MessageBox.confirm('ยืนยันการทำรายการ', ' \"ลบ\" ข้อมูลที่เลือก', function(btn) {
+			if (btn == 'yes') {
+				for(var i=0;i<rowSelected.length;i++) {
+					param2.noDoc += rowSelected[i].data.docNo+","; // concat No Document //
+					Ext.getCmp('idGrid').store.remove(rowSelected[i]);
 				}
-			});
-		}
-	});
+				param2.method = "gridRemoveData";
+				Ext.Ajax.request({
+					url : '/TransportationAllowance/SHI002.html',
+					params : param2,
+					success : function(response, opts) {
+						if (param2 != null) {
+							Ext.Msg.show({
+								   title:'สถานะ',
+								   msg: '<center>ลบข้อมูล เรียบร้อยแล้ว</center>',
+								   buttons: Ext.Msg.OK,
+								   width:200
+								});							
+						} else {
+							Ext.Msg.alert('สถานะ', 'Error');
+						}
+					},
+					failure : function(response, opts) {
+						Ext.Msg.alert('สถานะ', 'Error.');
+					}
+				});
+			}
+		});
 	}
 });
   

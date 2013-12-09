@@ -88,14 +88,20 @@ Ext.onReady(function() {SHI002.resumeForm = new Ext.form.FormPanel({
 	});
 	
 	Ext.get('btnCreateBin').on('click',function(e) {
-		Ext.MessageBox.confirm('ยืนยันการทำรายการ','คุณต้องการ \"สร้างใบเบิกเงิน\"',confirmFunction);
-		function confirmFunction(btn) {
-			if (btn == 'yes') {
-				var empId = Ext.getCmp('employeeId').getValue();
-				var urlPreviwPage = "/TransportationAllowance/SCF003.html?empId="+empId;
-				window.location.assign(urlPreviwPage);
-			}
-		}
+		Ext.MessageBox.show({
+			title : 'ยืนยันการทำรายการ',
+			msg : '<center>คุณต้องการ \"สร้างใบเบิกเงิน\"</center>',
+			width : 210,
+			buttons : Ext.MessageBox.OKCANCEL,
+			animEl : 'submit',
+			fn :function(btn) {
+					if (btn == 'ok') {
+						var empId = Ext.getCmp('employeeId').getValue();
+						var urlPreviwPage = "/TransportationAllowance/SCF003.html?empId="+empId;
+						window.location.assign(urlPreviwPage);
+					}
+				}
+			});	
 	});
 	
 	Ext.get('btnLogout').on('click',function(e) {

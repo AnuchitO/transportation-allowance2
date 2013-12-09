@@ -177,7 +177,7 @@ SEI005.seiGridColumns = [
 	align : 'center',
 	width : 89.44,
 	renderer: function (val, metadata, record) {
-		metadata.style = 'background-color: #FFFFCC !important;cursor: pointer;';
+		metadata.style = '!important;cursor: pointer;';
         return val;
     }
 

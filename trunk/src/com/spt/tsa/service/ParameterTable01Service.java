@@ -21,4 +21,5 @@ public interface ParameterTable01Service {
 	 
 	 public void removeFromParametorTable(SDM009Domain01 domain);
 	
+	
 }

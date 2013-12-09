@@ -28,7 +28,15 @@ SDM009.sdmGridColumns = [
 	align : 'center',
 	width : 260,
 
-}, {
+},{
+
+	header : 'id',
+	dataIndex : 'sdmId',
+	align : 'center',
+	width : 260,
+
+}
+    , {
 
 	header : 'รหัสแผนก / ฝ่าย',
 	dataIndex : 'sdmIdDept',
@@ -37,7 +45,8 @@ SDM009.sdmGridColumns = [
 	editor:new Ext.form.TextField({
 		id : 'editsdmDept',
 		
-	})
+	}),
+
 
 }, {
 	header : 'ชื่อแผนก / ฝ่าย',
@@ -67,6 +76,8 @@ SDM009.sdmGridStrore = new Ext.data.JsonStore({
 
 	fields : [ {
 		name : 'sdmNo'
+	},{
+		name : 'sdmId'
 	}, {
 		name : 'sdmIdDept'
 	}, {
@@ -196,12 +207,12 @@ function sdmSaveOrUpdate(){
 	var sm = SDM009.sdmCreateGrid.getSelectionModel().getSelections();
 	sdmparam.sdmpack = "";
 	for (var i = 0; i <= sm.length - 1; i++) {
-	
+		var sdmId = SDM009.sdmCreateGrid.getStore().getAt(i).data.sdmId;
 		var sdmIdDept = SDM009.sdmCreateGrid.getStore().getAt(i).data.sdmIdDept;
 		var sdmNameDept = SDM009.sdmCreateGrid.getStore().getAt(i).data.sdmNameDept;
 
 		SDM009.sdmCreateGrid.getSelectionModel().deselectRow(i);
-		sdmparam.sdmpack += sdmIdDept + "," + sdmNameDept + "!";
+		sdmparam.sdmpack += sdmId+ "," + sdmIdDept + "," + sdmNameDept + "!";
 	}
 	sdmparam.method = "sdmsave";
 	Ext.Ajax.request({
@@ -266,6 +277,7 @@ SDM009.sdmCreateGrid = new Ext.ss.grid.EditorGridPanel({
 	         SDM009.gridSaveBtn ],
 
 	clicksToEdit : 1,
+
 
 });
 // *****************************************************************************************//
@@ -350,6 +362,6 @@ Ext.onReady(function() {
 	    }
 	
     });
-	
+	SDM009.sdmCreateGrid.getColumnModel().setHidden(2, true);
 	
 });

@@ -391,19 +391,21 @@ SCF003.tatolPaymA.setValue(b);
 			}
 			SCF003.createGrid.getSelectionModel().deselectRow(i);
 			}
-			if(SCF003.createGrid.getSelectionModel().getSelections().length == 0){
-				
-			}
-			else{
-			convertString();
-			}
+//			if(SCF003.createGrid.getSelectionModel().getSelections().length == 0){
+//				
+//			}
+//			else{
+//				convertString();
+//			}
 					for (var j = 0; j <= sm.length - 1; j++) {
 
 						SCF003.createGrid.getSelectionModel().deselectRow(j);
 					}
 
 				}
+					
 				}
+				convertString();
 			});
 		} else {
 			Ext.Msg.alert('Warning', 'กรุณาเลือกข้อมูลที่จะลบ');
@@ -551,7 +553,7 @@ function sleep(milliseconds) {
 }
 var param2 = {};
 function saveOrUpdate() {
-
+	
 	param2.no = Ext.getCmp('no').getValue();
 	param2.date = Ext.getCmp('date').getValue();
 	param2.name = Ext.getCmp('name').getValue();
@@ -745,7 +747,11 @@ SCF003.gridSaveBtn = new Ext.Toolbar.Button(
 						if (Ext.isEmpty(forPay)) {
 							Ext.Msg.alert('Information',
 									'กรุณากรอกข้อมูลเพื่อชำระ');
-						} else{
+						}
+						else if(Ext.isEmpty(Ext.getCmp('editGridDate').getValue())){
+							Ext.Msg.alert('Information',
+							'กรุณากรอกข้อมูลการเดินทางในตาราง');
+						}else{
 						saveOrUpdate();
 						}
 					}
@@ -803,23 +809,23 @@ function changeNumberPrecisionPaymentTravel(){
 	var valueSet = 0;
 	for (var i = 0; i <= sm.length - 1; i++) {
 	var check = parseFloat(SCF003.createGrid.getStore().getAt(i).data.paymentTravel).toFixed(2).split(".");
-	if(check[1] < 25 ){
+	if(check[1] < 13 ){
 		check[1]= 0;
 		valueSet= check[0]+ "." + check[1];
 		SCF003.createGrid.store.getAt(i).set('paymentTravel', valueSet);
 	
 		}
-	else if(check[1] >= 25 && check[1] < 50){
+	else if(check[1] >= 13 && check[1] < 38){
 		check[1]= 25;
 		valueSet= check[0]+ "." + check[1];
 		SCF003.createGrid.store.getAt(i).set('paymentTravel', valueSet);
 		}
-	else if(check[1] >=50 && check[1] < 75 ){
+	else if(check[1] >=38 && check[1] < 63 ){
 		check[1]= 50;
 		valueSet= check[0]+ "." + check[1];
 		SCF003.createGrid.store.getAt(i).set('paymentTravel', valueSet);
 		}
-	else if(check[1] >=75 && check[1] < 100 ){
+	else if(check[1] >=63 && check[1] < 100 ){
 		check[1]= 75;
 		valueSet= check[0]+ "." + check[1];
 		SCF003.createGrid.store.getAt(i).set('paymentTravel', valueSet);
@@ -839,23 +845,23 @@ function changeNumberPrecisionPaymentD(){
 	var valueSet = 0;
 	for (var i = 0; i <= sm.length - 1; i++) {
 	var check = parseFloat(SCF003.createGrid.getStore().getAt(i).data.paymentD).toFixed(2).split(".");
-	if(check[1] < 25 ){
+	if(check[1] < 13 ){
 		check[1]= 0;
 		valueSet= check[0]+ "." + check[1];
 		SCF003.createGrid.store.getAt(i).set('paymentD', valueSet);
 	
 		}
-	else if(check[1] >= 25 && check[1] < 50){
+	else if(check[1] >= 13 && check[1] < 38){
 		check[1]= 25;
 		valueSet= check[0]+ "." + check[1];
 		SCF003.createGrid.store.getAt(i).set('paymentD', valueSet);
 		}
-	else if(check[1] >=50 && check[1] < 75 ){
+	else if(check[1] >=38 && check[1] < 63 ){
 		check[1]= 50;
 		valueSet= check[0]+ "." + check[1];
 		SCF003.createGrid.store.getAt(i).set('paymentD', valueSet);
 		}
-	else if(check[1] >=75 && check[1] < 100 ){
+	else if(check[1] >=63 && check[1] < 100 ){
 		check[1]= 75;
 		valueSet= check[0]+ "." + check[1];
 		SCF003.createGrid.store.getAt(i).set('paymentD', valueSet);
@@ -1623,7 +1629,11 @@ var statusClickSubmit = true;
 										if (Ext.isEmpty(forPay)) {
 											Ext.Msg.alert('Information',
 													'กรุณากรอกข้อมูลเพื่อชำระ');
-										}  else {
+										}
+										else if(Ext.isEmpty(Ext.getCmp('editGridDate').getValue())){
+											Ext.Msg.alert('Information',
+											'กรุณากรอกข้อมูลการเดินทางในตาราง');
+										}else {
 											param2.status = "002";
 											saveOrUpdate();
 											Ext.getCmp('company').setReadOnly(true);

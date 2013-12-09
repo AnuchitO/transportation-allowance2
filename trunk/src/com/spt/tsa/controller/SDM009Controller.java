@@ -81,6 +81,7 @@ public class SDM009Controller {
 		
 				 jobect = new JSONObject();
 				 jobect.accumulate("sdmNo",i);
+				 jobect.accumulate("sdmId",c.getId());
 				 jobect.accumulate("sdmIdDept",c.getEntry());
 				 jobect.accumulate("sdmNameDept",c.getDetail());
 				 jsonArray.add(jobect);

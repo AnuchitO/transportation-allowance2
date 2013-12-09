@@ -540,23 +540,23 @@ function changeNumberPrecisionscpDebit(){
 	var valueSet = 0;
 	for (var i = 0; i <= sm.length - 1; i++) {
 	var check = parseFloat(SCP007C.createGrid.getStore().getAt(i).data.scpDebit).toFixed(2).split(".");
-	if(check[1] < 25 ){
+	if(check[1] < 13 ){
 		check[1]= 0;
 		valueSet= check[0]+ "." + check[1];
 		SCP007C.createGrid.store.getAt(i).set('scpDebit', valueSet);
 	
 		}
-	else if(check[1] >= 25 && check[1] < 50){
+	else if(check[1] >= 13 && check[1] < 38){
 		check[1]= 25;
 		valueSet= check[0]+ "." + check[1];
 		SCP007C.createGrid.store.getAt(i).set('scpDebit', valueSet);
 		}
-	else if(check[1] >=50 && check[1] < 75 ){
+	else if(check[1] >=38 && check[1] < 63 ){
 		check[1]= 50;
 		valueSet= check[0]+ "." + check[1];
 		SCP007C.createGrid.store.getAt(i).set('scpDebit', valueSet);
 		}
-	else if(check[1] >=75 && check[1] < 100 ){
+	else if(check[1] >=63 && check[1] < 100 ){
 		check[1]= 75;
 		valueSet= check[0]+ "." + check[1];
 		SCP007C.createGrid.store.getAt(i).set('scpDebit', valueSet);
@@ -576,23 +576,23 @@ function changeNumberPrecisionscpCredit(){
 	var valueSet = 0;
 	for (var i = 0; i <= sm.length - 1; i++) {
 	var check = parseFloat(SCP007C.createGrid.getStore().getAt(i).data.scpCredit).toFixed(2).split(".");
-	if(check[1] < 25 ){
+	if(check[1] < 13 ){
 		check[1]= 0;
 		valueSet= check[0]+ "." + check[1];
 		SCP007C.createGrid.store.getAt(i).set('scpCredit', valueSet);
 	
 		}
-	else if(check[1] >= 25 && check[1] < 50){
+	else if(check[1] >= 13 && check[1] < 38){
 		check[1]= 25;
 		valueSet= check[0]+ "." + check[1];
 		SCP007C.createGrid.store.getAt(i).set('scpCredit', valueSet);
 		}
-	else if(check[1] >=50 && check[1] < 75 ){
+	else if(check[1] >=38 && check[1] < 63 ){
 		check[1]= 50;
 		valueSet= check[0]+ "." + check[1];
 		SCP007C.createGrid.store.getAt(i).set('scpCredit', valueSet);
 		}
-	else if(check[1] >=75 && check[1] < 100 ){
+	else if(check[1] >=63 && check[1] < 100 ){
 		check[1]= 75;
 		valueSet= check[0]+ "." + check[1];
 		SCP007C.createGrid.store.getAt(i).set('scpCredit', valueSet);

@@ -98,6 +98,12 @@ public class ParameterTableDaoImpl extends HibernateDaoSupport  implements Param
 								.add(Restrictions.eq("entry", entry));
 			return this.getHibernateTemplate().findByCriteria(criteria);
 		}
+	  
+	  public List<ParameterTable> findByParametorTableForSaveOrUpdateCheckForId(Integer id) {
+			 DetachedCriteria criteria =  DetachedCriteria.forClass(ParameterTable.class)
+										.add(Restrictions.eq("id", id));
+					return this.getHibernateTemplate().findByCriteria(criteria);
+				}
 	public void saveOrUpdateFromParameterTable(ParameterTable parameterTable){
     	this.getHibernateTemplate().saveOrUpdate(parameterTable);
     }

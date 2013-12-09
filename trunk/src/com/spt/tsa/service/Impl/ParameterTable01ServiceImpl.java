@@ -64,7 +64,12 @@ public class ParameterTable01ServiceImpl implements ParameterTable01Service {
 		String[] data = domain.getSdmpack().split("!");
 		for (String dataSplit : data) {
 			String[] dataRow = dataSplit.split(",");
-			List<ParameterTable> parametorDataOld = this.parameterTableDao.findByParametorTableForSaveOrUpdate(dataRow[0]);
+			
+			if(dataRow[0].equals("undefined")){
+				dataRow[0] = "0";
+			}
+			System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"+dataRow[0]);
+			List<ParameterTable> parametorDataOld = this.parameterTableDao.findByParametorTableForSaveOrUpdateCheckForId(Integer.valueOf(dataRow[0]));
 			if(parametorDataOld.size() != 0){
 				parameterTable = parametorDataOld.get(0);
 	    	}else{
@@ -72,8 +77,8 @@ public class ParameterTable01ServiceImpl implements ParameterTable01Service {
 	    		parameterTable.setId(100);
 	    	}
 			parameterTable.setCode("4");
-			parameterTable.setEntry(dataRow[0]);
-			parameterTable.setDetail(dataRow[1]);
+			parameterTable.setEntry(dataRow[1]);
+			parameterTable.setDetail(dataRow[2]);
 			this.parameterTableDao.saveOrUpdateFromParameterTable(parameterTable);
 			
 		}

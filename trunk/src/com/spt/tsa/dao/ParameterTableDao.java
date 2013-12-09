@@ -18,6 +18,7 @@ public interface ParameterTableDao {
 	public void removeFromParametorTable(ParameterTable parameterTable);
 	public List<ParameterTable> findDeptSelect(String domain);
 	public List<ParameterTable> findProvinceSelect(String domain);
+	 public List<ParameterTable> findByParametorTableForSaveOrUpdateCheckForId(Integer id);
 
 	
 

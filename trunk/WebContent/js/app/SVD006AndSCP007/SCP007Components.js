@@ -527,6 +527,60 @@ SCP007C.createCombobox = new Ext.form.ComboBox({
 			    }
 			  }	
 	});
+
+
+SCP007C.comboboxDeptStore = new Ext.data.JsonStore({
+	baseParams : {
+		method : 'scpDeptCombobox'
+	},
+	url : '/TransportationAllowance/SVD006.html',
+	method : 'POST',
+	storeId : 'bloodStore',
+	root : 'records',
+	idProperty : 'code',
+	autoLoad : true,
+	// fieldLabel : 'comboStrore',
+	fields : [ {
+		name : 'code'
+
+	}, {
+		name : 'description'
+	} ],
+	model : 'ForumThread',
+	remoteSort : true
+});
+
+
+
+
+
+SCP007C.createComboboxdept = new Ext.form.ComboBox({
+	id : 'createComboboxdept',
+	fieldLabel : 'deptcombobox',
+	mode : 'local1',
+	width:70,
+
+
+	store : SCP007C.comboboxDeptStore,
+	valueField : 'code',
+	displayField : 'code',
+	lazyRender : true,
+	autoSelect : true,
+	criterionField : true,
+	selectOnFocus : true,
+	typeAhead : true,
+	forceSelection : true,
+	triggerAction : 'all',
+	emptyText : 'Select ...',
+	
+	
+
+//	displayField : 'description'
+
+	
+	});
+
+
 SCP007C.checkboxselection = new Ext.grid.CheckboxSelectionModel({
 	singleSelect : false,
 
@@ -632,9 +686,7 @@ SCP007C.gridColumns = [ SCP007C.checkboxselection, {
 	dataIndex : 'scpIdDept',
 	align : 'center',
 	id : 'region',
-	editor : new Ext.form.TextField({
-		id : 'scpEditIdDept',
-	}),
+	editor : SCP007C.createComboboxdept,
 	width : 100,
 
 }, {

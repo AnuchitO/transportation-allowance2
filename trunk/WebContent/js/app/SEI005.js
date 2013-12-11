@@ -168,8 +168,10 @@ SEI005.seiGridColumns = [
 	header : 'ลำดับ',
 	dataIndex : 'seiNo',
 	align : 'center',
-	width : 89.44,
-
+	
+	width : 50,
+	
+	
 }, {
 
 	header : 'เลขที่เอกสาร',
@@ -195,7 +197,7 @@ SEI005.seiGridColumns = [
 	header : 'ชื่อพนักงาน',
 	dataIndex : 'seiNameEmployee',
 	align : 'center',
-	width : 89.44,
+	width : 128.88,
 
 }, {
 	header : 'วันส่งเอกสาร',

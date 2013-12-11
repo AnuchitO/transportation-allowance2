@@ -360,6 +360,29 @@ public class SVD006Controller{
 			gridData.responseJson(response);
 		}
 		
+		@RequestMapping(value = "/SVD006.html", method = RequestMethod.POST, params = "method=scpDeptCombobox")
+		public void findDept(HttpServletRequest request,
+				HttpServletResponse response) {
+			List<ParameterTable> param = this.parameterTable01Service.findTable("6");
+			JSONArray jsonArray = new JSONArray();
+			GridData gridData = new GridData();
+
+			JSONObject jobect1 = new JSONObject();
+			for (ParameterTable p : param) {
+
+				jobect1.accumulate("code", p.getEntry());
+				jobect1.accumulate("description",p.getEntry());
+				jsonArray.add(jobect1);
+				jobect1.clear();
+
+			}
+			gridData.setRecords(jsonArray);
+			gridData.setTotal(jsonArray.size());
+			gridData.setSuccess(true);
+			response.setContentType("application/json;charset=UTF-8"); 
+			gridData.responseJson(response);
+		}
+		
 		@RequestMapping(value = "/SVD006.html", method = RequestMethod.POST, params = "method=scpSave")
 		public void scpSave(HttpServletRequest request, HttpServletResponse response,
 

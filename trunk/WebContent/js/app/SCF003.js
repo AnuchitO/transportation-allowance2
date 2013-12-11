@@ -742,16 +742,30 @@ SCF003.gridSaveBtn = new Ext.Toolbar.Button(
 								confirmFunction);
 				function confirmFunction(btn) {
 					if (btn == 'yes') {
+						var checkEmail = SCF003.email.getValue();
+						 var emailFilter=/^.+@.+\..{2,3}$/;//รูปแบบการเช็คว่าถกต้องหรือป่าว
+						 var str=checkEmail;
 						param2.status = "001";
 						var forPay = Ext.getCmp('forPay').getValue();
-						if (Ext.isEmpty(forPay)) {
+						 if (!(emailFilter.test(str))) {
+								Ext.Msg.alert('Information',
+								'ท่านใส่อีเมล์ไม่ถูกต้อง');
+							    
+							}
+						
+						 else if (Ext.isEmpty(forPay)) {
 							Ext.Msg.alert('Information',
 									'กรุณากรอกข้อมูลเพื่อชำระ');
 						}
 						else if(Ext.isEmpty(Ext.getCmp('editGridDate').getValue())){
 							Ext.Msg.alert('Information',
 							'กรุณากรอกข้อมูลการเดินทางในตาราง');
-						}else{
+						}
+						
+						 
+						
+						
+						else{
 						saveOrUpdate();
 						}
 					}
@@ -1626,7 +1640,15 @@ var statusClickSubmit = true;
 								}
 								function confirmFunction(btn) {
 									if (btn == 'yes') {
-										if (Ext.isEmpty(forPay)) {
+										var checkEmail = SCF003.email.getValue();
+										var emailFilter=/^.+@.+\..{2,3}$/;//รูปแบบการเช็คว่าถกต้องหรือป่าว
+										var str=checkEmail;
+										 if (!(emailFilter.test(str))) {
+												Ext.Msg.alert('Information',
+												'ท่านใส่อีเมล์ไม่ถูกต้อง');
+											
+											}
+										 else if (Ext.isEmpty(forPay)) {
 											Ext.Msg.alert('Information',
 													'กรุณากรอกข้อมูลเพื่อชำระ');
 										}

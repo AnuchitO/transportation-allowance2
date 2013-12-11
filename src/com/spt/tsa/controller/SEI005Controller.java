@@ -209,7 +209,23 @@ public class SEI005Controller {
 		// **************************** Select All Case **************************************//
 		if(domain.getSelectMount().length() == 0 && domain.getSelectYear().length() == 0 && domain.getSelectStatus().length() == 0){
 		List<TravelHeader> dataTravelHeader = this.travelHeader01Service.findDataGroupByNo();
-	
+		if(this.travelHeader01Service.findDataGroupByNo().size() == 0){
+			 JSONObject jobect1 = new JSONObject();
+			 jobect1.accumulate("seiNo", "-");
+			 jobect1.accumulate("seiNumberDocument", "-");
+			 jobect1.accumulate("seiIdEmployee", "-");
+			 jobect1.accumulate("seiNameEmployee", "-");
+			 jobect1.accumulate("seiSendDate", "-");
+			
+			 jobect1.accumulate("seiStatus", "-");
+			 jobect1.accumulate("seiAppove","-");
+			 	
+			 jobect1.accumulate("seiTotalPayment", "-");
+			 jobect1.accumulate("seiRemark", "-");
+			
+			 jsonArray.add(jobect1);
+			 jobect1.clear();
+		}else{
 		int i=0;
 		String checkStatus = " ";
 		for(TravelHeader c:dataTravelHeader){
@@ -221,7 +237,7 @@ public class SEI005Controller {
 		 jobect1.accumulate("seiNo", i);
 		 jobect1.accumulate("seiNumberDocument", c.getNo());
 		 jobect1.accumulate("seiIdEmployee", c.getEmployee().getEmpId());
-		 jobect1.accumulate("seiNameEmployee", c.getEmployee().getName());
+		 jobect1.accumulate("seiNameEmployee", c.getEmployee().getName()+" "+" "+ c.getEmployee().getLastname());
 		 jobect1.accumulate("seiSendDate", date.format(c.getCreationate()));
 		
 		 jobect1.accumulate("seiStatus", this.parameterTable01Service.findRow("9", c.getStatus()).get(0).getDetail());
@@ -239,6 +255,7 @@ public class SEI005Controller {
 			 }
 		}
 		}
+		}
 		
 		//************************************* Select Status Case **************************************//
 		else if(domain.getSelectStatus().length() != 0 && domain.getSelectMount().length() == 0 && domain.getSelectYear().length() == 0){
@@ -246,6 +263,23 @@ public class SEI005Controller {
 			List<ParameterTable> param = this.parameterTable01Service.findStatusBySelect(domain.getSelectStatus());
 			
 			List<TravelHeader> traH = this.travelHeader01Service.findSelectSearchStatus(param.get(0).getEntry());
+			if(this.travelHeader01Service.findSelectSearchStatus(param.get(0).getEntry()).size() == 0){
+				 JSONObject jobect1 = new JSONObject();
+				 jobect1.accumulate("seiNo", "-");
+				 jobect1.accumulate("seiNumberDocument", "-");
+				 jobect1.accumulate("seiIdEmployee", "-");
+				 jobect1.accumulate("seiNameEmployee", "-");
+				 jobect1.accumulate("seiSendDate", "-");
+				
+				 jobect1.accumulate("seiStatus", "-");
+				 jobect1.accumulate("seiAppove","-");
+				 	
+				 jobect1.accumulate("seiTotalPayment", "-");
+				 jobect1.accumulate("seiRemark", "-");
+				
+				 jsonArray.add(jobect1);
+				 jobect1.clear();
+			}else{
 			int j=0;
 			for(TravelHeader c:traH){
 				j++;
@@ -256,7 +290,7 @@ public class SEI005Controller {
 			 jobect1.accumulate("seiNo", j);
 			 jobect1.accumulate("seiNumberDocument", c.getNo());
 			 jobect1.accumulate("seiIdEmployee", c.getEmployee().getEmpId());
-			 jobect1.accumulate("seiNameEmployee", c.getEmployee().getName());
+			 jobect1.accumulate("seiNameEmployee", c.getEmployee().getName()+" "+" "+c.getEmployee().getLastname());
 			 jobect1.accumulate("seiSendDate", date.format(c.getCreationate()));
 			
 			 jobect1.accumulate("seiStatus", this.parameterTable01Service.findRow("9", c.getStatus()).get(0).getDetail());
@@ -274,6 +308,7 @@ public class SEI005Controller {
 				 }
 			
 		}
+		}
 	
 		//***************************************** Select Year Case ********************************************//
 		else if(domain.getSelectYear().length() != 0 && domain.getSelectMount().length()==0 && domain.getSelectStatus().length() == 0){
@@ -281,6 +316,23 @@ public class SEI005Controller {
 			foo = foo - 543 ;
 			String yearSelect = Integer.toString(foo);
 			List<TravelHeader> traH = this.travelHeader01Service.findYearSelect(yearSelect);
+			if(this.travelHeader01Service.findYearSelect(yearSelect).size() == 0){
+				 JSONObject jobect1 = new JSONObject();
+				 jobect1.accumulate("seiNo", "-");
+				 jobect1.accumulate("seiNumberDocument", "-");
+				 jobect1.accumulate("seiIdEmployee", "-");
+				 jobect1.accumulate("seiNameEmployee", "-");
+				 jobect1.accumulate("seiSendDate", "-");
+				
+				 jobect1.accumulate("seiStatus", "-");
+				 jobect1.accumulate("seiAppove","-");
+				 	
+				 jobect1.accumulate("seiTotalPayment", "-");
+				 jobect1.accumulate("seiRemark", "-");
+				
+				 jsonArray.add(jobect1);
+				 jobect1.clear();
+			}else{
 			int j=0;
 			for(TravelHeader c:traH){
 				j++;
@@ -291,7 +343,7 @@ public class SEI005Controller {
 				 jobect1.accumulate("seiNo", j);
 				 jobect1.accumulate("seiNumberDocument", c.getNo());
 				 jobect1.accumulate("seiIdEmployee", c.getEmployee().getEmpId());
-				 jobect1.accumulate("seiNameEmployee", c.getEmployee().getName());
+				 jobect1.accumulate("seiNameEmployee", c.getEmployee().getName()+" "+" " + c.getEmployee().getLastname());
 				 jobect1.accumulate("seiSendDate", date.format(c.getCreationate()));
 				
 				 jobect1.accumulate("seiStatus", this.parameterTable01Service.findRow("9", c.getStatus()).get(0).getDetail());
@@ -308,6 +360,7 @@ public class SEI005Controller {
 				 jobect1.clear();
 					 }
 			}
+		}
 		
 		//********************************************** Select Month Case ******************************************//
 		else if(domain.getSelectMount().length() != 0 && domain.getSelectYear().length() == 0 && domain.getSelectStatus().length() == 0){
@@ -347,7 +400,7 @@ public class SEI005Controller {
 				 jobect1.accumulate("seiNo", j);
 				 jobect1.accumulate("seiNumberDocument", c.getNo());
 				 jobect1.accumulate("seiIdEmployee", c.getEmployee().getEmpId());
-				 jobect1.accumulate("seiNameEmployee", c.getEmployee().getName());
+				 jobect1.accumulate("seiNameEmployee", c.getEmployee().getName()+" "+" "+c.getEmployee().getLastname());
 				 jobect1.accumulate("seiSendDate", date.format(c.getCreationate()));
 				
 				 jobect1.accumulate("seiStatus", this.parameterTable01Service.findRow("9", c.getStatus()).get(0).getDetail());
@@ -406,7 +459,7 @@ public class SEI005Controller {
 			 jobect1.accumulate("seiNo", j);
 			 jobect1.accumulate("seiNumberDocument", c.getNo());
 			 jobect1.accumulate("seiIdEmployee", c.getEmployee().getEmpId());
-			 jobect1.accumulate("seiNameEmployee", c.getEmployee().getName());
+			 jobect1.accumulate("seiNameEmployee", c.getEmployee().getName()+" "+" "+c.getEmployee().getLastname());
 			 jobect1.accumulate("seiSendDate", date.format(c.getCreationate()));
 			
 			 jobect1.accumulate("seiStatus", this.parameterTable01Service.findRow("9", c.getStatus()).get(0).getDetail());
@@ -459,7 +512,7 @@ else if(domain.getSelectMount().length() != 0 && domain.getSelectStatus().length
 			 jobect1.accumulate("seiNo", j);
 			 jobect1.accumulate("seiNumberDocument", c.getNo());
 			 jobect1.accumulate("seiIdEmployee", c.getEmployee().getEmpId());
-			 jobect1.accumulate("seiNameEmployee", c.getEmployee().getName());
+			 jobect1.accumulate("seiNameEmployee", c.getEmployee().getName()+" "+" "+c.getEmployee().getLastname());
 			 jobect1.accumulate("seiSendDate", date.format(c.getCreationate()));
 			
 			 jobect1.accumulate("seiStatus", this.parameterTable01Service.findRow("9", c.getStatus()).get(0).getDetail());
@@ -514,7 +567,7 @@ else if(domain.getSelectYear().length() != 0 && domain.getSelectStatus().length(
 		 jobect1.accumulate("seiNo", j);
 		 jobect1.accumulate("seiNumberDocument", c.getNo());
 		 jobect1.accumulate("seiIdEmployee", c.getEmployee().getEmpId());
-		 jobect1.accumulate("seiNameEmployee", c.getEmployee().getName());
+		 jobect1.accumulate("seiNameEmployee", c.getEmployee().getName()+" "+" "+c.getEmployee().getLastname());
 		 jobect1.accumulate("seiSendDate", date.format(c.getCreationate()));
 		
 		 jobect1.accumulate("seiStatus", this.parameterTable01Service.findRow("9", c.getStatus()).get(0).getDetail());
@@ -570,7 +623,7 @@ else if(domain.getSelectMount().length() !=0 && domain.getSelectYear().length() 
 		 jobect1.accumulate("seiNo", j);
 		 jobect1.accumulate("seiNumberDocument", c.getNo());
 		 jobect1.accumulate("seiIdEmployee", c.getEmployee().getEmpId());
-		 jobect1.accumulate("seiNameEmployee", c.getEmployee().getName());
+		 jobect1.accumulate("seiNameEmployee", c.getEmployee().getName()+" "+" "+c.getEmployee().getLastname());
 		 jobect1.accumulate("seiSendDate", date.format(c.getCreationate()));
 		
 		 jobect1.accumulate("seiStatus", this.parameterTable01Service.findRow("9", c.getStatus()).get(0).getDetail());
